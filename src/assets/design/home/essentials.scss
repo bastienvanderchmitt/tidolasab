@@ -1,0 +1,27 @@
+.essentials {
+  margin-top: 100px;
+  margin-bottom: 100px;
+
+  .essential {
+    /**
+     * Font Awesome
+     */
+    .svg-inline--fa {
+      color: #B99D75;
+      font-size: 34px;
+    }
+
+    h5 {
+      font-family: Marcellus, serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    p {
+      font-family: Jost, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+}

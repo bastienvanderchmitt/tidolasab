@@ -1,0 +1,57 @@
+// Custom.scss
+$primary: #4db6ac;
+$secondary: #b2dfdb;
+$tertiary: #00695c;
+
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+@import "design/fonts";
+@import "design/menu";
+@import "design/animations";
+@import "design/footer";
+
+@import "design/home/essentials";
+
+.main-content {
+  min-height: 800px;
+}
+
+
+.nav-item .nav-link {
+  color: white;
+  font-family: 'LaBelleAurore', Arial, sans-serif;
+  font-size: 32px;
+
+  &:not(.active):hover {
+    color: var(--bs-nav-link-color);
+  }
+}
+
+.navbar {
+  .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: white;
+  }
+  .navbar-toggler {
+    color: white;
+    border: white solid 1px !important;
+  }
+}
+
+/**
+ * Titles
+ */
+
+.title-2 {
+  font-family: Marcellus, serif;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.title-4 {
+  font-family: Jost, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: #53624e;
+}
