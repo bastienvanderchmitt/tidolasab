@@ -2,8 +2,11 @@
 $primary: #4db6ac;
 $secondary: #b2dfdb;
 $tertiary: #00695c;
+$gold: #B99D75;
 
 @import '../../node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/slick-carousel/slick/slick';
+@import '../../node_modules/slick-carousel/slick/slick-theme';
 
 @import "design/fonts";
 @import "design/menu";
@@ -11,6 +14,8 @@ $tertiary: #00695c;
 @import "design/footer";
 
 @import "design/home/essentials";
+@import "design/home/preview";
+@import "design/home/review";
 
 .main-content {
   min-height: 800px;
@@ -34,6 +39,20 @@ $tertiary: #00695c;
   .navbar-toggler {
     color: white;
     border: white solid 1px !important;
+  }
+}
+
+.image-zoom {
+  overflow: hidden;
+
+  img {
+    transition: transform 0.5s;
+
+    &:hover {
+      -ms-transform: scale(1.1); /* IE 9 */
+      -webkit-transform: scale(1.1); /* Safari 3-8 */
+      transform: scale(1.1);
+    }
   }
 }
 

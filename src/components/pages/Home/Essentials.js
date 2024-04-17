@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "reactstrap";
-import essentials_1 from "../../../assets/img/essentials_1.jpg";
-import essentials_2 from "../../../assets/img/essentials_2.jpg";
+import essentials_1 from "../../../assets/img/essentials/essentials_1.jpg";
+import essentials_2 from "../../../assets/img/essentials/essentials_2.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlane,
@@ -32,7 +32,9 @@ const Essentials = () => {
     <Container className="essentials">
       <Row className="p-4">
         <Col className="px-5 d-none d-md-block">
-          <img alt="logo" src={essentials_1} className="w-100" />
+          <div className="image-zoom">
+            <img alt="essential 1" src={essentials_1} className="w-100" />
+          </div>
           <h4 className="aurore pt-3">
             Inspiré de notre histoire, en pleine nature pour offrir une
             expérience de vie différente.
@@ -92,12 +94,16 @@ const Essentials = () => {
           </Row>
           <Row>
             <Col>
-              <img alt="logo" src={essentials_2} className="w-100" />
+              <div className="image-zoom">
+                <img alt="logo" src={essentials_2} className="w-100" />
+              </div>
             </Col>
           </Row>
           <Row>
             <Col className="pt-4 px-5 d-md-none">
-              <img alt="logo" src={essentials_1} className="w-100" />
+              <div className="image-zoom">
+                <img alt="logo" src={essentials_1} className="w-100" />
+              </div>
               <h4 className="aurore pt-3">
                 Inspiré de notre histoire, en pleine nature pour offrir une
                 expérience de vie différente.

@@ -42,12 +42,11 @@ const Menu = () => {
     <section className="menu">
       <Parallax
         bgImage={require("../../assets/img/" + header.image)}
-        // bgImage={banner}
         bgImageAlt="the cat"
         strength={200}
         className="text-white text-center p-5"
       >
-        {isFixed ? (
+        {isFixed && (
           <Container className="desktop-menu d-none d-lg-block fixed animate__animated animate__fadeIn">
             <Row className="p-2">
               <Col>
@@ -62,29 +61,29 @@ const Menu = () => {
               </Col>
             </Row>
           </Container>
-        ) : (
-          <Container className="desktop-menu d-none d-lg-block">
-            <Row className="pt-4">
-              <Col>
-                <Nav pills>
-                  <CustomNavItem link="/" text="Accueil" />
-                  <CustomNavItem link="/about" text="Histoire" />
-                  <CustomNavItem link="/services" text="Services" />
-                </Nav>
-              </Col>
-              <Col>
-                <img alt="logo" src={logo} style={{ marginTop: "-25px" }} />
-              </Col>
-              <Col>
-                <Nav pills>
-                  <CustomNavItem link="/activites" text="Activités" />
-                  <CustomNavItem link="/photos" text="Photos" />
-                  <CustomNavItem link="/contact" text="Contact" />
-                </Nav>
-              </Col>
-            </Row>
-          </Container>
         )}
+        <Container className="desktop-menu d-none d-lg-block">
+          <Row className="pt-4">
+            <Col>
+              <Nav pills>
+                <CustomNavItem link="/" text="Accueil" />
+                <CustomNavItem link="/about" text="Histoire" />
+                <CustomNavItem link="/services" text="Services" />
+              </Nav>
+            </Col>
+            <Col>
+              <img alt="logo" src={logo} style={{ marginTop: "-25px" }} />
+            </Col>
+            <Col>
+              <Nav pills>
+                <CustomNavItem link="/activites" text="Activités" />
+                <CustomNavItem link="/photos" text="Photos" />
+                <CustomNavItem link="/contact" text="Contact" />
+              </Nav>
+            </Col>
+          </Row>
+        </Container>
+
         <Container className="d-lg-none">
           <Navbar color="faded white" light fixed={isFixed ? "top" : null}>
             <NavbarToggler onClick={toggle}>TEST</NavbarToggler>

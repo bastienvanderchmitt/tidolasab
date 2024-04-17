@@ -1,6 +1,7 @@
 import { useLayoutContext } from "../../contexts/LayoutContext";
 import { useEffect } from "react";
 import { pages } from "../../helpers/pages";
+import Essentials from "./Home/Essentials";
 
 const Services = () => {
   const { setHeader } = useLayoutContext();
@@ -9,7 +10,7 @@ const Services = () => {
     setHeader(pages.services);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return <h1>Services</h1>;
+  return <Essentials />;
 };
 
 export default Services;

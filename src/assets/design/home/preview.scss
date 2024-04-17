@@ -1,0 +1,48 @@
+.preview {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: #F3F3F0;
+
+  .preview-content {
+    max-width: 870px;
+    margin: auto;
+
+    .palm-tree {
+      color: $gold;
+      width: 70px;
+    }
+
+    p {
+      font-family: Jost, sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+
+  .slider-container {
+
+    .slick-prev,
+    .slick-next {
+      height: 50px;
+      width: 50px;
+      z-index: 1;
+
+      &:before {
+        font-size: 50px;
+        opacity: 1;
+      }
+    }
+
+    .slick-image-container {
+      padding: 0 16px;
+
+      img {
+        height: auto;
+        max-width: 100%;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+.review {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  .review-content {
+    max-width: 790px;
+    margin: auto;
+
+    .title-review {
+      font-family: Jost, sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      line-height: 14.4px;
+      text-transform: uppercase;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .review-icon {
+      color: $gold;
+      width: 40px;
+      height: 40px;
+    }
+
+    .quote {
+      font-family: Marcellus, serif;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 48px;
+    }
+
+    .quote-user {
+      font-family: Jost, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .review-star{
+      color: $gold;
+      margin: 0 4px;
+    }
+  }
+}
