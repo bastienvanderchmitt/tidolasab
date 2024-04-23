@@ -1,0 +1,22 @@
+.discover {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: rgba(0, 0, 0, 0.075);
+  box-shadow: 0px 0px 28px 0px rgba(66, 68, 90, 1);
+
+  .discover-content {
+    text-align: right;
+
+    .title-2 {
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .discover-icon {
+      color: $gold;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}

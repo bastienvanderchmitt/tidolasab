@@ -1,4 +1,5 @@
 import crick from "../../../assets/img/crick.jpg";
+import beach_palm from "../../../assets/img/discover/beach_palm.png";
 import { Parallax } from "react-parallax";
 import { Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +10,8 @@ const Reviews = () => {
     <>
       <Parallax
         blur={2}
-        bgImage={crick}
-        bgImageAlt="the crick"
+        bgImage={beach_palm}
+        bgImageAlt="the beach_palm"
         strength={200}
         className="text-white text-center p-5"
       >

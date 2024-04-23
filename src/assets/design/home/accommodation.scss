@@ -1,0 +1,47 @@
+.accommodation {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  .title-2 {
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .accommodation-header {
+    max-width: 800px;
+    margin: auto;
+  }
+
+  //.discover-icon {
+  //  color: $gold;
+  //  width: 40px;
+  //  height: 40px;
+  //}
+
+
+    .accommodation-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      ul {
+        margin: 10px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        list-style: none;
+        justify-content: center;
+
+        li {
+          display: flex;
+          align-items: center;
+          margin: 5px 0;
+          padding-right: 30px;
+          line-height: 28px;
+        }
+      }
+    }
+
+}
