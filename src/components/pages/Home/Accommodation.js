@@ -71,14 +71,13 @@ const Accommodation = () => {
           </div>
           <div className="">
             <p>
-              Stunning beachfront location with 60 square meters / 646 square
-              feet of interior space, located on the west side of the resort in
-              a private tropical garden with a plunge pool and a private outdoor
-              shower.
+              Dans un cadre de verdure luxuriante, notre Case Ti'Dola Sab est
+              une habitation indépendante toute en bois, construction récente
+              avec tout le confort nécessaire.
             </p>
           </div>
           <div className="more-btn">
-            <Link to={"#"}>
+            <Link to={"/booking"}>
               <span>Réserver</span>
             </Link>
           </div>

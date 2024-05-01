@@ -3,7 +3,7 @@ import Error from "../components/layout/Error";
 import Contact from "../components/pages/Contact";
 import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
-import Services from "../components/pages/Services";
+import Booking from "../components/pages/Booking";
 
 const staticSteps = [
   {
@@ -19,8 +19,8 @@ const staticSteps = [
     element: <Home />,
   },
   {
-    path: "/services",
-    element: <Services />,
+    path: "/booking",
+    element: <Booking />,
   },
 ];
 

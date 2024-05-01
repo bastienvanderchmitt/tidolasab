@@ -30,9 +30,35 @@
     }
   }
 
-  .header {
-    height: 800px;
+  &.big {
+    .header {
+      height: 800px;
+    }
+  }
 
+  &.small {
+    .header {
+      height: 480px;
+    }
+    .react-parallax {
+      height: 600px !important;
+      width: 100% !important;
+    }
+  }
+
+  //.big-header {
+  //  .header {
+  //    height: 800px;
+  //  }
+  //}
+  //
+  //.small-header {
+  //  .header {
+  //    height: 480px;
+  //  }
+  //}
+
+  .header {
     .header-subtitle,
     .header-description {
       font-family: Jost, sans-serif;

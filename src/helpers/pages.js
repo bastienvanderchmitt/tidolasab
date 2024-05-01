@@ -25,11 +25,11 @@ export const pages = {
       "A playground for the over-and-underwater world adventurers. Surfing, diving, snorkeling, fishing, sailing, nature trails & villages to explore.",
     image: "banner.jpg",
   },
-  services: {
-    title: "Services",
+  booking: {
+    title: "Réservation",
     subtitle: null,
     description:
       "Nous fournissons l'indispensable et vous profitez de l'essentiel",
-    image: "banner.jpg",
+    image: "room.jpg",
   },
 };

@@ -1,7 +1,7 @@
 // Custom.scss
-$primary: #4db6ac;
+$primary: #0ea1ab;
 $secondary: #b2dfdb;
-$tertiary: #00695c;
+$tertiary: #4db6ac;
 $gold: #B99D75;
 
 @import '../../node_modules/bootstrap/scss/bootstrap';
@@ -19,6 +19,9 @@ $gold: #B99D75;
 @import "design/home/discover";
 @import "design/home/accommodation";
 
+@import "design/booking/room";
+@import "design/booking/sidebar";
+
 .main-content {
   min-height: 800px;
 }
@@ -27,7 +30,7 @@ $gold: #B99D75;
 .nav-item .nav-link {
   color: white;
   font-family: 'LaBelleAurore', Arial, sans-serif;
-  font-size: 32px;
+  font-size: 31px;
 
   &:not(.active):hover {
     color: var(--bs-nav-link-color);
@@ -115,6 +118,13 @@ $gold: #B99D75;
   font-weight: 400;
 }
 
+.title-3 {
+  font-family: LaBelleAurore, serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+}
+
 .title-4 {
   font-family: Jost, sans-serif;
   font-size: 16px;
@@ -128,4 +138,69 @@ p {
   font-family: Jost, sans-serif;
   font-size: 18px;
   font-weight: 40;
+}
+
+.gold {
+  color: $gold;
+}
+
+/**
+ * Calendar
+ */
+.calendar__calendar-container {
+
+  .day-footer-cell {
+    position: absolute;
+    left: 0;
+    right: 0;
+    line-height: 12px;
+    text-transform: capitalize;
+    z-index: 3;
+    bottom: 3px;
+    font-size: 8px;
+    color: #ffffff;
+    box-sizing: border-box;
+
+    &.booked {
+      color: #969696;
+    }
+  }
+
+  .calendar__month-container {
+    svg {
+      fill: $gold;
+      width: 44px;
+      height: 44px;
+      & path {
+        fill: $gold !important;
+      }
+    }
+    .calendar__month-content {
+      span {
+        color: black !important;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .calendar__weekCell {
+    color: black !important;
+  }
+
+  .calendar__dayCell-selected,
+  .calendar__dayCell-selectedStart,
+  .calendar__dayCell-selectedEnd {
+    background-color: $gold;
+    border-color: $gold;
+  }
+}
+
+/**
+ * Form
+ */
+.number-btn {
+  display: inline-block;
+  border: solid 1px #B0B0B0;
+  border-radius: 50%;
+  background: white;
 }

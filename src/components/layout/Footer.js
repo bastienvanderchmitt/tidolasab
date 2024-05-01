@@ -1,4 +1,10 @@
 import { Col, Row } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
@@ -6,7 +12,7 @@ const Footer = () => {
       <Row className="text-center">
         <Col className="footer-card">
           <h6 className="footer-title">Adresse</h6>
-          <p>73120 Courchevel 1850, France</p>
+          <p>1212 Morne Lolo 97112, Grand Bourg</p>
         </Col>
         <Col className="footer-card">
           <h6 className="footer-title">Téléphone</h6>
@@ -14,10 +20,15 @@ const Footer = () => {
         </Col>
         <Col className="footer-card">
           <h6 className="footer-title">Email</h6>
-          <p>bastienvanderchmitt@gmail.com</p>
+          <p>tidolasab@gmail.com</p>
         </Col>
         <Col className="footer-card">
           <h6 className="footer-title">Social</h6>
+          <p>
+            <FontAwesomeIcon icon={faFacebook} className="me-4" />
+            <FontAwesomeIcon icon={faTwitter} className="me-4" />
+            <FontAwesomeIcon icon={faInstagram} />
+          </p>
         </Col>
       </Row>
       <Row>

@@ -62,9 +62,9 @@ const Essentials = () => {
               text="Nous pouvons venir vous chercher à l'aéroport ou à l'arrivée du Ferry."
             />
             <Essential
-              title="Location matériel"
+              title="Prêt de matériel"
               icon={faUmbrellaBeach}
-              text="Nous vous proposons des paddles à la location ansi que du matériel de plongée."
+              text="Transats à disposition pour des moments de farniente."
             />
           </Row>
           <Row>
