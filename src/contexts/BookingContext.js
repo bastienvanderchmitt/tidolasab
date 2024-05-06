@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useCallback } from "react";
+import React, { useState, createContext, useEffect, useMemo } from "react";
 import useContextFactory from "../hooks/useContextFactory";
 const BookingContext = createContext({});
 
@@ -20,7 +20,7 @@ const BookingContextProvider = ({ children }) => {
       ? selectedDates[1]?.toISOString().slice(0, 10)
       : "";
 
-  const getDays = useCallback(() => {
+  const days = useMemo(() => {
     if (selectedDates[0] && selectedDates[1]) {
       let diffTime = selectedDates[0].getTime() - selectedDates[1].getTime();
       return Math.abs(Math.round(diffTime / (1000 * 3600 * 24)));
@@ -28,10 +28,9 @@ const BookingContextProvider = ({ children }) => {
   }, [selectedDates]);
 
   useEffect(() => {
-    const days = getDays();
     const price = 100;
     days ? setTotal(days * price) : setTotal(null);
-  }, [getDays, setTotal]);
+  }, [days, setTotal]);
 
   return (
     <BookingContext.Provider
@@ -40,6 +39,7 @@ const BookingContextProvider = ({ children }) => {
         setSelectedDates,
         checkIn,
         checkOut,
+        days,
         total,
       }}
     >

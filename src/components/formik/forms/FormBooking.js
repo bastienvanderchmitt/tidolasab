@@ -5,9 +5,10 @@ import { Button, Form } from "reactstrap";
 import Field from "../Field";
 import { useBookingContext } from "../../../contexts/BookingContext";
 import NumberField from "../NumberField";
+import { saveBooking } from "../../../api/booking";
 
 const FormBooking = () => {
-  const { checkIn, checkOut, total } = useBookingContext();
+  const { checkIn, checkOut, total, days } = useBookingContext();
 
   const initialValues = useMemo(() => {
     return {
@@ -27,7 +28,20 @@ const FormBooking = () => {
   }, []);
 
   const handleForm = async (values) => {
-    console.log("submit", values);
+    try {
+      const res = await saveBooking({
+        ...values,
+        total: total,
+        days: days,
+        idClient: 1,
+      });
+      console.log("res", res);
+      if (res?.data?.bookingId)
+        console.log("RESA OK => ", res?.data?.bookingId);
+    } catch (e) {
+      // addToast(e.api_error || "Une erreur est survenue.", TOAST_ERROR);
+      console.log("e", e);
+    }
   };
 
   const scrollToCalendar = (e) => {
@@ -88,8 +102,14 @@ const FormBooking = () => {
             </div>
             <div className="content-total">
               <span className="title-total">Total :</span>
-              <span className="total">{total} €</span>
+              <span className="total">{total ? total + " €" : ""}</span>
             </div>
+            {days && (
+              <div className="content-detail">
+                <span className="title-total">Nombre de nuits :</span>
+                <span className="total">{days}</span>
+              </div>
+            )}
             <div className="content-submit mt-4">
               <Button
                 type="submit"

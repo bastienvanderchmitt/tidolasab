@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Calendar from "@demark-pro/react-booking-calendar";
 import { fr } from "date-fns/locale";
 import { months } from "../../helpers/months";
 import { useBookingContext } from "../../contexts/BookingContext";
-
-const reserved = [
-  {
-    startDate: new Date(2024, 4, 1),
-    endDate: new Date(2024, 4, 5),
-  },
-  {
-    startDate: new Date(2024, 4, 16),
-    endDate: new Date(2024, 4, 24),
-  },
-];
+import useApi from "../../hooks/useApi";
+import { getBookings } from "../../api/booking";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
+
+  const [{ bookings }, isLoading] = useApi(getBookings);
+
+  const reserved = useMemo(
+    () =>
+      bookings?.map((b) => {
+        const start = new Date(b.date_arrivee);
+        start.setHours(0);
+        const end = new Date(b.date_depart);
+        start.setHours(0);
+        return {
+          startDate: start,
+          endDate: end,
+        };
+      }),
+    [bookings],
+  );
+
   const handleChange = (e) => {
     e[0]?.setHours(14);
     e[1]?.setHours(10);
@@ -32,7 +43,9 @@ const DatePicker = ({ formRef }) => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <FontAwesomeIcon icon={faSpinner} />
+  ) : (
     <Calendar
       id="booking-calendar"
       selected={selectedDates}
@@ -45,7 +58,6 @@ const DatePicker = ({ formRef }) => {
           </div>
         ),
         DayCellFooter: (props) => {
-          // console.log("props", props);
           return (
             <div
               className={

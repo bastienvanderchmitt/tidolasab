@@ -1,4 +1,3 @@
-import crick from "../../../assets/img/crick.jpg";
 import beach_palm from "../../../assets/img/discover/beach_palm.png";
 import { Parallax } from "react-parallax";
 import { Col, Container, Row } from "reactstrap";
@@ -30,8 +29,12 @@ const Reviews = () => {
               </p>
               <p className="quote-user">ANNA WILLIAMS – TRIPADVISOR</p>
               <div>
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FontAwesomeIcon icon={faStar} className="review-star" />
+                {[1, 2, 3, 4, 5].map((_, key) => (
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="review-star"
+                    key={key}
+                  />
                 ))}
               </div>
             </Col>

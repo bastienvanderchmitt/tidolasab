@@ -38,19 +38,10 @@ const Accommodation = () => {
           <h4 className="aurore pt-3 text-center">Vue depuis le jardin</h4>
         </Col>
         <Col className="p-4 text-center accommodation-content" xs={12} xl={6}>
-          <div className="title-4">
-            Private Pool / Ocean View / Single Level
-          </div>
-          <h4 className="title-2 pt-2">Premier Oceanview Villa</h4>
+          <div className="title-4">Verdure / Calme & Reposant / Nature</div>
+          <h4 className="title-2 pt-2">Case Ti'Dola Sab</h4>
           <div className="">
-            {/*Envoi contrat de loc avec 50% à la résa et le solde 14 jours avant l'arrivée.*/}
             <ul>
-              {/*<li>*/}
-              {/*  <FontAwesomeIcon icon={faSquare} className="me-2" />*/}
-              {/*  <span>*/}
-              {/*    84 m<sup>2</sup>*/}
-              {/*  </span>*/}
-              {/*</li>*/}
               <li>
                 <FontAwesomeIcon icon={faUsers} className="me-2" />
                 <span>4 personnes</span>
