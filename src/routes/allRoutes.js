@@ -4,11 +4,16 @@ import Contact from "../components/pages/Contact";
 import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
 import Booking from "../components/pages/Booking";
+import Success from "../components/pages/Success";
 
 const staticSteps = [
   {
     path: "/contact",
     element: <Contact />,
+  },
+  {
+    path: "/success",
+    element: <Success />,
   },
   {
     path: "/login",

@@ -4,41 +4,34 @@
   margin-top: 60px;
 
   #booking-form-content {
-    input {
-      border-color: $gold;
-      height: 48px;
+
+    .content {
+      border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+
+      input {
+        border-color: $gold;
+        height: 48px;
+      }
+
+      .form-label {
+        font-family: Jost, sans-serif;
+        font-size: 16px;
+      }
     }
-    .form-label {
-      font-family: Jost, sans-serif;
-      font-size: 16px;
-    }
+
     .content-submit {
       .btn {
         text-transform: uppercase !important;
         color: white;
       }
+
       .conditions {
         font-size: 14px;
         margin-top: 20px;
+        text-align: justify;
       }
     }
-  }
 
-  .content-total {
-    border-top: solid 1px rgba(0, 0, 0, 0.1);
-    padding-top: 30px;
-
-    .title-total {
-      font-family: Marcellus, serif;
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 400;
-    }
-    .total {
-      float: right;
-      font-family: Jost, sans-serif;
-      font-size: 24px;
-      font-weight: 400;
-    }
   }
 }

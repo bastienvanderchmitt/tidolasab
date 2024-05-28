@@ -30,7 +30,7 @@ const Field = ({
       <RawField
         type={type}
         {...field}
-        invalid={!!meta.error}
+        invalid={!!meta.error && !!meta.touched}
         disabled={isSubmitting || disabled}
         required={required}
         placeholder={placeHolder || label}

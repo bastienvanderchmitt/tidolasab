@@ -32,4 +32,10 @@ export const pages = {
       "Nous fournissons l'indispensable et vous profitez de l'essentiel",
     image: "room.jpg",
   },
+  success: {
+    title: "Réservation validée",
+    subtitle: null,
+    description: null,
+    image: "room.jpg",
+  },
 };

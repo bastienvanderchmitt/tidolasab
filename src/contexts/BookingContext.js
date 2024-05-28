@@ -9,6 +9,9 @@ export const useBookingContext = () => {
 const BookingContextProvider = ({ children }) => {
   const [selectedDates, setSelectedDates] = useState([]);
   const [total, setTotal] = useState(0);
+  const [adults, setAdults] = useState(1);
+  const [child, setChild] = useState(0);
+  const [booked, setBooked] = useState(false);
 
   const checkIn =
     selectedDates?.length && selectedDates[0]
@@ -41,6 +44,12 @@ const BookingContextProvider = ({ children }) => {
         checkOut,
         days,
         total,
+        adults,
+        setAdults,
+        child,
+        setChild,
+        booked,
+        setBooked,
       }}
     >
       {children}
