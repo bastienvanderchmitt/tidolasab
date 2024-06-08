@@ -1,12 +1,7 @@
 import { Badge, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlane,
   faWifi,
-  faBroomBall,
-  faUmbrellaBeach,
-  faWheelchair,
-  faMartiniGlassCitrus,
   faLocationDot,
   faUsers,
   faBed,
@@ -105,24 +100,24 @@ const Room = () => {
           <Amenity icon={amenity.icon} text={amenity.text} key={key} />
         ))}
       </Row>
-      <Row>
-        <h4 className="title-2 pt-5 pb-4">Qu'est-ce qui est inclus ?</h4>
-        <div className="room-list">
-          <Badge>Private balcony</Badge>
-          <Badge>140x200 cm Elite bed</Badge>
-          <Badge>Upholstered seat beside the panoramic window</Badge>
-          <Badge>TV-UHD screen for watching mountaineering films</Badge>
-          <Badge>
-            Writing desk with USB ports for documenting your adventures
-          </Badge>
-          <Badge>Room safe for your top mountain photos</Badge>
-          <Badge>
-            Service station with Lavazza coffee machine, kettle and tea
-          </Badge>
-          <Badge>Bathroom with rain shower</Badge>
-          <Badge>Comfortable terry towels and bathrobes</Badge>
-        </div>
-      </Row>
+      {/*<Row>*/}
+      {/*  <h4 className="title-2 pt-5 pb-4">Qu'est-ce qui est inclus ?</h4>*/}
+      {/*  <div className="room-list">*/}
+      {/*    <Badge>Private balcony</Badge>*/}
+      {/*    <Badge>140x200 cm Elite bed</Badge>*/}
+      {/*    <Badge>Upholstered seat beside the panoramic window</Badge>*/}
+      {/*    <Badge>TV-UHD screen for watching mountaineering films</Badge>*/}
+      {/*    <Badge>*/}
+      {/*      Writing desk with USB ports for documenting your adventures*/}
+      {/*    </Badge>*/}
+      {/*    <Badge>Room safe for your top mountain photos</Badge>*/}
+      {/*    <Badge>*/}
+      {/*      Service station with Lavazza coffee machine, kettle and tea*/}
+      {/*    </Badge>*/}
+      {/*    <Badge>Bathroom with rain shower</Badge>*/}
+      {/*    <Badge>Comfortable terry towels and bathrobes</Badge>*/}
+      {/*  </div>*/}
+      {/*</Row>*/}
       <Row>
         <h4 className="title-2 pt-5 pb-4">
           <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />

@@ -14,6 +14,8 @@ import logo from "../../assets/img/logo_final.png";
 import logoFull from "../../assets/img/logo_full.png";
 import CustomNavItem from "./Menu/CustomNavItem";
 import { useCallback, useEffect } from "react";
+import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Menu = () => {
   const [isOpen, toggle] = useToggle(false);
@@ -56,7 +58,7 @@ const Menu = () => {
                 <Nav pills style={{ justifyContent: "center" }}>
                   <CustomNavItem link="/" text="Accueil" />
                   <CustomNavItem link="/booking" text="Réservation" />
-                  <CustomNavItem link="/about" text="Histoire" />
+                  <CustomNavItem link="/story" text="Histoire" />
                   <CustomNavItem link="/activities" text="Activités" />
                   <CustomNavItem link="/photos" text="Photos" />
                   <CustomNavItem link="/contact" text="Contact" />
@@ -71,10 +73,10 @@ const Menu = () => {
               <Nav pills>
                 <CustomNavItem link="/" text="Accueil" />
                 <CustomNavItem link="/booking" text="Réservation" />
-                <CustomNavItem link="/about" text="Histoire" />
+                <CustomNavItem link="/story" text="Histoire" />
               </Nav>
             </Col>
-            <Col>
+            <Col className="logo-col">
               <img alt="logo" src={logo} style={{ marginTop: "-25px" }} />
             </Col>
             <Col>
@@ -88,13 +90,26 @@ const Menu = () => {
         </Container>
 
         <Container className="d-lg-none">
-          <Navbar color="faded white" light fixed={isFixed ? "top" : null}>
-            <NavbarToggler onClick={toggle}>TEST</NavbarToggler>
+          <Navbar
+            color="faded white"
+            light
+            fixed={isFixed || isOpen ? "top" : null}
+          >
+            <NavbarToggler onClick={toggle}>
+              <FontAwesomeIcon icon={faBars} className="p-2 text-primary" />
+            </NavbarToggler>
             <Collapse isOpen={isOpen} navbar className="menu-mobile">
+              <div onClick={toggle}>
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="p-2 text-white"
+                  size="2xl"
+                />
+              </div>
               <Nav navbar pills>
                 <CustomNavItem link="/" text="Accueil" />
                 <CustomNavItem link="/booking" text="Réservation" />
-                <CustomNavItem link="/about" text="Histoire" />
+                <CustomNavItem link="/story" text="Histoire" />
                 <CustomNavItem link="/activities" text="Activités" />
                 <CustomNavItem link="/photos" text="Photos" />
                 <CustomNavItem link="/contact" text="Contact" />
@@ -113,7 +128,7 @@ const Menu = () => {
         </Container>
         <Container className="animate__animated animate__fadeInDown">
           <Row>
-            <Col className="header d-flex header align-items-center justify-content-center">
+            <Col className="header d-flex header align-items-center justify-content-center  pb-2">
               <div className="titles">
                 <div className="header-subtitle">{header.subtitle}</div>
                 <h1 className="header-title">{header.title}</h1>

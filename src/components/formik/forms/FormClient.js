@@ -15,6 +15,7 @@ import Field from "../Field";
 import { useBookingContext } from "../../../contexts/BookingContext";
 import { saveBooking } from "../../../api/booking";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const FormClient = ({ isOpen, toggle }) => {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const FormClient = ({ isOpen, toggle }) => {
         navigate("/success");
       }
     } catch (e) {
-      // addToast(e.api_error || "Une erreur est survenue.", TOAST_ERROR);
+      toast.error(e.api_error || "Une erreur est survenue.");
       console.log("e", e);
     }
   };

@@ -11,26 +11,37 @@ export const pages = {
       "Le havre balnéaire de chaleur, de tranquillité et de convivialité",
     image: "banner.jpg",
   },
-  contact: {
-    title: "Contactez-nous",
-    subtitle: "CONNECT WITH US",
-    description:
-      "Pour les réservations et demandes de renseignements, veuillez nous appeler ou nous écrire.",
-    image: "crick.jpg",
-  },
-  activities: {
-    title: "Activitées locales",
-    subtitle: "Que faire sur l'île",
-    description:
-      "A playground for the over-and-underwater world adventurers. Surfing, diving, snorkeling, fishing, sailing, nature trails & villages to explore.",
-    image: "banner.jpg",
-  },
   booking: {
     title: "Réservation",
     subtitle: null,
     description:
       "Nous fournissons l'indispensable et vous profitez de l'essentiel",
     image: "room.jpg",
+  },
+  story: {
+    title: "Histoire",
+    subtitle: "Qui sommes-nous ?",
+    description: "Des amoureaux de cette île, tout simplement.",
+    image: "crick.jpg",
+  },
+  activities: {
+    title: "Activitées locales",
+    subtitle: "Que faire sur l'île",
+    description: null,
+    image: "swimming_pool.jpg",
+  },
+  photos: {
+    title: "Photos",
+    subtitle: null,
+    description: "Logement et autres",
+    image: "crick.jpg",
+  },
+  contact: {
+    title: "Contact",
+    subtitle: "N'hésitez pas à prendre",
+    description:
+      "Pour les réservations et demandes de renseignements, vous pouvez nous appeler ou nous écrire.",
+    image: "crick.jpg",
   },
   success: {
     title: "Réservation validée",

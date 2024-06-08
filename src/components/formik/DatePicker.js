@@ -44,7 +44,7 @@ const DatePicker = ({ formRef }) => {
   };
 
   return isLoading ? (
-    <FontAwesomeIcon icon={faSpinner} />
+    <FontAwesomeIcon icon={faSpinner} spinPulse />
   ) : (
     <Calendar
       id="booking-calendar"

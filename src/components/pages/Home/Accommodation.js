@@ -29,13 +29,19 @@ const Accommodation = () => {
       </Row>
       <Row>
         <Col className="p-4" xs={12} xl={6}>
-          <div className="position-relative">
-            <div className="image-zoom">
-              <img src={accommodation} alt="accommodation" className="w-100" />
-              <div className="offset-border"></div>
+          <Link to={"/photos"}>
+            <div className="position-relative">
+              <div className="image-zoom">
+                <img
+                  src={accommodation}
+                  alt="accommodation"
+                  className="w-100"
+                />
+                <div className="offset-border"></div>
+              </div>
             </div>
-          </div>
-          <h4 className="aurore pt-3 text-center">Vue depuis le jardin</h4>
+            <h4 className="aurore pt-3 text-center">Vue depuis le jardin</h4>
+          </Link>
         </Col>
         <Col className="p-4 text-center accommodation-content" xs={12} xl={6}>
           <div className="title-4">Verdure / Calme & Reposant / Nature</div>

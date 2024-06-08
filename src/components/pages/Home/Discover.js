@@ -1,5 +1,6 @@
 import mg_beach from "../../../assets/img/discover/mg_beach.jpg";
 import { Col, Container, Row } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const Discover = () => {
   return (
@@ -26,16 +27,20 @@ const Discover = () => {
             </p>
           </Col>
           <Col>
-            <div className="position-relative">
-              <div className="image-zoom">
-                <img src={mg_beach} className="w-100" alt="beach" />
-                <div className="offset-border"></div>
-                <div className="overlay-label">
-                  <div className="overlay-label-text">VOIR</div>
+            <Link to={"/activities"}>
+              <div className="position-relative">
+                <div className="image-zoom">
+                  <img src={mg_beach} className="w-100" alt="beach" />
+                  <div className="offset-border"></div>
+                  <div className="overlay-label">
+                    <div className="overlay-label-text">VOIR</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <h4 className="aurore pt-3">Snorkeling sur la plage abandonnée</h4>
+              <h4 className="aurore pt-3">
+                Snorkeling sur la plage abandonnée
+              </h4>
+            </Link>
           </Col>
         </Row>
       </Container>

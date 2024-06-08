@@ -56,7 +56,7 @@ $smtpUsername = 'bastienvanderchmitt@gmail.com';
 $smtpPassword = 'waqo kjki nlpu ovjk';
 $smtpPort = 587;
 
-function sendEmail($to, $subject, $message, $isRib = false) {
+function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
 
     global $smtpServer;
     global $smtpUsername;
@@ -79,6 +79,9 @@ function sendEmail($to, $subject, $message, $isRib = false) {
     $mail->Subject = $subject;
     $mail->Body = $message;
     $mail->isHTML();
+
+    if ($reply)
+        $mail->addReplyTo($reply);
 
     if ($isRib) {
         // Ajout du RIB comme pièce jointe

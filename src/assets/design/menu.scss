@@ -41,22 +41,10 @@
       height: 480px;
     }
     .react-parallax {
-      height: 600px !important;
+      height: 700px !important;
       width: 100% !important;
     }
   }
-
-  //.big-header {
-  //  .header {
-  //    height: 800px;
-  //  }
-  //}
-  //
-  //.small-header {
-  //  .header {
-  //    height: 480px;
-  //  }
-  //}
 
   .header {
     .header-subtitle,
@@ -79,4 +67,63 @@
 
 .react-parallax-bgimage {
   filter: brightness(0.5) !important;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+  .desktop-menu {
+    .nav-item a {
+      font-size: 30px;
+      padding: 8px;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .desktop-menu {
+    .nav-item a {
+      font-size: 26px;
+      padding: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .header {
+    //.header-subtitle,
+    //.header-description {
+    //  font-size: 18px;
+    //}
+
+    .header-title {
+      font-size: 50px !important;
+    }
+  }
+}
+
+.menu-mobile.navbar-collapse {
+  height: 100vH;
+  width: 100vW;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1030;
+  padding: 20px;
+  background-color: rgb(0,0,0); /* Black fallback color */
+  background-color: rgba(0,0,0, 0.7); /* Black w/opacity */
+
+  .nav-pills {
+    position: relative;
+    top: 2%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+
+    .nav-item {
+      margin-bottom: 20px;
+
+      .nav-link:hover:not(.active) {
+        color: $primary;
+      }
+    }
+  }
 }

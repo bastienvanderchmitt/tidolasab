@@ -5,8 +5,31 @@ import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
 import Booking from "../components/pages/Booking";
 import Success from "../components/pages/Success";
+import Story from "../components/pages/Story";
+import Activities from "../components/pages/Activities";
+import Photos from "../components/pages/Photos";
 
 const staticSteps = [
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/booking",
+    element: <Booking />,
+  },
+  {
+    path: "/story",
+    element: <Story />,
+  },
+  {
+    path: "/activities",
+    element: <Activities />,
+  },
+  {
+    path: "/photos",
+    element: <Photos />,
+  },
   {
     path: "/contact",
     element: <Contact />,
@@ -18,14 +41,6 @@ const staticSteps = [
   {
     path: "/login",
     element: <Login />,
-  },
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/booking",
-    element: <Booking />,
   },
 ];
 

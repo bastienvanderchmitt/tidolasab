@@ -13,6 +13,8 @@ $gold: #B99D75;
 @import "design/animations";
 @import "design/footer";
 
+@import "design/contact";
+
 @import "design/home/essentials";
 @import "design/home/preview";
 @import "design/home/review";
@@ -44,8 +46,8 @@ $gold: #B99D75;
     color: white;
   }
   .navbar-toggler {
-    color: white;
-    border: white solid 1px !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 }
 
@@ -70,7 +72,7 @@ $gold: #B99D75;
     bottom: 30px;
     left: -20px;
     padding: 15px 50px;
-    background: black;
+    background: $gold;
     color: white;
     width: fit-content;
     max-width: calc(100% - 20px);
@@ -94,7 +96,7 @@ $gold: #B99D75;
   &:hover {
     //cursor: pointer;
     .overlay-label {
-      background: $gold;
+      background: $primary;
     }
     .offset-border {
       transform: translate(+10px, +10px);
@@ -205,4 +207,39 @@ p {
   border: solid 1px #B0B0B0;
   border-radius: 50%;
   background: white;
+}
+.main-content input {
+  border-color: #B99D75;
+  height: 48px;
+  border-radius: 0;
+}
+.main-content textarea {
+  border-color: #B99D75;
+  border-radius: 0;
+  height: 150px;
+}
+
+.transform-perspective-left {
+  transform: scale(1) perspective(2000px) rotateY(11deg) rotateX(2deg) rotate(-2deg);
+}
+
+.transform-perspective-right {
+  transform: scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg);
+}
+
+/**
+ * Slick
+ */
+.slick-slider {
+  .slick-prev {
+    left: -15px;
+  }
+
+  .slick-next {
+    right: -5px;
+  }
+
+  .slick-arrow:before {
+    font-size: 60px !important;
+  }
 }

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-// import addToast, { TOAST_ERROR } from "../helpers/toastr";
 import useToggle from "./useToggle";
+import toast from "react-hot-toast";
 
 export default function useApi(
   fetch,
@@ -30,9 +29,8 @@ export default function useApi(
           callBack && callBack(response.data);
         } catch (e) {
           console.log("error", e);
-          // if (typeof customError === "function")
-          //     addToast(customError(e), TOAST_ERROR);
-          // else addToast(e.api_error || customError, TOAST_ERROR);
+          if (typeof customError === "function") toast.error(customError(e));
+          else toast.error(e.api_error || customError);
         }
         setIsLoading(false);
       })();
