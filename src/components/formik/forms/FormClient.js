@@ -68,7 +68,7 @@ const FormClient = ({ isOpen, toggle }) => {
         navigate("/success");
       }
     } catch (e) {
-      toast.error(e.api_error || "Une erreur est survenue.");
+      toast.error(e.error || "Une erreur est survenue.");
       console.log("e", e);
     }
   };

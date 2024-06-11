@@ -1,0 +1,102 @@
+.dashboard {
+  background-color: #f4f3ef;
+  height: 100vH;
+
+  .sidebar {
+    margin: 0;
+    height: 100vH;
+    padding: 0px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 260px;
+    left: 0;
+    z-index: 999;
+    background-color: #66615b;
+
+    .container-fluid {
+      padding: 0;
+    }
+
+    .logo {
+      display: contents;
+      margin-bottom: 50px;
+      text-align: center;
+
+      img {
+        width: 50%;
+        margin: auto;
+      }
+    }
+
+    .sidebar-wrapper {
+      position: relative;
+      height: calc(100vh - 75px);
+      overflow: auto;
+      width: 260px;
+      z-index: 4;
+      padding-bottom: 100px;
+
+      //.info:after {
+      //  content: "";
+      //  margin-left: 15px;
+      //  height: 1px;
+      //  width: calc(100% - 30px);
+      //  background-color: hsla(0, 0%, 100%, .3);
+      //}
+    }
+
+    .nav-item .nav-link {
+      font-family: Jost, serif;
+      font-weight:bold;
+      font-style:normal;
+          margin: 10px 15px 0;
+          color: #fff;
+          display: block;
+          text-decoration: none;
+          position: relative;
+          text-transform: uppercase;
+          cursor: pointer;
+          font-size: 18px;
+          padding: 10px 8px;
+          line-height: 30px;
+          opacity: .7;
+
+      &:hover {
+        opacity: 1;
+        color: #fff;
+      }
+
+      &.active {
+        opacity: 1;
+        color: #51bcda;
+
+        //&:before {
+        //  border-right: 18px solid #f4f3ef;
+        //  border-top: 18px solid transparent;
+        //  border-bottom: 18px solid transparent;
+        //  content: "";
+        //  display: inline-block;
+        //  position: absolute;
+        //  right: -15px;
+        //  opacity: 1;
+        //  top: 6px;
+        //  transition: opacity .15s ease-in;
+        //}
+
+        &:after {
+          border-right: 17px solid #f4f3efe6;
+          border-top: 17px solid transparent;
+          border-bottom: 17px solid transparent;
+          content: "";
+          display: inline-block;
+          position: absolute;
+          right: -15px;
+          opacity: 1;
+          top: 7px;
+          transition: opacity .15s ease-in;
+        }
+      }
+    }
+  }
+}

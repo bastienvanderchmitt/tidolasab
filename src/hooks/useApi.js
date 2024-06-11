@@ -30,7 +30,7 @@ export default function useApi(
         } catch (e) {
           console.log("error", e);
           if (typeof customError === "function") toast.error(customError(e));
-          else toast.error(e.api_error || customError);
+          else toast.error(e.error || customError);
         }
         setIsLoading(false);
       })();
