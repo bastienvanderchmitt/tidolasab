@@ -15,7 +15,7 @@ const Reviews = () => {
         className="text-white text-center p-5"
       >
         <Container className="review">
-          <Row className="p-4 text-center">
+          <Row className="p-sm-4 text-center">
             <Col className="review-content align-self-center">
               <FontAwesomeIcon
                 icon={faHeartCircleCheck}
@@ -23,9 +23,10 @@ const Reviews = () => {
               />
               <h4 className="title-review pt-2">Nos clients racontent</h4>
               <p className="quote">
-                “Everything here was great: the staff, the room layout, the
-                property amenities with indoor pool, and the quality of the
-                food. But the high point is the view from the mountains.”
+                “Séjour au top Tout est bien Accueil convivial avec plein de
+                petites attentions 👍 Logement hyper clean et bien équipé,
+                aménagé avec goût. Clim, et jardin tropical 🌴 N'hésitez pas,
+                c’est là qu’il faut aller”
               </p>
               <p className="quote-user">ANNA WILLIAMS – TRIPADVISOR</p>
               <div>

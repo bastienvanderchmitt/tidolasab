@@ -1,4 +1,4 @@
-import mg_beach from "../../../assets/img/discover/mg_beach.jpg";
+import mg_beach from "../../../assets/img/locations/location_4.jpeg";
 import { Col, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -15,15 +15,14 @@ const Discover = () => {
               </Col>
             </Row>
             <p className="pt-4">
-              Sur la belle île de Marie Galante les activités sont nombreuses.
-              Restauration, visites, plages, activités nautiques, spa,
-              randonnées pédestres…
+              Sur la belle île de Marie Galante les activités sont nombreuses :
+              restauration, visites, plages, sports nautiques, spa,
+              randonnées...
             </p>
             <p>
               Découvrez également la culture Marie Galantaise dans toute son
-              authenticité. La récolte des cannes à sucre, la récolte du bambou,
-              la pêche avec les nasses, la ponte des tortues luth, la vie des
-              moulins…
+              authenticité. La récolte des cannes à sucre, du bambou, la pêche
+              avec les nasses, la ponte des tortues luth, la vie des moulins…
             </p>
           </Col>
           <Col>
@@ -37,9 +36,7 @@ const Discover = () => {
                   </div>
                 </div>
               </div>
-              <h4 className="aurore pt-3">
-                Snorkeling sur la plage abandonnée
-              </h4>
+              <h4 className="aurore pt-3">Des couleurs éblouissantes</h4>
             </Link>
           </Col>
         </Row>

@@ -40,8 +40,8 @@ const Story = () => {
   ];
 
   return (
-    <Container className="photos">
-      <Row className="p-4 m-lg-4 photos-header">
+    <Container className="story" style={{ paddingBottom: "100px" }}>
+      <Row className="p-4 m-lg-4 story-header">
         <Col className="text-center">
           <h4 className="title-4 pt-4">Découvrez la team</h4>
           <h4 className="title-2 pt-2">Qui-sommes nous ?</h4>

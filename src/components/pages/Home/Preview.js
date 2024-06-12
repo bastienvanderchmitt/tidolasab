@@ -1,10 +1,9 @@
 import { Col, Container, Row } from "reactstrap";
 import Slider from "react-slick";
 import palm_tree from "../../../assets/img/palm_tree.png";
-import caroussel_1 from "../../../assets/img/preview/caroussel_1.jpg";
-import caroussel_2 from "../../../assets/img/preview/caroussel_2.jpg";
-import caroussel_3 from "../../../assets/img/preview/caroussel_3.jpg";
-import caroussel_4 from "../../../assets/img/preview/caroussel_4.jpg";
+import caroussel_1 from "../../../assets/img/caroussel/location_3.jpeg";
+import caroussel_2 from "../../../assets/img/caroussel/location_7.jpeg";
+import caroussel_3 from "../../../assets/img/caroussel/location_18.jpeg";
 
 const Preview = () => {
   const settings = {
@@ -52,7 +51,7 @@ const Preview = () => {
               Paysages, nature, culture il y a tant de choses à découvrir.
               Partez en randonnée, visitez un site historique, découvrez les
               saveurs locales, prélassez vous sur la plage… Suivez votre rythme
-              et laissez vous porter par la douce chaleur des Caraïbes.
+              et laissez vous porter par la douce chaleur des Antilles.
             </p>
           </Col>
         </Row>
@@ -70,14 +69,20 @@ const Preview = () => {
                 <div className="slick-image-container">
                   <img src={caroussel_3} alt="caroussel_3" />
                 </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_4} alt="caroussel_4" />
-                </div>
+                {/*<div className="slick-image-container">*/}
+                {/*  <img src={caroussel_4} alt="caroussel_4" />*/}
+                {/*</div>*/}
+                {/*<div className="slick-image-container">*/}
+                {/*  <img src={caroussel_5} alt="caroussel_5" />*/}
+                {/*</div>{" "}*/}
+                {/*<div className="slick-image-container">*/}
+                {/*  <img src={caroussel_6} alt="caroussel_6" />*/}
+                {/*</div>*/}
               </Slider>
             </div>
             <h4 className="aurore pt-3">
-              Inspiré de notre histoire, en pleine nature pour offrir une
-              expérience de vie différente.
+              L'authenticité de la vie aux Antilles, un charme pittoresque et
+              d'innombrables plages de sable blanc.
             </h4>
           </Col>
         </Row>

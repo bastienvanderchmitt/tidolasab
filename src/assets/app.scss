@@ -253,3 +253,10 @@ p {
   //background-color: rgba($secondary, 0.05);
   background-color: #0dcaf024;
 }
+
+/**
+ * Others
+ */
+.activities .card-img-overlay {
+  height: fit-content;
+}

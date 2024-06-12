@@ -2,7 +2,7 @@ import { useLayoutContext } from "../../contexts/LayoutContext";
 import { useEffect } from "react";
 import { pages } from "../../helpers/pages";
 import { Col, Container, Row } from "reactstrap";
-import banner from "../../assets/img/banner.jpg";
+import banner from "../../assets/img/locations/location_11.jpeg";
 import FormContact from "../formik/forms/FormContact";
 
 const Contact = () => {

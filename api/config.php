@@ -90,8 +90,6 @@ function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
 
     // Envoi de l'email
     if (!$mail->send()) {
-        echo 'Erreur lors de l\'envoi de l\'email: ' . $mail->ErrorInfo;
-    } else {
-        echo 'Email envoyé avec succès!';
+        throw new Exception('Erreur lors de l\'envoi de l\'email: ' . $mail->ErrorInfo);
     }
 }

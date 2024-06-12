@@ -1,6 +1,6 @@
 .room {
   padding: 60px 15px;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  //border-bottom: solid 1px rgba(0, 0, 0, 0.1);
 
   .title-2 {
     font-size: 36px;
@@ -69,4 +69,10 @@
   .amenities svg {
     color: $gold;
   }
+}
+
+.room-images {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: #F3F3F0;
 }

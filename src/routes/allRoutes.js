@@ -10,6 +10,8 @@ import Activities from "../components/pages/Activities";
 import Photos from "../components/pages/Photos";
 import Dashboard from "../components/pages/Admin/Dashboard";
 import AuthenticationGuard from "../components/pages/Admin/AuthenticationGuard";
+import Privacy from "../components/pages/Rules/Privacy";
+import Terms from "../components/pages/Rules/Terms";
 
 const staticSteps = [
   {
@@ -38,6 +40,18 @@ const staticSteps = [
   },
   {
     path: "/success",
+    element: <Success />,
+  },
+  {
+    path: "/privacy",
+    element: <Privacy />,
+  },
+  {
+    path: "/terms-of-use",
+    element: <Terms />,
+  },
+  {
+    path: "/policy",
     element: <Success />,
   },
 ];

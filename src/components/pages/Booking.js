@@ -5,7 +5,7 @@ import Essentials from "./Home/Essentials";
 import { Col, Container, Row } from "reactstrap";
 import Room from "./Booking/Room";
 import Sidebar from "./Booking/Sidebar";
-import DatePicker from "../formik/DatePicker";
+import RoomImages from "./Booking/RoomImages";
 
 const Booking = () => {
   const { setHeader } = useLayoutContext();
@@ -25,12 +25,8 @@ const Booking = () => {
             <Sidebar />
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <DatePicker />
-          </Col>
-        </Row>
       </Container>
+      <RoomImages />
       <Essentials />
     </>
   );

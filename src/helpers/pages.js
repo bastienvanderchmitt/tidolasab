@@ -9,44 +9,69 @@ export const pages = {
     subtitle: null,
     description:
       "Le havre balnéaire de chaleur, de tranquillité et de convivialité",
-    image: "banner.jpg",
+    image: "home_banner.jpeg",
   },
   booking: {
     title: "Réservation",
     subtitle: null,
     description:
       "Nous fournissons l'indispensable et vous profitez de l'essentiel",
-    image: "room.jpg",
+    image: "room_banner.jpeg",
   },
   story: {
     title: "Histoire",
     subtitle: "Qui sommes-nous ?",
     description: "Des amoureaux de cette île, tout simplement.",
-    image: "crick.jpg",
+    image: "dolasab_beach.jpeg",
   },
   activities: {
     title: "Activitées locales",
     subtitle: "Que faire sur l'île",
     description: null,
-    image: "swimming_pool.jpg",
+    image: "activities_banner.jpeg",
   },
   photos: {
-    title: "Photos",
+    title: "Galerie photo",
     subtitle: null,
     description: "Logement et autres",
-    image: "crick.jpg",
+    image: "photos_banner.jpeg",
   },
   contact: {
     title: "Contact",
     subtitle: "N'hésitez pas à prendre",
     description:
       "Pour les réservations et demandes de renseignements, vous pouvez nous appeler ou nous écrire.",
-    image: "crick.jpg",
+    image: "contact_banner.jpeg",
   },
   success: {
     title: "Réservation validée",
     subtitle: null,
     description: null,
-    image: "room.jpg",
+    image: "activities_banner.jpeg",
+  },
+  privacy: {
+    title: "Confidentialité",
+    subtitle: null,
+    description: null,
+    image: "rules_banner.jpeg",
+  },
+  terms: {
+    title: "Conditions d'utilisation",
+    subtitle: null,
+    description: null,
+    image: "rules_banner.jpeg",
+  },
+  politic: {
+    title: "Politique",
+    subtitle: null,
+    description: null,
+    image: "rules_banner.jpeg",
+  },
+  error: {
+    title: "Ouups, page non trouvée",
+    subtitle: null,
+    description:
+      "Désolé mais nous n'avons pas trouvé la page que vous recherchez. Elle a peut-être été déplacée ou supprimée.",
+    image: "home_banner.jpeg",
   },
 };

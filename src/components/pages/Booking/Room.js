@@ -6,6 +6,7 @@ import {
   faUsers,
   faBed,
   faBathtub,
+  faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Amenity = ({ text, icon }) => {
@@ -69,7 +70,11 @@ const Room = () => {
           </ul>
         </Col>
       </Row>
-      <Row className="pt-4">
+      <Row className="pt-4 pb-4">
+        <h5 className="pt-3 marcellus">
+          <FontAwesomeIcon icon={faHouse} className="me-4 text-primary" />
+          En 2 mots
+        </h5>
         <p>
           Dans un cadre de verdure luxuriante, notre Case Ti'Dola Sab est une
           habitation indépendante toute en bois, construction récente avec tout
@@ -79,6 +84,17 @@ const Room = () => {
           Une grande terrasse couverte de 20m<sup>2</sup> vous attend pour vos
           moments de détente, ombragée par un magnifique Ylang Ylang odorant.
         </p>
+        <h5 className="pt-3 marcellus">
+          <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />
+          Accès et situation
+        </h5>
+        <p>
+          Nous sommes très bien situé pour visiter et parcourir l'île avec notre
+          emplacement central. Les 3 grandes viles Grand-Bourg, Capesterre et St
+          Louis sont à 10min de Ti'Dola Sab. Pour faire vos courses, 2min à pied
+          et vous pouvez vous ravitailler sur Morne Lolo.
+        </p>
+        <p>La distillerie Bielle est à 2min en voiture !</p>
       </Row>
       <Row>
         <h4 className="title-3 pt-4">
@@ -118,22 +134,22 @@ const Room = () => {
       {/*    <Badge>Comfortable terry towels and bathrobes</Badge>*/}
       {/*  </div>*/}
       {/*</Row>*/}
-      <Row>
-        <h4 className="title-2 pt-5 pb-4">
-          <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />
-          Accès et situation
-        </h4>
-        <p>
-          Nous sommes très bien situé pour visiter et parcourir l'île avec notre
-          emplacement central. Les 3 grandes viles Grand-Bourg, Capesterre et St
-          Louis sont à 10min de Ti'Dola Sab.
-        </p>
-        <p>
-          Pour faire vos courses, 2min à pied et vous pouvez vous ravitailler
-          sur Morne Lolo.
-        </p>
-        <p>La distillerie Bielle est à 2min en voiture !</p>
-      </Row>
+      {/*<Row>*/}
+      {/*  <h4 className="title-2 pt-5 pb-4">*/}
+      {/*    <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />*/}
+      {/*    Accès et situation*/}
+      {/*  </h4>*/}
+      {/*  <p>*/}
+      {/*    Nous sommes très bien situé pour visiter et parcourir l'île avec notre*/}
+      {/*    emplacement central. Les 3 grandes viles Grand-Bourg, Capesterre et St*/}
+      {/*    Louis sont à 10min de Ti'Dola Sab.*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    Pour faire vos courses, 2min à pied et vous pouvez vous ravitailler*/}
+      {/*    sur Morne Lolo.*/}
+      {/*  </p>*/}
+      {/*  <p>La distillerie Bielle est à 2min en voiture !</p>*/}
+      {/*</Row>*/}
     </Row>
   );
 };

@@ -6,7 +6,7 @@ import {
   faUsers,
   faBathtub,
 } from "@fortawesome/free-solid-svg-icons";
-import accommodation from "../../../assets/img/accomodation/accommodation.jpg";
+import accommodation from "../../../assets/img/room/view_2.jpeg";
 import { Link } from "react-router-dom";
 
 const Accommodation = () => {

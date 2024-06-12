@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "reactstrap";
-import essentials_1 from "../../../assets/img/essentials/essentials_1.jpg";
-import essentials_2 from "../../../assets/img/essentials/essentials_2.jpg";
+import essentials_1 from "../../../assets/img/room/room_6.jpeg";
+import essentials_2 from "../../../assets/img/room/view_1.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlane,

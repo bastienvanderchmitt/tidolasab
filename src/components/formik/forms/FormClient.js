@@ -62,6 +62,7 @@ const FormClient = ({ isOpen, toggle }) => {
         total: total,
         days: days,
       });
+      console.log("res", res);
       if (res?.data?.bookingId) {
         toggle();
         setBooked(true);

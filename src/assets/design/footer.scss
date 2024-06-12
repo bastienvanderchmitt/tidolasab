@@ -1,4 +1,14 @@
 .footer {
+  //background-color: #ccccb3;
+
+  a {
+    color: white;
+
+    &:hover {
+      color: $gold;
+    }
+  }
+
   .footer-card{
     border: solid 1px #b99d7533;
     padding: 35px;
