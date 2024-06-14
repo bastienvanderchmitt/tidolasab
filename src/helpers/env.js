@@ -1,3 +1,3 @@
-export const app_env = "dev";
+export const app_env = "prod";
 
-export const app_api_url = "http://tidolasab/api";
+export const app_api_url = "https://wwww.tidolasab.com/api";
