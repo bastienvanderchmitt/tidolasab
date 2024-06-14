@@ -5,10 +5,10 @@
  */
 require_once('Connexion.php');
 
-$bddHost = "localhost";
-$bddName = "tidolasab";
-$bddUser = "admin";
-$bddPass = "admin";
+$bddHost = "185.98.131.176";
+$bddName = "tidol2380910";
+$bddUser = "tidol2380910";
+$bddPass = "x5awliixto";
 $bddPort = 3306;
 
 $connexion = new Connexion($bddHost, $bddName, $bddUser, $bddPass, $bddPort);
