@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "reactstrap";
 import Slider from "react-slick";
-import palm_tree from "../../../assets/img/palm_tree.png";
+import palm_tree from "../../../assets/img/icons/palm_tree.png";
 import caroussel_1 from "../../../assets/img/caroussel/location_3.jpeg";
 import caroussel_2 from "../../../assets/img/caroussel/location_7.jpeg";
 import caroussel_3 from "../../../assets/img/caroussel/location_18.jpeg";

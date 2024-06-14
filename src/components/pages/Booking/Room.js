@@ -8,13 +8,25 @@ import {
   faBathtub,
   faHouse,
 } from "@fortawesome/free-solid-svg-icons";
+import air_conditioning from "../../../assets/img/icons/air_conditioning.png";
+import breakfast from "../../../assets/img/icons/breakfast.png";
+import coffee_machine from "../../../assets/img/icons/coffee_machine.png";
+import douche from "../../../assets/img/icons/douche.png";
+import electric_kettle from "../../../assets/img/icons/electric_kettle.png";
+import fridge from "../../../assets/img/icons/fridge.png";
+import microwave from "../../../assets/img/icons/microwave.png";
+import serviette from "../../../assets/img/icons/serviette.png";
+import stove from "../../../assets/img/icons/stove.png";
+import toaster from "../../../assets/img/icons/toaster.png";
+import toilets from "../../../assets/img/icons/toilets.png";
+import wifi_signal from "../../../assets/img/icons/wifi_signal.png";
 
 const Amenity = ({ text, icon }) => {
   return (
     <Col sm={12} md={6} className="amenity">
       <Row>
-        <Col xs={1}>
-          <FontAwesomeIcon icon={icon} />
+        <Col xs={1} className="me-4">
+          <img src={icon} alt={text} />
         </Col>
         <Col>
           <p>{text}</p>
@@ -25,18 +37,18 @@ const Amenity = ({ text, icon }) => {
 };
 
 const amenities = [
-  { icon: faWifi, text: "Wifi" },
-  { icon: faWifi, text: "Air conditionné" },
-  { icon: faWifi, text: "Plaques à induction" },
-  { icon: faWifi, text: "Micro-ondes" },
-  { icon: faWifi, text: "Cafetière" },
-  { icon: faWifi, text: "Réfrigérateur / Congélateur" },
-  { icon: faWifi, text: "Grille-pain" },
-  { icon: faWifi, text: "Bouilloire" },
-  { icon: faWifi, text: "Vaisselle pour 4 personnes" },
-  { icon: faBathtub, text: "Douche italienne" },
-  { icon: faWifi, text: "WC indépendant" },
-  { icon: faWifi, text: "Serviettes de bain" },
+  { icon: wifi_signal, text: "Wifi" },
+  { icon: air_conditioning, text: "Air conditionné" },
+  { icon: stove, text: "Plaques à induction" },
+  { icon: microwave, text: "Micro-ondes" },
+  { icon: coffee_machine, text: "Cafetière" },
+  { icon: fridge, text: "Réfrigérateur / Congélateur" },
+  { icon: toaster, text: "Grille-pain" },
+  { icon: electric_kettle, text: "Bouilloire" },
+  { icon: breakfast, text: "Vaisselle pour 4 personnes" },
+  { icon: douche, text: "Douche italienne" },
+  { icon: toilets, text: "WC indépendant" },
+  { icon: serviette, text: "Serviettes de bain" },
 ];
 
 const Room = () => {
@@ -73,7 +85,7 @@ const Room = () => {
       <Row className="pt-4 pb-4">
         <h5 className="pt-3 marcellus">
           <FontAwesomeIcon icon={faHouse} className="me-4 text-primary" />
-          En 2 mots
+          Logement
         </h5>
         <p>
           Dans un cadre de verdure luxuriante, notre Case Ti'Dola Sab est une
@@ -83,6 +95,13 @@ const Room = () => {
         <p>
           Une grande terrasse couverte de 20m<sup>2</sup> vous attend pour vos
           moments de détente, ombragée par un magnifique Ylang Ylang odorant.
+          Votre case est face à la forêt domaniale; écrin de verdure calme,
+          reposant et dépaysant pour les amoureux de la nature.
+        </p>
+        <p>
+          Il ne vous reste plus qu'à profiter d'instants magiques. Notre plaisir
+          : vous accueillir et partager notre paradis. Une corbeille de bienvenu
+          vous attend à votre arrivée.
         </p>
         <h5 className="pt-3 marcellus">
           <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />
@@ -90,11 +109,11 @@ const Room = () => {
         </h5>
         <p>
           Nous sommes très bien situé pour visiter et parcourir l'île avec notre
-          emplacement central. Les 3 grandes viles Grand-Bourg, Capesterre et St
-          Louis sont à 10min de Ti'Dola Sab. Pour faire vos courses, 2min à pied
-          et vous pouvez vous ravitailler sur Morne Lolo.
+          emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et
+          St Louis sont à 10min de Ti'Dola Sab. Pour faire vos courses, 2min à
+          pied et vous pouvez vous ravitailler sur Morne Lolo. La distillerie
+          Bielle est à 2min en voiture !
         </p>
-        <p>La distillerie Bielle est à 2min en voiture !</p>
       </Row>
       <Row>
         <h4 className="title-3 pt-4">
@@ -133,22 +152,6 @@ const Room = () => {
       {/*    <Badge>Bathroom with rain shower</Badge>*/}
       {/*    <Badge>Comfortable terry towels and bathrobes</Badge>*/}
       {/*  </div>*/}
-      {/*</Row>*/}
-      {/*<Row>*/}
-      {/*  <h4 className="title-2 pt-5 pb-4">*/}
-      {/*    <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />*/}
-      {/*    Accès et situation*/}
-      {/*  </h4>*/}
-      {/*  <p>*/}
-      {/*    Nous sommes très bien situé pour visiter et parcourir l'île avec notre*/}
-      {/*    emplacement central. Les 3 grandes viles Grand-Bourg, Capesterre et St*/}
-      {/*    Louis sont à 10min de Ti'Dola Sab.*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    Pour faire vos courses, 2min à pied et vous pouvez vous ravitailler*/}
-      {/*    sur Morne Lolo.*/}
-      {/*  </p>*/}
-      {/*  <p>La distillerie Bielle est à 2min en voiture !</p>*/}
       {/*</Row>*/}
     </Row>
   );

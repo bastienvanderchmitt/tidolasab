@@ -12,6 +12,7 @@ import Dashboard from "../components/pages/Admin/Dashboard";
 import AuthenticationGuard from "../components/pages/Admin/AuthenticationGuard";
 import Privacy from "../components/pages/Rules/Privacy";
 import Terms from "../components/pages/Rules/Terms";
+import Politic from "../components/pages/Rules/Politic";
 
 const staticSteps = [
   {
@@ -52,7 +53,7 @@ const staticSteps = [
   },
   {
     path: "/policy",
-    element: <Success />,
+    element: <Politic />,
   },
 ];
 

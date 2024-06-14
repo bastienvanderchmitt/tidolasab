@@ -16,6 +16,8 @@ import { useBookingContext } from "../../../contexts/BookingContext";
 import { saveBooking } from "../../../api/booking";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FormClient = ({ isOpen, toggle }) => {
   const navigate = useNavigate();
@@ -62,7 +64,6 @@ const FormClient = ({ isOpen, toggle }) => {
         total: total,
         days: days,
       });
-      console.log("res", res);
       if (res?.data?.bookingId) {
         toggle();
         setBooked(true);
@@ -157,9 +158,12 @@ const FormClient = ({ isOpen, toggle }) => {
                       color="primary"
                       type="submit"
                       disabled={!!isSubmitting}
-                      // onClick={handleForm}
                     >
-                      Réserver
+                      {isSubmitting ? (
+                        <FontAwesomeIcon icon={faSpinner} spinPulse />
+                      ) : (
+                        "Réserver"
+                      )}
                     </Button>
                   </Col>
                 </Row>

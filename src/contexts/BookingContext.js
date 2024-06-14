@@ -31,7 +31,7 @@ const BookingContextProvider = ({ children }) => {
   }, [selectedDates]);
 
   useEffect(() => {
-    const price = 100;
+    const price = 90;
     days ? setTotal(days * price) : setTotal(null);
   }, [days, setTotal]);
 

@@ -4,6 +4,7 @@ import { pages } from "../../helpers/pages";
 import { useBookingContext } from "../../contexts/BookingContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
+import rib from "../../assets/img/rib.pdf";
 
 const Success = () => {
   const { setHeader } = useLayoutContext();
@@ -74,6 +75,19 @@ const Success = () => {
                 saisie. Le solde restant vous sera demandé 14 jours avant
                 l'arrivée.
               </p>
+            </Row>
+            <Row className="py-4">
+              <object
+                data={rib}
+                type="application/pdf"
+                width="100%"
+                height="500px"
+              >
+                <p>
+                  Unable to display PDF file. <a href={rib}>Download</a>{" "}
+                  instead.
+                </p>
+              </object>
             </Row>
             <Row>
               <p className="pt-4">

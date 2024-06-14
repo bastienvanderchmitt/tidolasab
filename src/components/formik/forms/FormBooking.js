@@ -112,6 +112,7 @@ const FormBooking = () => {
                 >
                   Réserver
                 </Button>
+                <p className="mt-4">Tarif unique : 90€ par nuit.</p>
                 <p className="conditions">
                   Envoi du contrat de location sous conditions de versement d'un
                   acompte de 50% à la réservation (via virement bancaire). Le
