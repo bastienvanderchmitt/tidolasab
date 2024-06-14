@@ -46,9 +46,9 @@ function clearInput($input)
 /**
  * Email config
  */
-//require "vendor/autoload.php";
-require_once("/var/www/tidolasab/vendor/phpmailer/phpmailer/src/PHPMailer.php");
-require_once("/var/www/tidolasab/vendor/phpmailer/phpmailer/src/SMTP.php");
+require_once __DIR__.'/../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 // Configuration du serveur SMTP
 $smtpServer = 'smtp.gmail.com';
@@ -64,7 +64,7 @@ function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
     global $smtpPort;
 
     // Création de l'objet PHPMailer
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail = new PHPMailer();
 
     // Configuration de l'email
     $mail->isSMTP();
