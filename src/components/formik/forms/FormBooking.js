@@ -82,6 +82,7 @@ const FormBooking = () => {
                     name="adults"
                     label="Adultes"
                     helpText="13 ans et plus"
+                    max={4}
                   />
                 </div>
                 <div className="form-group mb-4">
