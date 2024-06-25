@@ -4,14 +4,14 @@ import { fr } from "date-fns/locale";
 import { months } from "../../helpers/months";
 import { useBookingContext } from "../../contexts/BookingContext";
 import useApi from "../../hooks/useApi";
-import { getBookings } from "../../api/booking";
+import { getValidatedBookings } from "../../api/booking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
 
-  const [{ bookings }, isLoading] = useApi(getBookings);
+  const [{ bookings }, isLoading] = useApi(getValidatedBookings);
 
   const reserved = useMemo(
     () =>

@@ -25,7 +25,7 @@ try {
         // Send email with RIB to client
         $to = $data->email;
         $subject = 'Tidolasab - Réservation en cours';
-        $message = "<html><h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est validée. Voici le RIB en PJ.</p></html>";
+        $message = "<html><h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p></html>";
         sendEmail($to, $subject, $message, true);
 
         // Send email to admin

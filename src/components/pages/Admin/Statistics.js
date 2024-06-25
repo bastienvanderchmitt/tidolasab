@@ -5,7 +5,7 @@ const Statistics = () => {
     <Container fluid className="statistics">
       <Row>
         <Col md={2}>
-          <h1>Statistiques</h1>
+          <h1 className="aurore">Statistiques</h1>
         </Col>
       </Row>
     </Container>

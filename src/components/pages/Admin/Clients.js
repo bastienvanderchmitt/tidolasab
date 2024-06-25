@@ -9,10 +9,10 @@ const Clients = () => {
     <Container fluid className="clients">
       <Row>
         <Col md={2}>
-          <h1>Clients</h1>
+          <h1 className="aurore">Clients</h1>
         </Col>
       </Row>
-      <Row>
+      <Row className="my-5">
         <Col>
           <AdminClient clients={clients} />
         </Col>
@@ -22,23 +22,6 @@ const Clients = () => {
 };
 
 const AdminClient = ({ clients, reload }) => {
-  // const StatusBadge = ({ status }) => {
-  //   const color = useMemo(
-  //     () =>
-  //       status === "en attente"
-  //         ? "warning"
-  //         : status === "validée"
-  //           ? "success"
-  //           : status === "en cours"
-  //             ? "primary"
-  //             : status === "passée"
-  //               ? "secondary"
-  //               : "danger",
-  //     [status],
-  //   );
-  //   return <Badge color={color}>{status.toUpperCase()}</Badge>;
-  // };
-
   return (
     <Table
       striped

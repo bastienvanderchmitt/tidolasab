@@ -1,5 +1,7 @@
 <?php
 
+$env = 'DEV';
+
 /**
  * Database access
  */
@@ -57,6 +59,11 @@ $smtpPassword = 'waqo kjki nlpu ovjk';
 $smtpPort = 587;
 
 function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
+
+    global $env;
+
+    if ($env === 'DEV')
+        return true;
 
     global $smtpServer;
     global $smtpUsername;

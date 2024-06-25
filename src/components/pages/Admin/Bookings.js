@@ -8,10 +8,15 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import useApi from "../../../hooks/useApi";
-import { getBookings } from "../../../api/booking";
+import { cancel, getBookings, validate, waiting } from "../../../api/booking";
 import React, { useMemo } from "react";
 import useToggle from "../../../hooks/useToggle";
-import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faPause,
+  faSpinner,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Bookings = () => {
@@ -29,15 +34,15 @@ const Bookings = () => {
     [bookings],
   );
 
-  const runningBookings = useMemo(
-    () => bookings?.filter((b) => b.etat_reservation === "en cours"),
-    [bookings],
-  );
-
-  const pastBookings = useMemo(
-    () => bookings?.filter((b) => b.etat_reservation === "passée"),
-    [bookings],
-  );
+  // const runningBookings = useMemo(
+  //   () => bookings?.filter((b) => b.etat_reservation === "en cours"),
+  //   [bookings],
+  // );
+  //
+  // const pastBookings = useMemo(
+  //   () => bookings?.filter((b) => b.etat_reservation === "passée"),
+  //   [bookings],
+  // );
 
   const canceledBookings = useMemo(
     () => bookings?.filter((b) => b.etat_reservation === "annulée"),
@@ -48,7 +53,7 @@ const Bookings = () => {
     <Container fluid className="bookings">
       <Row>
         <Col>
-          <h1>Réservations</h1>
+          <h1 className="aurore">Réservations</h1>
         </Col>
         <Col xs={1}>
           <Button onClick={switchStatus}>
@@ -58,31 +63,19 @@ const Bookings = () => {
       </Row>
       {byStatus ? (
         <>
-          <Row>
+          <Row className="my-5">
             <Col>
               <h4>En attente</h4>
               <AdminBooking bookings={waitingBookings} reload={reload} />
             </Col>
           </Row>
-          <Row>
+          <Row className="my-5">
             <Col>
-              <h4>Validés</h4>
-              <AdminBooking bookings={runningBookings} reload={reload} />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h4>En cours</h4>
+              <h4>Validées</h4>
               <AdminBooking bookings={validatedBookings} reload={reload} />
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <h4>Passés</h4>
-              <AdminBooking bookings={pastBookings} reload={reload} />
-            </Col>
-          </Row>
-          <Row>
+          <Row className="my-5">
             <Col>
               <h4>Annulés</h4>
               <AdminBooking bookings={canceledBookings} reload={reload} />
@@ -90,13 +83,51 @@ const Bookings = () => {
           </Row>
         </>
       ) : (
-        <Row>
+        <Row className="my-5">
           <Col>
             <AdminBooking bookings={bookings} reload={reload} />
           </Col>
         </Row>
       )}
     </Container>
+  );
+};
+
+const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
+  const [loading, toggleLoading] = useToggle();
+  const updateBooking = async (booking, status) => {
+    toggleLoading();
+    if (status === "validée") {
+      await validate({ id_reservation: booking.id_reservation });
+    } else if (status === "annulée") {
+      await cancel({ id_reservation: booking.id_reservation });
+    } else {
+      await waiting({ id_reservation: booking.id_reservation });
+    }
+    toggleLoading();
+    reload();
+  };
+  return (
+    <>
+      <Button
+        id={"wait-btn-" + booking.id_reservation}
+        onClick={() => updateBooking(booking, status)}
+        color={color}
+        className="me-2 p-0 pe-1 ps-1"
+        disabled={!!loading}
+      >
+        <FontAwesomeIcon
+          icon={loading ? faSpinner : icon}
+          spinPulse={!!loading}
+        />
+      </Button>
+      <UncontrolledTooltip
+        placement="top"
+        target={"wait-btn-" + booking.id_reservation}
+      >
+        {libelle}
+      </UncontrolledTooltip>
+    </>
   );
 };
 
@@ -126,18 +157,15 @@ const AdminBooking = ({ bookings, reload }) => {
     return <Badge color={color}>{status.toUpperCase()}</Badge>;
   };
 
-  const updateBooking = async (booking, status) => {
-    console.log(status, booking);
-    reload();
-  };
-
   return (
     <Table
       striped
       hover
       bordered
       className="rounded"
-      style={{ boxShadow: "0 6px 10px -4px rgba(0, 0, 0, .15)" }}
+      style={{
+        boxShadow: "0 6px 10px -4px rgba(0, 0, 0, .15)",
+      }}
     >
       <thead>
         <tr className="text-center">
@@ -166,41 +194,35 @@ const AdminBooking = ({ bookings, reload }) => {
             <td>{b.nombre_nuits}</td>
             <td>{b.prix_total} €</td>
             <td>
-              {b.etat_reservation === "en attente" ? (
-                <>
-                  <Button
-                    id={"validate-btn-" + b.id_reservation}
-                    onClick={() => updateBooking(b, "validée")}
-                    color="success"
-                    className="me-2 p-0 pe-1 ps-1"
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </Button>
-                  <UncontrolledTooltip
-                    placement="top"
-                    target={"validate-btn-" + b.id_reservation}
-                  >
-                    Valider
-                  </UncontrolledTooltip>
-                </>
+              {b.etat_reservation !== "en attente" ? (
+                <ActionBtn
+                  booking={b}
+                  status={"en attente"}
+                  libelle={"Passer en attente"}
+                  icon={faPause}
+                  color="warning"
+                  reload={reload}
+                />
+              ) : null}
+              {b.etat_reservation !== "validée" ? (
+                <ActionBtn
+                  booking={b}
+                  status={"validée"}
+                  libelle={"Valider"}
+                  icon={faCheck}
+                  color="success"
+                  reload={reload}
+                />
               ) : null}
               {b.etat_reservation !== "annulée" ? (
-                <>
-                  <Button
-                    id={"cancel-btn-" + b.id_reservation}
-                    onClick={() => updateBooking(b, "annulée")}
-                    color="danger"
-                    className="me-2 p-0 pe-1 ps-1"
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </Button>
-                  <UncontrolledTooltip
-                    placement="top"
-                    target={"cancel-btn-" + b.id_reservation}
-                  >
-                    Annuler
-                  </UncontrolledTooltip>
-                </>
+                <ActionBtn
+                  booking={b}
+                  status={"annulée"}
+                  libelle={"Annuler"}
+                  icon={faTrash}
+                  color="danger"
+                  reload={reload}
+                />
               ) : null}
             </td>
           </tr>
