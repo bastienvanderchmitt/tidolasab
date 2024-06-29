@@ -32,14 +32,17 @@ try {
     // Get posted data
     $login = $data->login;
     $password = $data->password;
+    $password_bcrypt = $login.SALT.trim($password);
 
     $user = $connexion->safeFetch("SELECT * FROM users WHERE login = :login;", ['login' => $login]);
 
     // Validate user credentials
-//    $valid = password_verify($password_bcrypt, $user->password);
-    $valid = true;
+    if (!$user) {
 
-    if ($user->password == $password) {
+        $result = ['error' => 'Utilisateur inconnu'];
+        http_response_code(400);
+
+    } else if (password_verify($password_bcrypt, $user->password)) {
 
         // Generate JWT token
         $jwt = generate_jwt($user);
@@ -48,7 +51,7 @@ try {
 
     } else {
 
-        $result = ['error' => 'Login failed'];
+        $result = ['error' => 'Mot de passe erroné'];
         http_response_code(400);
     }
 

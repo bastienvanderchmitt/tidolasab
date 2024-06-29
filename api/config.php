@@ -1,6 +1,7 @@
 <?php
 
 $env = 'DEV';
+define('SALT','6454gb94z!fvez,;mwgez.iop*-fge54');
 
 /**
  * Database access

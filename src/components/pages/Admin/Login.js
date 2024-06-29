@@ -103,7 +103,11 @@ const Login = () => {
                           placeHolder="Mot de passe"
                         />
                       </FormGroup>
-                      <Button color="primary text-white" block>
+                      <Button
+                        color="primary text-white"
+                        block
+                        disabled={isSubmitting}
+                      >
                         <FontAwesomeIcon icon={faPaperPlane} className="me-2" />
                         Se connecter
                       </Button>

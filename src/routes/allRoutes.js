@@ -13,6 +13,7 @@ import AuthenticationGuard from "../components/pages/Admin/AuthenticationGuard";
 import Privacy from "../components/pages/Rules/Privacy";
 import Terms from "../components/pages/Rules/Terms";
 import Politic from "../components/pages/Rules/Politic";
+import CreateUser from "../components/pages/Admin/CreateUser";
 
 const staticSteps = [
   {
@@ -71,6 +72,10 @@ const allRoutes = [
   {
     path: "/admin/",
     element: <AuthenticationGuard component={Dashboard} />,
+  },
+  {
+    path: "/admin/user/create",
+    element: <AuthenticationGuard component={CreateUser} />,
   },
 ];
 
