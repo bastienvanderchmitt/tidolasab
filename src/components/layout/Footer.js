@@ -17,11 +17,15 @@ const Footer = () => {
           </Col>
           <Col className="footer-card">
             <h6 className="footer-title">Téléphone</h6>
-            <p>06 09 92 18 20</p>
+            <p>
+              <a href="tel:+6793456788">+679 345 67 88</a>
+            </p>
           </Col>
           <Col className="footer-card">
             <h6 className="footer-title">Email</h6>
-            <p>tidolasab@gmail.com</p>
+            <p>
+              <a href="mailto:tidolasab@gmail.com">tidolasab@gmail.com</a>
+            </p>
           </Col>
           <Col className="footer-card">
             <h6 className="footer-title">Social</h6>

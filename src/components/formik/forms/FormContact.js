@@ -31,7 +31,8 @@ const FormContact = () => {
 
   const handleForm = async (values) => {
     try {
-      await sendEmail({ ...values });
+      const { data } = await sendEmail({ ...values });
+      if (data) toast.success("Message envoyé.");
     } catch (e) {
       toast.error(e.error || "Une erreur est survenue.");
       console.log("e", e);

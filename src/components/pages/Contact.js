@@ -21,7 +21,7 @@ const Contact = () => {
           <p>1212 Morne Lolo</p>
           <p>97112, Grand Bourg</p>
           <p>
-            <strong>Phone Number:</strong>{" "}
+            <strong>Téléphone:</strong>{" "}
             <a href="tel:+6793456788">+679 345 67 88</a>
             <br />
             <strong>Email:</strong>{" "}

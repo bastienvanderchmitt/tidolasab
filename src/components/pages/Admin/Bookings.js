@@ -95,6 +95,7 @@ const Bookings = () => {
 
 const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
   const [loading, toggleLoading] = useToggle();
+
   const updateBooking = async (booking, status) => {
     toggleLoading();
     if (status === "validée") {
@@ -107,10 +108,11 @@ const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
     toggleLoading();
     reload();
   };
+
   return (
     <>
       <Button
-        id={"wait-btn-" + booking.id_reservation}
+        id={"btn-" + color + "-" + booking.id_reservation}
         onClick={() => updateBooking(booking, status)}
         color={color}
         className="me-2 p-0 pe-1 ps-1"
@@ -123,7 +125,7 @@ const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
       </Button>
       <UncontrolledTooltip
         placement="top"
-        target={"wait-btn-" + booking.id_reservation}
+        target={"btn-" + color + "-" + booking.id_reservation}
       >
         {libelle}
       </UncontrolledTooltip>

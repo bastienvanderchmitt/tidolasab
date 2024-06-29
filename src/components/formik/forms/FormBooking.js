@@ -91,6 +91,7 @@ const FormBooking = () => {
                     name="children"
                     label="Enfants"
                     helpText="De 2 à 12 ans"
+                    max={8}
                   />
                 </div>
               </div>

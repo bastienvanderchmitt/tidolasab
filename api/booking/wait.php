@@ -15,7 +15,7 @@ try {
         // Send email to client
         $to = $client->email_client;
         $subject = 'Tidolasab - Réservation en cours';
-        $message = "<html><h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p></html>";
+        $message = "<h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p>";
         sendEmail($to, $subject, $message, true);
 
         $connexion->commit();

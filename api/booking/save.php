@@ -25,27 +25,25 @@ try {
         // Send email with RIB to client
         $to = $data->email;
         $subject = 'Tidolasab - Réservation en cours';
-        $message = "<html><h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p></html>";
+        $message = "<h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p>";
         sendEmail($to, $subject, $message, true);
 
         // Send email to admin
 //        $to = "tidolasab@gmail.com";
         $to = "bastienvanderchmitt@gmail.com";
         $subject = 'Nouvelle réservation !';
-        $message = "<html>
-                        <h4><a href='https://tidolasab/admin/booking/$bookingId'>Réservation</a> de $data->name $data->firstName</h4>
-                        <ul>
-                            <li>Du $data->checkIn au $data->checkOut ($data->days nuits)</li>
-                            <li>$data->adults adultes, $data->children enfants</li>
-                            <li>Pour un total de $data->total €</li>
-                        </ul>
-                        <h5>Informations client :</h5>
-                        <ul>
-                            <li>Email : $data->email</li>
-                            <li>Téléphone : $data->phone</li>
-                            <li>Adresse : $address</li>
-                        </ul>
-                    </html>";
+        $message = "<h4><a href='https://tidolasab/admin/booking/$bookingId'>Réservation</a> de $data->name $data->firstName</h4>
+                    <ul>
+                        <li>Du $data->checkIn au $data->checkOut ($data->days nuits)</li>
+                        <li>$data->adults adultes, $data->children enfants</li>
+                        <li>Pour un total de $data->total €</li>
+                    </ul>
+                    <h5>Informations client :</h5>
+                    <ul>
+                        <li>Email : $data->email</li>
+                        <li>Téléphone : $data->phone</li>
+                        <li>Adresse : $address</li>
+                    </ul>";
         sendEmail($to, $subject, $message);
 
         $connexion->commit();

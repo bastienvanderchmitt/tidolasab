@@ -63,8 +63,8 @@ function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
 
     global $env;
 
-    if ($env === 'DEV')
-        return true;
+//    if ($env === 'DEV')
+//        return true;
 
     global $smtpServer;
     global $smtpUsername;
@@ -85,8 +85,51 @@ function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
     $mail->setFrom('tidolasab@gmail.com', 'Tidolasab');
     $mail->addAddress($to);
     $mail->Subject = $subject;
-    $mail->Body = $message;
     $mail->isHTML();
+
+    $body = <<<EOF
+<html>
+  <head>
+    <style>
+      .body-container {
+        background-color: #b2dfdb;
+        font-family: Arial, sans-serif;
+        padding: 40px;
+      }
+      .container {
+        width: 80%;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .logo-container {
+      text-align: center;
+      }
+      .logo {
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="body-container">
+          <div class="logo-container">
+            <img src="https://www.tidolasab.com/static/media/logo_final.9655083de4a46582f8d2.png" alt="Logo" class="logo">
+          </div>
+          <div class="container">
+              $message
+              <p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href="tel:+6793456788">+679 345 67 88</a> ou à <a href="mailto:tidolasab@gmail.com">tidolasab@gmail.com</a>.</p>
+              <p>Cordialement,</p>
+              <p>Ti' Dola Sab</p>
+          </div>
+      </div>
+  </body>
+</html>
+EOF;
+
+    $mail->Body = $body;
 
     if ($reply)
         $mail->addReplyTo($reply);

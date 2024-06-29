@@ -15,7 +15,29 @@ try {
         // Send email to client
         $to = $client->email_client;
         $subject = 'Tidolasab - Réservation validée !';
-        $message = "<html><h4>Bonjour,</h4><p>Félicitations,</p><p>Votre réservation est validée.</p></html>";
+        $message = "<p>Bonjour [Nom du client],</p>
+                    <p>Nous sommes ravis de vous confirmer votre réservation de gîte pour les dates du [Date d'arrivée] au [Date de départ].</p>
+                    <table>
+                      <tr>
+                        <th>Détails de la réservation</th>
+                      </tr>
+                      <tr>
+                        <td>Nombre de personnes :</td>
+                        <td>[Nombre de personnes]</td>
+                      </tr>
+                      <tr>
+                        <td>Date d'arrivée :</td>
+                        <td>[Date d'arrivée]</td>
+                      </tr>
+                      <tr>
+                        <td>Date de départ :</td>
+                        <td>[Date de départ]</td>
+                      </tr>
+                      <tr>
+                        <td>Prix total :</td>
+                        <td>[Prix total]</td>
+                      </tr>
+                    </table>";
         sendEmail($to, $subject, $message);
 
         $connexion->commit();
