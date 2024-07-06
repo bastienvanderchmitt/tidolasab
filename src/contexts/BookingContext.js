@@ -1,5 +1,7 @@
 import React, { useState, createContext, useEffect, useMemo } from "react";
 import useContextFactory from "../hooks/useContextFactory";
+import { getDaysHighSeason, getDaysLowSeason } from "../helpers/dates";
+import { priceHightSeason, priceLowSeason, touristTax } from "../helpers/env";
 const BookingContext = createContext({});
 
 export const useBookingContext = () => {
@@ -30,10 +32,29 @@ const BookingContextProvider = ({ children }) => {
     } else return null;
   }, [selectedDates]);
 
+  const daysHighSeason = useMemo(() => {
+    return selectedDates[0] && selectedDates[1]
+      ? getDaysHighSeason(selectedDates[0], selectedDates[1])
+      : null;
+  }, [selectedDates]);
+
+  const daysLowSeason = useMemo(() => {
+    return selectedDates[0] && selectedDates[1]
+      ? getDaysLowSeason(selectedDates[0], selectedDates[1])
+      : null;
+  }, [selectedDates]);
+
   useEffect(() => {
-    const price = 90;
-    days ? setTotal(days * price) : setTotal(null);
-  }, [days, setTotal]);
+    if (days) {
+      setTotal(
+        daysHighSeason * priceHightSeason +
+          daysLowSeason * priceLowSeason +
+          days * touristTax,
+      );
+    } else {
+      setTotal(null);
+    }
+  }, [days, daysHighSeason, daysLowSeason, setTotal]);
 
   return (
     <BookingContext.Provider
@@ -50,6 +71,8 @@ const BookingContextProvider = ({ children }) => {
         setChild,
         booked,
         setBooked,
+        daysHighSeason,
+        daysLowSeason,
       }}
     >
       {children}

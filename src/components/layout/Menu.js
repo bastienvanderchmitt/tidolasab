@@ -16,6 +16,7 @@ import CustomNavItem from "./Menu/CustomNavItem";
 import { useCallback, useEffect } from "react";
 import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [isOpen, toggle] = useToggle(false);
@@ -79,7 +80,9 @@ const Menu = () => {
               </Nav>
             </Col>
             <Col className="logo-col">
-              <img alt="logo" src={logo} style={{ marginTop: "-25px" }} />
+              <Link to="/">
+                <img alt="logo" src={logo} style={{ marginTop: "-25px" }} />
+              </Link>
             </Col>
             <Col>
               <Nav pills>
@@ -120,11 +123,13 @@ const Menu = () => {
           </Navbar>
           <Row>
             <Col>
-              {isFixed ? (
-                <img src={logoFull} alt="logo" />
-              ) : (
-                <img src={logo} alt="logo" />
-              )}
+              <Link to="/">
+                {isFixed ? (
+                  <img src={logoFull} alt="logo" />
+                ) : (
+                  <img src={logo} alt="logo" />
+                )}
+              </Link>
             </Col>
           </Row>
         </Container>

@@ -25,27 +25,27 @@ const Bookings = () => {
   const [{ bookings }] = useApi(getBookings, null, null, [reloading]);
 
   const waitingBookings = useMemo(
-    () => bookings?.filter((b) => b.etat_reservation === "en attente"),
+    () => bookings?.filter((b) => b.statut === "en attente"),
     [bookings],
   );
 
   const validatedBookings = useMemo(
-    () => bookings?.filter((b) => b.etat_reservation === "validée"),
+    () => bookings?.filter((b) => b.statut === "validée"),
     [bookings],
   );
 
   // const runningBookings = useMemo(
-  //   () => bookings?.filter((b) => b.etat_reservation === "en cours"),
+  //   () => bookings?.filter((b) => b.statut === "en cours"),
   //   [bookings],
   // );
   //
   // const pastBookings = useMemo(
-  //   () => bookings?.filter((b) => b.etat_reservation === "passée"),
+  //   () => bookings?.filter((b) => b.statut === "passée"),
   //   [bookings],
   // );
 
   const canceledBookings = useMemo(
-    () => bookings?.filter((b) => b.etat_reservation === "annulée"),
+    () => bookings?.filter((b) => b.statut === "annulée"),
     [bookings],
   );
 
@@ -99,11 +99,11 @@ const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
   const updateBooking = async (booking, status) => {
     toggleLoading();
     if (status === "validée") {
-      await validate({ id_reservation: booking.id_reservation });
+      await validate({ id: booking.id });
     } else if (status === "annulée") {
-      await cancel({ id_reservation: booking.id_reservation });
+      await cancel({ id: booking.id });
     } else {
-      await waiting({ id_reservation: booking.id_reservation });
+      await waiting({ id: booking.id });
     }
     toggleLoading();
     reload();
@@ -112,7 +112,7 @@ const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
   return (
     <>
       <Button
-        id={"btn-" + color + "-" + booking.id_reservation}
+        id={"btn-" + color + "-" + booking.id}
         onClick={() => updateBooking(booking, status)}
         color={color}
         className="me-2 p-0 pe-1 ps-1"
@@ -125,7 +125,7 @@ const ActionBtn = ({ booking, status, libelle, icon, color, reload }) => {
       </Button>
       <UncontrolledTooltip
         placement="top"
-        target={"btn-" + color + "-" + booking.id_reservation}
+        target={"btn-" + color + "-" + booking.id}
       >
         {libelle}
       </UncontrolledTooltip>
@@ -185,18 +185,18 @@ const AdminBooking = ({ bookings, reload }) => {
       <tbody>
         {bookings?.map((b, i) => (
           <tr key={i} className="text-center">
-            <th scope="row">{b.id_reservation}</th>
+            <th scope="row">{b.id}</th>
             <td>{b.date_arrivee}</td>
             <td>{b.date_depart}</td>
             <td>
-              <StatusBadge status={b.etat_reservation} />
+              <StatusBadge status={b.statut} />
             </td>
             <td>{b.adultes}</td>
             <td>{b.enfants}</td>
             <td>{b.nombre_nuits}</td>
             <td>{b.prix_total} €</td>
             <td>
-              {b.etat_reservation !== "en attente" ? (
+              {b.statut !== "en attente" ? (
                 <ActionBtn
                   booking={b}
                   status={"en attente"}
@@ -206,7 +206,7 @@ const AdminBooking = ({ bookings, reload }) => {
                   reload={reload}
                 />
               ) : null}
-              {b.etat_reservation !== "validée" ? (
+              {b.statut !== "validée" ? (
                 <ActionBtn
                   booking={b}
                   status={"validée"}
@@ -216,7 +216,7 @@ const AdminBooking = ({ bookings, reload }) => {
                   reload={reload}
                 />
               ) : null}
-              {b.etat_reservation !== "annulée" ? (
+              {b.statut !== "annulée" ? (
                 <ActionBtn
                   booking={b}
                   status={"annulée"}

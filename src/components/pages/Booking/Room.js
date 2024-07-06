@@ -101,7 +101,7 @@ const Room = () => {
         <p>
           Il ne vous reste plus qu'à profiter d'instants magiques. Notre plaisir
           : vous accueillir et partager notre paradis. Une corbeille de bienvenu
-          vous attend à votre arrivée.
+          vous attend à votre arrivée (à partir de 16h et départ jusqu'à 11h).
         </p>
         <h5 className="pt-3 marcellus">
           <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />

@@ -18,9 +18,6 @@ const Error = () => {
   return (
     <>
       <Menu />
-      {/*<div className="main-content">*/}
-      {/*  <h1>ERROR</h1>*/}
-      {/*</div>*/}
       <Footer />
     </>
   );

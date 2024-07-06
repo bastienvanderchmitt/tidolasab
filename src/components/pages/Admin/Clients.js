@@ -42,14 +42,14 @@ const AdminClient = ({ clients, reload }) => {
         </tr>
       </thead>
       <tbody>
-        {clients?.map((b, i) => (
+        {clients?.map((c, i) => (
           <tr key={i} className="text-center">
-            <th scope="row">{b.id_client}</th>
-            <td>{b.nom_client}</td>
-            <td>{b.prenom_client}</td>
-            <td>{b.email_client}</td>
-            <td>{b.telephone_client}</td>
-            <td>{b.adresse_client}</td>
+            <th scope="row">{c.id}</th>
+            <td>{c.nom}</td>
+            <td>{c.prenom}</td>
+            <td>{c.email}</td>
+            <td>{c.telephone}</td>
+            <td>{c.adresse}</td>
             <td></td>
           </tr>
         ))}
