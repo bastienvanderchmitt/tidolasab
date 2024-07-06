@@ -9,10 +9,10 @@ const Clients = () => {
     <Container fluid className="clients">
       <Row>
         <Col md={2}>
-          <h1>Clients</h1>
+          <h1 className="aurore">Clients</h1>
         </Col>
       </Row>
-      <Row>
+      <Row className="my-5">
         <Col>
           <AdminClient clients={clients} />
         </Col>
@@ -22,23 +22,6 @@ const Clients = () => {
 };
 
 const AdminClient = ({ clients, reload }) => {
-  // const StatusBadge = ({ status }) => {
-  //   const color = useMemo(
-  //     () =>
-  //       status === "en attente"
-  //         ? "warning"
-  //         : status === "validée"
-  //           ? "success"
-  //           : status === "en cours"
-  //             ? "primary"
-  //             : status === "passée"
-  //               ? "secondary"
-  //               : "danger",
-  //     [status],
-  //   );
-  //   return <Badge color={color}>{status.toUpperCase()}</Badge>;
-  // };
-
   return (
     <Table
       striped
@@ -59,14 +42,14 @@ const AdminClient = ({ clients, reload }) => {
         </tr>
       </thead>
       <tbody>
-        {clients?.map((b, i) => (
+        {clients?.map((c, i) => (
           <tr key={i} className="text-center">
-            <th scope="row">{b.id_client}</th>
-            <td>{b.nom_client}</td>
-            <td>{b.prenom_client}</td>
-            <td>{b.email_client}</td>
-            <td>{b.telephone_client}</td>
-            <td>{b.adresse_client}</td>
+            <th scope="row">{c.id}</th>
+            <td>{c.nom}</td>
+            <td>{c.prenom}</td>
+            <td>{c.email}</td>
+            <td>{c.telephone}</td>
+            <td>{c.adresse}</td>
             <td></td>
           </tr>
         ))}

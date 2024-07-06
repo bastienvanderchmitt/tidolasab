@@ -1,15 +1,6 @@
-import { useLayoutContext } from "../../../contexts/LayoutContext";
-import { useEffect } from "react";
-import { pages } from "../../../helpers/pages";
 import { Button, Col, Container, Row } from "reactstrap";
 
 const Terms = () => {
-  const { setHeader } = useLayoutContext();
-
-  useEffect(() => {
-    setHeader(pages.terms);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <Container className="py-5">
       <Row>

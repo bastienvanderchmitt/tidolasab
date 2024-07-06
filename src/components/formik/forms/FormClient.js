@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Price from "../../pages/Booking/Price";
 
 const FormClient = ({ isOpen, toggle }) => {
   const navigate = useNavigate();
@@ -134,17 +135,12 @@ const FormClient = ({ isOpen, toggle }) => {
                     </Col>
                   </Row>
                 </div>
-                <div className="content-total">
-                  <span className="title-total">Total :</span>
-                  <span className="total">{total ? total + " €" : ""}</span>
-                </div>
-                <div className="content-detail">
-                  <span className="title-detail">Nombre de nuits :</span>
-                  <span className="detail">{days}</span>
-                </div>
-                {/*<span>*/}
-                {/*  (du {checkIn} au {checkOut})*/}
-                {/*</span>*/}
+
+                <Row>
+                  <Col>
+                    <Price />
+                  </Col>
+                </Row>
               </div>
               <ModalFooter>
                 <Row>

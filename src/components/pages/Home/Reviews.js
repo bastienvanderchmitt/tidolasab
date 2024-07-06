@@ -23,12 +23,11 @@ const Reviews = () => {
               />
               <h4 className="title-review pt-2">Nos clients racontent</h4>
               <p className="quote">
-                “Séjour au top Tout est bien Accueil convivial avec plein de
-                petites attentions 👍 Logement hyper clean et bien équipé,
-                aménagé avec goût. Clim, et jardin tropical 🌴 N'hésitez pas,
-                c’est là qu’il faut aller”
+                “Isabelle et Frank sont au top 👍 Ils sont à l'écoute et
+                attentionnés. Les lieux sont très paisibles, calme et cocooning
+                🌴 On recommande et bien évidemment on reviendra à coup sûr !”
               </p>
-              <p className="quote-user">ANNA WILLIAMS – TRIPADVISOR</p>
+              <p className="quote-user">MARYSELLA – BOOKING</p>
               <div>
                 {[1, 2, 3, 4, 5].map((_, key) => (
                   <FontAwesomeIcon

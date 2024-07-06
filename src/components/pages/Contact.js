@@ -1,17 +1,8 @@
-import { useLayoutContext } from "../../contexts/LayoutContext";
-import { useEffect } from "react";
-import { pages } from "../../helpers/pages";
 import { Col, Container, Row } from "reactstrap";
 import banner from "../../assets/img/locations/location_11.jpeg";
 import FormContact from "../formik/forms/FormContact";
 
 const Contact = () => {
-  const { setHeader } = useLayoutContext();
-
-  useEffect(() => {
-    setHeader(pages.contact);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <Container fluid>
       <Row>
@@ -21,7 +12,7 @@ const Contact = () => {
           <p>1212 Morne Lolo</p>
           <p>97112, Grand Bourg</p>
           <p>
-            <strong>Phone Number:</strong>{" "}
+            <strong>Téléphone:</strong>{" "}
             <a href="tel:+6793456788">+679 345 67 88</a>
             <br />
             <strong>Email:</strong>{" "}

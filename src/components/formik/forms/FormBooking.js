@@ -7,10 +7,12 @@ import { useBookingContext } from "../../../contexts/BookingContext";
 import NumberField from "../NumberField";
 import useToggle from "../../../hooks/useToggle";
 import FormClient from "./FormClient";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Price from "../../pages/Booking/Price";
 
 const FormBooking = () => {
-  const { checkIn, checkOut, total, days, setAdults, setChild } =
-    useBookingContext();
+  const { checkIn, checkOut, setAdults, setChild } = useBookingContext();
   const [isOpen, toggle] = useToggle();
 
   const initialValues = useMemo(() => {
@@ -82,6 +84,7 @@ const FormBooking = () => {
                     name="adults"
                     label="Adultes"
                     helpText="13 ans et plus"
+                    max={4}
                   />
                 </div>
                 <div className="form-group mb-4">
@@ -90,19 +93,11 @@ const FormBooking = () => {
                     name="children"
                     label="Enfants"
                     helpText="De 2 à 12 ans"
+                    max={8}
                   />
                 </div>
               </div>
-              <div className="content-total">
-                <span className="title-total">Total :</span>
-                <span className="total">{total ? total + " €" : ""}</span>
-              </div>
-              {days && (
-                <div className="content-detail">
-                  <span className="title-total">Nombre de nuits :</span>
-                  <span className="total">{days}</span>
-                </div>
-              )}
+              <Price />
               <div className="content-submit mt-4">
                 <Button
                   type="submit"
@@ -110,9 +105,17 @@ const FormBooking = () => {
                   color="primary"
                   disabled={!!isSubmitting}
                 >
-                  Réserver
+                  {isSubmitting ? (
+                    <FontAwesomeIcon icon={faSpinner} spinPulse />
+                  ) : (
+                    "Réserver"
+                  )}
                 </Button>
-                <p className="mt-4">Tarif unique : 90€ par nuit.</p>
+                <p className="prices">
+                  <u>Tarifs :</u> à partir de <b>80€</b> par nuit. Une
+                  demi-journée offerte par semaine. Taxe de séjour de 2€ par
+                  nuit et par adulte.
+                </p>
                 <p className="conditions">
                   Envoi du contrat de location sous conditions de versement d'un
                   acompte de 50% à la réservation (via virement bancaire). Le

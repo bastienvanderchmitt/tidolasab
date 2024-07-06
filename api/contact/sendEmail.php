@@ -10,13 +10,13 @@ try {
 //        $to = "tidolasab@gmail.com";
         $to = "bastienvanderchmitt@gmail.com";
         $subject = $data->subject;
-        $message = "<html>
-                        <h4>Nouveau message de $data->name :</h4>
-                        <blockquote class='gmail_quote' style='margin: 0px 0px 0px 0.8ex; border-left: 1px solid rgb(204, 204, 204); padding-left: 1ex;'>
-                            $data->message
-                        </blockquote>
-                    </html>";
+        $message = "<h4>Nouveau message de $data->name :</h4>
+                    <blockquote class='gmail_quote' style='margin: 0px 0px 0px 0.8ex; border-left: 1px solid rgb(204, 204, 204); padding-left: 1ex;'>
+                        $data->message
+                    </blockquote>";
         sendEmail($to, $subject, $message, false, $data->email);
+
+        $result = ['success' => true];
         http_response_code(200);
 
 } catch (Exception $e) {

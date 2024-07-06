@@ -150,6 +150,10 @@ p {
   color: $gold;
 }
 
+.bold {
+  font-weight: 600;
+}
+
 /**
  * Calendar
  */
@@ -239,6 +243,10 @@ p {
 
   .slick-next {
     right: -5px;
+  }
+
+  .slick-prev:before, .slick-next:before {
+    color: white;
   }
 
   .slick-arrow:before {

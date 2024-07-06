@@ -1,6 +1,4 @@
-import { useLayoutContext } from "../../contexts/LayoutContext";
-import { useCallback, useEffect, useState } from "react";
-import { pages } from "../../helpers/pages";
+import { useCallback, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
@@ -30,12 +28,6 @@ import location_22 from "../../assets/img/locations/location_22.jpeg";
 const Photos = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
-
-  const { setHeader } = useLayoutContext();
-
-  useEffect(() => {
-    setHeader(pages.photos);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const images = [
     {

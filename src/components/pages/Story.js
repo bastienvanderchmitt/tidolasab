@@ -1,17 +1,8 @@
-import { useLayoutContext } from "../../contexts/LayoutContext";
-import { useEffect } from "react";
-import { pages } from "../../helpers/pages";
 import { Badge, Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const Story = () => {
-  const { setHeader } = useLayoutContext();
-
-  useEffect(() => {
-    setHeader(pages.story);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const teamMembers = [
     {
       name: "Isabelle",
