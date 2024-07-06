@@ -1,6 +1,3 @@
-import { useLayoutContext } from "../../contexts/LayoutContext";
-import { useEffect } from "react";
-import { pages } from "../../helpers/pages";
 import {
   Card,
   CardBody,
@@ -25,12 +22,6 @@ import location_6_square from "../../assets/img/locations/location_6_square.jpeg
 import distillerie from "../../assets/img/discover/distillerie-vue-aerienne.jpg";
 
 const Activities = () => {
-  const { setHeader } = useLayoutContext();
-
-  useEffect(() => {
-    setHeader(pages.activities);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const activities = [
     {
       title: "Anse Bambou",
@@ -153,9 +144,9 @@ const Activities = () => {
           <h4 className="title-4 pt-4">Partez à la découverte et ...</h4>
           <h4 className="title-2 pt-2">Vivez des moments inoubliables</h4>
           <p className="pt-3">
-            Sur la belle île de Marie Galante les activités sont nombreuses.
+            Sur la belle île de Marie-Galante les activités sont nombreuses.
             Restauration, visites, plages, activités nautiques, spa, randonnées
-            pédestres… Découvrez également la culture Marie Galantaise dans
+            pédestres… Découvrez également la culture Marie-Galantaise dans
             toute son authenticité. La récolte des cannes à sucre, la récolte du
             bambou, la pêche avec les nasses, la ponte des tortues luth, la vie
             des moulins…

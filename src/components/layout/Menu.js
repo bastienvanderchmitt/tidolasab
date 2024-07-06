@@ -8,19 +8,25 @@ import {
   Row,
 } from "reactstrap";
 import { Parallax } from "react-parallax";
-import { useLayoutContext } from "../../contexts/LayoutContext";
 import useToggle from "../../hooks/useToggle";
 import logo from "../../assets/img/logo_final.png";
 import logoFull from "../../assets/img/logo_full.png";
 import CustomNavItem from "./Menu/CustomNavItem";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useOutlet } from "react-router-dom";
 
 const Menu = () => {
   const [isOpen, toggle] = useToggle(false);
   const [isFixed, toggleFixed] = useToggle(false);
+
+  const outlets = useOutlet();
+
+  const params = useMemo(
+    () => outlets?.props?.children?.props?.match?.route?.params,
+    [outlets],
+  );
 
   const handleScroll = useCallback(() => {
     const position = window.pageYOffset;
@@ -39,20 +45,18 @@ const Menu = () => {
     };
   }, [handleScroll]);
 
-  const { header } = useLayoutContext();
-
   return (
     <section
       className={
-        header.image !== "home_banner.jpeg" ? "menu small" : "menu big"
+        params.image !== "home_banner.jpeg" ? "menu small" : "menu big"
       }
     >
       <Parallax
-        bgImage={require("../../assets/img/banners/" + header.image)}
+        bgImage={require("../../assets/img/banners/" + params.image)}
         bgImageAlt="the cat"
         strength={200}
         className="text-white text-center p-5"
-        // bgImageStyle={header.image !== "banner.jpg" ? { height: "450px" } : {}}
+        // bgImageStyle={params.image !== "banner.jpg" ? { height: "450px" } : {}}
       >
         {isFixed && (
           <Container className="desktop-menu d-none d-lg-block fixed animate__animated animate__fadeIn">
@@ -80,7 +84,7 @@ const Menu = () => {
               </Nav>
             </Col>
             <Col className="logo-col">
-              <Link to="/">
+              <Link to={"/"}>
                 <img alt="logo" src={logo} style={{ marginTop: "-25px" }} />
               </Link>
             </Col>
@@ -101,7 +105,11 @@ const Menu = () => {
             fixed={isFixed || isOpen ? "top" : null}
           >
             <NavbarToggler onClick={toggle}>
-              <FontAwesomeIcon icon={faBars} className="p-2 text-primary" />
+              <FontAwesomeIcon
+                icon={faBars}
+                className="p-2 text-primary"
+                size="xl"
+              />
             </NavbarToggler>
             <Collapse isOpen={isOpen} navbar className="menu-mobile">
               <div onClick={toggle}>
@@ -123,7 +131,7 @@ const Menu = () => {
           </Navbar>
           <Row>
             <Col>
-              <Link to="/">
+              <Link to={"/"}>
                 {isFixed ? (
                   <img src={logoFull} alt="logo" />
                 ) : (
@@ -137,9 +145,9 @@ const Menu = () => {
           <Row>
             <Col className="header d-flex header align-items-center justify-content-center  pb-2">
               <div className="titles">
-                <div className="header-subtitle">{header.subtitle}</div>
-                <h1 className="header-title">{header.title}</h1>
-                <div className="header-description">{header.description}</div>
+                <div className="header-subtitle">{params.subtitle}</div>
+                <h1 className="header-title">{params.title}</h1>
+                <div className="header-description">{params.description}</div>
               </div>
             </Col>
           </Row>

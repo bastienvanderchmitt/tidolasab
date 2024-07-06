@@ -245,6 +245,10 @@ p {
     right: -5px;
   }
 
+  .slick-prev:before, .slick-next:before {
+    color: white;
+  }
+
   .slick-arrow:before {
     font-size: 60px !important;
   }

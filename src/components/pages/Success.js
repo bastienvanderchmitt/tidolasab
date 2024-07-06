@@ -1,6 +1,4 @@
-import { useLayoutContext } from "../../contexts/LayoutContext";
 import React, { useEffect } from "react";
-import { pages } from "../../helpers/pages";
 import { useBookingContext } from "../../contexts/BookingContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
@@ -9,13 +7,13 @@ import { getDaysFromNow } from "../../helpers/dates";
 import Price from "./Booking/Price";
 
 const Success = () => {
-  const { setHeader } = useLayoutContext();
-  const { total, booked, selectedDates } = useBookingContext();
+  const { total, booked, selectedDates } =
+    useBookingContext();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    !booked ? navigate("/") : setHeader(pages.success);
+    !booked && navigate("/");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

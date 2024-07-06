@@ -17,22 +17,28 @@ const Footer = () => {
           </Col>
           <Col className="footer-card">
             <h6 className="footer-title">Téléphone</h6>
-            <p>
-              <a href="tel:+6793456788">+679 345 67 88</a>
-            </p>
+            <a
+              href="tel:+679 345 67 88"
+              style={{ textDecorationColor: "#B99D75" }}
+            >
+              <p className="gold">+679 345 67 88</p>
+            </a>
           </Col>
           <Col className="footer-card">
             <h6 className="footer-title">Email</h6>
-            <p>
-              <a href="mailto:tidolasab@gmail.com">tidolasab@gmail.com</a>
-            </p>
+            <a
+              href="mailto:tidolasab@gmail.com"
+              style={{ textDecorationColor: "#B99D75" }}
+            >
+              <p className="gold">tidolasab@gmail.com</p>
+            </a>
           </Col>
           <Col className="footer-card">
-            <h6 className="footer-title">Social</h6>
+            <h6 className="footer-title">Réseaux sociaux</h6>
             <p>
-              <FontAwesomeIcon icon={faFacebook} className="me-4" />
-              <FontAwesomeIcon icon={faTwitter} className="me-4" />
-              <FontAwesomeIcon icon={faInstagram} />
+              <FontAwesomeIcon icon={faFacebook} className="me-4" size="xl" />
+              <FontAwesomeIcon icon={faTwitter} className="me-4" size="xl" />
+              <FontAwesomeIcon icon={faInstagram} size="xl" />
             </p>
           </Col>
         </Row>

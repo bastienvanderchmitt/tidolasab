@@ -14,47 +14,58 @@ import Privacy from "../components/pages/Rules/Privacy";
 import Terms from "../components/pages/Rules/Terms";
 import Politic from "../components/pages/Rules/Politic";
 import CreateUser from "../components/pages/Admin/CreateUser";
+import { pages } from "../helpers/pages";
 
 const staticSteps = [
   {
     path: "/",
     element: <Home />,
+    params: pages.home,
   },
   {
     path: "/booking",
     element: <Booking />,
+    params: pages.booking,
   },
   {
     path: "/story",
     element: <Story />,
+    params: pages.story,
   },
   {
     path: "/activities",
     element: <Activities />,
+    params: pages.activities,
   },
   {
     path: "/photos",
     element: <Photos />,
+    params: pages.photos,
   },
   {
     path: "/contact",
     element: <Contact />,
+    params: pages.contact,
   },
   {
     path: "/success",
     element: <Success />,
+    params: pages.success,
   },
   {
     path: "/privacy",
     element: <Privacy />,
+    params: pages.privacy,
   },
   {
     path: "/terms-of-use",
     element: <Terms />,
+    params: pages.terms,
   },
   {
     path: "/policy",
     element: <Politic />,
+    params: pages.politic,
   },
 ];
 

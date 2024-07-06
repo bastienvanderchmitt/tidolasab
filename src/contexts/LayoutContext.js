@@ -1,6 +1,5 @@
 import React, { useState, createContext } from "react";
 import useContextFactory from "../hooks/useContextFactory";
-import { pages } from "../helpers/pages";
 const LayoutContext = createContext({});
 
 export const useLayoutContext = () => {
@@ -8,7 +7,7 @@ export const useLayoutContext = () => {
 };
 
 const LayoutContextProvider = ({ children }) => {
-  const [header, setHeader] = useState(pages.home);
+  const [header, setHeader] = useState();
 
   return (
     <LayoutContext.Provider
