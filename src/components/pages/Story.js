@@ -1,6 +1,6 @@
 import { Badge, Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import franck_isa from "../../assets/img/story/franck_isa.jpeg";
 
 const Story = () => {
