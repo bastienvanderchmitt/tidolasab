@@ -7,6 +7,7 @@ import {
   faBed,
   faBathtub,
   faHouse,
+  faSquareParking,
 } from "@fortawesome/free-solid-svg-icons";
 import air_conditioning from "../../../assets/img/icons/air_conditioning.png";
 import breakfast from "../../../assets/img/icons/breakfast.png";
@@ -38,7 +39,7 @@ const Amenity = ({ text, icon }) => {
 
 const amenities = [
   { icon: wifi_signal, text: "Wifi" },
-  { icon: air_conditioning, text: "Air conditionné" },
+  { icon: air_conditioning, text: "Brasseurs d'air" },
   { icon: stove, text: "Plaques à induction" },
   { icon: microwave, text: "Micro-ondes" },
   { icon: coffee_machine, text: "Cafetière" },
@@ -55,13 +56,13 @@ const Room = () => {
   return (
     <Row className="room">
       <h4 className="title-2 pt-2">Case Ti'Dola Sab</h4>
-      <div className="title-4">Verdure / Calme & Reposant / Nature</div>
+      <div className="title-4">Jardin tropical / Calme & Reposant / Nature</div>
       <Row>
         <Col className="room-content">
           <ul>
             <li>
               <FontAwesomeIcon icon={faUsers} className="me-2" />
-              <span>4 personnes</span>
+              <span>2 personnes</span>
             </li>
             <li>
               <FontAwesomeIcon icon={faBed} className="me-2" />
@@ -76,8 +77,16 @@ const Room = () => {
               <span>1 salle de bain</span>
             </li>
             <li>
+              <FontAwesomeIcon icon={faHouse} className="me-2" />
+              <span>Grande terrasse</span>
+            </li>
+            <li>
               <FontAwesomeIcon icon={faWifi} className="me-2" />
               <span>Wifi</span>
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faSquareParking} className="me-2" />
+              <span>Parking</span>
             </li>
           </ul>
         </Col>
@@ -95,7 +104,7 @@ const Room = () => {
         <p>
           Une grande terrasse couverte de 20m<sup>2</sup> vous attend pour vos
           moments de détente, ombragée par un magnifique Ylang Ylang odorant.
-          Votre case est face à la forêt domaniale; écrin de verdure calme,
+          Votre case est face à la forêt domaniale, écrin de verdure calme,
           reposant et dépaysant pour les amoureux de la nature.
         </p>
         <p>
@@ -111,8 +120,8 @@ const Room = () => {
           Nous sommes très bien situé pour visiter et parcourir l'île avec notre
           emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et
           St Louis sont à 10min de Ti'Dola Sab. Pour faire vos courses, 2min à
-          pied et vous pouvez vous ravitailler sur Morne Lolo. La distillerie
-          Bielle est à 2min en voiture !
+          pied et vous pouvez vous ravitailler sur Morne Lolo. Une des trois
+          distilleries est à 2 mn en voiture.
         </p>
       </Row>
       <Row>
@@ -121,9 +130,9 @@ const Room = () => {
         </h4>
         <div className="room-list">
           <Badge>Folle Anse</Badge>
-          <Badge>St Louis</Badge>
-          <Badge>l'Anse de Mays</Badge>
-          <Badge>l'Anse Canot</Badge>
+          <Badge>Anse Bambou</Badge>
+          <Badge>Anse de Mays</Badge>
+          <Badge>Anse Canot</Badge>
           <Badge>Vieux Fort</Badge>
           <Badge>la Feuillère et petite Ans</Badge>
           <Badge>Grand Bourg</Badge>
@@ -135,24 +144,6 @@ const Room = () => {
           <Amenity icon={amenity.icon} text={amenity.text} key={key} />
         ))}
       </Row>
-      {/*<Row>*/}
-      {/*  <h4 className="title-2 pt-5 pb-4">Qu'est-ce qui est inclus ?</h4>*/}
-      {/*  <div className="room-list">*/}
-      {/*    <Badge>Private balcony</Badge>*/}
-      {/*    <Badge>140x200 cm Elite bed</Badge>*/}
-      {/*    <Badge>Upholstered seat beside the panoramic window</Badge>*/}
-      {/*    <Badge>TV-UHD screen for watching mountaineering films</Badge>*/}
-      {/*    <Badge>*/}
-      {/*      Writing desk with USB ports for documenting your adventures*/}
-      {/*    </Badge>*/}
-      {/*    <Badge>Room safe for your top mountain photos</Badge>*/}
-      {/*    <Badge>*/}
-      {/*      Service station with Lavazza coffee machine, kettle and tea*/}
-      {/*    </Badge>*/}
-      {/*    <Badge>Bathroom with rain shower</Badge>*/}
-      {/*    <Badge>Comfortable terry towels and bathrobes</Badge>*/}
-      {/*  </div>*/}
-      {/*</Row>*/}
     </Row>
   );
 };

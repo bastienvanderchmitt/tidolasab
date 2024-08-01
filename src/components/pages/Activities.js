@@ -11,52 +11,41 @@ import {
 } from "reactstrap";
 import { faLocationPin } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import location_18 from "../../assets/img/locations/location_18.jpeg";
+import location_23 from "../../assets/img/locations/location_23.jpeg";
 import location_9 from "../../assets/img/locations/location_9.jpeg";
 import location_20 from "../../assets/img/locations/location_20.jpeg";
 import location_15 from "../../assets/img/locations/location_15.jpeg";
-import location_10_square from "../../assets/img/locations/location_10_square.jpeg";
+import location_24 from "../../assets/img/locations/location_24.jpeg";
 import location_3_square from "../../assets/img/locations/location_3_square.jpeg";
 import location_4_square from "../../assets/img/locations/location_4_square.jpeg";
 import location_6_square from "../../assets/img/locations/location_6_square.jpeg";
-import distillerie from "../../assets/img/discover/distillerie-vue-aerienne.jpg";
+import location_10_square from "../../assets/img/locations/location_10_square.jpeg";
 
 const Activities = () => {
   const activities = [
     {
-      title: "Anse Bambou",
+      title: "Plages",
       img: location_20,
       description:
-        "Découvrez l'une des plus belles plages de l'île, avec ses eaux cristallines et son sable fin.",
+        "Découvrez les des plus belles plages de l'île, avec des eaux cristallines et du sable fin.",
       location: "Anse Bambou",
     },
     {
-      title: "Randonnée à la Distillerie Bielle",
-      img: distillerie,
+      title: "Rhumeries",
+      img: location_10_square,
       description:
-        "Partez à la découverte d'une des plus anciennes distilleries de la Guadeloupe, et apprenez-en plus sur la production de rhum.",
-      location: (
-        <>
-          Distillerie Bielle - image{" "}
-          <a
-            href="https://www.rhum-outremer.com/distillerie-bielle"
-            target="_blank"
-            rel="noreferrer"
-          >
-            @rhum-outremer
-          </a>
-        </>
-      ),
+        "Partez à la découverte des trois distilleries de Marie-Galante, et apprenez-en plus sur la production de rhum.",
+      location: "Capesterre et Grand-Bourg",
     },
     {
       title: "Caye Plate",
       img: location_6_square,
       description:
         "D'une rare beauté et vertigineux, la falaise Caye Plate est l'un des plus beaux sites à visiter à Marie-Galante.",
-      location: "Plateau de l'Anse du Coq",
+      location: "Saint-Louis",
     },
     {
-      title: "Îlet de Vieux Fort",
+      title: "Vieux Fort",
       img: location_4_square,
       description:
         "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels !",
@@ -67,35 +56,33 @@ const Activities = () => {
       img: location_15,
       description:
         "Découvrez l'histoire de l'Habitation Roussel Trianon, une ancienne sucrerie, et admirez l'architecture créole de l'île.",
-      location: "Habitation Roussel Trianon",
+      location: "Grand-Bourg",
     },
     {
-      title: "Snorkeling à la Pointe des Sables",
+      title: "Activités aquatiques",
       img: location_9,
       description:
-        "Explorez les fonds marins de la Pointe des Sables et découvrez la faune et la flore sous-marine de l'île.",
-      location: "Pointe des Sables",
+        "Essayez-vous à la plongée ou au snorkeling et explorez la faune et la flore sous-marine de l'île.",
+      location: "Toute l'île ",
     },
     {
-      title: "Plage de Petite Anse",
-      img: location_18,
+      title: "Street Art",
+      img: location_23,
       description:
-        "Détendez-vous sur la plage de Petite Anse, une plage sauvage et préservée de l'île.",
+        "Une véritable célébration de la culture locale, de l’art et de la créativité.",
       location: "Petite Anse",
     },
     {
-      title: "Gueule grand gouffre",
+      title: "Gueule Grand Gouffre",
       img: location_3_square,
       description:
-        "Véritable trésor de l’île, cette arche naturelle creusée par la mer vous offrira des sensations fortes en entendant l’océan tourbillonner au fond du gouffre",
-      location: "Capesterre",
+        "Une arche naturelle creusée par la mer et un point de vue à couper le souffle.",
+      location: "Saint-Louis",
     },
-
     {
-      title: "Visite de Grand-Bourg",
-      img: location_10_square,
-      description:
-        "Découvrez l'histoire et l'architecture de la ville ou détendez-vous après une journée bien remplie.",
+      title: "Habitation Murat",
+      img: location_24,
+      description: "Vestiges d’une habitation sucrière et musée.",
       location: "Grand-Bourg",
     },
   ];
@@ -121,10 +108,13 @@ const Activities = () => {
             {activity.title}
           </CardTitle>
         </CardImgOverlay>
-        <CardBody>
+        <CardBody style={{ minHeight: "160px" }}>
           <CardText>{activity.description}</CardText>
           <CardText>
-            <small className="text-muted">
+            <small
+              className="text-muted"
+              style={{ position: "absolute", bottom: "10px" }}
+            >
               <FontAwesomeIcon
                 icon={faLocationPin}
                 className="me-2 text-secondary"
@@ -142,14 +132,15 @@ const Activities = () => {
       <Row className="p-4 m-lg-4 accommodation-header">
         <Col className="text-center">
           <h4 className="title-4 pt-4">Partez à la découverte et ...</h4>
-          <h4 className="title-2 pt-2">Vivez des moments inoubliables</h4>
+          <h4 className="title-2 pt-2">Ecrivez votre histoire</h4>
           <p className="pt-3">
-            Sur la belle île de Marie-Galante les activités sont nombreuses.
-            Restauration, visites, plages, activités nautiques, spa, randonnées
-            pédestres… Découvrez également la culture Marie-Galantaise dans
-            toute son authenticité. La récolte des cannes à sucre, la récolte du
-            bambou, la pêche avec les nasses, la ponte des tortues luth, la vie
-            des moulins…
+            En découvrant ses plages de sable blanc aux eaux turquoises, sa
+            faune aquatique, ses forets tropicales, sa mangrove, ses sentiers de
+            randonnées, sa gastronomie, ses trois rhumeries, ses moulins...
+          </p>
+          <p className="pt-3">
+            Venez prendre le temps d'apprécier les charmes authentiques de
+            Marie-Galante, ses habitants et sa culture antillaise.
           </p>
         </Col>
       </Row>

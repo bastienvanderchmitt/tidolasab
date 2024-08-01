@@ -8,12 +8,12 @@ const Contact = () => {
       <Row>
         <Col lg={6} className="informations">
           <h4 className="title-4 pt-4">Informations</h4>
-          <h5 className="title-2 pt-2">Tidolasab</h5>
+          <h5 className="title-2 pt-2">Ti' Dola Sab</h5>
           <p>1212 Morne Lolo</p>
           <p>97112, Grand Bourg</p>
           <p>
-            <strong>Téléphone:</strong>{" "}
-            <a href="tel:+6793456788">+679 345 67 88</a>
+            <strong>Téléphone:</strong>
+            <a href="tel:0690648904">06 90 64 89 04</a>
             <br />
             <strong>Email:</strong>{" "}
             <a href="mailto:tidolasab@gmail.com">tidolasab@gmail.com</a>

@@ -117,9 +117,7 @@ const Photos = () => {
       <Row className="p-4 m-lg-4 photos-header">
         <Col className="text-center">
           <h4 className="title-4 pt-4">NOS PLUS BEAUX CLICHÉS</h4>
-          <h4 className="title-2 pt-2">
-            Découvrez le paradis qui vous attends
-          </h4>
+          <h4 className="title-2 pt-2">Découvrez le paradis qui vous attend</h4>
           <p className="pt-3 m-auto">
             Que ce soit à la plage ou dans les terres, chaque moment est unique
             à Marie-Galante.

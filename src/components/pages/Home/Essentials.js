@@ -7,7 +7,7 @@ import {
   faWifi,
   faBroomBall,
   faUmbrellaBeach,
-  faWheelchair,
+  faBowlRice,
   faMartiniGlassCitrus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -59,7 +59,7 @@ const Essentials = () => {
             <Essential
               title="Airport Pick-up"
               icon={faPlane}
-              text="Nous pouvons venir vous chercher à l'aéroport ou à l'arrivée du Ferry."
+              text="Nous pouvons venir vous chercher à l’aérodrome ou à l'arrivée du Ferry."
             />
             <Essential
               title="Prêt de matériel"
@@ -76,21 +76,16 @@ const Essentials = () => {
             <Essential
               title="Apéro local"
               icon={faMartiniGlassCitrus}
-              text="Venez découvrir les cocktails et rhums de l'île."
+              text="Venez découvrir les cocktails et rhums de l’île. Sur commande."
             />
           </Row>
           <Row className="pb-4">
             <Essential
               title="Blanchisserie"
               icon={faBroomBall}
-              text="Lorem ipsum proin gravida velit auctor sde re sit amet
-                    space."
+              text="Lave-linge dans la case."
             />
-            <Essential
-              title="Accès handicapé"
-              icon={faWheelchair}
-              text="Le gite est accessible pour les personnes en situation de handicap."
-            />
+            <Essential title="Repas" icon={faBowlRice} text="Sur commande." />
           </Row>
           <Row>
             <Col>

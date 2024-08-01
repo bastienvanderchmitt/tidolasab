@@ -5,6 +5,8 @@ import {
   faBed,
   faUsers,
   faBathtub,
+  faSquareParking,
+  faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import accommodation from "../../../assets/img/room/view_2.jpeg";
 import { Link } from "react-router-dom";
@@ -21,9 +23,7 @@ const Accommodation = () => {
             Détente et dépaysement assurés dans un cadre naturel
           </h4>
           <p className="pt-3">
-            Optez pour le charme authentique de notre hébergement créole aux
-            couleurs locales, dans un jardin tropical luxuriant à 500 mètres de
-            la plage de Ti’Anse.
+            Au coeur d'une verdure luxuriante, bienvenue à Marie-Galante.
           </p>
         </Col>
       </Row>
@@ -44,33 +44,42 @@ const Accommodation = () => {
           </Link>
         </Col>
         <Col className="p-4 text-center accommodation-content" xs={12} xl={6}>
-          <div className="title-4">Verdure / Calme & Reposant / Nature</div>
+          <div className="title-4">
+            Jardin tropical / Calme & Reposant / Nature
+          </div>
           <h4 className="title-2 pt-2">Case Ti'Dola Sab</h4>
           <div className="">
             <ul>
               <li>
                 <FontAwesomeIcon icon={faUsers} className="me-2" />
-                <span>4 personnes</span>
+                <span>2 personnes</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faBed} className="me-2" />
-                <span>2 lits King size</span>
+                <span>1 lit king size / 1 BZ</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faBathtub} className="me-2" />
                 <span>1 salle de bain</span>
               </li>
               <li>
+                <FontAwesomeIcon icon={faHouse} className="me-2" />
+                <span>Grande terrasse</span>
+              </li>
+              <li>
                 <FontAwesomeIcon icon={faWifi} className="me-2" />
                 <span>Wifi</span>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faSquareParking} className="me-2" />
+                <span>Parking</span>
               </li>
             </ul>
           </div>
           <div className="">
             <p>
-              Dans un cadre de verdure luxuriante, notre Case Ti'Dola Sab est
-              une habitation indépendante toute en bois, construction récente
-              avec tout le confort nécessaire.
+              Notre case Ti’ Dola Sab est une habitation indépendante toute en
+              bois, de construction récente avec tout le confort nécessaire.
             </p>
           </div>
           <div className="more-btn">
