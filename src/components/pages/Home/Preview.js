@@ -45,13 +45,12 @@ const Preview = () => {
             <img className="palm-tree" alt="palm_tree" src={palm_tree} />
             <h4 className="title-4 pt-4">BIENVENUE A TI' DOLA SAB</h4>
             <h4 className="title-2 pt-2">
-              Dans la plus belle île de Guadeloupe, au coeur des Caraïbes
+              Dans l’une des plus authentiques et des plus belles îles de la
+              Guadeloupe, au coeur des Caraïbes
             </h4>
             <p className="pt-5">
-              Paysages, nature, culture il y a tant de choses à découvrir.
-              Partez en randonnée, visitez un site historique, découvrez les
-              saveurs locales, prélassez vous sur la plage… Suivez votre rythme
-              et laissez vous porter par la douce chaleur des Antilles.
+              Venez prendre le temps de découvrir les charmes authentiques de
+              Marie-Galante, ses habitants et la culture antillaise.
             </p>
           </Col>
         </Row>

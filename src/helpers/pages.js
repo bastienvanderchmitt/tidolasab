@@ -22,7 +22,7 @@ export const pages = {
     title: "Histoire",
     subtitle: "Qui sommes-nous ?",
     description: "Des amoureaux de cette île, tout simplement.",
-    image: "dolasab_beach.jpeg",
+    image: "dolasab_beach_2.jpeg",
   },
   activities: {
     title: "Activitées locales",

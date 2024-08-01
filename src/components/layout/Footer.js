@@ -17,11 +17,8 @@ const Footer = () => {
           </Col>
           <Col className="footer-card">
             <h6 className="footer-title">Téléphone</h6>
-            <a
-              href="tel:+679 345 67 88"
-              style={{ textDecorationColor: "#B99D75" }}
-            >
-              <p className="gold">+679 345 67 88</p>
+            <a href="tel:0690648904" style={{ textDecorationColor: "#B99D75" }}>
+              <p className="gold">06 90 64 89 04</p>
             </a>
           </Col>
           <Col className="footer-card">
@@ -36,9 +33,23 @@ const Footer = () => {
           <Col className="footer-card">
             <h6 className="footer-title">Réseaux sociaux</h6>
             <p>
-              <FontAwesomeIcon icon={faFacebook} className="me-4" size="xl" />
+              <a
+                href="https://www.facebook.com/profile.php?id=61557470872317"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FontAwesomeIcon icon={faFacebook} className="me-4" size="xl" />
+              </a>
+              {/*<a href="#" target="_blank" rel="noreferrer">*/}
               <FontAwesomeIcon icon={faTwitter} className="me-4" size="xl" />
-              <FontAwesomeIcon icon={faInstagram} size="xl" />
+              {/*</a>*/}
+              <a
+                href="https://www.instagram.com/tidolasab?igsh=bHZnZTQ0OXRhNjRz"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FontAwesomeIcon icon={faInstagram} size="xl" />
+              </a>
             </p>
           </Col>
         </Row>

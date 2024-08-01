@@ -15,14 +15,10 @@ const Discover = () => {
               </Col>
             </Row>
             <p className="pt-4">
-              Sur la belle île de Marie-Galante les activités sont nombreuses :
-              restauration, visites, plages, sports nautiques, spa,
-              randonnées...
-            </p>
-            <p>
-              Découvrez également la culture-Marie Galantaise dans toute son
-              authenticité. La récolte des cannes à sucre, du bambou, la pêche
-              avec les nasses, la ponte des tortues luth, la vie des moulins…
+              Découvrez « la galette » (surnom de l’île), ses plages de sable
+              blanc aux eaux turquoises, sa faune aquatique, ses forets
+              tropicales, sa mangrove, ses sentiers de randonnées, sa
+              gastronomie, ses trois rhumeries, ses moulins...
             </p>
           </Col>
           <Col>

@@ -1,33 +1,34 @@
 import { Badge, Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import franck_isa from "../../assets/img/story/franck_isa.jpeg";
 
 const Story = () => {
   const teamMembers = [
-    {
-      name: "Isabelle",
-      image:
-        "https://demos.creative-tim.com/argon-design-system-pro-react/assets/img/theme/kareya-saleh.jpg",
-      description:
-        'Artist is a term applied to a person who engages in an activity deemed to be an art. An artist also may be defined unofficially as "a person should is one who expresses him- or herself through a medium". He is should a descriptive term applied to a person who engages in an activity deemed to be an art.',
-      fields: ["Réservations", "Communication"],
-      socials: [
-        { icon: faFacebook, url: "https://www.facebook.com/" },
-        { icon: faInstagram, url: "https://www.instagram.com/" },
-      ],
-    },
-    {
-      name: "Franck",
-      image:
-        "https://demos.creative-tim.com/argon-design-system-pro-react/assets/img/theme/lucy.jpg",
-      description:
-        'Artist is a term applied to a person who engages in an activity deemed to be an art. An artist also may be defined unofficially as "a person should is one who expresses him- or herself through a medium". He is should a descriptive term applied to a person who engages in an activity deemed to be an art.',
-      fields: ["Entretien", "Rhum"],
-      socials: [
-        { icon: faFacebook, url: "https://www.facebook.com/" },
-        { icon: faInstagram, url: "https://www.instagram.com/" },
-      ],
-    },
+    // {
+    //   name: "Isabelle",
+    //   image:
+    //     "https://demos.creative-tim.com/argon-design-system-pro-react/assets/img/theme/kareya-saleh.jpg",
+    //   description:
+    //     'Artist is a term applied to a person who engages in an activity deemed to be an art. An artist also may be defined unofficially as "a person should is one who expresses him- or herself through a medium". He is should a descriptive term applied to a person who engages in an activity deemed to be an art.',
+    //   fields: ["Réservations", "Communication"],
+    //   socials: [
+    //     { icon: faFacebook, url: "https://www.facebook.com/" },
+    //     { icon: faInstagram, url: "https://www.instagram.com/" },
+    //   ],
+    // },
+    // {
+    //   name: "Franck",
+    //   image:
+    //     "https://demos.creative-tim.com/argon-design-system-pro-react/assets/img/theme/lucy.jpg",
+    //   description:
+    //     'Artist is a term applied to a person who engages in an activity deemed to be an art. An artist also may be defined unofficially as "a person should is one who expresses him- or herself through a medium". He is should a descriptive term applied to a person who engages in an activity deemed to be an art.',
+    //   fields: ["Entretien", "Rhum"],
+    //   socials: [
+    //     { icon: faFacebook, url: "https://www.facebook.com/" },
+    //     { icon: faInstagram, url: "https://www.instagram.com/" },
+    //   ],
+    // },
   ];
 
   return (
@@ -35,17 +36,13 @@ const Story = () => {
       <Row className="p-4 m-lg-4 story-header">
         <Col className="text-center">
           <h4 className="title-4 pt-4">Découvrez la team</h4>
-          <h4 className="title-2 pt-2">Qui-sommes nous ?</h4>
+          <h4 className="title-2 pt-2">Qui sommes-nous ?</h4>
           <p className="pt-3 m-auto">
-            AD Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ex
-            orci, facilisis sit amet vulputate posuere, vulputate imperdiet
-            ligula. Cras faucibus felis nec tempor vestibulum. Nullam erat
-            felis, lacinia a hendrerit ut, pellentesque vitae ipsum. Fusce porta
-            gravida erat vitae tristique. Donec vel massa finibus, fermentum
-            tellus vel, cursus sapien. Curabitur efficitur condimentum ultrices.
-            Vestibulum pellentesque commodo ex. Donec blandit odio dui, at
-            dapibus tellus efficitur at. Nunc id dui maximus, blandit tellus et,
-            iaculis nisl.
+            La découverte de Marie-Galante a été un véritable coup de coeur pour
+            nous. Après de multiples allers et retours sur cette magnifique île
+            qui nous a adopté, nous avons décidé de ne plus en repartir et de
+            nous y implanter définitivement. Notre plus grand plaisir est de
+            vous la partager.
           </p>
         </Col>
       </Row>
@@ -96,6 +93,31 @@ const Story = () => {
           </Col>
         </Row>
       ))}
+
+      <Row className="w-75 py-4 m-auto">
+        <Col>
+          <div className="p-4">
+            <img
+              className="rounded shadow transform-perspective-left w-100"
+              src={franck_isa}
+              alt="franck & isabelle"
+            />
+          </div>
+        </Col>
+      </Row>
+      <Row className="w-75 py-4 m-auto">
+        <Col>
+          <p className="title-3 d-sm-none">Franck :</p>
+          <Badge className="m-2 title-3">Entretien</Badge>
+          <Badge className="m-2 title-3">Rhum</Badge>
+        </Col>
+        <Col>
+          <p className="title-3 d-sm-none mt-4">Isabelle :</p>
+          <Badge className="m-2 title-3">Accueil</Badge>
+          <Badge className="m-2 title-3">Réservations</Badge>
+          <Badge className="m-2 title-3">Communication</Badge>
+        </Col>
+      </Row>
     </Container>
   );
 };
