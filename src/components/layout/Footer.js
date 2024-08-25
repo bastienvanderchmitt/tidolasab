@@ -60,12 +60,12 @@ const Footer = () => {
               <Col>
                 <a href="/privacy">Confidentialité</a>
               </Col>
-              <Col>
-                <a href="/terms-of-use">Conditions d'utilisation</a>
-              </Col>
-              <Col>
-                <a href="/policy">Politique</a>
-              </Col>
+              {/*<Col>*/}
+              {/*  <a href="/terms-of-use">Conditions d'utilisation</a>*/}
+              {/*</Col>*/}
+              {/*<Col>*/}
+              {/*  <a href="/policy">Politique</a>*/}
+              {/*</Col>*/}
             </Row>
           </Col>
         </Row>

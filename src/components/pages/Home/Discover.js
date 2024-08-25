@@ -11,7 +11,7 @@ const Discover = () => {
             <Row>
               <Col>
                 <h4 className="title-4 pt-4">Découvrez l'île</h4>
-                <span className="title-2">Tant de choses à découvrir !</span>
+                {/*<span className="title-2">Tant de choses à découvrir !</span>*/}
               </Col>
             </Row>
             <p className="pt-4">
