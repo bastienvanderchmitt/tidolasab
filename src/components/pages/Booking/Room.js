@@ -2,6 +2,7 @@ import { Badge, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faWifi,
+  faWaterLadder,
   faLocationDot,
   faUsers,
   faBed,
@@ -65,6 +66,10 @@ const Room = () => {
               <span>2 personnes</span>
             </li>
             <li>
+              <FontAwesomeIcon icon={faWaterLadder} className="me-2" />
+              <span>Piscine</span>
+            </li>
+            <li>
               <FontAwesomeIcon icon={faBed} className="me-2" />
               <span>1 lit King size en 160</span>
             </li>
@@ -96,6 +101,11 @@ const Room = () => {
           <FontAwesomeIcon icon={faHouse} className="me-4 text-primary" />
           Logement
         </h5>
+        <p className="text-warning">
+          FERMETURE du 1er Octobre au 30 Novembre 2024 pour Travaux. A partir du
+          1er Décembre la piscine sera devant votre terrasse et l'hébergement
+          sera climatisé.
+        </p>
         <p>
           Dans un cadre de verdure luxuriante, notre Case Ti'Dola Sab est une
           habitation indépendante toute en bois, construction récente avec tout

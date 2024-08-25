@@ -10,6 +10,7 @@ import FormClient from "./FormClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Price from "../../pages/Booking/Price";
+import { priceLowSeason } from "../../../helpers/env";
 
 const FormBooking = () => {
   const { checkIn, checkOut, setAdults, setChild } = useBookingContext();
@@ -112,8 +113,8 @@ const FormBooking = () => {
                   )}
                 </Button>
                 <p className="prices">
-                  <u>Tarifs :</u> à partir de <b>80€</b> par nuit. Une
-                  demi-journée offerte par semaine. Taxe de séjour de 2€ par
+                  <u>Tarifs :</u> à partir de <b>{priceLowSeason}€</b> par nuit.
+                  Une demi-journée offerte par semaine. Taxe de séjour de 2€ par
                   nuit et par adulte.
                 </p>
                 <p className="conditions">
