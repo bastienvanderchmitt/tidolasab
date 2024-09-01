@@ -38,7 +38,7 @@ try {
                         <td>[Prix total]</td>
                       </tr>
                     </table>";
-        sendEmail($to, $subject, $message);
+        sendEmail($to, $subject, $message,false,true);
 
         $connexion->commit();
         http_response_code(200);

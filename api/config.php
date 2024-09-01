@@ -59,7 +59,7 @@ $smtpUsername = 'bastienvanderchmitt@gmail.com';
 $smtpPassword = 'waqo kjki nlpu ovjk';
 $smtpPort = 587;
 
-function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
+function sendEmail($to, $subject, $message, $isRib = false, $iscontract = false, $reply = false) {
 
     global $smtpServer;
     global $smtpUsername;
@@ -131,6 +131,10 @@ EOF;
 
     if ($isRib) {
         $mail->addAttachment('/var/www/tidolasab/src/assets/img/rib.pdf', 'rib.pdf');
+    }
+
+    if ($iscontract) {
+        $mail->addAttachment('/var/www/tidolasab/src/assets/img/contrat_location_tmp.pdf', 'contrat_location.pdf');
     }
 
     // Envoi de l'email
