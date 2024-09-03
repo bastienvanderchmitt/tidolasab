@@ -1,9 +1,13 @@
 import { Col, Container, Row } from "reactstrap";
 import Slider from "react-slick";
 import palm_tree from "../../../assets/img/icons/palm_tree.png";
-import caroussel_1 from "../../../assets/img/caroussel/location_3.jpeg";
-import caroussel_2 from "../../../assets/img/caroussel/location_7.jpeg";
-import caroussel_3 from "../../../assets/img/caroussel/location_18.jpeg";
+import caroussel_1 from "../../../assets/img/caroussel/caroussel_1.jpeg";
+import caroussel_2 from "../../../assets/img/caroussel/caroussel_2.jpeg";
+import caroussel_3 from "../../../assets/img/caroussel/caroussel_3.jpeg";
+import caroussel_4 from "../../../assets/img/caroussel/caroussel_4.jpeg";
+import caroussel_5 from "../../../assets/img/caroussel/caroussel_5.jpeg";
+import caroussel_6 from "../../../assets/img/caroussel/caroussel_6.jpeg";
+import caroussel_7 from "../../../assets/img/caroussel/caroussel_7.jpeg";
 
 const Preview = () => {
   const settings = {
@@ -56,7 +60,6 @@ const Preview = () => {
         </Row>
         <Row>
           <Col>
-            {/*<div className="slider-container animate__animated animate__fadeInRight animate__slow">*/}
             <div className="slider-container">
               <Slider {...settings}>
                 <div className="slick-image-container">
@@ -68,15 +71,18 @@ const Preview = () => {
                 <div className="slick-image-container">
                   <img src={caroussel_3} alt="caroussel_3" />
                 </div>
-                {/*<div className="slick-image-container">*/}
-                {/*  <img src={caroussel_4} alt="caroussel_4" />*/}
-                {/*</div>*/}
-                {/*<div className="slick-image-container">*/}
-                {/*  <img src={caroussel_5} alt="caroussel_5" />*/}
-                {/*</div>{" "}*/}
-                {/*<div className="slick-image-container">*/}
-                {/*  <img src={caroussel_6} alt="caroussel_6" />*/}
-                {/*</div>*/}
+                <div className="slick-image-container">
+                  <img src={caroussel_4} alt="caroussel_4" />
+                </div>
+                <div className="slick-image-container">
+                  <img src={caroussel_5} alt="caroussel_5" />
+                </div>
+                <div className="slick-image-container">
+                  <img src={caroussel_6} alt="caroussel_6" />
+                </div>
+                <div className="slick-image-container">
+                  <img src={caroussel_7} alt="caroussel_7" />
+                </div>
               </Slider>
             </div>
             <h4 className="aurore pt-3">

@@ -11,8 +11,6 @@ import Photos from "../components/pages/Photos";
 import Dashboard from "../components/pages/Admin/Dashboard";
 import AuthenticationGuard from "../components/pages/Admin/AuthenticationGuard";
 import Privacy from "../components/pages/Rules/Privacy";
-import Terms from "../components/pages/Rules/Terms";
-import Politic from "../components/pages/Rules/Politic";
 import CreateUser from "../components/pages/Admin/CreateUser";
 import { pages } from "../helpers/pages";
 
@@ -57,16 +55,16 @@ const staticSteps = [
     element: <Privacy />,
     params: pages.privacy,
   },
-  {
-    path: "/terms-of-use",
-    element: <Terms />,
-    params: pages.terms,
-  },
-  {
-    path: "/policy",
-    element: <Politic />,
-    params: pages.politic,
-  },
+  // {
+  //   path: "/terms-of-use",
+  //   element: <Terms />,
+  //   params: pages.terms,
+  // },
+  // {
+  //   path: "/policy",
+  //   element: <Politic />,
+  //   params: pages.politic,
+  // },
 ];
 
 const allRoutes = [

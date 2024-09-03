@@ -59,12 +59,7 @@ $smtpUsername = 'bastienvanderchmitt@gmail.com';
 $smtpPassword = 'waqo kjki nlpu ovjk';
 $smtpPort = 587;
 
-function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
-
-    global $env;
-
-//    if ($env === 'DEV')
-//        return true;
+function sendEmail($to, $subject, $message, $isRib = false, $iscontract = false, $reply = false) {
 
     global $smtpServer;
     global $smtpUsername;
@@ -120,7 +115,7 @@ function sendEmail($to, $subject, $message, $isRib = false, $reply = false) {
           </div>
           <div class="container">
               $message
-              <p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href="tel:+6793456788">+679 345 67 88</a> ou à <a href="mailto:tidolasab@gmail.com">tidolasab@gmail.com</a>.</p>
+              <p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href="tel:0690648904">06 90 64 89 04</a> ou à <a href="mailto:tidolasab@gmail.com">tidolasab@gmail.com</a>.</p>
               <p>Cordialement,</p>
               <p>Ti' Dola Sab</p>
           </div>
@@ -135,8 +130,11 @@ EOF;
         $mail->addReplyTo($reply);
 
     if ($isRib) {
-        // Ajout du RIB comme pièce jointe
         $mail->addAttachment('/var/www/tidolasab/src/assets/img/rib.pdf', 'rib.pdf');
+    }
+
+    if ($iscontract) {
+        $mail->addAttachment('/var/www/tidolasab/src/assets/img/contrat_location_tmp.pdf', 'contrat_location.pdf');
     }
 
     // Envoi de l'email
