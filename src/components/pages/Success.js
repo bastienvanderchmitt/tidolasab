@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { useBookingContext } from "../../contexts/BookingContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-import rib from "../../assets/img/rib.pdf";
+import rib from "../../assets/pdf/rib.pdf";
 import { getDaysFromNow } from "../../helpers/dates";
 import Price from "./Booking/Price";
 
 const Success = () => {
-  const { total, booked, selectedDates } =
-    useBookingContext();
+  const { total, booked, selectedDates } = useBookingContext();
 
   const navigate = useNavigate();
 

@@ -130,11 +130,11 @@ EOF;
         $mail->addReplyTo($reply);
 
     if ($isRib) {
-        $mail->addAttachment('/var/www/tidolasab/src/assets/img/rib.pdf', 'rib.pdf');
+        $mail->addAttachment('/var/www/tidolasab/src/assets/pdf/rib.pdf', 'rib.pdf');
     }
 
     if ($iscontract) {
-        $mail->addAttachment('/var/www/tidolasab/src/assets/img/contrat_location_tmp.pdf', 'contrat_location.pdf');
+        $mail->addAttachment('/var/www/tidolasab/src/assets/pdf/contrat_location_tmp.pdf', 'contrat_location.pdf');
     }
 
     // Envoi de l'email
