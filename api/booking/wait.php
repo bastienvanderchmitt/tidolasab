@@ -14,9 +14,10 @@ try {
 
         // Send email to client
         $to = $client->email;
+        $name = $client->nom . ' ' . $client->prenom;
         $subject = 'Tidolasab - Réservation en cours';
-        $message = "<h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p>";
-        sendEmail($to, $subject, $message, true);
+        $message = "<h4>Bonjour $name,</h4><p>Merci pour votre confiance.</p><p>Votre réservation est en cours de validation (en attente).</p>";
+        sendEmail($to, $subject, $message);
 
         $connexion->commit();
         http_response_code(200);
