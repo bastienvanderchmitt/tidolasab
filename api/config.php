@@ -89,9 +89,9 @@ function sendEmail($to, $subject, $message, $isRib = false, $iscontract = false,
   <head>
     <style>
       .body-container {
-        background-color: #b2dfdb;
+        background-color: #b2dfdb !important;
         font-family: Arial, sans-serif;
-        padding: 40px;
+        padding: 40px !important;
       }
       .container {
         width: 80%;
