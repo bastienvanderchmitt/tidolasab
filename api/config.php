@@ -1,6 +1,6 @@
 <?php
 
-$env = 'DEV';
+$env = 'PROD';
 $root = $env === 'DEV' ? '/var/www/tidolasab/src/assets/pdf' : '/var/www/tidolasab.com/htdocs';
 define('SALT','6454gb94z!fvez,;mwgez.iop*-fge54');
 
