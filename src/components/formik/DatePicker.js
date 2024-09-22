@@ -16,10 +16,10 @@ const DatePicker = ({ formRef }) => {
   const reserved = useMemo(
     () =>
       bookings?.map((b) => {
-        const start = new Date(b.date_arrivee);
+        const start = new Date(b.date_arrivee + " 00:00:00 GMT+0200");
         start.setHours(0);
-        const end = new Date(b.date_depart);
-        start.setHours(0);
+        const end = new Date(b.date_depart + " 00:00:00 GMT+0200");
+        end.setHours(0);
         return {
           startDate: start,
           endDate: end,

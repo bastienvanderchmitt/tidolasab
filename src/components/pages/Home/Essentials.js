@@ -75,11 +75,7 @@ const Essentials = () => {
               icon={faSwimmingPool}
               text="Directement dans le jardin, devant votre terrasse."
             />
-            <Essential
-              title="Climatisation"
-              icon={faWind}
-              text="Dans tout le logement."
-            />
+            <Essential title="Climatisation" icon={faWind} />
           </Row>
           <Row>
             <Essential
