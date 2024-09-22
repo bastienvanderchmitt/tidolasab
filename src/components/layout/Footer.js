@@ -47,20 +47,20 @@ const Footer = () => {
           </Col>
         </Row>
         <Row>
-          <Col className="footer-col">© Copyright Tidolasab.</Col>
-          <Col className="footer-col">
-            <Row>
-              <Col>
-                <a href="/privacy">Confidentialité</a>
-              </Col>
-              {/*<Col>*/}
-              {/*  <a href="/terms-of-use">Conditions d'utilisation</a>*/}
-              {/*</Col>*/}
-              {/*<Col>*/}
-              {/*  <a href="/policy">Politique</a>*/}
-              {/*</Col>*/}
-            </Row>
-          </Col>
+          <Col className="py-4">© Copyright Tidolasab.</Col>
+          {/*<Col className="footer-col">*/}
+          {/*  <Row>*/}
+          {/*<Col>*/}
+          {/*  <a href="/privacy">Confidentialité</a>*/}
+          {/*</Col>*/}
+          {/*<Col>*/}
+          {/*  <a href="/terms-of-use">Conditions d'utilisation</a>*/}
+          {/*</Col>*/}
+          {/*<Col>*/}
+          {/*  <a href="/policy">Politique</a>*/}
+          {/*</Col>*/}
+          {/*</Row>*/}
+          {/*</Col>*/}
         </Row>
       </Container>
     </section>
