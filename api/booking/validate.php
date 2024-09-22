@@ -20,10 +20,11 @@ try {
         // Send email to client
         $to = $reservation->email;
         $arrivee = $reservation->date_arrivee;
-        $depart = $reservation->depart;
-        $name = $reservation->nom + $reservation->prenom;
-        $nbr = $reservation->adultes + $reservation->enfants;
+        $depart = $reservation->date_depart;
+        $name = $reservation->nom . ' ' . $reservation->prenom;
+        $nbr = (int)$reservation->adultes + (int)$reservation->enfants;
         $total = $reservation->prix_total;
+        $half = $total / 2;
         $subject = 'Tidolasab - Réservation validée !';
         $message = "<p>Bonjour $name,</p>
                     <p>Nous sommes ravis de vous confirmer votre réservation.</p>
@@ -45,17 +46,15 @@ try {
                       </tr>
                       <tr>
                         <td>Prix total :</td>
-                        <td>$total</td>
+                        <td>$total €</td>
                       </tr>
-                    </table>
-                    <table>
                       <tr>
                         <td>Acompte versé :</td>
-                        <td>$nbr</td>
+                        <td>$half €</td>
                       </tr>
                       <tr>
                         <td>Solde à régler :</td>
-                        <td>$nbr</td>
+                        <td>$half €</td>
                       </tr>
                     </table>";
         sendEmail($to, $subject, $message);

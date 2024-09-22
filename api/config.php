@@ -1,6 +1,7 @@
 <?php
 
 $env = 'DEV';
+$root = $env === 'DEV' ? '/var/www/tidolasab/src/assets/pdf' : '/var/www/tidolasab.com/htdocs';
 define('SALT','6454gb94z!fvez,;mwgez.iop*-fge54');
 
 /**
@@ -65,6 +66,7 @@ function sendEmail($to, $subject, $message, $isRib = false, $iscontract = false,
     global $smtpUsername;
     global $smtpPassword;
     global $smtpPort;
+    global $root;
 
     // Création de l'objet PHPMailer
     $mail = new PHPMailer();
@@ -130,11 +132,11 @@ EOF;
         $mail->addReplyTo($reply);
 
     if ($isRib) {
-        $mail->addAttachment('/var/www/tidolasab/src/assets/pdf/rib.pdf', 'rib.pdf');
+        $mail->addAttachment("$root/rib.pdf", 'rib.pdf');
     }
 
     if ($iscontract) {
-        $mail->addAttachment('/var/www/tidolasab/src/assets/pdf/contrat_location.pdf', 'contrat_location.pdf');
+        $mail->addAttachment("$root/contrat_location.pdf", 'contrat_location.pdf');
     }
 
     // Envoi de l'email
