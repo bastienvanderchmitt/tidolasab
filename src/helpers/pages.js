@@ -44,7 +44,7 @@ export const pages = {
     image: "contact_banner.jpeg",
   },
   success: {
-    title: "Réservation validée",
+    title: "Félicitations",
     subtitle: null,
     description: null,
     image: "activities_banner.jpeg",
