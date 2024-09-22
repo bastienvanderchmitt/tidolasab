@@ -8,8 +8,11 @@ import caroussel_4 from "../../../assets/img/caroussel/caroussel_4.jpeg";
 import caroussel_5 from "../../../assets/img/caroussel/caroussel_5.jpeg";
 import caroussel_6 from "../../../assets/img/caroussel/caroussel_6.jpeg";
 import caroussel_7 from "../../../assets/img/caroussel/caroussel_7.jpeg";
+import { useTranslation } from "react-i18next";
 
 const Preview = () => {
+  const { t } = useTranslation();
+
   const settings = {
     dots: false,
     infinite: false,
@@ -47,15 +50,9 @@ const Preview = () => {
         <Row className="p-4 text-center preview">
           <Col className="preview-content align-self-center">
             <img className="palm-tree" alt="palm_tree" src={palm_tree} />
-            <h4 className="title-4 pt-4">BIENVENUE A TI' DOLA SAB</h4>
-            <h4 className="title-2 pt-2">
-              Dans l’une des plus authentiques et des plus belles îles de la
-              Guadeloupe, au coeur des Caraïbes
-            </h4>
-            <p className="pt-5">
-              Venez prendre le temps de découvrir les charmes authentiques de
-              Marie-Galante, ses habitants et la culture antillaise.
-            </p>
+            <h4 className="title-4 pt-4">{t("preview.welcome")}</h4>
+            <h4 className="title-2 pt-2">{t("preview.title")}</h4>
+            <p className="pt-5">{t("preview.subtitle")}</p>
           </Col>
         </Row>
         <Row>
@@ -85,10 +82,7 @@ const Preview = () => {
                 </div>
               </Slider>
             </div>
-            <h4 className="aurore pt-3">
-              L'authenticité de la vie aux Antilles, un charme pittoresque et
-              d'innombrables plages de sable blanc.
-            </h4>
+            <h4 className="aurore pt-3">{t("preview.description")}</h4>
           </Col>
         </Row>
       </Container>

@@ -9,10 +9,10 @@ const Contact = () => {
         <Col lg={6} className="informations">
           <h4 className="title-4 pt-4">Informations</h4>
           <h5 className="title-2 pt-2">Ti' Dola Sab</h5>
-          <p>1212 Morne Lolo</p>
-          <p>97112, Grand Bourg</p>
+          <p>Morne Lolo</p>
+          <p>97112 Grand-Bourg</p>
           <p>
-            <strong>Téléphone:</strong>
+            <strong>Téléphone:</strong>{" "}
             <a href="tel:0690648904">06 90 64 89 04</a>
             <br />
             <strong>Email:</strong>{" "}

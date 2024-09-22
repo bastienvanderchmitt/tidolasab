@@ -134,7 +134,7 @@ EOF;
     }
 
     if ($iscontract) {
-        $mail->addAttachment('/var/www/tidolasab/src/assets/pdf/contrat_location_tmp.pdf', 'contrat_location.pdf');
+        $mail->addAttachment('/var/www/tidolasab/src/assets/pdf/contrat_location.pdf', 'contrat_location.pdf');
     }
 
     // Envoi de l'email

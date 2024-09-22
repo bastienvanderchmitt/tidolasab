@@ -16,11 +16,15 @@ import { useCallback, useEffect, useMemo } from "react";
 import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useOutlet } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Menu = () => {
+  // TODO :
+  // Eclaircir page acceuil
   const [isOpen, toggle] = useToggle(false);
   const [isFixed, toggleFixed] = useToggle(false);
 
+  const { t } = useTranslation();
   const outlets = useOutlet();
 
   const params = useMemo(
@@ -63,12 +67,15 @@ const Menu = () => {
             <Row className="p-2">
               <Col>
                 <Nav pills style={{ justifyContent: "center" }}>
-                  <CustomNavItem link="/" text="Accueil" />
-                  <CustomNavItem link="/booking" text="Réservation" />
-                  <CustomNavItem link="/story" text="Histoire" />
-                  <CustomNavItem link="/activities" text="Activités" />
-                  <CustomNavItem link="/photos" text="Photos" />
-                  <CustomNavItem link="/contact" text="Contact" />
+                  <CustomNavItem link="/" text={t("menu.home")} />
+                  <CustomNavItem link="/booking" text={t("menu.booking")} />
+                  <CustomNavItem link="/story" text={t("menu.history")} />
+                  <CustomNavItem
+                    link="/activities"
+                    text={t("menu.activities")}
+                  />
+                  <CustomNavItem link="/photos" text={t("menu.photos")} />
+                  <CustomNavItem link="/contact" text={t("menu.contact")} />
                 </Nav>
               </Col>
             </Row>
@@ -78,9 +85,9 @@ const Menu = () => {
           <Row className="pt-4">
             <Col>
               <Nav pills>
-                <CustomNavItem link="/" text="Accueil" />
-                <CustomNavItem link="/booking" text="Réservation" />
-                <CustomNavItem link="/story" text="Histoire" />
+                <CustomNavItem link="/" text={t("menu.home")} />
+                <CustomNavItem link="/booking" text={t("menu.booking")} />
+                <CustomNavItem link="/story" text={t("menu.history")} />
               </Nav>
             </Col>
             <Col className="logo-col">
@@ -90,9 +97,9 @@ const Menu = () => {
             </Col>
             <Col>
               <Nav pills>
-                <CustomNavItem link="/activities" text="Activités" />
-                <CustomNavItem link="/photos" text="Photos" />
-                <CustomNavItem link="/contact" text="Contact" />
+                <CustomNavItem link="/activities" text={t("menu.activities")} />
+                <CustomNavItem link="/photos" text={t("menu.photos")} />
+                <CustomNavItem link="/contact" text={t("menu.contact")} />
               </Nav>
             </Col>
           </Row>
@@ -120,12 +127,12 @@ const Menu = () => {
                 />
               </div>
               <Nav navbar pills>
-                <CustomNavItem link="/" text="Accueil" />
-                <CustomNavItem link="/booking" text="Réservation" />
-                <CustomNavItem link="/story" text="Histoire" />
-                <CustomNavItem link="/activities" text="Activités" />
-                <CustomNavItem link="/photos" text="Photos" />
-                <CustomNavItem link="/contact" text="Contact" />
+                <CustomNavItem link="/" text={t("menu.home")} />
+                <CustomNavItem link="/booking" text={t("menu.booking")} />
+                <CustomNavItem link="/story" text={t("menu.history")} />
+                <CustomNavItem link="/activities" text={t("menu.activities")} />
+                <CustomNavItem link="/photos" text={t("menu.photos")} />
+                <CustomNavItem link="/contact" text={t("menu.contact")} />
               </Nav>
             </Collapse>
           </Navbar>

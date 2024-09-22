@@ -26,30 +26,28 @@ const Activities = () => {
     {
       title: "Plages",
       img: location_20,
-      description:
-        "Découvrez les des plus belles plages de l'île, avec des eaux cristallines et du sable fin.",
+      description: "Découvrez ses eaux cristallines et son sable fin.",
       location: "Anse Bambou",
     },
     {
       title: "Rhumeries",
       img: location_10_square,
       description:
-        "Partez à la découverte des trois distilleries de Marie-Galante, et apprenez-en plus sur la production de rhum.",
+        "Partez à la découverte des trois distilleries de Marie-Galante, et apprenez-en plus sur la production et la dégustation de ses différents rhum.",
       location: "Capesterre et Grand-Bourg",
     },
     {
       title: "Caye Plate",
       img: location_6_square,
-      description:
-        "D'une rare beauté et vertigineux, la falaise Caye Plate est l'un des plus beaux sites à visiter à Marie-Galante.",
+      description: "D'une rare beauté et vertigineuse, la falaise Caye Plate.",
       location: "Saint-Louis",
     },
     {
-      title: "Vieux Fort",
+      title: "Îlet de Vieux Fort",
       img: location_4_square,
       description:
-        "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels !",
-      location: "Îlet de Vieux Fort",
+        "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels!",
+      location: "Vieux Fort",
     },
     {
       title: "Habitation Roussel Trianon",

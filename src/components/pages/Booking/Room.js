@@ -9,6 +9,7 @@ import {
   faBathtub,
   faHouse,
   faSquareParking,
+  faWind,
 } from "@fortawesome/free-solid-svg-icons";
 import air_conditioning from "../../../assets/img/icons/air_conditioning.png";
 import breakfast from "../../../assets/img/icons/breakfast.png";
@@ -40,7 +41,7 @@ const Amenity = ({ text, icon }) => {
 
 const amenities = [
   { icon: wifi_signal, text: "Wifi" },
-  { icon: air_conditioning, text: "Brasseurs d'air" },
+  { icon: air_conditioning, text: "Brasseurs d'air / Climatisation" },
   { icon: stove, text: "Plaques à induction" },
   { icon: microwave, text: "Micro-ondes" },
   { icon: coffee_machine, text: "Cafetière" },
@@ -56,7 +57,7 @@ const amenities = [
 const Room = () => {
   return (
     <Row className="room">
-      <h4 className="title-2 pt-2">Case Ti'Dola Sab</h4>
+      <h4 className="title-2 pt-2">Case Ti' Dola Sab</h4>
       <div className="title-4">Jardin tropical / Calme & Reposant / Nature</div>
       <Row>
         <Col className="room-content">
@@ -68,6 +69,10 @@ const Room = () => {
             <li>
               <FontAwesomeIcon icon={faWaterLadder} className="me-2" />
               <span>Piscine</span>
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faWind} className="me-2" />
+              <span>Climatisation</span>
             </li>
             <li>
               <FontAwesomeIcon icon={faBed} className="me-2" />
@@ -107,7 +112,7 @@ const Room = () => {
           sera climatisé.
         </p>
         <p>
-          Dans un cadre de verdure luxuriante, notre Case Ti'Dola Sab est une
+          Dans un cadre de verdure luxuriante, notre Case Ti' Dola Sab est une
           habitation indépendante toute en bois, construction récente avec tout
           le confort nécessaire.
         </p>
@@ -117,10 +122,11 @@ const Room = () => {
           Votre case est face à la forêt domaniale, écrin de verdure calme,
           reposant et dépaysant pour les amoureux de la nature.
         </p>
+        <p>Il ne vous reste plus qu'à profiter d'instants magiques.</p>
         <p>
-          Il ne vous reste plus qu'à profiter d'instants magiques. Notre plaisir
-          : vous accueillir et partager notre paradis. Une corbeille de bienvenu
-          vous attend à votre arrivée (à partir de 16h et départ jusqu'à 11h).
+          Notre plaisir : vous accueillir et partager notre paradis. Une
+          corbeille de bienvenue vous attend à votre arrivée (à partir de 14h et
+          départ jusqu'à 11h).
         </p>
         <h5 className="pt-3 marcellus">
           <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />
@@ -129,14 +135,14 @@ const Room = () => {
         <p>
           Nous sommes très bien situé pour visiter et parcourir l'île avec notre
           emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et
-          St Louis sont à 10min de Ti'Dola Sab. Pour faire vos courses, 2min à
+          St Louis sont à 10mn de Ti' Dola Sab. Pour faire vos courses, 2mn à
           pied et vous pouvez vous ravitailler sur Morne Lolo. Une des trois
-          distilleries est à 2 mn en voiture.
+          distilleries est à 2mn en voiture.
         </p>
       </Row>
       <Row>
         <h4 className="title-3 pt-4">
-          Les plus belles plages de l'île sont à 10min :
+          Les plus belles plages de l'île sont à 10mn :
         </h4>
         <div className="room-list">
           <Badge>Folle Anse</Badge>
@@ -144,12 +150,12 @@ const Room = () => {
           <Badge>Anse de Mays</Badge>
           <Badge>Anse Canot</Badge>
           <Badge>Vieux Fort</Badge>
-          <Badge>la Feuillère et petite Ans</Badge>
-          <Badge>Grand Bourg</Badge>
+          <Badge>la Feuillère et petite Anse</Badge>
+          <Badge>Grand-Bourg</Badge>
         </div>
       </Row>
       <Row className="amenities">
-        <h4 className="title-2 pt-5 pb-4">Équipements de la chambre</h4>
+        <h4 className="title-2 pt-5 pb-4">Équipements du gîte</h4>
         {amenities.map((amenity, key) => (
           <Amenity icon={amenity.icon} text={amenity.text} key={key} />
         ))}

@@ -10,35 +10,55 @@ try {
         $sql = "UPDATE reservations SET statut = 'validée' WHERE id = :id;";
         $response = $connexion->safeExecute($sql, ['id' => $data->id]);
 
-        $client = $connexion->safeFetch("SELECT c.* FROM clients c INNER JOIN reservations_clients rc ON c.id = rc.id_client AND rc.id_reservation = :id_reservation;", ['id_reservation' => $data->id]);
+        $reservation = $connexion->safeFetch("SELECT c.*, r.* 
+                                               FROM reservations r 
+                                                    INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
+                                                    INNER JOIN clients c ON c.id = rc.id_client
+                                               WHERE r.id = :id_reservation;",
+            ['id_reservation' => $data->id]);
 
         // Send email to client
-        $to = $client->email;
+        $to = $reservation->email;
+        $arrivee = $reservation->date_arrivee;
+        $depart = $reservation->depart;
+        $name = $reservation->nom + $reservation->prenom;
+        $nbr = $reservation->adultes + $reservation->enfants;
+        $total = $reservation->prix_total;
         $subject = 'Tidolasab - Réservation validée !';
-        $message = "<p>Bonjour [Nom du client],</p>
-                    <p>Nous sommes ravis de vous confirmer votre réservation de gîte pour les dates du [Date d'arrivée] au [Date de départ].</p>
+        $message = "<p>Bonjour $name,</p>
+                    <p>Nous sommes ravis de vous confirmer votre réservation.</p>
                     <table>
                       <tr>
-                        <th>Détails de la réservation</th>
+                        <th>Détails</th>
                       </tr>
                       <tr>
                         <td>Nombre de personnes :</td>
-                        <td>[Nombre de personnes]</td>
+                        <td>$nbr</td>
                       </tr>
                       <tr>
                         <td>Date d'arrivée :</td>
-                        <td>[Date d'arrivée]</td>
+                        <td>$arrivee</td>
                       </tr>
                       <tr>
                         <td>Date de départ :</td>
-                        <td>[Date de départ]</td>
+                        <td>$depart</td>
                       </tr>
                       <tr>
                         <td>Prix total :</td>
-                        <td>[Prix total]</td>
+                        <td>$total</td>
+                      </tr>
+                    </table>
+                    <table>
+                      <tr>
+                        <td>Acompte versé :</td>
+                        <td>$nbr</td>
+                      </tr>
+                      <tr>
+                        <td>Solde à régler :</td>
+                        <td>$nbr</td>
                       </tr>
                     </table>";
-        sendEmail($to, $subject, $message,false,true);
+        sendEmail($to, $subject, $message);
 
         $connexion->commit();
         http_response_code(200);

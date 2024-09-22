@@ -7,6 +7,8 @@ import {
   faBathtub,
   faSquareParking,
   faHouse,
+  faWaterLadder,
+  faWind,
 } from "@fortawesome/free-solid-svg-icons";
 import accommodation from "../../../assets/img/room/view_2.jpeg";
 import { Link } from "react-router-dom";
@@ -47,12 +49,20 @@ const Accommodation = () => {
           <div className="title-4">
             Jardin tropical / Calme & Reposant / Nature
           </div>
-          <h4 className="title-2 pt-2">Case Ti'Dola Sab</h4>
+          <h4 className="title-2 pt-2">Case Ti' Dola Sab</h4>
           <div className="">
             <ul>
               <li>
                 <FontAwesomeIcon icon={faUsers} className="me-2" />
                 <span>2 personnes</span>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faWaterLadder} className="me-2" />
+                <span>Piscine</span>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faWind} className="me-2" />
+                <span>Climatisation</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faBed} className="me-2" />

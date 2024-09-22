@@ -9,6 +9,8 @@ import {
   faUmbrellaBeach,
   faBowlRice,
   faMartiniGlassCitrus,
+  faWind,
+  faSwimmingPool,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Essential = ({ title, text, icon }) => {
@@ -51,7 +53,7 @@ const Essentials = () => {
           <Row>
             <Col>
               <h4 className="title-2 pt-2">
-                L'essentiel pour un séjour Douillet et Confortable
+                L'essentiel pour un séjour douillet et confortable
               </h4>
             </Col>
           </Row>
@@ -65,6 +67,18 @@ const Essentials = () => {
               title="Prêt de matériel"
               icon={faUmbrellaBeach}
               text="Transats à disposition pour des moments de farniente."
+            />
+          </Row>
+          <Row className="pt-1 pb-2">
+            <Essential
+              title="Piscine"
+              icon={faSwimmingPool}
+              text="Directement dans le jardin, devant votre terrasse."
+            />
+            <Essential
+              title="Climatisation"
+              icon={faWind}
+              text="Dans tout le logement."
             />
           </Row>
           <Row>
