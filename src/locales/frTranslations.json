@@ -1,0 +1,16 @@
+{
+  "menu" : {
+    "home": "Accueil",
+    "booking": "Réservation",
+    "history": "Histoire",
+    "activities": "Activités",
+    "photos": "Photos",
+    "contact": "Contact"
+  },
+  "preview" : {
+    "welcome": "BIENVENUE A TI' DOLA SAB",
+    "title": "Dans l’une des plus authentiques et des plus belles îles de la Guadeloupe, au coeur des Caraïbes",
+    "subtitle": "Venez prendre le temps de découvrir les charmes authentiques de Marie-Galante, ses habitants et la culture antillaise.",
+    "description": "L'authenticité de la vie aux Antilles, un charme pittoresque et d'innombrables plages de sable blanc.."
+  }
+}

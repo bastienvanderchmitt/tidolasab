@@ -33,9 +33,7 @@ const FormBooking = () => {
     });
   }, []);
 
-  const handleForm = async (values) => {
-    setAdults(values.adults);
-    setChild(values.children);
+  const handleForm = async () => {
     toggle();
   };
 
@@ -56,7 +54,7 @@ const FormBooking = () => {
         onSubmit={handleForm}
         enableReinitialize
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isSubmitting, onChange }) => (
           <Form onSubmit={handleSubmit} className="w-100">
             <div
               className="content-block-form with-action"
@@ -85,6 +83,7 @@ const FormBooking = () => {
                     name="adults"
                     label="Adultes"
                     helpText="13 ans et plus"
+                    onChange={(value) => setAdults(value)}
                     max={4}
                   />
                 </div>
@@ -94,6 +93,7 @@ const FormBooking = () => {
                     name="children"
                     label="Enfants"
                     helpText="De 2 à 12 ans"
+                    onChange={(value) => setChild(value)}
                     max={8}
                   />
                 </div>
@@ -118,9 +118,10 @@ const FormBooking = () => {
                   nuit et par adulte.
                 </p>
                 <p className="conditions">
-                  Envoi du contrat de location sous conditions de versement d'un
-                  acompte de 50% à la réservation (via virement bancaire). Le
-                  solde vous sera demandé 14 jours avant l'arrivée.
+                  Le contrat de location vous sera transmis avec une demande de
+                  versement d'un acompte de 50% (via virement bancaire) qui
+                  confirmeront votre réservation. Le solde vous sera demandé 14
+                  jours avant l'arrivée.
                 </p>
               </div>
             </div>

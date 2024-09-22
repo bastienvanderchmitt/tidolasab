@@ -49,12 +49,12 @@ const BookingContextProvider = ({ children }) => {
       setTotal(
         daysHighSeason * priceHightSeason +
           daysLowSeason * priceLowSeason +
-          days * touristTax,
+          days * adults * touristTax,
       );
     } else {
       setTotal(null);
     }
-  }, [days, daysHighSeason, daysLowSeason, setTotal]);
+  }, [days, adults, daysHighSeason, daysLowSeason, setTotal]);
 
   return (
     <BookingContext.Provider

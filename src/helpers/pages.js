@@ -20,7 +20,7 @@ export const pages = {
   },
   story: {
     title: "Histoire",
-    subtitle: "Qui sommes-nous ?",
+    subtitle: null,
     description: "Des amoureaux de cette île, tout simplement.",
     image: "dolasab_beach_2.jpeg",
   },
@@ -31,7 +31,7 @@ export const pages = {
     image: "activities_banner.jpeg",
   },
   photos: {
-    title: "Galerie photo",
+    title: "Galerie photos",
     subtitle: null,
     description: "Logement et autres",
     image: "photos_banner.jpeg",

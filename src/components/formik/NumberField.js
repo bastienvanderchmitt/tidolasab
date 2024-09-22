@@ -16,6 +16,7 @@ const NumberField = ({
   helpText,
   append,
   max,
+  onChange,
   ...rest
 }) => {
   const { isSubmitting } = useFormikContext();
@@ -52,16 +53,22 @@ const NumberField = ({
         <div className="d-inline">
           <Button
             className="number-btn me-3"
-            onClick={() => setValue(meta.value > 0 ? meta.value - 1 : 0)}
+            onClick={async () => {
+              const val = meta.value > 1 ? meta.value - 1 : 1;
+              await setValue(val);
+              onChange(val);
+            }}
           >
             <FontAwesomeIcon icon={faMinus} />
           </Button>
           <div className="field-number-value d-inline-block">{meta.value}</div>
           <Button
             className="number-btn ms-3"
-            onClick={() =>
-              setValue(max && meta.value < max ? meta.value + 1 : meta.value)
-            }
+            onClick={async () => {
+              const val = max && meta.value < max ? meta.value + 1 : meta.value;
+              await setValue(val);
+              onChange(val);
+            }}
           >
             <FontAwesomeIcon icon={faPlus} />
           </Button>

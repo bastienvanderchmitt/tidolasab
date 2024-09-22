@@ -5,7 +5,7 @@ require_once('../api.php');
 global $data, $connexion;
 
 try {
-    $checkExisting = $connexion->safeFetchAll("SELECT * FROM reservations WHERE :date_arrivee BETWEEN date_arrivee AND date_depart OR :date_depart BETWEEN date_arrivee AND date_depart;", ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut]);
+    $checkExisting = $connexion->safeFetchAll("SELECT * FROM reservations WHERE statut = 'validée' AND :date_arrivee BETWEEN date_arrivee AND date_depart OR :date_depart BETWEEN date_arrivee AND date_depart;", ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut]);
 
     if (!count($checkExisting)) {
         $connexion->beginTransaction();
@@ -25,8 +25,11 @@ try {
         // Send email with RIB to client
         $to = $data->email;
         $subject = 'Tidolasab - Réservation en cours';
-        $message = "<h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Votre réservation est en cours de validation. Voici le RIB en PJ.</p>";
-        sendEmail($to, $subject, $message, true);
+        $message = "<h4>Bonjour,</h4>
+                    <p>Nous vous remercions pour votre confiance.</p>
+                    <p>Votre réservation est en cours de validation.</p>
+                    <p>Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et de votre acompte de 50%.</p>";
+        sendEmail($to, $subject, $message, true, true);
 
         // Send email to admin
 //        $to = "tidolasab@gmail.com";

@@ -78,7 +78,7 @@ const Price = ({ withParticipants }) => {
       {days && (
         <div className="content-detail">
           <span className="title-sub-total">Taxe de séjour :</span>
-          <span className="sub-total">{days * touristTax} €</span>
+          <span className="sub-total">{days * adults * touristTax} €</span>
         </div>
       )}
       <div className="content-total">

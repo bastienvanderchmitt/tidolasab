@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "home": "Home",
+    "booking": "Booking",
+    "history": "History",
+    "activities": "Activities",
+    "photos": "Photos",
+    "contact": "Contact"
+  },
+  "preview": {
+    "welcome": "Welcome to Ti' Dola Sab",
+    "title": "In one of the most authentic and beautiful islands of Guadeloupe, in the heart of the Caribbean",
+    "subtitle": "Come and take the time to discover the authentic charms of Marie-Galante, its inhabitants and the Caribbean culture",
+    "description": "The authenticity of life in the Caribbean, a picturesque charm and countless white sandy beaches"
+  }
+}

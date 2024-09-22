@@ -16,9 +16,11 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "formik": "^2.4.6",
+    "i18next": "^23.14.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
+    "react-i18next": "^15.0.1",
     "react-images": "^1.2.0-beta.7",
     "react-parallax": "^3.5.1",
     "react-photo-gallery": "^8.0.0",
@@ -54,5 +56,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

@@ -29,7 +29,7 @@ const CreateUser = () => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      username: Yup.string().required("Veuillez indiquer un login."),
+      username: Yup.string().required("Veuillez indiquer un username."),
       email: Yup.string().required("Veuillez indiquer un email."),
       login: Yup.string().required("Veuillez indiquer un login."),
       password: Yup.string().required("Veuillez indiquer un mot de passe."),
