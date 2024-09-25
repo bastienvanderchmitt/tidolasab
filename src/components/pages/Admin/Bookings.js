@@ -18,6 +18,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { dateFormat } from "../../../helpers/dates";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -172,6 +173,7 @@ const AdminBooking = ({ bookings, reload }) => {
       <thead>
         <tr className="text-center">
           <th>Id</th>
+          <th>Nom</th>
           <th>Arrivée</th>
           <th>Départ</th>
           <th>Statut</th>
@@ -186,8 +188,9 @@ const AdminBooking = ({ bookings, reload }) => {
         {bookings?.map((b, i) => (
           <tr key={i} className="text-center">
             <th scope="row">{b.id}</th>
-            <td>{b.date_arrivee}</td>
-            <td>{b.date_depart}</td>
+            <td>{b.nom_client}</td>
+            <td>{dateFormat(b.date_arrivee)}</td>
+            <td>{dateFormat(b.date_depart)}</td>
             <td>
               <StatusBadge status={b.statut} />
             </td>
@@ -231,7 +234,7 @@ const AdminBooking = ({ bookings, reload }) => {
         ))}
         <tr>
           <td
-            colSpan={7}
+            colSpan={8}
             style={{ backgroundColor: "white", borderRight: "none" }}
           >
             <strong>Total :</strong>

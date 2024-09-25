@@ -13,6 +13,7 @@ const Price = ({ withParticipants }) => {
     days,
     daysHighSeason,
     daysLowSeason,
+    discount,
     selectedDates,
     adults,
     child,
@@ -81,6 +82,12 @@ const Price = ({ withParticipants }) => {
           <span className="sub-total">{days * adults * touristTax} €</span>
         </div>
       )}
+      {discount ? (
+        <div className="content-detail text-success">
+          <span className="title-sub-total">Réduction :</span>
+          <span className="sub-total">- {discount} €</span>
+        </div>
+      ) : null}
       <div className="content-total">
         <span className="title-total">Total :</span>
         <span className="total">{total ? total + " €" : ""}</span>

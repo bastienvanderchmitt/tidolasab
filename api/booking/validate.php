@@ -24,7 +24,10 @@ try {
         $name = $reservation->nom . ' ' . $reservation->prenom;
         $nbr = (int)$reservation->adultes + (int)$reservation->enfants;
         $total = $reservation->prix_total;
-        $half = $total / 2;
+        $half = $total / 2; // TODO enregistrer en base l'acompte payé et calcule le reste
+        $dateArrivee = new DateTime($arrivee);
+        $dateArrivee->modify('-14 days');
+        $date_solde = $dateArrivee->format('Y-m-d');
         $subject = 'Tidolasab - Réservation validée !';
         $message = "<p>Bonjour $name,</p>
                     <p>Nous sommes ravis de vous confirmer votre réservation.</p>
@@ -56,7 +59,8 @@ try {
                         <td>Solde à régler :</td>
                         <td>$half €</td>
                       </tr>
-                    </table>";
+                    </table>
+                    <p>Solde à régler avant le $date_solde</p>";
         sendEmail($to, $subject, $message);
 
         $connexion->commit();

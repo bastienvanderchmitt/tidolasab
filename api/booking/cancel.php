@@ -15,7 +15,7 @@ try {
         // Send email to client
         $to = $client->email;
         $subject = 'Tidolasab - Réservation annulée';
-        $message = "<h4>Bonjour,</h4><p> merci pour votre confiance.</p><p>Malheureusement, votre réservation viens d'être annulée.</p>";
+        $message = "<h4>Bonjour,</h4><p>Malheureusement, votre réservation viens d'être annulée.</p>";
         sendEmail($to, $subject, $message);
 
 

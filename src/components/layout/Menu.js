@@ -110,6 +110,7 @@ const Menu = () => {
             color="faded white"
             light
             fixed={isFixed || isOpen ? "top" : null}
+            style={{ maxWidth: "85px" }}
           >
             <NavbarToggler onClick={toggle}>
               <FontAwesomeIcon

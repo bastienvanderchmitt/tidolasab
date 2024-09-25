@@ -54,9 +54,12 @@ const Success = () => {
                 Un email avec le{" "}
                 <span className="bold">contrat de location</span> et notre{" "}
                 <span className="bold">RIB</span> vient de vous être envoyé sur
-                l'adresse que vous avez saisi. Votre séjour vous sera confirmé à
-                réception de votre contrat et de votre{" "}
-                <span className="bold">acompte de 50%</span> ({total / 2} €).
+                l'adresse que vous avez saisi.
+              </p>
+              <p className="px-4">
+                Votre séjour vous sera confirmé à réception de votre contrat et
+                de votre <span className="bold">acompte de 50%</span> (
+                {total / 2} €).
               </p>
               <p className="px-4">
                 Le <span className="bold">solde restant</span> vous sera demandé{" "}

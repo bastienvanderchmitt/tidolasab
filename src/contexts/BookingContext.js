@@ -44,17 +44,28 @@ const BookingContextProvider = ({ children }) => {
       : null;
   }, [selectedDates]);
 
+  const discount = useMemo(() => {
+    const freeHalfDays = Math.floor(days / 7);
+    return Math.round(
+      freeHalfDays *
+        ((daysHighSeason * priceHightSeason + daysLowSeason * priceLowSeason) /
+          days /
+          2),
+    );
+  }, [days, daysHighSeason, daysLowSeason]);
+
   useEffect(() => {
     if (days) {
       setTotal(
         daysHighSeason * priceHightSeason +
           daysLowSeason * priceLowSeason +
-          days * adults * touristTax,
+          days * adults * touristTax -
+          discount,
       );
     } else {
       setTotal(null);
     }
-  }, [days, adults, daysHighSeason, daysLowSeason, setTotal]);
+  }, [days, adults, daysHighSeason, daysLowSeason, discount, setTotal]);
 
   return (
     <BookingContext.Provider
@@ -73,6 +84,7 @@ const BookingContextProvider = ({ children }) => {
         setBooked,
         daysHighSeason,
         daysLowSeason,
+        discount,
       }}
     >
       {children}
