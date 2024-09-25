@@ -24,11 +24,13 @@ try {
 
         // Send email with RIB to client
         $to = $data->email;
+        $amount = (int)$data->total / 2;
         $subject = 'Tidolasab - Réservation en cours';
         $message = "<h4>Bonjour,</h4>
                     <p>Nous vous remercions pour votre confiance.</p>
                     <p>Votre réservation est en cours de validation.</p>
-                    <p>Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et de votre acompte de 50%.</p>";
+                    <p>Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et de votre acompte de 50% ($amount €).</p>
+                    <p>Le solde restant vous sera demandé 14 jours avant l'arrivée.</p>";
         sendEmail($to, $subject, $message, true, true);
 
         // Send email to admin

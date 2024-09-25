@@ -6,7 +6,9 @@ global $connexion;
 
 try {
 
-    $result = ['bookings' => $connexion->safeFetchAll("SELECT * FROM reservations;")];
+    $result = ['bookings' => $connexion->safeFetchAll("SELECT CONCAT(c.nom, ' ', c.prenom) as nom_client, r.* FROM reservations r
+                                                                INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
+                                                                INNER JOIN clients c ON c.id = rc.id_client;")];
     http_response_code(200);
 
 } catch (Exception $e) {

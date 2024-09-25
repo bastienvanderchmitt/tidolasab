@@ -14,7 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import location_23 from "../../assets/img/locations/location_23.jpeg";
 import location_9 from "../../assets/img/locations/location_9.jpeg";
 import location_20 from "../../assets/img/locations/location_20.jpeg";
-import location_15 from "../../assets/img/locations/location_15.jpeg";
+// import location_15 from "../../assets/img/locations/location_15.jpeg";
+import location_25 from "../../assets/img/locations/location_25.jpeg";
 import location_24 from "../../assets/img/locations/location_24.jpeg";
 import location_3_square from "../../assets/img/locations/location_3_square.jpeg";
 import location_4_square from "../../assets/img/locations/location_4_square.jpeg";
@@ -51,7 +52,7 @@ const Activities = () => {
     },
     {
       title: "Habitation Roussel Trianon",
-      img: location_15,
+      img: location_25,
       description:
         "Découvrez l'histoire de l'Habitation Roussel Trianon, une ancienne sucrerie, et admirez l'architecture créole de l'île.",
       location: "Grand-Bourg",

@@ -72,3 +72,8 @@ export const getDaysFromNow = (date) => {
   const today = startOfDay(new Date());
   return differenceInDays(date, today);
 };
+
+export const dateFormat = (date) => {
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+};
