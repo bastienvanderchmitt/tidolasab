@@ -16,9 +16,9 @@ const DatePicker = ({ formRef }) => {
   const reserved = useMemo(
     () =>
       bookings?.map((b) => {
-        const start = new Date(b.date_arrivee + " 00:00:00 GMT+0200");
+        const start = new Date(b.date_arrivee);
         start.setHours(0);
-        const end = new Date(b.date_depart + " 00:00:00 GMT+0200");
+        const end = new Date(b.date_depart);
         end.setHours(0);
         return {
           startDate: start,
@@ -27,6 +27,8 @@ const DatePicker = ({ formRef }) => {
       }),
     [bookings],
   );
+
+  console.log("reserved", reserved);
 
   const handleChange = (e) => {
     e[0]?.setHours(14);
