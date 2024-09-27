@@ -8,7 +8,7 @@ export const pages = {
     ),
     subtitle: null,
     description:
-      "Le havre balnéaire de chaleur, de tranquillité et de convivialité",
+      "Havre balnéaire de chaleur, de tranquillité et de convivialité",
     image: "home_banner.jpeg",
   },
   booking: {
