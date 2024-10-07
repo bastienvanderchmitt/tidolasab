@@ -7,34 +7,38 @@ import useApi from "../../hooks/useApi";
 import { getValidatedBookings } from "../../api/booking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment-timezone";
 
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
 
   const [{ bookings }, isLoading] = useApi(getValidatedBookings);
 
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   const reserved = useMemo(
     () =>
       bookings?.map((b) => {
-        const start = new Date(b.date_arrivee);
-        start.setHours(0);
-        const end = new Date(b.date_depart);
-        end.setHours(0);
+        const startMoment = moment.tz(b.date_arrivee, tz).startOf("day");
+        const startDate = startMoment.toDate();
+
+        const endMoment = moment.tz(b.date_depart, tz).startOf("day");
+        const endDate = endMoment.toDate();
+
         return {
-          startDate: start,
-          endDate: end,
+          startDate,
+          endDate,
         };
       }),
-    [bookings],
+    [bookings, tz],
   );
-
-  console.log("reserved", reserved);
 
   const handleChange = (e) => {
     e[0]?.setHours(14);
     e[1]?.setHours(10);
     e[1]?.setMinutes(0);
     e[1]?.setSeconds(0);
+    console.log(e);
     setSelectedDates(e);
     if (e[1]) {
       const element = document.getElementById("booking-form-content");
