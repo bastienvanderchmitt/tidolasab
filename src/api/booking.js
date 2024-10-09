@@ -8,8 +8,8 @@ export const getBookings = () => {
   return appAxios.get("booking/getAll.php");
 };
 
-export const getValidatedBookings = () => {
-  return appAxios.get("booking/getValidated.php");
+export const getReservedBookings = () => {
+  return appAxios.get("booking/getReserved.php");
 };
 
 export const validate = (data) => {

@@ -5,8 +5,7 @@ require_once('../api.php');
 global $data, $connexion;
 
 try {
-    $checkExisting = $connexion->safeFetchAll("SELECT * FROM reservations WHERE statut = 'validée' AND :date_arrivee BETWEEN date_arrivee AND date_depart OR :date_depart BETWEEN date_arrivee AND date_depart;", ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut]);
-
+    $checkExisting = $connexion->safeFetchAll("SELECT * FROM reservations WHERE statut = :statut AND (:date_arrivee BETWEEN date_arrivee AND date_depart OR :date_depart BETWEEN date_arrivee AND date_depart);", ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut, 'statut' => 'validée']);
     if (!count($checkExisting)) {
         $connexion->beginTransaction();
 
@@ -31,11 +30,11 @@ try {
                     <p>Votre réservation est en cours de validation.</p>
                     <p>Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et de votre acompte de 50% ($amount €).</p>
                     <p>Le solde restant vous sera demandé 14 jours avant l'arrivée.</p>";
-        sendEmail($to, $subject, $message, true, true);
+        if (!$data->isAdmin)
+            sendEmail($to, $subject, $message, true, true);
 
         // Send email to admin
-//        $to = "tidolasab@gmail.com";
-        $to = "bastienvanderchmitt@gmail.com";
+        $to = "tidolasab@gmail.com";
         $subject = 'Nouvelle réservation !';
         $message = "<h4><a href='https://tidolasab/admin/booking/$bookingId'>Réservation</a> de $data->name $data->firstName</h4>
                     <ul>
@@ -49,7 +48,8 @@ try {
                         <li>Téléphone : $data->phone</li>
                         <li>Adresse : $address</li>
                     </ul>";
-        sendEmail($to, $subject, $message);
+        if (!$data->isAdmin)
+            sendEmail($to, $subject, $message);
 
         $connexion->commit();
 

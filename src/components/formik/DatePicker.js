@@ -4,31 +4,34 @@ import { fr } from "date-fns/locale";
 import { months } from "../../helpers/months";
 import { useBookingContext } from "../../contexts/BookingContext";
 import useApi from "../../hooks/useApi";
-import { getValidatedBookings } from "../../api/booking";
+import { getReservedBookings } from "../../api/booking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment-timezone";
 
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
 
-  const [{ bookings }, isLoading] = useApi(getValidatedBookings);
+  const [{ bookings }, isLoading] = useApi(getReservedBookings);
+
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   const reserved = useMemo(
     () =>
       bookings?.map((b) => {
-        const start = new Date(b.date_arrivee);
-        start.setHours(0);
-        const end = new Date(b.date_depart);
-        end.setHours(0);
+        const startMoment = moment.tz(b.date_arrivee, tz).startOf("day");
+        const startDate = startMoment.toDate();
+
+        const endMoment = moment.tz(b.date_depart, tz).startOf("day");
+        const endDate = endMoment.toDate();
+
         return {
-          startDate: start,
-          endDate: end,
+          startDate,
+          endDate,
         };
       }),
-    [bookings],
+    [bookings, tz],
   );
-
-  console.log("reserved", reserved);
 
   const handleChange = (e) => {
     e[0]?.setHours(14);

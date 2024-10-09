@@ -10,7 +10,7 @@ const Base = () => {
 
   return (
     <>
-      <Toaster />
+      <Toaster containerStyle={{ height: "100% !important" }} />
       <Button
         onClick={() =>
           i18n.changeLanguage(i18n.language === "fr" ? "en" : "fr")
