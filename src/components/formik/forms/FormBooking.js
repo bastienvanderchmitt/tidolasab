@@ -12,7 +12,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Price from "../../pages/Booking/Price";
 import { priceLowSeason } from "../../../helpers/env";
 
-const FormBooking = () => {
+const FormBooking = ({ callbackAdmin }) => {
   const { checkIn, checkOut, setAdults, setChild } = useBookingContext();
   const [isOpen, toggle] = useToggle();
 
@@ -117,18 +117,24 @@ const FormBooking = () => {
                   Une demi-journée offerte par semaine. Taxe de séjour de 2€ par
                   nuit et par adulte.
                 </p>
-                <p className="conditions">
-                  Le contrat de location vous sera transmis avec une demande de
-                  versement d'un acompte de 50% (via virement bancaire) qui
-                  confirmeront votre réservation. Le solde vous sera demandé 14
-                  jours avant l'arrivée.
-                </p>
+                {!callbackAdmin && (
+                  <p className="conditions">
+                    Le contrat de location vous sera transmis avec une demande
+                    de versement d'un acompte de 50% (via virement bancaire) qui
+                    confirmeront votre réservation. Le solde vous sera demandé
+                    14 jours avant l'arrivée.
+                  </p>
+                )}
               </div>
             </div>
           </Form>
         )}
       </Formik>
-      <FormClient isOpen={isOpen} toggle={toggle} />
+      <FormClient
+        isOpen={isOpen}
+        toggle={toggle}
+        callbackAdmin={callbackAdmin}
+      />
     </>
   );
 };

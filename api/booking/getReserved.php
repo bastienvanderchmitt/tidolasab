@@ -6,7 +6,7 @@ global $connexion;
 
 try {
 
-    $result = ['bookings' => $connexion->safeFetchAll("SELECT * FROM reservations WHERE statut = 'validée';")];
+    $result = ['bookings' => $connexion->safeFetchAll("SELECT * FROM reservations WHERE statut <> 'annulée';")];
     http_response_code(200);
 
 } catch (Exception $e) {

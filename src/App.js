@@ -5,14 +5,17 @@ import { allRoutes } from "./routes/allRoutes";
 import LayoutContextProvider from "./contexts/LayoutContext";
 import BookingContextProvider from "./contexts/BookingContext";
 import AdminContextProvider from "./contexts/AdminContext";
+import DialogContextProvider from "./contexts/DialogContext";
 
 function App() {
   return (
     <AdminContextProvider>
       <LayoutContextProvider>
-        <BookingContextProvider>
-          <RouterProvider router={createBrowserRouter(allRoutes)} />
-        </BookingContextProvider>
+        <DialogContextProvider>
+          <BookingContextProvider>
+            <RouterProvider router={createBrowserRouter(allRoutes)} />
+          </BookingContextProvider>
+        </DialogContextProvider>
       </LayoutContextProvider>
     </AdminContextProvider>
   );

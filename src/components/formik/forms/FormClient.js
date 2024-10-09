@@ -20,7 +20,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Price from "../../pages/Booking/Price";
 
-const FormClient = ({ isOpen, toggle }) => {
+const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
   const navigate = useNavigate();
 
   const { checkIn, checkOut, total, days, adults, child, setBooked } =
@@ -64,11 +64,16 @@ const FormClient = ({ isOpen, toggle }) => {
         adults: adults,
         total: total,
         days: days,
+        isAdmin: !!callbackAdmin,
       });
       if (res?.data?.bookingId) {
         toggle();
         setBooked(true);
-        navigate("/success");
+        if (!!callbackAdmin) {
+          callbackAdmin();
+        } else {
+          navigate("/success");
+        }
       }
     } catch (e) {
       toast.error(e.error || "Une erreur est survenue.");

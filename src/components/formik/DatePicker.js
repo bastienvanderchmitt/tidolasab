@@ -4,7 +4,7 @@ import { fr } from "date-fns/locale";
 import { months } from "../../helpers/months";
 import { useBookingContext } from "../../contexts/BookingContext";
 import useApi from "../../hooks/useApi";
-import { getValidatedBookings } from "../../api/booking";
+import { getReservedBookings } from "../../api/booking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment-timezone";
@@ -12,7 +12,7 @@ import moment from "moment-timezone";
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
 
-  const [{ bookings }, isLoading] = useApi(getValidatedBookings);
+  const [{ bookings }, isLoading] = useApi(getReservedBookings);
 
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -38,7 +38,6 @@ const DatePicker = ({ formRef }) => {
     e[1]?.setHours(10);
     e[1]?.setMinutes(0);
     e[1]?.setSeconds(0);
-    console.log(e);
     setSelectedDates(e);
     if (e[1]) {
       const element = document.getElementById("booking-form-content");

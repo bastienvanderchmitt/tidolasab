@@ -5,22 +5,25 @@ import Bookings from "./Bookings";
 import Clients from "./Clients";
 import Statistics from "./Statistics";
 import { Toaster } from "react-hot-toast";
+import Payments from "./Payments";
 
 const Dashboard = () => {
   const [active, setActive] = useState("BOOKINGS");
   return (
     <>
       <Toaster />
-      <Container fluid className="dashboard">
+      <Container fluid className="dashboard min-vh-100">
         <Row>
-          <Col md={2}>
+          <Col lg={2} className="g-0">
             <Sidebar active={active} setActive={setActive} />
           </Col>
-          <Col md={10} className="p-4">
+          <Col lg={10} className="g-0">
             {active === "BOOKINGS" ? (
               <Bookings />
             ) : active === "CLIENTS" ? (
               <Clients />
+            ) : active === "PAIEMENTS" ? (
+              <Payments />
             ) : (
               <Statistics />
             )}

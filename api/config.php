@@ -56,8 +56,8 @@ use PHPMailer\PHPMailer\SMTP;
 
 // Configuration du serveur SMTP
 $smtpServer = 'smtp.gmail.com';
-$smtpUsername = 'bastienvanderchmitt@gmail.com';
-$smtpPassword = 'waqo kjki nlpu ovjk';
+$smtpUsername = 'tidolasab@gmail.com';
+$smtpPassword = 'ckhm ukpr emgi kxgu';
 $smtpPort = 587;
 
 function sendEmail($to, $subject, $message, $isRib = false, $iscontract = false, $reply = false) {
