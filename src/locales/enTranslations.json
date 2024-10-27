@@ -202,7 +202,9 @@
   "history": {
     "title": "Meet the team",
     "subtitle": "Who are we?",
-    "description": "Discovering Marie-Galante was a true love at first sight for us. After numerous trips to this magnificent island that adopted us, we decided to settle down permanently. Our greatest pleasure is to share it with you.",
+    "description_1": "Discovering Marie-Galante was a true love at first sight for us.",
+    "description_2": "After numerous trips to this magnificent island that adopted us, we decided to settle down permanently. Our greatest pleasure is to share it with you.",
+    "description_3": "Our greatest pleasure is to share it with you.",
     "maintenance": "Maintenance",
     "rhum": "Rum",
     "reception": "Reception",
