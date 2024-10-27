@@ -7,8 +7,11 @@ import { sendEmail } from "../../../api/contact";
 import { faPaperPlane, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const FormContact = () => {
+  const { t } = useTranslation();
+
   const initialValues = useMemo(() => {
     return {
       name: "",
@@ -20,21 +23,21 @@ const FormContact = () => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      name: Yup.string().required("Veuillez indiquer un nom."),
+      name: Yup.string().required(t("contact.name_validation")),
       email: Yup.string()
-        .email("Veuillez indiquer un email valide.")
-        .required("Veuillez indiquer un email."),
-      subject: Yup.string().required("Veuillez indiquer un sujet."),
-      message: Yup.string().required("Veuillez indiquer un message."),
+        .email(t("contact.email_validation"))
+        .required(t("contact.email_required")),
+      subject: Yup.string().required(t("contact.subject_validation")),
+      message: Yup.string().required(t("contact.message_validation")),
     });
-  }, []);
+  }, [t]);
 
   const handleForm = async (values) => {
     try {
       const { data } = await sendEmail({ ...values });
-      if (data) toast.success("Message envoyé.");
+      if (data) toast.success(t("contact.sent"));
     } catch (e) {
-      toast.error(e.error || "Une erreur est survenue.");
+      toast.error(e.error || t("common.error"));
       console.log("e", e);
     }
   };
@@ -55,22 +58,38 @@ const FormContact = () => {
             <div className="content">
               <Row>
                 <Col className="form-group mb-4">
-                  <Field type="text" name="name" placeholder="Nom" />
+                  <Field
+                    type="text"
+                    name="name"
+                    placeholder={t("contact.name")}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col className="form-group mb-4">
-                  <Field type="email" name="email" placeholder="Email" />
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder={t("contact.email")}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col className="form-group mb-4">
-                  <Field type="text" name="subject" placeholder="Sujet" />
+                  <Field
+                    type="text"
+                    name="subject"
+                    placeholder={t("contact.subject")}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col className="form-group mb-4">
-                  <Field type="textarea" name="message" placeholder="Message" />
+                  <Field
+                    type="textarea"
+                    name="message"
+                    placeholder={t("contact.message")}
+                  />
                 </Col>
               </Row>
             </div>

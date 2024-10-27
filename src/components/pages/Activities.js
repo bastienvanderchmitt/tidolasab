@@ -14,75 +14,71 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import location_23 from "../../assets/img/locations/location_23.jpeg";
 import location_9 from "../../assets/img/locations/location_9.jpeg";
 import location_20 from "../../assets/img/locations/location_20.jpeg";
-// import location_15 from "../../assets/img/locations/location_15.jpeg";
 import location_25 from "../../assets/img/locations/location_25.jpeg";
 import location_24 from "../../assets/img/locations/location_24.jpeg";
 import location_3_square from "../../assets/img/locations/location_3_square.jpeg";
 import location_4_square from "../../assets/img/locations/location_4_square.jpeg";
 import location_6_square from "../../assets/img/locations/location_6_square.jpeg";
 import location_10_square from "../../assets/img/locations/location_10_square.jpeg";
+import { useTranslation } from "react-i18next";
 
 const Activities = () => {
+  const { t } = useTranslation();
+
   const activities = [
     {
-      title: "Plages",
+      title: t("activities.activity_1.title"),
       img: location_20,
-      description: "Découvrez ses eaux cristallines et son sable fin.",
-      location: "Anse Bambou",
+      description: t("activities.activity_1.description"),
+      location: t("activities.activity_1.location"),
     },
     {
-      title: "Rhumeries",
+      title: t("activities.activity_2.title"),
       img: location_10_square,
-      description:
-        "Partez à la découverte des trois distilleries de Marie-Galante, et apprenez-en plus sur la production et la dégustation de ses différents rhum.",
-      location: "Capesterre et Grand-Bourg",
+      description: t("activities.activity_2.description"),
+      location: t("activities.activity_2.location"),
     },
     {
-      title: "Caye Plate",
+      title: t("activities.activity_3.title"),
       img: location_6_square,
-      description: "D'une rare beauté et vertigineuse, la falaise Caye Plate.",
-      location: "Saint-Louis",
+      description: t("activities.activity_3.description"),
+      location: t("activities.activity_3.location"),
     },
     {
-      title: "Îlet de Vieux Fort",
+      title: t("activities.activity_4.title"),
       img: location_4_square,
-      description:
-        "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels!",
-      location: "Vieux Fort",
+      description: t("activities.activity_4.description"),
+      location: t("activities.activity_4.location"),
     },
     {
-      title: "Habitation Roussel Trianon",
+      title: t("activities.activity_5.title"),
       img: location_25,
-      description:
-        "Découvrez l'histoire de l'Habitation Roussel Trianon, une ancienne sucrerie, et admirez l'architecture créole de l'île.",
-      location: "Grand-Bourg",
+      description: t("activities.activity_5.description"),
+      location: t("activities.activity_5.location"),
     },
     {
-      title: "Activités aquatiques",
+      title: t("activities.activity_6.title"),
       img: location_9,
-      description:
-        "Essayez-vous à la plongée ou au snorkeling et explorez la faune et la flore sous-marine de l'île.",
-      location: "Toute l'île ",
+      description: t("activities.activity_6.description"),
+      location: t("activities.activity_6.location"),
     },
     {
-      title: "Street Art",
+      title: t("activities.activity_7.title"),
       img: location_23,
-      description:
-        "Une véritable célébration de la culture locale, de l’art et de la créativité.",
-      location: "Petite Anse",
+      description: t("activities.activity_7.description"),
+      location: t("activities.activity_7.location"),
     },
     {
-      title: "Gueule Grand Gouffre",
+      title: t("activities.activity_8.title"),
       img: location_3_square,
-      description:
-        "Une arche naturelle creusée par la mer et un point de vue à couper le souffle.",
-      location: "Saint-Louis",
+      description: t("activities.activity_8.description"),
+      location: t("activities.activity_8.location"),
     },
     {
-      title: "Habitation Murat",
+      title: t("activities.activity_9.title"),
       img: location_24,
-      description: "Vestiges d’une habitation sucrière et musée.",
-      location: "Grand-Bourg",
+      description: t("activities.activity_9.description"),
+      location: t("activities.activity_9.location"),
     },
   ];
 
@@ -130,17 +126,10 @@ const Activities = () => {
     <Container className="activities" style={{ paddingBottom: "100px" }}>
       <Row className="p-4 m-lg-4 accommodation-header">
         <Col className="text-center">
-          <h4 className="title-4 pt-4">Partez à la découverte et ...</h4>
-          <h4 className="title-2 pt-2">Ecrivez votre histoire</h4>
-          <p className="pt-3">
-            En découvrant ses plages de sable blanc aux eaux turquoises, sa
-            faune aquatique, ses forets tropicales, sa mangrove, ses sentiers de
-            randonnées, sa gastronomie, ses trois rhumeries, ses moulins...
-          </p>
-          <p className="pt-3">
-            Venez prendre le temps d'apprécier les charmes authentiques de
-            Marie-Galante, ses habitants et sa culture antillaise.
-          </p>
+          <h4 className="title-4 pt-4">{t("activities.title")}</h4>
+          <h4 className="title-2 pt-2">{t("activities.subtitle")}</h4>
+          <p className="pt-3">{t("activities.description")}</p>
+          <p className="pt-3">{t("activities.sub_description")}</p>
         </Col>
       </Row>
       <Row className="p-4">

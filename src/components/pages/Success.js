@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { useBookingContext } from "../../contexts/BookingContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-// import rib from "../../assets/pdf/rib.pdf";
-// import contract from "../../assets/pdf/contrat_location.pdf";
 import { getDaysFromNow } from "../../helpers/dates";
 import Price from "./Booking/Price";
+import { useTranslation } from "react-i18next";
 
 const Success = () => {
   const { total, booked, selectedDates } = useBookingContext();
 
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,14 +23,12 @@ const Success = () => {
           <Col className="p-5">
             <Row>
               <Col>
-                <h4 className="title-4 pt-4 mb-2">
-                  Merci, votre réservation a bien été reçue !
-                </h4>
+                <h4 className="title-4 pt-4 mb-2">{t("success.title")}</h4>
               </Col>
             </Row>
             <Row>
               <Col>
-                <span className="title-2 mt-4">Détail de la commande</span>
+                <span className="title-2 mt-4">{t("success.subtitle")}</span>
               </Col>
             </Row>
             <Row className="my-4">
@@ -41,62 +39,38 @@ const Success = () => {
             <Row className="my-4 py-4">
               <Col>
                 <span className="title-3 mt-4">
-                  Plus que{" "}
+                  {t("success.less")}{" "}
                   <span className="gold marcellus">
                     {getDaysFromNow(selectedDates[0])}
                   </span>{" "}
-                  jours à patientier, courage ! &#128521;
+                  {t("success.patience")} &#128521;
                 </span>
               </Col>
             </Row>
             <Row className="bg-secondary my-4 rounded">
               <p className="pt-4 px-4">
-                Un email avec le{" "}
-                <span className="bold">contrat de location</span> et notre{" "}
-                <span className="bold">RIB</span> vient de vous être envoyé sur
-                l'adresse que vous avez saisi.
+                {t("success.desc_1_1")}{" "}
+                <span className="bold">{t("success.desc_1_2")}</span>
+                {t("success.desc_1_3")} <span className="bold">RIB</span>
+                {t("success.desc_1_4")}
               </p>
               <p className="px-4">
-                Votre séjour vous sera confirmé à réception de votre contrat et
-                de votre <span className="bold">acompte de 50%</span> (
+                {t("success.desc_2_1")}
+                <span className="bold">{t("success.desc_2_2")}</span> (
                 {total / 2} €).
               </p>
               <p className="px-4">
-                Le <span className="bold">solde restant</span> vous sera demandé{" "}
-                <span className="bold">14 jours avant l'arrivée</span>.
+                {t("success.desc_3_1")}
+                <span className="bold">{t("success.desc_3_2")}</span>
+                {t("success.desc_3_3")}{" "}
+                <span className="bold">{t("success.desc_3_4")}</span>.
               </p>
             </Row>
-            {/*<Row className="py-4">*/}
-            {/*  <object*/}
-            {/*    data={rib}*/}
-            {/*    type="application/pdf"*/}
-            {/*    width="100%"*/}
-            {/*    height="500px"*/}
-            {/*  >*/}
-            {/*    <p>*/}
-            {/*      Unable to display PDF file. <a href={rib}>Download</a>{" "}*/}
-            {/*      instead.*/}
-            {/*    </p>*/}
-            {/*  </object>*/}
-            {/*</Row>*/}
-            {/*<Row className="py-4">*/}
-            {/*  <object*/}
-            {/*    data={contract}*/}
-            {/*    type="application/pdf"*/}
-            {/*    width="100%"*/}
-            {/*    height="500px"*/}
-            {/*  >*/}
-            {/*    <p>*/}
-            {/*      Unable to display PDF file. <a href={contract}>Download</a>{" "}*/}
-            {/*      instead.*/}
-            {/*    </p>*/}
-            {/*  </object>*/}
-            {/*</Row>*/}
             <Row>
               <p className="pt-4">
-                N'hésitez pas à aller faire un tour du côté des{" "}
-                <Link to="/activities">activitées</Link> pour découvrir ce que
-                l'île peut vous offrir.
+                {t("success.activities_1")}{" "}
+                <Link to="/activities">activitées</Link>
+                {t("success.activities_2")}
               </p>
             </Row>
           </Col>

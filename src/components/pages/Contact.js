@@ -1,8 +1,11 @@
 import { Col, Container, Row } from "reactstrap";
 import banner from "../../assets/img/locations/location_11.jpeg";
 import FormContact from "../formik/forms/FormContact";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+  const { t } = useTranslation();
+
   return (
     <Container fluid>
       <Row>
@@ -12,7 +15,7 @@ const Contact = () => {
           <p>Morne Lolo</p>
           <p>97112 Grand-Bourg</p>
           <p>
-            <strong>Téléphone:</strong>{" "}
+            <strong>{t("common.phone")}:</strong>{" "}
             <a href="tel:0690648904">06 90 64 89 04</a>
             <br />
             <strong>Email:</strong>{" "}
@@ -22,8 +25,10 @@ const Contact = () => {
         <Col lg={6} style={{ backgroundImage: "url(" + banner + ")" }}>
           <div className="contact-panel">
             <div className="form-contact">
-              <h4 className="title-4 pt-4 text-center">Contact</h4>
-              <h5 className="title-2 pb-4 text-center">Discutons !</h5>
+              <h4 className="title-4 pt-4 text-center">
+                {t("contact.contact")}
+              </h4>
+              <h5 className="title-2 pb-4 text-center">{t("contact.title")}</h5>
               <FormContact />
             </div>
           </div>

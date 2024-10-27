@@ -3,8 +3,11 @@ import { Parallax } from "react-parallax";
 import { Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeartCircleCheck, faStar } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const Reviews = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Parallax
@@ -21,13 +24,9 @@ const Reviews = () => {
                 icon={faHeartCircleCheck}
                 className="review-icon"
               />
-              <h4 className="title-review pt-2">Nos clients racontent</h4>
-              <p className="quote">
-                “Isabelle et Frank sont au top 👍 Ils sont à l'écoute et
-                attentionnés. Les lieux sont très paisibles, calme et cocooning
-                🌴 On recommande et bien évidemment on reviendra à coup sûr !”
-              </p>
-              <p className="quote-user">MARYSELLA – BOOKING</p>
+              <h4 className="title-review pt-2">{t("reviews.title")}</h4>
+              <p className="quote">{t("reviews.quote")}</p>
+              <p className="quote-user">{t("reviews.quote_user")}</p>
               <div>
                 {[1, 2, 3, 4, 5].map((_, key) => (
                   <FontAwesomeIcon

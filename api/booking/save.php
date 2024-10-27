@@ -10,8 +10,8 @@ try {
         $connexion->beginTransaction();
 
         $address = $data->address . ", " . $data->postalCode . " " . $data->city . ", " . $data->country;
-        $sql = "INSERT INTO clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse;";
-        $response = $connexion->safeExecute($sql, ['nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $address]);
+        $sql = "INSERT INTO clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse, language = :language;";
+        $response = $connexion->safeExecute($sql, ['nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $address, 'language' => $data->language]);
         $clientId = $connexion->lastInsertId();
 
         $sql = "INSERT INTO reservations SET date_arrivee = :date_arrivee, date_depart = :date_depart, nombre_nuits = :nombre_nuits, adultes = :adultes, enfants = :enfants, prix_total = :prix_total;";
@@ -24,12 +24,23 @@ try {
         // Send email with RIB to client
         $to = $data->email;
         $amount = (int)$data->total / 2;
-        $subject = 'Tidolasab - Réservation en cours';
-        $message = "<h4>Bonjour,</h4>
+        $subject = $data->language === 'fr' ? 'Tidolasab - Réservation en cours' : 'Tidolasab - Booking in progess';
+        $message = $data->language === 'fr' ? "<h4>Bonjour,</h4>
                     <p>Nous vous remercions pour votre confiance.</p>
                     <p>Votre réservation est en cours de validation.</p>
                     <p>Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et de votre acompte de 50% ($amount €).</p>
-                    <p>Le solde restant vous sera demandé 14 jours avant l'arrivée.</p>";
+                    <p>Le solde restant vous sera demandé 14 jours avant l'arrivée.</p>
+                    <p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                    <p>Cordialement,</p>
+                    <p>Ti' Dola Sab</p>" :
+                        "<h4>Hello,</h4>
+                        <p>Thank you for your trust.</p>
+                        <p>Your booking is being processed.</p>
+                        <p>Your stay will be confirmed upon receipt of your signed contract attached and your deposit of 50% ($amount €).</p>
+                        <p>The remaining balance will be requested 14 days before arrival.</p>
+                        <p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                        <p>Best regards,</p>
+                        <p>Ti' Dola Sab</p>";
         if (!$data->isAdmin)
             sendEmail($to, $subject, $message, true, true);
 
@@ -48,8 +59,8 @@ try {
                         <li>Téléphone : $data->phone</li>
                         <li>Adresse : $address</li>
                     </ul>";
-        if (!$data->isAdmin)
-            sendEmail($to, $subject, $message);
+//        if (!$data->isAdmin)
+//            sendEmail($to, $subject, $message);
 
         $connexion->commit();
 

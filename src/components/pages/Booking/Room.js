@@ -1,16 +1,6 @@
 import { Badge, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faWifi,
-  faWaterLadder,
-  faLocationDot,
-  faUsers,
-  faBed,
-  faBathtub,
-  faHouse,
-  faSquareParking,
-  faWind,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faHouse } from "@fortawesome/free-solid-svg-icons";
 import air_conditioning from "../../../assets/img/icons/air_conditioning.png";
 import breakfast from "../../../assets/img/icons/breakfast.png";
 import coffee_machine from "../../../assets/img/icons/coffee_machine.png";
@@ -23,6 +13,8 @@ import stove from "../../../assets/img/icons/stove.png";
 import toaster from "../../../assets/img/icons/toaster.png";
 import toilets from "../../../assets/img/icons/toilets.png";
 import wifi_signal from "../../../assets/img/icons/wifi_signal.png";
+import { useTranslation } from "react-i18next";
+import Assets from "../Home/Assets";
 
 const Amenity = ({ text, icon }) => {
   return (
@@ -39,111 +31,55 @@ const Amenity = ({ text, icon }) => {
   );
 };
 
-const amenities = [
-  { icon: wifi_signal, text: "Wifi" },
-  { icon: air_conditioning, text: "Brasseurs d'air / Climatisation" },
-  { icon: stove, text: "Plaques à induction" },
-  { icon: microwave, text: "Micro-ondes" },
-  { icon: coffee_machine, text: "Cafetière" },
-  { icon: fridge, text: "Réfrigérateur / Congélateur" },
-  { icon: toaster, text: "Grille-pain" },
-  { icon: electric_kettle, text: "Bouilloire" },
-  { icon: breakfast, text: "Vaisselle pour 4 personnes" },
-  { icon: douche, text: "Douche italienne" },
-  { icon: toilets, text: "WC indépendant" },
-  { icon: serviette, text: "Serviettes de bain" },
-];
-
 const Room = () => {
+  const { t } = useTranslation();
+
+  const amenities = [
+    { icon: wifi_signal, text: t("amenities.wifi") },
+    { icon: air_conditioning, text: t("amenities.clim") },
+    { icon: stove, text: t("amenities.hob") },
+    { icon: microwave, text: t("amenities.micro-wave") },
+    { icon: coffee_machine, text: t("amenities.coffee") },
+    { icon: fridge, text: t("amenities.fridge") },
+    { icon: toaster, text: t("amenities.toaster") },
+    { icon: electric_kettle, text: t("amenities.kettle") },
+    { icon: breakfast, text: t("amenities.dishes") },
+    { icon: douche, text: t("amenities.shower") },
+    { icon: toilets, text: t("amenities.wc") },
+    { icon: serviette, text: t("amenities.towels") },
+  ];
+
   return (
     <Row className="room">
       <h4 className="title-2 pt-2">Case Ti' Dola Sab</h4>
-      <div className="title-4">Jardin tropical / Calme & Reposant / Nature</div>
+      <div className="title-4">{t("accommodation.breadcrumb")}</div>
       <Row>
         <Col className="room-content">
-          <ul>
-            <li>
-              <FontAwesomeIcon icon={faUsers} className="me-2" />
-              <span>2 personnes</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faWaterLadder} className="me-2" />
-              <span>Piscine</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faWind} className="me-2" />
-              <span>Climatisation</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faBed} className="me-2" />
-              <span>1 lit King size en 160</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faBed} className="me-2" />
-              <span>1 BZ en 140</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faBathtub} className="me-2" />
-              <span>1 salle de bain</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faHouse} className="me-2" />
-              <span>Grande terrasse</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faWifi} className="me-2" />
-              <span>Wifi</span>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faSquareParking} className="me-2" />
-              <span>Parking</span>
-            </li>
-          </ul>
+          <Assets />
         </Col>
       </Row>
       <Row className="pt-4 pb-4">
         <h5 className="pt-3 marcellus">
           <FontAwesomeIcon icon={faHouse} className="me-4 text-primary" />
-          Logement
+          {t("room.accommodation")}
         </h5>
-        <p className="text-warning">
-          FERMETURE du 1er Octobre au 30 Novembre 2024 pour Travaux. A partir du
-          1er Décembre la piscine sera devant votre terrasse et l'hébergement
-          sera climatisé.
-        </p>
+        <p className="text-warning">{t("room.closed")}</p>
+        <p>{t("room.description_1")}</p>
         <p>
-          Dans un cadre de verdure luxuriante, notre Case Ti' Dola Sab est une
-          habitation indépendante toute en bois, construction récente avec tout
-          le confort nécessaire.
+          {t("room.description_2_1")}
+          <sup>2</sup>
+          {t("room.description_2_2")}
         </p>
-        <p>
-          Une grande terrasse couverte de 20m<sup>2</sup> vous attend pour vos
-          moments de détente, ombragée par un magnifique Ylang Ylang odorant.
-          Votre case est face à la forêt domaniale, écrin de verdure calme,
-          reposant et dépaysant pour les amoureux de la nature.
-        </p>
-        <p>Il ne vous reste plus qu'à profiter d'instants magiques.</p>
-        <p>
-          Notre plaisir : vous accueillir et partager notre paradis. Une
-          corbeille de bienvenue vous attend à votre arrivée (à partir de 14h et
-          départ jusqu'à 11h).
-        </p>
+        <p>{t("room.description_3")}</p>
+        <p>{t("room.description_4")}</p>
         <h5 className="pt-3 marcellus">
           <FontAwesomeIcon icon={faLocationDot} className="me-4 text-primary" />
-          Accès et situation
+          {t("room.access_title")}
         </h5>
-        <p>
-          Nous sommes très bien situé pour visiter et parcourir l'île avec notre
-          emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et
-          St Louis sont à 10mn de Ti' Dola Sab. Pour faire vos courses, 2mn à
-          pied et vous pouvez vous ravitailler sur Morne Lolo. Une des trois
-          distilleries est à 2mn en voiture.
-        </p>
+        <p>{t("room.access_description")}</p>
       </Row>
       <Row>
-        <h4 className="title-3 pt-4">
-          Les plus belles plages de l'île sont à 10mn :
-        </h4>
+        <h4 className="title-3 pt-4">{t("room.beaches")}</h4>
         <div className="room-list">
           <Badge>Folle Anse</Badge>
           <Badge>Anse Bambou</Badge>
@@ -155,7 +91,7 @@ const Room = () => {
         </div>
       </Row>
       <Row className="amenities">
-        <h4 className="title-2 pt-5 pb-4">Équipements du gîte</h4>
+        <h4 className="title-2 pt-5 pb-4">{t("room.equipments")}</h4>
         {amenities.map((amenity, key) => (
           <Amenity icon={amenity.icon} text={amenity.text} key={key} />
         ))}

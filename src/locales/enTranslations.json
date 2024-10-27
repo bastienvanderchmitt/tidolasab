@@ -1,16 +1,288 @@
 {
+  "common": {
+    "booking": "Book",
+    "cancel": "Cancel",
+    "days": "days",
+    "phone": "Phone",
+    "error": "An error has occurred."
+  },
   "menu": {
     "home": "Home",
     "booking": "Booking",
-    "history": "History",
+    "history": "Story",
     "activities": "Activities",
     "photos": "Photos",
     "contact": "Contact"
+  },
+  "pages": {
+    "home": {
+      "title": "Dream Stay in Marie-Galante",
+      "description": "A seaside haven of warmth, tranquility, and friendliness"
+    },
+    "booking": {
+      "title": "Booking",
+      "description": "We provide the essentials, and you enjoy the most important."
+    },
+    "story": {
+      "title": "Story",
+      "description": "Lovers of this island, simply."
+    },
+    "activities": {
+      "title": "Local Activities",
+      "subtitle": "What to do on the island"
+    },
+    "photos": {
+      "title": "Photo Gallery",
+      "description": "Accommodation and more"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Feel free to reach out",
+      "description": "For reservations and inquiries, you can call us or write to us."
+    },
+    "success": {
+      "title": "Congratulations"
+    },
+    "error": {
+      "title": "Oops, page not found",
+      "description": "Sorry, but we couldn't find the page you are looking for. It may have been moved or deleted."
+    }
   },
   "preview": {
     "welcome": "Welcome to Ti' Dola Sab",
     "title": "In one of the most authentic and beautiful islands of Guadeloupe, in the heart of the Caribbean",
     "subtitle": "Come and take the time to discover the authentic charms of Marie-Galante, its inhabitants and the Caribbean culture",
     "description": "The authenticity of life in the Caribbean, a picturesque charm and countless white sandy beaches"
+  },
+  "discover": {
+    "title": "Discover the island",
+    "description": "Discover « la galette » (nickname of the island), its white sandy beaches with turquoise waters, its aquatic fauna, tropical forests, mangroves, hiking trails, gastronomy, three rum distilleries, and mills...",
+    "see": "SEE",
+    "image_title": "Dazzling colors"
+  },
+  "accommodation": {
+    "title": "START YOUR STAY COMFORTABLY",
+    "subtitle": "Relaxation and change of scenery guaranteed in a natural setting",
+    "subtitle_2": "In the heart of lush greenery, welcome to Marie-Galante.",
+    "photo_link": "View from the garden",
+    "breadcrumb": "Tropical garden / Calm & Relaxing / Nature",
+    "description": "Our Ti’ Dola Sab cottage is a fully independent wooden house, recently built with all the necessary comfort.",
+    "booking": "Book"
+  },
+  "assets": {
+    "people": "2 people",
+    "pool": "Swimming pool",
+    "clim": "Air conditioning",
+    "bed": "1 king-size bed / 1 sofa bed",
+    "bathroom": "1 bathroom",
+    "front": "Large terrace",
+    "wifi": "Wifi",
+    "parking": "Parking"
+  },
+  "reviews": {
+    "title": "Our clients share",
+    "quote": "“Isabelle and Frank are amazing 👌 They are attentive and caring. The places are very peaceful, calm, and cozy 🌴 We recommend it and of course, we will definitely come back!”",
+    "quote_user": "MARYSELLA – BOOKING"
+  },
+  "essentials": {
+    "photo_title": "Inspired by our story, in the heart of nature to offer a different life experience.",
+    "title": "DISCOVER THE SERVICES WE OFFER",
+    "subtitle": "The essentials for a cozy and comfortable stay",
+    "airport_title": "Pick-up at the aerodrome",
+    "airport_description": "We can pick you up at the aerodrome or at the ferry arrival.",
+    "stuff_title": "Equipment rental",
+    "stuff_description": "Sun loungers available for moments of relaxation.",
+    "pool_title": "Swimming pool",
+    "pool_description": "Directly in the garden, in front of your terrace.",
+    "clim": "Air conditioning",
+    "wifi_title": "Wifi & Internet",
+    "wifi_description": "Connection included in the rental.",
+    "rhum_title": "Local aperitif",
+    "rhum_description": "Come discover the cocktails and rums of the island. Available on request.",
+    "clean_title": "Laundry service",
+    "clean_description": "Washing machine in the cottage.",
+    "food_title": "Meals",
+    "food_description": "Available on request."
+  },
+  "room": {
+    "accommodation": "Accommodation",
+    "closed": "CLOSED from October 1st to November 30th, 2024 for renovations. Starting December 1st, the pool will be in front of your terrace and the accommodation will be air-conditioned.",
+    "description_1": "In a setting of lush greenery, our Ti' Dola Sab cottage is a fully independent wooden house, recently built with all the necessary comfort.",
+    "description_2_1": "A large covered terrace of 20m",
+    "description_2_2": " awaits you for your moments of relaxation, shaded by a magnificent fragrant Ylang Ylang tree. Your cottage faces the state forest, a calm and peaceful green haven for nature lovers.",
+    "description_3": "All you have to do is enjoy magical moments.",
+    "description_4": "Our pleasure: to welcome you and share our paradise. A welcome basket awaits you upon your arrival (from 2 PM and check-out until 11 AM).",
+    "access_title": "Access and Location",
+    "access_description": "We are very well located to visit and explore the island with our central location. The three major towns, Grand-Bourg, Capesterre, and St Louis, are 10 minutes from Ti' Dola Sab. For shopping, it's a 2-minute walk to Morne Lolo. One of the three distilleries is 2 minutes by car.",
+    "beaches": "The most beautiful beaches on the island are 10 minutes away:",
+    "equipments": "Cottage amenities"
+  },
+  "amenities": {
+    "wifi": "Wifi",
+    "clim": "Ceiling fans / Air conditioning",
+    "hob": "Induction cooktops",
+    "micro-wave": "Microwave",
+    "coffee": "Coffee maker",
+    "fridge": "Refrigerator / Freezer",
+    "toaster": "Toaster",
+    "kettle": "Kettle",
+    "dishes": "Dishes for 4 people",
+    "shower": "Italian shower",
+    "wc": "Separate WC",
+    "towels": "Bath towels"
+  },
+  "booking": {
+    "checkIn": "Check-in on:",
+    "checkOut": "Check-out on:",
+    "adults": "Adults",
+    "adults_age": "13 years and older",
+    "children": "Children",
+    "children_age": "Ages 2 to 12",
+    "prices": "Rates:",
+    "from": " from ",
+    "prices_text": " per night. One half-day offered per week. Tourist tax of 2€ per night per adult.",
+    "conditions": "The rental agreement will be sent to you with a request for a deposit of 50% (via bank transfer) to confirm your booking. The balance will be requested 14 days before arrival.",
+    "checkIn_validation": "Please indicate a check-in date.",
+    "checkOut_validation": "Please indicate a check-out date.",
+    "adults_validation": "Please indicate the number of adults.",
+    "booked": "Booked",
+    "begin": "Begin",
+    "end": "End"
+  },
+  "client": {
+    "name_validation": "Please provide a name.",
+    "firstName_validation": "Please provide a first name.",
+    "email_validation": "Please provide a valid email.",
+    "email_required": "Please provide a valid email.",
+    "phone_validation": "Please provide a phone number.",
+    "address_validation": "Please provide an address.",
+    "postalCode_validation": "Please provide a postal code.",
+    "city_validation": "Please provide a city.",
+    "country_validation": "Please provide a country.",
+    "name": "Name",
+    "firstName": "Firstname",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "postalCode": "Postal code",
+    "city": "City",
+    "country": "Country"
+  },
+  "price": {
+    "nights": "Number of nights:",
+    "from": "from",
+    "to": "to",
+    "adult": "adult",
+    "child": "child",
+    "children": "children",
+    "high_season_price": "High season rate",
+    "low_season_price": "Low season rate",
+    "tax": "Tourist tax:",
+    "discount": "Discount:",
+    "total": "Total:"
+  },
+  "success": {
+    "title": "Thank you, your reservation has been received!",
+    "subtitle": "Order details",
+    "less": "Only",
+    "patience": "days to wait, hang in there!",
+    "desc_1_1": "An email with the",
+    "desc_1_2": "rental contract",
+    "desc_1_3": " and our",
+    "desc_1_4": " has just been sent to the address you provided.",
+    "desc_2_1": "Your stay will be confirmed upon receipt of your contract and your",
+    "desc_2_2": " 50% deposit",
+    "desc_3_1": "The",
+    "desc_3_2": " remaining balance",
+    "desc_3_3": " will be requested",
+    "desc_3_4": "14 days before arrival.",
+    "activities_1": "Feel free to check out the",
+    "activities_2": "N to discover what the island has to offer."
+  },
+  "history": {
+    "title": "Meet the team",
+    "subtitle": "Who are we?",
+    "description": "Discovering Marie-Galante was a true love at first sight for us. After numerous trips to this magnificent island that adopted us, we decided to settle down permanently. Our greatest pleasure is to share it with you.",
+    "maintenance": "Maintenance",
+    "rhum": "Rum",
+    "reception": "Reception",
+    "bookings": "Bookings",
+    "communication": "Communication"
+  },
+  "activities": {
+    "title": "Set off to discover and ...",
+    "subtitle": "Write your story",
+    "description": "By exploring its white sandy beaches with turquoise waters, its aquatic fauna, tropical forests, mangroves, hiking trails, gastronomy, its three rum distilleries, its mills...",
+    "sub_description": "Take the time to appreciate the authentic charms of Marie-Galante, its inhabitants, and its Caribbean culture.",
+    "activity_1": {
+      "title": "Beaches",
+      "description": "Discover its crystal-clear waters and fine sand.",
+      "location": "Anse Bambou"
+    },
+    "activity_2": {
+      "title": "Rum Distilleries",
+      "description": "Explore the three distilleries of Marie-Galante and learn more about the production and tasting of its various rums.",
+      "location": "Capesterre and Grand-Bourg"
+    },
+    "activity_3": {
+      "title": "Caye Plate",
+      "description": "Of rare beauty and vertiginous, the Caye Plate cliff.",
+      "location": "Saint-Louis"
+    },
+    "activity_4": {
+      "title": "Îlet de Vieux Fort",
+      "description": "Explore the mangrove of Vieux Fort, its beach, and also enjoy a hike in exceptional landscapes!",
+      "location": "Vieux Fort"
+    },
+    "activity_5": {
+      "title": "Habitation Roussel Trianon",
+      "description": "Discover the history of the Habitation Roussel Trianon, an old sugar factory, and admire the Creole architecture of the island.",
+      "location": "Grand-Bourg"
+    },
+    "activity_6": {
+      "title": "Water Activities",
+      "description": "Try diving or snorkeling and explore the island's underwater fauna and flora.",
+      "location": "All over the island"
+    },
+    "activity_7": {
+      "title": "Street Art",
+      "description": "A true celebration of local culture, art, and creativity.",
+      "location": "Petite Anse"
+    },
+    "activity_8": {
+      "title": "Gueule Grand Gouffre",
+      "description": "A natural arch carved by the sea and a breathtaking viewpoint.",
+      "location": "Saint-Louis"
+    },
+    "activity_9": {
+      "title": "Habitation Murat",
+      "description": "Remnants of a sugar plantation and museum.",
+      "location": "Grand-Bourg"
+    }
+  },
+  "photos": {
+    "title": "OUR MOST BEAUTIFUL SHOTS",
+    "subtitle": "Discover the paradise that awaits you",
+    "description": "Whether on the beach or inland, every moment is unique in Marie-Galante.",
+    "sub_description": "Here is a glimpse of what you can observe during your stay with us."
+  },
+  "contact": {
+    "contact": "Contact",
+    "title": "Let's talk!",
+    "name_validation": "Please provide a name.",
+    "email_validation": "Please provide a valid email.",
+    "email_required": "Please provide an email.",
+    "subject_validation": "Please provide a subject.",
+    "message_validation": "Please provide a message.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "sent": "Message sent.",
+    "send": "SEND"
+  },
+  "footer": {
+    "address": "Address",
+    "social": "Social networks"
   }
 }

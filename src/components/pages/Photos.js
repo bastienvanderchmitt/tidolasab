@@ -29,10 +29,13 @@ import location_32 from "../../assets/img/locations/location_32.jpeg";
 import location_33 from "../../assets/img/locations/location_33.jpeg";
 import location_34 from "../../assets/img/locations/location_34.jpeg";
 import location_35 from "../../assets/img/locations/location_35.jpeg";
+import { useTranslation } from "react-i18next";
 
 const Photos = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+  const { t } = useTranslation();
 
   const images = [
     {
@@ -186,16 +189,10 @@ const Photos = () => {
     <Container className="photos" style={{ paddingBottom: "100px" }}>
       <Row className="p-4 m-lg-4 photos-header">
         <Col className="text-center">
-          <h4 className="title-4 pt-4">NOS PLUS BEAUX CLICHÉS</h4>
-          <h4 className="title-2 pt-2">Découvrez le paradis qui vous attend</h4>
-          <p className="pt-3 m-auto">
-            Que ce soit à la plage ou dans les terres, chaque moment est unique
-            à Marie-Galante.
-          </p>
-          <p>
-            Voici un aperçu de ce que vous pourrez observer lors de votre séjour
-            chez nous.
-          </p>
+          <h4 className="title-4 pt-4">{t("photos.title")}</h4>
+          <h4 className="title-2 pt-2">{t("photos.subtitle")}</h4>
+          <p className="pt-3 m-auto">{t("photos.description")}</p>
+          <p>{t("photos.sub_description")}</p>
         </Col>
       </Row>
       <Row className="p-4 photos-panel text-center">

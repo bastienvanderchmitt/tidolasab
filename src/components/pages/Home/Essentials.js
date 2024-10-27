@@ -12,6 +12,7 @@ import {
   faWind,
   faSwimmingPool,
 } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const Essential = ({ title, text, icon }) => {
   return (
@@ -30,6 +31,8 @@ const Essential = ({ title, text, icon }) => {
 };
 
 const Essentials = () => {
+  const { t } = useTranslation();
+
   return (
     <Container className="essentials">
       <Row className="p-4">
@@ -37,65 +40,62 @@ const Essentials = () => {
           <div className="image-zoom">
             <img alt="essential 1" src={essentials_1} className="w-100" />
           </div>
-          <h4 className="aurore pt-3">
-            Inspiré de notre histoire, en pleine nature pour offrir une
-            expérience de vie différente.
-          </h4>
+          <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
         </Col>
         <Col>
           <Row>
             <Col>
-              <h4 className="title-4">
-                DÉCOUVREZ LES SERVICES QUE NOUS PROPOSONS
-              </h4>
+              <h4 className="title-4">{t("essentials.title")}</h4>
             </Col>
           </Row>
           <Row>
             <Col>
-              <h4 className="title-2 pt-2">
-                L'essentiel pour un séjour douillet et confortable
-              </h4>
+              <h4 className="title-2 pt-2">{t("essentials.subtitle")}</h4>
             </Col>
           </Row>
           <Row className="pt-5">
             <Essential
-              title="Airport Pick-up"
+              title={t("essentials.airport_title")}
               icon={faPlane}
-              text="Nous pouvons venir vous chercher à l’aérodrome ou à l'arrivée du Ferry."
+              text={t("essentials.airport_description")}
             />
             <Essential
-              title="Prêt de matériel"
+              title={t("essentials.stuff_title")}
               icon={faUmbrellaBeach}
-              text="Transats à disposition pour des moments de farniente."
+              text={t("essentials.stuff_description")}
             />
           </Row>
           <Row className="pt-1 pb-2">
             <Essential
-              title="Piscine"
+              title={t("essentials.pool_title")}
               icon={faSwimmingPool}
-              text="Directement dans le jardin, devant votre terrasse."
+              text={t("essentials.pool_description")}
             />
-            <Essential title="Climatisation" icon={faWind} />
+            <Essential title={t("essentials.clim")} icon={faWind} />
           </Row>
           <Row>
             <Essential
-              title="Wifi & Internet"
+              title={t("essentials.wifi_title")}
               icon={faWifi}
-              text="Connexion incluse dans la location."
+              text={t("essentials.wifi_description")}
             />
             <Essential
-              title="Apéro local"
+              title={t("essentials.rhum_title")}
               icon={faMartiniGlassCitrus}
-              text="Venez découvrir les cocktails et rhums de l’île. Sur commande."
+              text={t("essentials.rhum_description")}
             />
           </Row>
           <Row className="pb-4">
             <Essential
-              title="Blanchisserie"
+              title={t("essentials.clean_title")}
               icon={faBroomBall}
-              text="Lave-linge dans la case."
+              text={t("essentials.clean_description")}
             />
-            <Essential title="Repas" icon={faBowlRice} text="Sur commande." />
+            <Essential
+              title={t("essentials.food_title")}
+              icon={faBowlRice}
+              text={t("essentials.food_description")}
+            />
           </Row>
           <Row>
             <Col>
@@ -109,10 +109,7 @@ const Essentials = () => {
               <div className="image-zoom">
                 <img alt="logo" src={essentials_1} className="w-100" />
               </div>
-              <h4 className="aurore pt-3">
-                Inspiré de notre histoire, en pleine nature pour offrir une
-                expérience de vie différente.
-              </h4>
+              <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
             </Col>
           </Row>
         </Col>

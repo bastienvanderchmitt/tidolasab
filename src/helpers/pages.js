@@ -1,77 +1,68 @@
 export const pages = {
   home: {
-    title: (
-      <>
-        <div>Séjour de Rêve</div>
-        <div>à Marie-Galante</div>
-      </>
-    ),
+    title: "pages.home.title",
     subtitle: null,
-    description:
-      "Havre balnéaire de chaleur, de tranquillité et de convivialité",
+    description: "pages.home.description",
     image: "home_banner.jpeg",
   },
   booking: {
-    title: "Réservation",
+    title: "pages.booking.title",
     subtitle: null,
-    description:
-      "Nous fournissons l'indispensable et vous profitez de l'essentiel",
+    description: "pages.booking.description",
     image: "room_banner.jpeg",
   },
   story: {
-    title: "Histoire",
+    title: "pages.story.title",
     subtitle: null,
-    description: "Des amoureaux de cette île, tout simplement.",
+    description: "pages.story.description",
     image: "dolasab_beach_2.jpeg",
   },
   activities: {
-    title: "Activitées locales",
-    subtitle: "Que faire sur l'île",
+    title: "pages.activities.title",
+    subtitle: "pages.activities.subtitle",
     description: null,
     image: "activities_banner.jpeg",
   },
   photos: {
-    title: "Galerie photos",
+    title: "pages.photos.title",
     subtitle: null,
-    description: "Logement et autres",
+    description: "pages.photos.description",
     image: "photos_banner.jpeg",
   },
   contact: {
-    title: "Contact",
-    subtitle: "N'hésitez pas à prendre",
-    description:
-      "Pour les réservations et demandes de renseignements, vous pouvez nous appeler ou nous écrire.",
+    title: "pages.contact.title",
+    subtitle: "pages.contact.subtitle",
+    description: "pages.contact.description",
     image: "contact_banner.jpeg",
   },
   success: {
-    title: "Félicitations",
+    title: "pages.success.title",
     subtitle: null,
     description: null,
     image: "activities_banner.jpeg",
   },
-  privacy: {
-    title: "Confidentialité",
-    subtitle: null,
-    description: null,
-    image: "rules_banner.jpeg",
-  },
-  terms: {
-    title: "Conditions d'utilisation",
-    subtitle: null,
-    description: null,
-    image: "rules_banner.jpeg",
-  },
-  politic: {
-    title: "Politique",
-    subtitle: null,
-    description: null,
-    image: "rules_banner.jpeg",
-  },
+  // privacy: {
+  //   title: "Confidentialité",
+  //   subtitle: null,
+  //   description: null,
+  //   image: "rules_banner.jpeg",
+  // },
+  // terms: {
+  //   title: "Conditions d'utilisation",
+  //   subtitle: null,
+  //   description: null,
+  //   image: "rules_banner.jpeg",
+  // },
+  // politic: {
+  //   title: "Politique",
+  //   subtitle: null,
+  //   description: null,
+  //   image: "rules_banner.jpeg",
+  // },
   error: {
-    title: "Ouups, page non trouvée",
+    title: "pages.error.title",
     subtitle: null,
-    description:
-      "Désolé mais nous n'avons pas trouvé la page que vous recherchez. Elle a peut-être été déplacée ou supprimée.",
+    description: "pages.error.description",
     image: "home_banner.jpeg",
   },
 };

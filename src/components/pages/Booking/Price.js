@@ -6,8 +6,10 @@ import {
 } from "../../../helpers/env";
 import { useBookingContext } from "../../../contexts/BookingContext";
 import { getFrenchDate } from "../../../helpers/dates";
+import { useTranslation } from "react-i18next";
 
 const Price = ({ withParticipants }) => {
+  const { t } = useTranslation();
   const {
     total,
     days,
@@ -23,13 +25,13 @@ const Price = ({ withParticipants }) => {
       {days && (
         <>
           <div className="content-detail">
-            <span className="title-total">Nombre de nuits :</span>
+            <span className="title-total">{t("price.nights")}</span>
             <span className="total">{days}</span>
           </div>
           <div className="content-total">
             <span className="title-sub-total">
-              du {getFrenchDate(selectedDates[0])} au{" "}
-              {getFrenchDate(selectedDates[1], true)}
+              {t("price.from")} {getFrenchDate(selectedDates[0])}{" "}
+              {t("price.to")} {getFrenchDate(selectedDates[1], true)}
             </span>
           </div>
         </>
@@ -37,20 +39,22 @@ const Price = ({ withParticipants }) => {
       {withParticipants && (
         <>
           <div className="content-detail">
-            <span className="title-sub-total">
-              Adulte{+adults > 1 && "s"} :
+            <span className="title-sub-total text-capitalize">
+              {t("price.adult")}
+              {+adults > 1 && "s"} :
             </span>
             <span className="sub-total">
-              {adults} adulte{+adults > 1 && "s"}
+              {adults} {t("price.adult")}
+              {+adults > 1 && "s"}
             </span>
           </div>
           {child ? (
             <div className="content-detail">
-              <span className="title-sub-total">
-                Enfant{+child > 1 && "s"} :
+              <span className="title-sub-total text-capitalize">
+                {+child > 1 ? t("price.child") : t("price.children")} :
               </span>
               <span className="sub-total">
-                {child} enfant{+child > 1 && "s"}
+                {child} {+child > 1 ? t("price.child") : t("price.children")}
               </span>
             </div>
           ) : null}
@@ -59,7 +63,8 @@ const Price = ({ withParticipants }) => {
       {daysHighSeason ? (
         <div className="content-total">
           <span className="title-sub-total">
-            Tarif haute saison ({priceHightSeason} €) x {daysHighSeason} jours :
+            {t("price.high_season_price")} ({priceHightSeason} €) x{" "}
+            {daysHighSeason} {t("common.days")} :
           </span>
           <span className="sub-total">
             {daysHighSeason * priceHightSeason + " €"}
@@ -69,7 +74,8 @@ const Price = ({ withParticipants }) => {
       {daysLowSeason ? (
         <div className="content-total">
           <span className="title-sub-total">
-            Tarif basse saison ({priceLowSeason} €) x {daysLowSeason} jours :
+            {t("price.low_season_price")} ({priceLowSeason} €) x {daysLowSeason}{" "}
+            {t("common.days")} :
           </span>
           <span className="sub-total">
             {daysLowSeason * priceLowSeason + " €"}
@@ -78,18 +84,18 @@ const Price = ({ withParticipants }) => {
       ) : null}
       {days && (
         <div className="content-detail">
-          <span className="title-sub-total">Taxe de séjour :</span>
+          <span className="title-sub-total">{t("price.tax")}</span>
           <span className="sub-total">{days * adults * touristTax} €</span>
         </div>
       )}
       {discount ? (
         <div className="content-detail text-success">
-          <span className="title-sub-total">Réduction :</span>
+          <span className="title-sub-total">{t("price.discount")}</span>
           <span className="sub-total">- {discount} €</span>
         </div>
       ) : null}
       <div className="content-total">
-        <span className="title-total">Total :</span>
+        <span className="title-total">{t("price.total")}</span>
         <span className="total">{total ? total + " €" : ""}</span>
       </div>
     </>

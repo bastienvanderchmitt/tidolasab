@@ -1,4 +1,11 @@
 {
+  "common" : {
+    "booking": "Réserver",
+    "cancel": "Annuler",
+    "days": "jours",
+    "phone": "Téléphone",
+    "error": "Une erreur est survenue."
+  },
   "menu" : {
     "home": "Accueil",
     "booking": "Réservation",
@@ -7,10 +14,276 @@
     "photos": "Photos",
     "contact": "Contact"
   },
+  "pages": {
+    "home": {
+      "title": "Séjour de Rêve à Marie-Galante",
+      "description": "Havre balnéaire de chaleur, de tranquillité et de convivialité"
+    },
+    "booking": {
+      "title": "Réservation",
+      "description": "Nous fournissons l'indispensable et vous profitez de l'essentiel"
+    },
+    "story": {
+      "title": "Histoire",
+      "description": "Des amoureaux de cette île, tout simplement."
+    },
+    "activities": {
+      "title": "Activitées locales",
+      "subtitle": "Que faire sur l'île"
+    },
+    "photos": {
+      "title": "Galerie photos",
+      "description": "Logement et autres"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "N'hésitez pas à prendre",
+      "description": "Pour les réservations et demandes de renseignements, vous pouvez nous appeler ou nous écrire."
+    },
+    "success": {
+      "title": "Félicitations"
+    },
+    "error": {
+      "title": "Ouups, page non trouvée",
+      "description": "Désolé mais nous n'avons pas trouvé la page que vous recherchez. Elle a peut-être été déplacée ou supprimée."
+    }
+  },
   "preview" : {
     "welcome": "BIENVENUE A TI' DOLA SAB",
     "title": "Dans l’une des plus authentiques et des plus belles îles de la Guadeloupe, au coeur des Caraïbes",
     "subtitle": "Venez prendre le temps de découvrir les charmes authentiques de Marie-Galante, ses habitants et la culture antillaise.",
     "description": "L'authenticité de la vie aux Antilles, un charme pittoresque et d'innombrables plages de sable blanc.."
+  },
+  "discover": {
+    "title": "Découvrez l'île",
+    "description": "Découvrez « la galette » (surnom de l’île), ses plages de sable blanc aux eaux turquoises, sa faune aquatique, ses forets tropicales, sa mangrove, ses sentiers de randonnées, sa gastronomie, ses trois rhumeries, ses moulins...",
+    "see": "VOIR",
+    "image_title": "Des couleurs éblouissantes"
+  },
+  "accommodation": {
+    "title": "COMMENCEZ VOTRE SÉJOUR CONFORTABLEMENT",
+    "subtitle": "Détente et dépaysement assurés dans un cadre naturel",
+    "subtitle_2": "Au coeur d'une verdure luxuriante, bienvenue à Marie-Galante.",
+    "photo_link": "Vue depuis le jardin",
+    "breadcrumb": "Jardin tropical / Calme & Reposant / Nature",
+    "description": "Notre case Ti’ Dola Sab est une habitation indépendante toute en bois, de construction récente avec tout le confort nécessaire."
+  },
+  "assets" : {
+    "people": "2 personnes",
+    "pool": "Piscine",
+    "clim": "Climatisation",
+    "bed": "1 lit king size / 1 BZ",
+    "bathroom": "1 salle de bain",
+    "front": "Grande terrasse",
+    "wifi": "Wifi",
+    "parking": "Parking"
+  },
+  "reviews": {
+    "title": "Nos clients racontent",
+    "quote": "“Isabelle et Frank sont au top \uD83D\uDC4D Ils sont à l'écoute et attentionnés. Les lieux sont très paisibles, calme et cocooning \uD83C\uDF34 On recommande et bien évidemment on reviendra à coup sûr !”",
+    "quote_user": "MARYSELLA – BOOKING"
+  },
+  "essentials": {
+    "photo_title": "Inspiré de notre histoire, en pleine nature pour offrir une expérience de vie différente.",
+    "title": "DÉCOUVREZ LES SERVICES QUE NOUS PROPOSONS",
+    "subtitle": "L'essentiel pour un séjour douillet et confortable",
+    "airport_title": "Prise en charge à l'aérodrome",
+    "airport_description": "Nous pouvons venir vous chercher à l’aérodrome ou à l'arrivée du Ferry.",
+    "stuff_title": "Prêt de matériel",
+    "stuff_description": "Transats à disposition pour des moments de farniente.",
+    "pool_title": "Piscine",
+    "pool_description": "Directement dans le jardin, devant votre terrasse.",
+    "clim": "Climatisation",
+    "wifi_title": "Wifi & Internet",
+    "wifi_description": "Connexion incluse dans la location.",
+    "rhum_title": "Apéro local",
+    "rhum_description": "Venez découvrir les cocktails et rhums de l’île. Sur commande.",
+    "clean_title": "Blanchisserie",
+    "clean_description": "Lave-linge dans la case.",
+    "food_title": "Repas",
+    "food_description": "Sur commande."
+  },
+  "room": {
+    "accommodation": "Logement",
+    "closed": "FERMETURE du 1er Octobre au 30 Novembre 2024 pour Travaux. A partir du 1er Décembre la piscine sera devant votre terrasse et l'hébergement sera climatisé.",
+    "description_1": "Dans un cadre de verdure luxuriante, notre Case Ti' Dola Sab est une habitation indépendante toute en bois, construction récente avec tout le confort nécessaire.",
+    "description_2_1": "Une grande terrasse couverte de 20m",
+    "description_2_2": " vous attend pour vos moments de détente, ombragée par un magnifique Ylang Ylang odorant. Votre case est face à la forêt domaniale, écrin de verdure calme, reposant et dépaysant pour les amoureux de la nature.",
+    "description_3": "Il ne vous reste plus qu'à profiter d'instants magiques.",
+    "description_4": "Notre plaisir : vous accueillir et partager notre paradis. Une corbeille de bienvenue vous attend à votre arrivée (à partir de 14h et départ jusqu'à 11h).",
+    "access_title": "Accès et situation",
+    "access_description": "Nous sommes très bien situé pour visiter et parcourir l'île avec notre emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et St Louis sont à 10mn de Ti' Dola Sab. Pour faire vos courses, 2mn à pied et vous pouvez vous ravitailler sur Morne Lolo. Une des trois distilleries est à 2mn en voiture.",
+    "beaches": "Les plus belles plages de l'île sont à 10mn :",
+    "equipments": "Équipements du gîte"
+  },
+  "amenities": {
+    "wifi": "Wifi",
+    "clim": "Brasseurs d'air / Climatisation",
+    "hob": "Plaques à induction",
+    "micro-wave": "Micro-ondes",
+    "coffee": "Cafetière",
+    "fridge": "Réfrigérateur / Congélateur",
+    "toaster": "Grille-pain",
+    "kettle": "Bouilloire",
+    "dishes": "Vaisselle pour 4 personnes",
+    "shower": "Douche italienne",
+    "wc": "WC indépendant",
+    "towels": "Serviettes de bain"
+  },
+  "booking": {
+    "checkIn": "Arrivée le:",
+    "checkOut": "Départ le:",
+    "adults": "Adultes",
+    "adults_age": "13 ans et plus",
+    "children": "Enfants",
+    "children_age": "De 2 à 12 ans",
+    "prices": "Tarifs:",
+    "from": " à partir de ",
+    "prices_text": " par nuit. Une demi-journée offerte par semaine. Taxe de séjour de 2€ par nuit et par adulte.",
+    "conditions": "Le contrat de location vous sera transmis avec une demande de versement d'un acompte de 50% (via virement bancaire) qui confirmeront votre réservation. Le solde vous sera demandé 14 jours avant l'arrivée.",
+    "checkIn_validation": "Veuillez indiquer une date d'arrivée.",
+    "checkOut_validation": "Veuillez indiquer une date de départ.",
+    "adults_validation": "Veuillez indiquer le nombre d'adultes.",
+    "booked": "Réservé",
+    "begin": "Début",
+    "end": "Fin"
+  },
+  "client": {
+    "name_validation": "Veuillez indiquer un nom.",
+    "firstName_validation": "Veuillez indiquer un prénom.",
+    "email_validation": "Veuillez indiquer un email valide.",
+    "email_required": "Veuillez indiquer un email valide.",
+    "phone_validation": "Veuillez indiquer un numéro de téléphone.",
+    "address_validation": "Veuillez indiquer une adresse.",
+    "postalCode_validation": "Veuillez indiquer un code postal.",
+    "city_validation": "Veuillez indiquer une ville.",
+    "country_validation": "Veuillez indiquer un pays.",
+    "name": "Nom",
+    "firstName": "Prénom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "postalCode": "Code postal",
+    "city": "Ville",
+    "country": "Pays"
+  },
+  "price": {
+    "nights": "Nombre de nuits :",
+    "from": "du",
+    "to": "au",
+    "adult": "adulte",
+    "child": "enfant",
+    "children": "enfants",
+    "high_season_price": "Tarif haute saison",
+    "low_season_price": "Tarif basse saison",
+    "tax": "Taxe de séjour :",
+    "discount": "Réduction :",
+    "total": "Total :"
+  },
+  "success": {
+    "title": "Merci, votre réservation a bien été reçue !",
+    "subtitle": "Détail de la commande",
+    "less": "Plus que",
+    "patience": "jours à patientier, courage !",
+    "desc_1_1": "Un email avec le",
+    "desc_1_2": "contrat de location",
+    "desc_1_3": " et notre",
+    "desc_1_4": " vient de vous être envoyé sur l'adresse que vous avez saisi.",
+    "desc_2_1": "Votre séjour vous sera confirmé à réception de votre contrat et de votre",
+    "desc_2_2": " acompte de 50%",
+    "desc_3_1": "Le",
+    "desc_3_2": " solde restant",
+    "desc_3_3": " vous sera demandé",
+    "desc_3_4": "14 jours avant l'arrivée",
+    "activities_1": "N'hésitez pas à aller faire un tour du côté des",
+    "activities_2": "N pour découvrir ce que l'île peut vous offrir."
+  },
+  "history": {
+    "title": "Découvrez la team",
+    "subtitle": "Qui sommes-nous ?",
+    "description_1": "La découverte de Marie-Galante a été un véritable coup de coeur pour nous.",
+    "description_2": "Après de multiples allers et retours sur cette magnifique île qui nous a adopté, nous avons décidé de ne plus en repartir et de nous y implanter définitivement.",
+    "description_3": "Notre plus grand plaisir est de vous la partager.",
+    "maintenance": "Entretien",
+    "rhum": "Rhum",
+    "reception": "Accueil",
+    "bookings": "Réservations",
+    "communication": "Communication"
+  },
+  "activities": {
+    "title": "Partez à la découverte et ...",
+    "subtitle": "Ecrivez votre histoire",
+    "description": "En découvrant ses plages de sable blanc aux eaux turquoises, sa faune aquatique, ses forets tropicales, sa mangrove, ses sentiers de randonnées, sa gastronomie, ses trois rhumeries, ses moulins...",
+    "sub_description": "Venez prendre le temps d'apprécier les charmes authentiques de Marie-Galante, ses habitants et sa culture antillaise.",
+    "activity_1": {
+      "title": "Plages",
+      "description": "Découvrez ses eaux cristallines et son sable fin.",
+      "location": "Anse Bambou"
+    },
+    "activity_2": {
+      "title": "Rhumeries",
+      "description": "Partez à la découverte des trois distilleries de Marie-Galante, et apprenez-en plus sur la production et la dégustation de ses différents rhum.",
+      "location": "Capesterre et Grand-Bourg"
+    },
+    "activity_3": {
+      "title": "Caye Plate",
+      "description": "D'une rare beauté et vertigineuse, la falaise Caye Plate.",
+      "location": "Saint-Louis"
+    },
+    "activity_4": {
+      "title": "Îlet de Vieux Fort",
+      "description": "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels!",
+      "location": "Vieux Fort"
+    },
+    "activity_5": {
+      "title": "Habitation Roussel Trianon",
+      "description": "Découvrez l'histoire de l'Habitation Roussel Trianon, une ancienne sucrerie, et admirez l'architecture créole de l'île.",
+      "location": "Grand-Bourg"
+    },
+    "activity_6": {
+      "title": "Activités aquatiques",
+      "description": "Essayez-vous à la plongée ou au snorkeling et explorez la faune et la flore sous-marine de l'île.",
+      "location": "Toute l'île"
+    },
+    "activity_7": {
+      "title": "Street Art",
+      "description": "Une véritable célébration de la culture locale, de l’art et de la créativité.",
+      "location": "Petite Anse"
+    },
+    "activity_8": {
+      "title": "Gueule Grand Gouffre",
+      "description": "Une arche naturelle creusée par la mer et un point de vue à couper le souffle.",
+      "location": "Saint-Louis"
+    },
+    "activity_9": {
+      "title": "Habitation Murat",
+      "description": "Vestiges d’une habitation sucrière et musée.",
+      "location": "Grand-Bourg"
+    }
+  },
+  "photos": {
+    "title": "NOS PLUS BEAUX CLICHÉS",
+    "subtitle": "Découvrez le paradis qui vous attend",
+    "description": "Que ce soit à la plage ou dans les terres, chaque moment est unique à Marie-Galante.",
+    "sub_description": "Voici un aperçu de ce que vous pourrez observer lors de votre séjour chez nous."
+  },
+  "contact": {
+    "contact": "Contact",
+    "title": "Discutons !",
+    "name_validation": "Veuillez indiquer un nom.",
+    "email_validation": "Veuillez indiquer un email valide.",
+    "email_required": "Veuillez indiquer un email.",
+    "subject_validation": "Veuillez indiquer un sujet.",
+    "message_validation": "Veuillez indiquer un message.",
+    "name": "Nom",
+    "email": "Email",
+    "subject": "Sujet",
+    "message": "Message",
+    "sent": "Message envoyé.",
+    "send": "ENVOYER"
+  },
+  "footer": {
+    "address": "Adresse",
+    "social": "Réseaux sociaux"
   }
 }
