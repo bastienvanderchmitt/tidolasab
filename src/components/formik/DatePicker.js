@@ -1,17 +1,18 @@
 import React, { useMemo } from "react";
 import Calendar from "@demark-pro/react-booking-calendar";
-import { fr } from "date-fns/locale";
-import { months } from "../../helpers/months";
+import { fr, enUS } from "date-fns/locale";
 import { useBookingContext } from "../../contexts/BookingContext";
 import useApi from "../../hooks/useApi";
 import { getReservedBookings } from "../../api/booking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment-timezone";
+import { useTranslation } from "react-i18next";
 
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
 
+  const { t, i18n } = useTranslation();
   const [{ bookings }, isLoading] = useApi(getReservedBookings);
 
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -48,6 +49,40 @@ const DatePicker = ({ formRef }) => {
     }
   };
 
+  const months = useMemo(
+    () =>
+      i18n.language === "fr"
+        ? [
+            "Janvier",
+            "Février",
+            "Mars",
+            "Avril",
+            "Mai",
+            "Juin",
+            "Juillet",
+            "Août",
+            "Septembre",
+            "Octobre",
+            "Novembre",
+            "Décembre",
+          ]
+        : [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ],
+    [i18n.language],
+  );
+
   return isLoading ? (
     <FontAwesomeIcon icon={faSpinner} spinPulse />
   ) : (
@@ -72,11 +107,11 @@ const DatePicker = ({ formRef }) => {
               }
             >
               {props.state.isReserved
-                ? "Réservé"
+                ? t("booking.booked")
                 : props.state.isSelectedStart
-                  ? "Début"
+                  ? t("booking.begin")
                   : props.state.isSelectedEnd
-                    ? "Fin"
+                    ? t("booking.end")
                     : ""}
             </div>
           );
@@ -87,7 +122,7 @@ const DatePicker = ({ formRef }) => {
       reserved={reserved}
       dateFnsOptions={{
         weekStartsOn: 1,
-        locale: fr,
+        locale: i18n.language === "fr" ? fr : enUS,
       }}
       classNamePrefix="calendar"
       range={true}

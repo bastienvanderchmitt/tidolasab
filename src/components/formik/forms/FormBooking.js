@@ -11,10 +11,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Price from "../../pages/Booking/Price";
 import { priceLowSeason } from "../../../helpers/env";
+import { useTranslation } from "react-i18next";
 
 const FormBooking = ({ callbackAdmin }) => {
   const { checkIn, checkOut, setAdults, setChild } = useBookingContext();
   const [isOpen, toggle] = useToggle();
+
+  const { t } = useTranslation();
 
   const initialValues = useMemo(() => {
     return {
@@ -27,11 +30,11 @@ const FormBooking = ({ callbackAdmin }) => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      checkIn: Yup.date().required("Veuillez indiquer une date d'arrivée."),
-      checkOut: Yup.date().required("Veuillez indiquer une date de départ."),
-      adults: Yup.number().required("Veuillez indiquer le nombre d'adultes."),
+      checkIn: Yup.date().required(t("booking.checkIn_validation")),
+      checkOut: Yup.date().required(t("booking.checkOut_validation")),
+      adults: Yup.number().required(t("booking.adults_validation")),
     });
-  }, []);
+  }, [t]);
 
   const handleForm = async () => {
     toggle();
@@ -65,7 +68,7 @@ const FormBooking = ({ callbackAdmin }) => {
                   <Field
                     type="date"
                     name="checkIn"
-                    label="Arrivée le :"
+                    label={t("booking.checkIn")}
                     onClick={scrollToCalendar}
                   />
                 </div>
@@ -73,7 +76,7 @@ const FormBooking = ({ callbackAdmin }) => {
                   <Field
                     type="date"
                     name="checkOut"
-                    label="Départ le :"
+                    label={t("booking.checkOut")}
                     onClick={scrollToCalendar}
                   />
                 </div>
@@ -81,8 +84,8 @@ const FormBooking = ({ callbackAdmin }) => {
                   <NumberField
                     type="number"
                     name="adults"
-                    label="Adultes"
-                    helpText="13 ans et plus"
+                    label={t("booking.adults")}
+                    helpText={t("booking.adults_age")}
                     onChange={(value) => setAdults(value)}
                     max={4}
                   />
@@ -91,8 +94,8 @@ const FormBooking = ({ callbackAdmin }) => {
                   <NumberField
                     type="number"
                     name="children"
-                    label="Enfants"
-                    helpText="De 2 à 12 ans"
+                    label={t("booking.children")}
+                    helpText={t("booking.children_age")}
                     onChange={(value) => setChild(value)}
                     max={8}
                   />
@@ -109,21 +112,17 @@ const FormBooking = ({ callbackAdmin }) => {
                   {isSubmitting ? (
                     <FontAwesomeIcon icon={faSpinner} spinPulse />
                   ) : (
-                    "Réserver"
+                    t("common.booking")
                   )}
                 </Button>
                 <p className="prices">
-                  <u>Tarifs :</u> à partir de <b>{priceLowSeason}€</b> par nuit.
-                  Une demi-journée offerte par semaine. Taxe de séjour de 2€ par
-                  nuit et par adulte.
+                  <u>{t("booking.prices")}</u>
+                  {t("booking.from")}
+                  <b>{priceLowSeason}€</b>
+                  {t("booking.prices_text")}
                 </p>
                 {!callbackAdmin && (
-                  <p className="conditions">
-                    Le contrat de location vous sera transmis avec une demande
-                    de versement d'un acompte de 50% (via virement bancaire) qui
-                    confirmeront votre réservation. Le solde vous sera demandé
-                    14 jours avant l'arrivée.
-                  </p>
+                  <p className="conditions">{t("booking.conditions")}</p>
                 )}
               </div>
             </div>

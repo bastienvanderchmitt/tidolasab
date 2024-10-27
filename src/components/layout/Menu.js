@@ -17,10 +17,9 @@ import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useOutlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import LanguageSwitch from "./Menu/LanguageSwitch";
 
 const Menu = () => {
-  // TODO :
-  // Eclaircir page acceuil
   const [isOpen, toggle] = useToggle(false);
   const [isFixed, toggleFixed] = useToggle(false);
 
@@ -62,13 +61,20 @@ const Menu = () => {
         className="text-white text-center p-5"
         // bgImageStyle={params.image !== "banner.jpg" ? { height: "450px" } : {}}
       >
+        <div className="d-none d-lg-block">
+          <LanguageSwitch isFixed={isFixed} />
+        </div>
         {isFixed && (
           <Container className="desktop-menu d-none d-lg-block fixed animate__animated animate__fadeIn">
             <Row className="p-2">
               <Col>
                 <Nav pills style={{ justifyContent: "center" }}>
                   <CustomNavItem link="/" text={t("menu.home")} />
-                  <CustomNavItem link="/booking" text={t("menu.booking")} />
+                  <CustomNavItem
+                    link="/booking"
+                    text={t("menu.booking")}
+                    booking
+                  />
                   <CustomNavItem link="/story" text={t("menu.history")} />
                   <CustomNavItem
                     link="/activities"
@@ -86,7 +92,11 @@ const Menu = () => {
             <Col>
               <Nav pills>
                 <CustomNavItem link="/" text={t("menu.home")} />
-                <CustomNavItem link="/booking" text={t("menu.booking")} />
+                <CustomNavItem
+                  link="/booking"
+                  text={t("menu.booking")}
+                  booking
+                />
                 <CustomNavItem link="/story" text={t("menu.history")} />
               </Nav>
             </Col>
@@ -105,7 +115,7 @@ const Menu = () => {
           </Row>
         </Container>
 
-        <Container className="d-lg-none">
+        <div className="d-lg-none">
           <Navbar
             color="faded white"
             light
@@ -120,21 +130,51 @@ const Menu = () => {
               />
             </NavbarToggler>
             <Collapse isOpen={isOpen} navbar className="menu-mobile">
-              <div onClick={toggle}>
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="p-2 text-white"
-                  size="2xl"
-                />
+              <div className="d-lg-none">
+                <LanguageSwitch />
               </div>
-              <Nav navbar pills>
-                <CustomNavItem link="/" text={t("menu.home")} />
-                <CustomNavItem link="/booking" text={t("menu.booking")} />
-                <CustomNavItem link="/story" text={t("menu.history")} />
-                <CustomNavItem link="/activities" text={t("menu.activities")} />
-                <CustomNavItem link="/photos" text={t("menu.photos")} />
-                <CustomNavItem link="/contact" text={t("menu.contact")} />
-              </Nav>
+              <div className="mt-4">
+                <div onClick={toggle}>
+                  <FontAwesomeIcon
+                    icon={faCircleXmark}
+                    className="p-2 text-white"
+                    size="2xl"
+                  />
+                </div>
+                <Nav navbar pills>
+                  <CustomNavItem
+                    link="/"
+                    text={t("menu.home")}
+                    callback={toggle}
+                  />
+                  <CustomNavItem
+                    link="/booking"
+                    text={t("menu.booking")}
+                    callback={toggle}
+                    booking
+                  />
+                  <CustomNavItem
+                    link="/story"
+                    text={t("menu.history")}
+                    callback={toggle}
+                  />
+                  <CustomNavItem
+                    link="/activities"
+                    text={t("menu.activities")}
+                    callback={toggle}
+                  />
+                  <CustomNavItem
+                    link="/photos"
+                    text={t("menu.photos")}
+                    callback={toggle}
+                  />
+                  <CustomNavItem
+                    link="/contact"
+                    text={t("menu.contact")}
+                    callback={toggle}
+                  />
+                </Nav>
+              </div>
             </Collapse>
           </Navbar>
           <Row>
@@ -148,14 +188,16 @@ const Menu = () => {
               </Link>
             </Col>
           </Row>
-        </Container>
+        </div>
         <Container className="animate__animated animate__fadeInDown">
           <Row>
             <Col className="header d-flex header align-items-center justify-content-center  pb-2">
               <div className="titles">
-                <div className="header-subtitle">{params.subtitle}</div>
-                <h1 className="header-title">{params.title}</h1>
-                <div className="header-description">{params.description}</div>
+                <div className="header-subtitle">{t(params.subtitle)}</div>
+                <h1 className="header-title">{t(params.title)}</h1>
+                <div className="header-description">
+                  {t(params.description)}
+                </div>
               </div>
             </Col>
           </Row>

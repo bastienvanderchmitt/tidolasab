@@ -19,9 +19,12 @@ import toast from "react-hot-toast";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Price from "../../pages/Booking/Price";
+import { useTranslation } from "react-i18next";
 
 const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
   const navigate = useNavigate();
+
+  const { t, i18n } = useTranslation();
 
   const { checkIn, checkOut, total, days, adults, child, setBooked } =
     useBookingContext();
@@ -41,18 +44,18 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      name: Yup.string().required("Veuillez indiquer un nom."),
-      firstName: Yup.string().required("Veuillez indiquer un prénom."),
+      name: Yup.string().required(t("client.name_validation")),
+      firstName: Yup.string().required(t("client.firstName_validation")),
       email: Yup.string()
-        .email("Veuillez indiquer un email valide.")
-        .required("Veuillez indiquer un email."),
-      phone: Yup.string().required("Veuillez indiquer un numéro de téléphone."),
-      address: Yup.string().required("Veuillez indiquer une adresse."),
-      postalCode: Yup.string().required("Veuillez indiquer un code postal."),
-      city: Yup.string().required("Veuillez indiquer une ville."),
-      country: Yup.string().required("Veuillez indiquer un pays."),
+        .email(t("client.email_validation"))
+        .required(t("client.email_required")),
+      phone: Yup.string().required(t("client.phone_validation")),
+      address: Yup.string().required(t("client.address_validation")),
+      postalCode: Yup.string().required(t("client.postalCode_validation")),
+      city: Yup.string().required(t("client.city_validation")),
+      country: Yup.string().required(t("client.country_validation")),
     });
-  }, []);
+  }, [t]);
 
   const handleForm = async (values) => {
     try {
@@ -64,6 +67,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
         adults: adults,
         total: total,
         days: days,
+        language: i18n.language,
         isAdmin: !!callbackAdmin,
       });
       if (res?.data?.bookingId) {
@@ -105,38 +109,58 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
                 <div className="content">
                   <Row>
                     <Col className="form-group mb-4">
-                      <Field type="text" name="name" label="Nom" />
+                      <Field type="text" name="name" label={t("client.name")} />
                     </Col>
                     <Col className="form-group mb-4">
-                      <Field type="text" name="firstName" label="Prénom" />
+                      <Field
+                        type="text"
+                        name="firstName"
+                        label={t("client.firstName")}
+                      />
                     </Col>
                   </Row>
                   <Row>
                     <Col className="form-group mb-4" xs={12} lg={6}>
-                      <Field type="email" name="email" label="Email" />
+                      <Field
+                        type="email"
+                        name="email"
+                        label={t("client.email")}
+                      />
                     </Col>
                     <Col className="form-group mb-4">
-                      <Field type="text" name="phone" label="Téléphone" />
+                      <Field
+                        type="text"
+                        name="phone"
+                        label={t("client.phone")}
+                      />
                     </Col>
                   </Row>
                   <Row>
                     <Col className="form-group mb-4" xs={12} lg={6}>
-                      <Field type="text" name="address" label="Adresse" />
+                      <Field
+                        type="text"
+                        name="address"
+                        label={t("client.address")}
+                      />
                     </Col>
                     <Col className="form-group mb-4">
                       <Field
                         type="text"
                         name="postalCode"
-                        label="Code postal"
+                        label={t("client.postalCode")}
                       />
                     </Col>
                   </Row>
                   <Row>
                     <Col className="form-group mb-4">
-                      <Field type="text" name="city" label="Ville" />
+                      <Field type="text" name="city" label={t("client.city")} />
                     </Col>
                     <Col className="form-group mb-4">
-                      <Field type="text" name="country" label="Pays" />
+                      <Field
+                        type="text"
+                        name="country"
+                        label={t("client.country")}
+                      />
                     </Col>
                   </Row>
                 </div>
@@ -151,7 +175,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
                 <Row>
                   <Col>
                     <Button color="secondary" onClick={toggle}>
-                      Annuler
+                      {t("common.cancel")}
                     </Button>
                   </Col>
                   <Col>
@@ -163,7 +187,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
                       {isSubmitting ? (
                         <FontAwesomeIcon icon={faSpinner} spinPulse />
                       ) : (
-                        "Réserver"
+                        t("common.booking")
                       )}
                     </Button>
                   </Col>

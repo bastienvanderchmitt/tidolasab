@@ -1,8 +1,11 @@
 import mg_beach from "../../../assets/img/locations/location_4.jpeg";
 import { Col, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Discover = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="discover">
       <Container>
@@ -10,16 +13,10 @@ const Discover = () => {
           <Col className="p-5" xs={12} xl={6}>
             <Row>
               <Col>
-                <h4 className="title-4 pt-4">Découvrez l'île</h4>
-                {/*<span className="title-2">Tant de choses à découvrir !</span>*/}
+                <h4 className="title-4 pt-4">{t("discover.title")}</h4>
               </Col>
             </Row>
-            <p className="pt-4">
-              Découvrez « la galette » (surnom de l’île), ses plages de sable
-              blanc aux eaux turquoises, sa faune aquatique, ses forets
-              tropicales, sa mangrove, ses sentiers de randonnées, sa
-              gastronomie, ses trois rhumeries, ses moulins...
-            </p>
+            <p className="pt-4">{t("discover.description")}</p>
           </Col>
           <Col>
             <Link to={"/activities"}>
@@ -28,11 +25,13 @@ const Discover = () => {
                   <img src={mg_beach} className="w-100" alt="beach" />
                   <div className="offset-border"></div>
                   <div className="overlay-label">
-                    <div className="overlay-label-text">VOIR</div>
+                    <div className="overlay-label-text">
+                      {t("discover.see")}
+                    </div>
                   </div>
                 </div>
               </div>
-              <h4 className="aurore pt-3">Des couleurs éblouissantes</h4>
+              <h4 className="aurore pt-3">{t("discover.image_title")}</h4>
             </Link>
           </Col>
         </Row>

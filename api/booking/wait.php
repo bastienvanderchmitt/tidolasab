@@ -15,8 +15,14 @@ try {
         // Send email to client
         $to = $client->email;
         $name = $client->nom . ' ' . $client->prenom;
-        $subject = 'Tidolasab - Réservation en cours';
-        $message = "<h4>Bonjour $name,</h4><p>Merci pour votre confiance.</p><p>Votre réservation est en cours de validation (en attente).</p>";
+        $subject = $client->language === 'fr' ? 'Tidolasab - Réservation en cours' : 'Tidolasab - Booking in progess';
+        $message = $client->language === 'fr' ?
+            "<h4>Bonjour $name,</h4><p>Merci pour votre confiance.</p><p>Votre réservation est en cours de validation (en attente).</p><p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                    <p>Cordialement,</p>
+                    <p>Ti' Dola Sab</p>" :
+            "<h4>Hello $name,</h4><p>Thank you for your trust.</p><p>Your booking is being processed (pending).</p><p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                        <p>Best regards,</p>
+                        <p>Ti' Dola Sab</p>";
         sendEmail($to, $subject, $message);
 
         $connexion->commit();

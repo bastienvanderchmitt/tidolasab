@@ -42,6 +42,10 @@ $gold: #B99D75;
   &:not(.active):hover {
     color: var(--bs-nav-link-color);
   }
+
+  &.booking {
+    text-decoration: underline 2px var(--bs-nav-pills-link-active-bg);
+  }
 }
 
 .navbar {
@@ -74,7 +78,7 @@ $gold: #B99D75;
     position: absolute;
     bottom: 30px;
     left: -20px;
-    padding: 15px 50px;
+    padding: 10px 40px;
     background: $gold;
     color: white;
     width: fit-content;

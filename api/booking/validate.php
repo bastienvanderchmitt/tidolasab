@@ -32,8 +32,8 @@ try {
     $dateArrivee = new DateTime($arrivee);
     $dateArrivee->modify('-14 days');
     $date_solde = $dateArrivee->format('Y-m-d');
-    $subject = 'Tidolasab - Réservation validée !';
-    $message = "<p>Bonjour $name,</p>
+    $subject = $reservation->language === 'fr' ? 'Tidolasab - Réservation validée !' : 'Tidolasab - Booking validated !';
+    $message = $reservation->language === 'fr' ? "<p>Bonjour $name,</p>
                 <p>Nous sommes ravis de vous confirmer votre réservation.</p>
                 <table>
                   <tr>
@@ -64,7 +64,45 @@ try {
                     <td>$rest €</td>
                   </tr>
                 </table>
-                <p>Solde à régler avant le $date_solde</p>";
+                <p>Solde à régler avant le $date_solde</p>
+                <p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                <p>Cordialement,</p>
+                <p>Ti' Dola Sab</p>" :
+                    "<p>Hello $name,</p>
+                    <p>We are pleased to confirm your booking.</p>
+                    <table>
+                      <tr>
+                        <th>Details</th>
+                      </tr>
+                      <tr>
+                        <td>Number of people:</td>
+                        <td>$nbr</td>
+                      </tr>
+                      <tr>
+                        <td>Arrival date:</td>
+                        <td>$arrivee</td>
+                      </tr>
+                      <tr>
+                        <td>Departure date:</td>
+                        <td>$depart</td>
+                      </tr>
+                      <tr>
+                        <td>Total price:</td>
+                        <td>$total €</td>
+                      </tr>
+                      <tr>
+                        <td>Deposit paid:</td>
+                        <td>$deposit €</td>
+                      </tr>
+                      <tr>
+                        <td>Balance to be paid:</td>
+                        <td>$rest €</td>
+                      </tr>
+                    </table>
+                    <p>Balance to be paid by $date_solde</p>
+                    <p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                    <p>Best regards,</p>
+                    <p>Ti' Dola Sab</p>";
     sendEmail($to, $subject, $message);
 
     $connexion->commit();

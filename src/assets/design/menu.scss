@@ -63,6 +63,25 @@
       max-width: 600px;
     }
   }
+
+  .language-switch {
+    z-index: 9999;
+    right: 20px;
+    top: 25px;
+    color: white;
+
+    &.isFixed {
+      top: 10px;
+    }
+
+    .language-switch-btn {
+      cursor: pointer;
+
+      &.selected {
+        border-bottom: 2px solid $primary;
+      }
+    }
+  }
 }
 
 .react-parallax-bgimage {
@@ -100,6 +119,13 @@
   }
   .menu.big .header {
     height: 70vH;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .language-switch {
+      background-color: #8080804f;
+    padding: 10px;
   }
 }
 

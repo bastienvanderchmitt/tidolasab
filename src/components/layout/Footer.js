@@ -1,18 +1,21 @@
 import { Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="footer text-center bg-dark text-white">
       <Container fluid>
         <Row className="text-center">
           <Col className="footer-card">
-            <h6 className="footer-title">Adresse</h6>
+            <h6 className="footer-title">{t("footer.address")}</h6>
             <p>Morne Lolo, 97112, Grand-Bourg</p>
           </Col>
           <Col className="footer-card">
-            <h6 className="footer-title">Téléphone</h6>
+            <h6 className="footer-title">{t("common.phone")}</h6>
             <a href="tel:0690648904" style={{ textDecorationColor: "#B99D75" }}>
               <p className="gold">06 90 64 89 04</p>
             </a>
@@ -27,7 +30,7 @@ const Footer = () => {
             </a>
           </Col>
           <Col className="footer-card">
-            <h6 className="footer-title">Réseaux sociaux</h6>
+            <h6 className="footer-title">{t("footer.social")}</h6>
             <p>
               <a
                 href="https://www.facebook.com/profile.php?id=61557470872317"
