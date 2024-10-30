@@ -29,6 +29,11 @@ import location_32 from "../../assets/img/locations/location_32.jpeg";
 import location_33 from "../../assets/img/locations/location_33.jpeg";
 import location_34 from "../../assets/img/locations/location_34.jpeg";
 import location_35 from "../../assets/img/locations/location_35.jpeg";
+import location_36 from "../../assets/img/locations/location_36.jpeg";
+import location_37 from "../../assets/img/locations/location_37.jpeg";
+import location_38 from "../../assets/img/locations/location_38.jpeg";
+import location_39 from "../../assets/img/locations/location_39.jpeg";
+import location_40 from "../../assets/img/locations/location_40.jpeg";
 import { useTranslation } from "react-i18next";
 
 const Photos = () => {
@@ -134,8 +139,8 @@ const Photos = () => {
       height: 2,
     },
     {
-      src: location_5,
-      width: 2,
+      src: location_35,
+      width: 3,
       height: 2,
     },
     {
@@ -146,6 +151,11 @@ const Photos = () => {
     {
       src: location_15,
       width: 3,
+      height: 2,
+    },
+    {
+      src: location_5,
+      width: 2,
       height: 2,
     },
     {
@@ -169,9 +179,29 @@ const Photos = () => {
       height: 1,
     },
     {
-      src: location_35,
+      src: location_36,
+      width: 2,
+      height: 2,
+    },
+    {
+      src: location_40,
+      width: 2,
+      height: 2,
+    },
+    {
+      src: location_37,
+      width: 3,
+      height: 2,
+    },
+    {
+      src: location_39,
       width: 2,
       height: 1,
+    },
+    {
+      src: location_38,
+      width: 2,
+      height: 2,
     },
   ];
 
