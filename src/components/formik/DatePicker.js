@@ -21,7 +21,7 @@ const DatePicker = ({ formRef }) => {
     () =>
       bookings?.map((b) => {
         const startMoment = moment.tz(b.date_arrivee, tz).startOf("day");
-        const startDate = startMoment.toDate();
+        const startDate = startMoment.add(1, "day").toDate();
 
         const endMoment = moment.tz(b.date_depart, tz).startOf("day");
         const endDate = endMoment.toDate();
@@ -98,27 +98,49 @@ const DatePicker = ({ formRef }) => {
           </div>
         ),
         DayCellFooter: (props) => {
+          const isFirstDayReserved = bookings.some((booking) => {
+            const startDate = moment(booking.date_arrivee).startOf("day");
+            const endDate = moment(booking.date_depart).startOf("day");
+            return moment(props.date).isBetween(startDate, endDate, null, "[]");
+          });
           return (
             <div
               className={
-                props.state.isReserved
+                (props.state.isReserved || isFirstDayReserved) &&
+                !(props.state.isSelectedStart || props.state.isSelectedEnd)
                   ? "day-footer-cell booked"
                   : "day-footer-cell"
               }
             >
-              {props.state.isReserved
-                ? t("booking.booked")
-                : props.state.isSelectedStart
-                  ? t("booking.begin")
-                  : props.state.isSelectedEnd
-                    ? t("booking.end")
+              {props.state.isSelectedStart
+                ? t("booking.begin")
+                : props.state.isSelectedEnd
+                  ? t("booking.end")
+                  : props.state.isReserved || isFirstDayReserved
+                    ? t("booking.booked")
                     : ""}
             </div>
           );
         },
       }}
       isStart={true}
-      disabled={(date, state) => state.isPast}
+      disabled={(date, state) => {
+        // Vérifiez si la date est dans le passé
+        if (state.isPast) {
+          return true;
+        }
+
+        // Vérifiez si la date est le premier jour d'une réservation
+        const isFirstDayReserved = reserved.some((reservation) => {
+          const startDate = moment(reservation.startDate)
+            .add(1, "day")
+            .startOf("day");
+          return startDate.isSame(moment(date), "day");
+        });
+
+        // Si c'est le premier jour d'une réservation, ne pas désactiver
+        return isFirstDayReserved;
+      }}
       reserved={reserved}
       dateFnsOptions={{
         weekStartsOn: 1,

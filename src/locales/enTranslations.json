@@ -146,6 +146,7 @@
     "checkOut_validation": "Please indicate a check-out date.",
     "adults_validation": "Please indicate the number of adults.",
     "booked": "Booked",
+    "booked_start": "Booked from 2pm",
     "begin": "Begin",
     "end": "End"
   },
@@ -197,7 +198,8 @@
     "desc_3_3": " will be requested",
     "desc_3_4": "14 days before arrival.",
     "activities_1": "Feel free to check out the",
-    "activities_2": "N to discover what the island has to offer."
+    "activities_2": " to discover what the island has to offer.",
+    "activities": "activities"
   },
   "history": {
     "title": "Meet the team",
