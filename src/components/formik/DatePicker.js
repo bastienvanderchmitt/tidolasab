@@ -101,7 +101,7 @@ const DatePicker = ({ formRef }) => {
           const isFirstDayReserved = bookings.some((booking) => {
             const startDate = moment(booking.date_arrivee).startOf("day");
             const endDate = moment(booking.date_depart).startOf("day");
-            return moment(props.date).isBetween(startDate, endDate, null, "[]");
+            return moment(props.date).isBetween(startDate, endDate, null, "[)");
           });
           return (
             <div
