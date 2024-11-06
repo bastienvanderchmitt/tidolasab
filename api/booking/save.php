@@ -5,7 +5,17 @@ require_once('../api.php');
 global $data, $connexion;
 
 try {
-    $checkExisting = $connexion->safeFetchAll("SELECT * FROM reservations WHERE statut = :statut AND (:date_arrivee BETWEEN date_arrivee AND date_depart OR :date_depart BETWEEN date_arrivee AND date_depart);", ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut, 'statut' => 'validée']);
+    $checkExisting = $connexion->safeFetchAll("
+        SELECT * FROM reservations 
+                 WHERE statut = :statut AND 
+                       (:date_arrivee BETWEEN date_arrivee AND (date_depart - INTERVAL 1 DAY) OR 
+                        :date_depart BETWEEN (date_arrivee + INTERVAL 1 DAY) AND date_depart);",
+        [
+            'date_arrivee' => $data->checkIn,
+            'date_depart' => $data->checkOut,
+            'statut' => 'validée'
+        ]
+    );
     if (!count($checkExisting)) {
         $connexion->beginTransaction();
 
@@ -59,8 +69,8 @@ try {
                         <li>Téléphone : $data->phone</li>
                         <li>Adresse : $address</li>
                     </ul>";
-//        if (!$data->isAdmin)
-//            sendEmail($to, $subject, $message);
+        if (!$data->isAdmin)
+            sendEmail($to, $subject, $message);
 
         $connexion->commit();
 

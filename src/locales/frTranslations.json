@@ -145,6 +145,7 @@
     "checkOut_validation": "Veuillez indiquer une date de départ.",
     "adults_validation": "Veuillez indiquer le nombre d'adultes.",
     "booked": "Réservé",
+    "booked_start": "Réservé à partir de 14h",
     "begin": "Début",
     "end": "Fin"
   },
@@ -196,7 +197,8 @@
     "desc_3_3": " vous sera demandé",
     "desc_3_4": "14 jours avant l'arrivée",
     "activities_1": "N'hésitez pas à aller faire un tour du côté des",
-    "activities_2": "N pour découvrir ce que l'île peut vous offrir."
+    "activities_2": "N pour découvrir ce que l'île peut vous offrir.",
+    "activities": "activitées"
   },
   "history": {
     "title": "Découvrez la team",

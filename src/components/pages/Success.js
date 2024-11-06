@@ -69,7 +69,7 @@ const Success = () => {
             <Row>
               <p className="pt-4">
                 {t("success.activities_1")}{" "}
-                <Link to="/activities">activitées</Link>
+                <Link to="/activities">{t("success.activities")}</Link>
                 {t("success.activities_2")}
               </p>
             </Row>
