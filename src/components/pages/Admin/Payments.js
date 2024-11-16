@@ -9,6 +9,7 @@ import PaymentModal from "./Modals/PaymentModal";
 import useDialog from "../../../hooks/useDialog";
 import useToggle from "../../../hooks/useToggle";
 import useConfirmDialog from "../../../hooks/useConfirmDialog";
+import useSorting from "../../../hooks/useSorting";
 
 const Payments = () => {
   const [reloading, reload] = useToggle(false);
@@ -59,6 +60,12 @@ const AdminPayments = ({ payments, reload }) => {
     [payments],
   );
 
+  const {
+    sortedData: sortedPayments,
+    requestSort,
+    getSortIcon,
+  } = useSorting(payments);
+
   return (
     <Table
       striped
@@ -70,19 +77,40 @@ const AdminPayments = ({ payments, reload }) => {
     >
       <thead>
         <tr className="text-center">
-          <th>Id</th>
-          <th>Date</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Moyen de paiement</th>
-          <th>Montant</th>
+          <th
+            onClick={() => requestSort("date_paiement")}
+            style={{ cursor: "pointer" }}
+          >
+            Date <FontAwesomeIcon icon={getSortIcon("date_paiement")} />
+          </th>
+          <th onClick={() => requestSort("nom")} style={{ cursor: "pointer" }}>
+            Nom <FontAwesomeIcon icon={getSortIcon("nom")} />
+          </th>
+          <th
+            onClick={() => requestSort("prenom")}
+            style={{ cursor: "pointer" }}
+          >
+            Prénom <FontAwesomeIcon icon={getSortIcon("prenom")} />
+          </th>
+          <th
+            onClick={() => requestSort("moyen_paiement")}
+            style={{ cursor: "pointer" }}
+          >
+            Moyen de paiement{" "}
+            <FontAwesomeIcon icon={getSortIcon("moyen_paiement")} />
+          </th>
+          <th
+            onClick={() => requestSort("montant_paiement")}
+            style={{ cursor: "pointer" }}
+          >
+            Montant <FontAwesomeIcon icon={getSortIcon("montant_paiement")} />
+          </th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        {payments?.map((p, i) => (
+        {sortedPayments?.map((p, i) => (
           <tr key={i} className="text-center">
-            <th scope="row">{p.id}</th>
             <td>{dateFormat(p.date_paiement)}</td>
             <td>{p.nom}</td>
             <td>{p.prenom}</td>
@@ -134,7 +162,7 @@ const AdminPayments = ({ payments, reload }) => {
         ))}
         <tr>
           <td
-            colSpan={5}
+            colSpan={4}
             style={{ backgroundColor: "white", borderRight: "none" }}
           >
             <strong>Total :</strong>

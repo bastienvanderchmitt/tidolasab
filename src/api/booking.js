@@ -23,3 +23,7 @@ export const cancel = (data) => {
 export const waiting = (data) => {
   return appAxios.post("booking/wait.php", data);
 };
+
+export const remove = (data) => {
+  return appAxios.post("booking/delete.php", data);
+};

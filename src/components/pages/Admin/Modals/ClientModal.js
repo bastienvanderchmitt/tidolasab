@@ -28,13 +28,13 @@ const ClientModal = ({ isOpen, close, client }) => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      name: Yup.string().required("Veuillez indiquer un nom."),
-      firstName: Yup.string().required("Veuillez indiquer un prénom."),
-      email: Yup.string()
-        .email("Veuillez indiquer un email valide.")
-        .required("Veuillez indiquer un email."),
-      phone: Yup.string().required("Veuillez indiquer un numéro de téléphone."),
-      address: Yup.string().required("Veuillez indiquer une adresse."),
+      // name: Yup.string().required("Veuillez indiquer un nom."),
+      // firstName: Yup.string().required("Veuillez indiquer un prénom."),
+      // email: Yup.string()
+      //   .email("Veuillez indiquer un email valide.")
+      //   .required("Veuillez indiquer un email."),
+      // phone: Yup.string().required("Veuillez indiquer un numéro de téléphone."),
+      // address: Yup.string().required("Veuillez indiquer une adresse."),
     });
   }, []);
 

@@ -21,19 +21,20 @@ try {
         ['id_reservation' => $data->id]);
 
     // Send email to client
-    $to = $reservation->email;
-    $arrivee = $reservation->date_arrivee;
-    $depart = $reservation->date_depart;
-    $name = $reservation->nom . ' ' . $reservation->prenom;
-    $nbr = (int)$reservation->adultes + (int)$reservation->enfants;
-    $total = $reservation->prix_total;
-    $deposit = $data->deposit;
-    $rest = (float)$total - (float)$deposit;
-    $dateArrivee = new DateTime($arrivee);
-    $dateArrivee->modify('-14 days');
-    $date_solde = $dateArrivee->format('Y-m-d');
-    $subject = $reservation->language === 'fr' ? 'Tidolasab - Réservation validée !' : 'Tidolasab - Booking validated !';
-    $message = $reservation->language === 'fr' ? "<p>Bonjour $name,</p>
+    if (!empty($reservation->email)) {
+        $to = $reservation->email;
+        $arrivee = $reservation->date_arrivee;
+        $depart = $reservation->date_depart;
+        $name = $reservation->nom . ' ' . $reservation->prenom;
+        $nbr = (int)$reservation->adultes + (int)$reservation->enfants;
+        $total = $reservation->prix_total;
+        $deposit = $data->deposit;
+        $rest = (float)$total - (float)$deposit;
+        $dateArrivee = new DateTime($arrivee);
+        $dateArrivee->modify('-14 days');
+        $date_solde = $dateArrivee->format('Y-m-d');
+        $subject = $reservation->language === 'fr' ? 'Tidolasab - Réservation validée !' : 'Tidolasab - Booking validated !';
+        $message = $reservation->language === 'fr' ? "<p>Bonjour $name,</p>
                 <p>Nous sommes ravis de vous confirmer votre réservation.</p>
                 <table>
                   <tr>
@@ -68,7 +69,7 @@ try {
                 <p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
                 <p>Cordialement,</p>
                 <p>Ti' Dola Sab</p>" :
-                    "<p>Hello $name,</p>
+            "<p>Hello $name,</p>
                     <p>We are pleased to confirm your booking.</p>
                     <table>
                       <tr>
@@ -103,7 +104,8 @@ try {
                     <p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
                     <p>Best regards,</p>
                     <p>Ti' Dola Sab</p>";
-    sendEmail($to, $subject, $message);
+        sendEmail($to, $subject, $message);
+    }
 
     $connexion->commit();
 

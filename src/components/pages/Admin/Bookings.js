@@ -11,10 +11,11 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import useApi from "../../../hooks/useApi";
-import { cancel, getBookings, waiting } from "../../../api/booking";
+import { cancel, getBookings, remove, waiting } from "../../../api/booking";
 import React, { useMemo, useState } from "react";
 import useToggle from "../../../hooks/useToggle";
 import {
+  faBan,
   faCheck,
   faPause,
   faPlus,
@@ -26,6 +27,7 @@ import { dateFormat } from "../../../helpers/dates";
 import BookingModal from "./Modals/BookingModal";
 import ValidateModal from "./Modals/ValidateModal";
 import useConfirmDialog from "../../../hooks/useConfirmDialog";
+import useSorting from "../../../hooks/useSorting";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -61,12 +63,24 @@ const Bookings = () => {
       } else if (status === "annulée") {
         if (
           await confirm(
-            "Voulez vous vraiment annuler la réservation de '" +
-              booking.nom_client +
-              "' ?",
+            <>
+              Voulez vous vraiment annuler la réservation de{" "}
+              <span className="text-primary">{booking.nom_client}</span> ?
+            </>,
           )
         ) {
           await cancel({ id: booking.id });
+        }
+      } else if (status === "delete") {
+        if (
+          await confirm(
+            <>
+              Voulez vous vraiment supprimer la réservation de{" "}
+              <span className="text-primary">{booking.nom_client}</span> ?
+            </>,
+          )
+        ) {
+          await remove({ id: booking.id });
         }
       } else {
         if (
@@ -109,6 +123,12 @@ const Bookings = () => {
   };
 
   const AdminBooking = ({ bookings, totalWithoutCanceled }) => {
+    const {
+      sortedData: bookingsToDisplay,
+      requestSort,
+      getSortIcon,
+    } = useSorting(bookings);
+
     const total = useMemo(() => {
       const filtered = totalWithoutCanceled
         ? bookings?.filter((b) => b.statut !== "annulée")
@@ -148,22 +168,55 @@ const Bookings = () => {
       >
         <thead>
           <tr className="text-center">
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Arrivée</th>
-            <th>Départ</th>
+            <th
+              onClick={() => requestSort("nom_client")}
+              style={{ cursor: "pointer" }}
+            >
+              Nom <FontAwesomeIcon icon={getSortIcon("nom_client")} />
+            </th>
+            <th
+              onClick={() => requestSort("date_arrivee")}
+              style={{ cursor: "pointer" }}
+            >
+              Arrivée <FontAwesomeIcon icon={getSortIcon("date_arrivee")} />
+            </th>
+            <th
+              onClick={() => requestSort("date_depart")}
+              style={{ cursor: "pointer" }}
+            >
+              Départ <FontAwesomeIcon icon={getSortIcon("date_depart")} />
+            </th>
             <th>Statut</th>
-            <th>Adultes</th>
-            <th>Enfants</th>
-            <th>Nuits</th>
-            <th>Prix</th>
+            <th
+              onClick={() => requestSort("adultes")}
+              style={{ cursor: "pointer" }}
+            >
+              Adultes <FontAwesomeIcon icon={getSortIcon("adultes")} />
+            </th>
+            <th
+              onClick={() => requestSort("enfants")}
+              style={{ cursor: "pointer" }}
+            >
+              Enfants <FontAwesomeIcon icon={getSortIcon("enfants")} />
+            </th>
+            <th
+              onClick={() => requestSort("nombre_nuits")}
+              style={{ cursor: "pointer" }}
+            >
+              Nuits <FontAwesomeIcon icon={getSortIcon("nombre_nuits")} />
+            </th>
+            <th
+              onClick={() => requestSort("prix_total")}
+              style={{ cursor: "pointer" }}
+            >
+              Prix <FontAwesomeIcon icon={getSortIcon("prix_total")} />
+            </th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {bookings?.map((b, i) => (
+          {bookingsToDisplay?.map((b, i) => (
             <tr key={i} className="text-center">
-              <th scope="row">{b.id}</th>
               <td>{b.nom_client}</td>
               <td>{dateFormat(b.date_arrivee)}</td>
               <td>{dateFormat(b.date_depart)}</td>
@@ -198,6 +251,14 @@ const Bookings = () => {
                     booking={b}
                     status={"annulée"}
                     libelle={"Annuler"}
+                    icon={faBan}
+                    color="danger"
+                  />
+                ) : b.statut === "annulée" ? (
+                  <ActionBtn
+                    booking={b}
+                    status={"delete"}
+                    libelle={"Supprimer"}
                     icon={faTrash}
                     color="danger"
                   />
@@ -207,7 +268,7 @@ const Bookings = () => {
           ))}
           <tr>
             <td
-              colSpan={8}
+              colSpan={7}
               style={{ backgroundColor: "white", borderRight: "none" }}
             >
               <strong>Total :</strong>

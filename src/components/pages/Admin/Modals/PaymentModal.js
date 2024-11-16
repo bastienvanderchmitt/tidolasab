@@ -30,9 +30,9 @@ const PaymentModal = ({ isOpen, close, payment }) => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      deposit: Yup.number()
-        .min(0.1, "Le montant doit être positif.")
-        .required("Veuillez indiquer un montant pour l'acompte."),
+      deposit: Yup.number().required(
+        "Veuillez indiquer un montant pour l'acompte.",
+      ),
       date: Yup.date().required("Veuillez indiquer une date de paiement."),
       booking: Yup.number().required("Veuillez indiquer une réservation."),
     });
