@@ -19,17 +19,23 @@ try {
     if (!count($checkExisting)) {
         $connexion->beginTransaction();
 
-        $address = $data->address . ", " . $data->postalCode . " " . $data->city . ", " . $data->country;
-        $sql = "INSERT INTO clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse, language = :language;";
-        $response = $connexion->safeExecute($sql, ['nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $address, 'language' => $data->language]);
-        $clientId = $connexion->lastInsertId();
-
-        $sql = "INSERT INTO reservations SET date_arrivee = :date_arrivee, date_depart = :date_depart, nombre_nuits = :nombre_nuits, adultes = :adultes, enfants = :enfants, prix_total = :prix_total;";
-        $response = $connexion->safeExecute($sql, ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut, 'nombre_nuits' => $data->days, 'adultes' => $data->adults, 'enfants' => $data->children, 'prix_total' => $data->total]);
+        $total = $data->type !== 'Fermeture' ? $data->total : 0;
+        $sql = "INSERT INTO reservations SET date_arrivee = :date_arrivee, date_depart = :date_depart, nombre_nuits = :nombre_nuits, adultes = :adultes, enfants = :enfants, prix_total = :prix_total, type = :type;";
+        $response = $connexion->safeExecute($sql, ['date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut, 'nombre_nuits' => $data->days, 'adultes' => $data->adults, 'enfants' => $data->children, 'prix_total' => $total, 'type' => $data->type]);
         $bookingId = $connexion->lastInsertId();
 
-        $sql = "INSERT INTO reservations_clients SET id_reservation = :id_reservation, id_client = :id_client;";
-        $connexion->safeExecute($sql, ['id_reservation' => $bookingId, 'id_client' => $clientId]);
+        if ($data->type === "Fermeture") {
+            $sql = "UPDATE reservations SET statut = :statut WHERE id = :id_reservation;";
+            $connexion->safeExecute($sql, ['statut' => 'validée', 'id_reservation' => $bookingId]);
+        } else {
+            $address = $data->address . ", " . $data->postalCode . " " . $data->city . ", " . $data->country;
+            $sql = "INSERT INTO clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse, language = :language;";
+            $response = $connexion->safeExecute($sql, ['nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $address, 'language' => $data->language]);
+            $clientId = $connexion->lastInsertId();
+
+            $sql = "INSERT INTO reservations_clients SET id_reservation = :id_reservation, id_client = :id_client;";
+            $connexion->safeExecute($sql, ['id_reservation' => $bookingId, 'id_client' => $clientId]);
+        }
 
         // Send email with RIB to client
         $to = $data->email;

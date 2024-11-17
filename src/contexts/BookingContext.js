@@ -13,6 +13,7 @@ const BookingContextProvider = ({ children }) => {
   const [total, setTotal] = useState(0);
   const [adults, setAdults] = useState(1);
   const [child, setChild] = useState(0);
+  const [type, setType] = useState("Classique");
   const [booked, setBooked] = useState(false);
 
   const checkIn =
@@ -76,6 +77,7 @@ const BookingContextProvider = ({ children }) => {
         checkOut,
         days,
         total,
+        setTotal,
         adults,
         setAdults,
         child,
@@ -85,6 +87,8 @@ const BookingContextProvider = ({ children }) => {
         daysHighSeason,
         daysLowSeason,
         discount,
+        type,
+        setType,
       }}
     >
       {children}

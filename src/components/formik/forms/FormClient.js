@@ -26,7 +26,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
 
   const { t, i18n } = useTranslation();
 
-  const { checkIn, checkOut, total, days, adults, child, setBooked } =
+  const { checkIn, checkOut, total, days, adults, child, setBooked, type } =
     useBookingContext();
 
   const initialValues = useMemo(() => {
@@ -43,19 +43,25 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
   }, []);
 
   const validationSchema = useMemo(() => {
-    return Yup.object().shape({
-      name: Yup.string().required(t("client.name_validation")),
-      firstName: Yup.string().required(t("client.firstName_validation")),
-      email: Yup.string()
-        .email(t("client.email_validation"))
-        .required(t("client.email_required")),
-      phone: Yup.string().required(t("client.phone_validation")),
-      address: Yup.string().required(t("client.address_validation")),
-      postalCode: Yup.string().required(t("client.postalCode_validation")),
-      city: Yup.string().required(t("client.city_validation")),
-      country: Yup.string().required(t("client.country_validation")),
-    });
-  }, [t]);
+    return Yup.object().shape(
+      !!callbackAdmin
+        ? {}
+        : {
+            name: Yup.string().required(t("client.name_validation")),
+            firstName: Yup.string().required(t("client.firstName_validation")),
+            email: Yup.string()
+              .email(t("client.email_validation"))
+              .required(t("client.email_required")),
+            phone: Yup.string().required(t("client.phone_validation")),
+            address: Yup.string().required(t("client.address_validation")),
+            postalCode: Yup.string().required(
+              t("client.postalCode_validation"),
+            ),
+            city: Yup.string().required(t("client.city_validation")),
+            country: Yup.string().required(t("client.country_validation")),
+          },
+    );
+  }, [t, callbackAdmin]);
 
   const handleForm = async (values) => {
     try {
@@ -69,6 +75,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
         days: days,
         language: i18n.language,
         isAdmin: !!callbackAdmin,
+        type: type,
       });
       if (res?.data?.bookingId) {
         toggle();

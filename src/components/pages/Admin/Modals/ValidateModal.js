@@ -19,10 +19,12 @@ import { dateFormat } from "../../../../helpers/dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment-timezone";
+import { paymentTypes } from "../../../../helpers/paymentTypes";
 
 const ValidateModal = ({ isOpen, toggle, booking, reload }) => {
   const initialValues = useMemo(() => {
     return {
+      type: "virement",
       deposit: booking?.prix_total / 2,
       date: moment().format("YYYY-MM-DD"),
     };
@@ -30,9 +32,9 @@ const ValidateModal = ({ isOpen, toggle, booking, reload }) => {
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      deposit: Yup.number()
-        .min(0.1, "Le montant doit être positif.")
-        .required("Veuillez indiquer un montant pour l'acompte."),
+      deposit: Yup.number().required(
+        "Veuillez indiquer un montant pour l'acompte.",
+      ),
       date: Yup.date().required("Veuillez indiquer une date de paiement."),
     });
   }, []);
@@ -89,13 +91,32 @@ const ValidateModal = ({ isOpen, toggle, booking, reload }) => {
                   <Col>
                     <div>
                       <Field
+                        type="select"
+                        name="type"
+                        label="Moyen de paiement"
+                      >
+                        {paymentTypes.map((t, index) => (
+                          <option
+                            key={index}
+                            color="secondary"
+                            value={t}
+                            // onClick={() => setFieldValue("type", t)}
+                            // active={values.type === t}
+                          >
+                            {t.toUpperCase()}
+                          </option>
+                        ))}
+                      </Field>
+                    </div>
+                    <div className="pt-3">
+                      <Field
                         type="number"
                         name="deposit"
                         label="Acompte versé (€)"
                         step="0.01"
                       />
                     </div>
-                    <div className="pt-4">
+                    <div className="pt-3">
                       <Field type="date" name="date" label="Date du paiement" />
                     </div>
                   </Col>

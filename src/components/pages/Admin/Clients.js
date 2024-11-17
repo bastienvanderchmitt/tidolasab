@@ -1,12 +1,15 @@
 import { Button, Col, Container, Row, Table } from "reactstrap";
 import useApi from "../../../hooks/useApi";
-import { getClients } from "../../../api/client";
+import { deleteClient, getClients } from "../../../api/client";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ClientModal from "./Modals/ClientModal";
 import useDialog from "../../../hooks/useDialog";
 import useToggle from "../../../hooks/useToggle";
+import useConfirmDialog from "../../../hooks/useConfirmDialog";
+import toast from "react-hot-toast";
+import useSorting from "../../../hooks/useSorting";
 
 const Clients = () => {
   const [reloading, reload] = useToggle(false);
@@ -31,6 +34,13 @@ const Clients = () => {
 
 const AdminClient = ({ clients, reload }) => {
   const dialog = useDialog();
+  const confirm = useConfirmDialog();
+
+  const {
+    sortedData: sortedClients,
+    requestSort,
+    getSortIcon,
+  } = useSorting(clients);
 
   return (
     <Table
@@ -43,19 +53,39 @@ const AdminClient = ({ clients, reload }) => {
     >
       <thead>
         <tr className="text-center">
-          <th>Id</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Email</th>
-          <th>Téléphone</th>
-          <th>Adresse</th>
+          <th onClick={() => requestSort("nom")} style={{ cursor: "pointer" }}>
+            Nom <FontAwesomeIcon icon={getSortIcon("nom")} />
+          </th>
+          <th
+            onClick={() => requestSort("prenom")}
+            style={{ cursor: "pointer" }}
+          >
+            Prénom <FontAwesomeIcon icon={getSortIcon("prenom")} />
+          </th>
+          <th
+            onClick={() => requestSort("email")}
+            style={{ cursor: "pointer" }}
+          >
+            Email <FontAwesomeIcon icon={getSortIcon("email")} />
+          </th>
+          <th
+            onClick={() => requestSort("telephone")}
+            style={{ cursor: "pointer" }}
+          >
+            Téléphone <FontAwesomeIcon icon={getSortIcon("telephone")} />
+          </th>
+          <th
+            onClick={() => requestSort("adresse")}
+            style={{ cursor: "pointer" }}
+          >
+            Adresse <FontAwesomeIcon icon={getSortIcon("adresse")} />
+          </th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        {clients?.map((c, i) => (
+        {sortedClients?.map((c, i) => (
           <tr key={i} className="text-center">
-            <th scope="row">{c.id}</th>
             <td>{c.nom}</td>
             <td>{c.prenom}</td>
             <td>{c.email}</td>
@@ -73,27 +103,38 @@ const AdminClient = ({ clients, reload }) => {
               >
                 <FontAwesomeIcon icon={faEdit} />
               </Button>
+              {c.can_delete !== "0" && (
+                <Button
+                  id={"btn-client-delete-" + c.id}
+                  onClick={async () => {
+                    if (
+                      await confirm(
+                        <>
+                          Voulez vous vraiment supprimer le client{" "}
+                          <span className="text-primary">
+                            {c.nom + " " + c.prenom}
+                          </span>{" "}
+                          ?
+                        </>,
+                      )
+                    ) {
+                      const res = await deleteClient({ id: c.id });
+                      res?.data?.success
+                        ? reload()
+                        : toast.error(
+                            res?.data?.message || "Une erreur est survenue.",
+                          );
+                    }
+                  }}
+                  color="danger"
+                  className="me-2 p-0 pe-1 ps-1"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              )}
             </td>
           </tr>
         ))}
-        {/*<tr>*/}
-        {/*  <td*/}
-        {/*    colSpan={5}*/}
-        {/*    style={{ backgroundColor: "white", borderRight: "none" }}*/}
-        {/*  >*/}
-        {/*    <strong>Total :</strong>*/}
-        {/*  </td>*/}
-        {/*  <td*/}
-        {/*    style={{*/}
-        {/*      backgroundColor: "white",*/}
-        {/*      borderLeft: "none",*/}
-        {/*      borderRight: "none",*/}
-        {/*    }}*/}
-        {/*    className="text-center"*/}
-        {/*  >*/}
-        {/*    <strong>{clients?.length}</strong>*/}
-        {/*  </td>*/}
-        {/*</tr>*/}
       </tbody>
     </Table>
   );

@@ -7,9 +7,10 @@ global $connexion;
 try {
 
     $result = ['payments' => $connexion->safeFetchAll("SELECT c.nom, c.prenom, p.* FROM paiements p 
-        INNER JOIN reservations r ON r.id = p.id_reservation
-        INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
-        INNER JOIN clients c ON c.id = rc.id_client;
+            INNER JOIN reservations r ON r.id = p.id_reservation
+            INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
+            INNER JOIN clients c ON c.id = rc.id_client
+        ORDER BY date_paiement;
     ")];
     http_response_code(200);
 
