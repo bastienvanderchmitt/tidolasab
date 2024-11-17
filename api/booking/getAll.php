@@ -7,8 +7,8 @@ global $connexion;
 try {
 
     $result = ['bookings' => $connexion->safeFetchAll("SELECT CONCAT(c.nom, ' ', c.prenom) as nom_client, r.* FROM reservations r
-                                                                INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
-                                                                INNER JOIN clients c ON c.id = rc.id_client
+                                                                LEFT JOIN reservations_clients rc ON r.id = rc.id_reservation
+                                                                LEFT JOIN clients c ON c.id = rc.id_client
                                                               ORDER BY date_arrivee;")];
     http_response_code(200);
 

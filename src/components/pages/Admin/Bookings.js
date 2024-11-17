@@ -155,6 +155,19 @@ const Bookings = () => {
       return <Badge color={color}>{status.toUpperCase()}</Badge>;
     };
 
+    const TypeBadge = ({ type }) => {
+      const color = useMemo(
+        () =>
+          type === "Booking"
+            ? "success"
+            : type === "Fermeture"
+              ? "warning"
+              : "primary",
+        [type],
+      );
+      return <Badge color={color}>{type.toUpperCase()}</Badge>;
+    };
+
     return (
       <Table
         striped
@@ -173,6 +186,12 @@ const Bookings = () => {
               style={{ cursor: "pointer" }}
             >
               Nom <FontAwesomeIcon icon={getSortIcon("nom_client")} />
+            </th>
+            <th
+              onClick={() => requestSort("type")}
+              style={{ cursor: "pointer" }}
+            >
+              Type <FontAwesomeIcon icon={getSortIcon("type")} />
             </th>
             <th
               onClick={() => requestSort("date_arrivee")}
@@ -218,6 +237,9 @@ const Bookings = () => {
           {bookingsToDisplay?.map((b, i) => (
             <tr key={i} className="text-center">
               <td>{b.nom_client}</td>
+              <td>
+                <TypeBadge type={b.type} />
+              </td>
               <td>{dateFormat(b.date_arrivee)}</td>
               <td>{dateFormat(b.date_depart)}</td>
               <td>
@@ -268,7 +290,7 @@ const Bookings = () => {
           ))}
           <tr>
             <td
-              colSpan={7}
+              colSpan={8}
               style={{ backgroundColor: "white", borderRight: "none" }}
             >
               <strong>Total :</strong>

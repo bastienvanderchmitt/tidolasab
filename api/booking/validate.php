@@ -10,18 +10,18 @@ try {
     $sql = "UPDATE reservations SET statut = 'validée' WHERE id = :id;";
     $response = $connexion->safeExecute($sql, ['id' => $data->id]);
 
-    $sql = "INSERT INTO paiements SET id_reservation = :id, montant_paiement = :montant, date_paiement = :date, moyen_paiement = 'virement';";
-    $response = $connexion->safeExecute($sql, ['id' => $data->id, 'montant' => $data->deposit, 'date' => $data->date]);
+    $sql = "INSERT INTO paiements SET id_reservation = :id, montant_paiement = :montant, date_paiement = :date, moyen_paiement = :moyen_paiement;";
+    $response = $connexion->safeExecute($sql, ['id' => $data->id, 'montant' => $data->deposit, 'date' => $data->date, 'moyen_paiement' => $data->type]);
 
     $reservation = $connexion->safeFetch("SELECT c.*, r.* 
                                            FROM reservations r 
-                                                INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
-                                                INNER JOIN clients c ON c.id = rc.id_client
+                                                LEFT JOIN reservations_clients rc ON r.id = rc.id_reservation
+                                                LEFT JOIN clients c ON c.id = rc.id_client
                                            WHERE r.id = :id_reservation;",
         ['id_reservation' => $data->id]);
 
     // Send email to client
-    if (!empty($reservation->email)) {
+    if (!empty($reservation->email) && $reservation->type === 'Classique') {
         $to = $reservation->email;
         $arrivee = $reservation->date_arrivee;
         $depart = $reservation->date_depart;

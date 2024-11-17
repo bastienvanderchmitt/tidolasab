@@ -1,20 +1,22 @@
 import React, { useMemo } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button, Form } from "reactstrap";
+import { Button, ButtonGroup, Form } from "reactstrap";
 import Field from "../Field";
 import { useBookingContext } from "../../../contexts/BookingContext";
 import NumberField from "../NumberField";
 import useToggle from "../../../hooks/useToggle";
 import FormClient from "./FormClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Price from "../../pages/Booking/Price";
 import { priceLowSeason } from "../../../helpers/env";
 import { useTranslation } from "react-i18next";
+import { bookingTypes } from "../../../helpers/bookingTypes";
 
 const FormBooking = ({ callbackAdmin }) => {
-  const { checkIn, checkOut, setAdults, setChild } = useBookingContext();
+  const { checkIn, checkOut, setAdults, setChild, type, setType } =
+    useBookingContext();
   const [isOpen, toggle] = useToggle();
 
   const { t } = useTranslation();
@@ -57,7 +59,7 @@ const FormBooking = ({ callbackAdmin }) => {
         onSubmit={handleForm}
         enableReinitialize
       >
-        {({ handleSubmit, isSubmitting, onChange }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit} className="w-100">
             <div
               className="content-block-form with-action"
@@ -101,7 +103,24 @@ const FormBooking = ({ callbackAdmin }) => {
                   />
                 </div>
               </div>
-              <Price />
+              <Price isAdmin={!!callbackAdmin} />
+              {!!callbackAdmin && (
+                <div className={"mt-5 mb-3"}>
+                  <ButtonGroup className="w-100">
+                    {bookingTypes.map((t, index) => (
+                      <Button
+                        key={index}
+                        color="secondary"
+                        outline
+                        onClick={() => setType(t)}
+                        active={type === t}
+                      >
+                        {t}
+                      </Button>
+                    ))}
+                  </ButtonGroup>
+                </div>
+              )}
               <div className="content-submit mt-4">
                 <Button
                   type="submit"
@@ -112,7 +131,10 @@ const FormBooking = ({ callbackAdmin }) => {
                   {isSubmitting ? (
                     <FontAwesomeIcon icon={faSpinner} spinPulse />
                   ) : (
-                    t("common.booking")
+                    <>
+                      <FontAwesomeIcon icon={faCalendarDays} className="me-2" />
+                      {t("common.booking")}
+                    </>
                   )}
                 </Button>
                 <p className="prices">

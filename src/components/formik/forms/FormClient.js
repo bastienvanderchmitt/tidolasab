@@ -26,7 +26,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
 
   const { t, i18n } = useTranslation();
 
-  const { checkIn, checkOut, total, days, adults, child, setBooked } =
+  const { checkIn, checkOut, total, days, adults, child, setBooked, type } =
     useBookingContext();
 
   const initialValues = useMemo(() => {
@@ -61,7 +61,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
             country: Yup.string().required(t("client.country_validation")),
           },
     );
-  }, [t]);
+  }, [t, callbackAdmin]);
 
   const handleForm = async (values) => {
     try {
@@ -75,6 +75,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
         days: days,
         language: i18n.language,
         isAdmin: !!callbackAdmin,
+        type: type,
       });
       if (res?.data?.bookingId) {
         toggle();

@@ -4,6 +4,7 @@ import { savePayment } from "../../../../api/payment";
 import toast from "react-hot-toast";
 import {
   Button,
+  ButtonGroup,
   Col,
   Form,
   Modal,
@@ -16,6 +17,7 @@ import { Formik } from "formik";
 import Field from "../../../formik/Field";
 import useApi from "../../../../hooks/useApi";
 import { getBookings } from "../../../../api/booking";
+import { paymentTypes } from "../../../../helpers/paymentTypes";
 
 const PaymentModal = ({ isOpen, close, payment }) => {
   const [{ bookings }] = useApi(getBookings);
@@ -25,6 +27,7 @@ const PaymentModal = ({ isOpen, close, payment }) => {
       deposit: payment ? payment.montant_paiement : "",
       date: payment ? payment.date_paiement : "",
       booking: payment ? payment.id_reservation : "",
+      type: payment ? payment.moyen_paiement : "virement",
     };
   }, [payment]);
 
@@ -64,10 +67,27 @@ const PaymentModal = ({ isOpen, close, payment }) => {
         enableReinitialize
         initialValues={initialValues}
       >
-        {({ isSubmitting, handleSubmit }) => (
+        {({ isSubmitting, handleSubmit, values, setFieldValue }) => (
           <Form onSubmit={handleSubmit}>
             <ModalHeader>{payment ? "Edition" : "Ajout"} paiement</ModalHeader>
             <ModalBody>
+              <Row className="mt-3 mb-4">
+                <Col>
+                  <ButtonGroup className="w-100">
+                    {paymentTypes.map((t, index) => (
+                      <Button
+                        key={index}
+                        color="secondary"
+                        outline
+                        onClick={() => setFieldValue("type", t)}
+                        active={values.type === t}
+                      >
+                        {t.toUpperCase()}
+                      </Button>
+                    ))}
+                  </ButtonGroup>
+                </Col>
+              </Row>
               <Row>
                 <Col className="form-group">
                   <Field

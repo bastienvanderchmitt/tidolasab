@@ -66,6 +66,19 @@ const AdminPayments = ({ payments, reload }) => {
     getSortIcon,
   } = useSorting(payments);
 
+  const TypeBadge = ({ type }) => {
+    const color = useMemo(
+      () =>
+        type === "virement"
+          ? "success"
+          : type === "chèque"
+            ? "secondary"
+            : "primary",
+      [type],
+    );
+    return <Badge color={color}>{type.toUpperCase()}</Badge>;
+  };
+
   return (
     <Table
       striped
@@ -115,7 +128,7 @@ const AdminPayments = ({ payments, reload }) => {
             <td>{p.nom}</td>
             <td>{p.prenom}</td>
             <td>
-              <Badge color="primary">{p.moyen_paiement}</Badge>
+              <TypeBadge type={p.moyen_paiement} />
             </td>
             <td>{p.montant_paiement} €</td>
             <td>
