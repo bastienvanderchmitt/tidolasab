@@ -111,8 +111,8 @@ const PaymentModal = ({ isOpen, close, payment }) => {
                     <option></option>
                     {bookings?.map((b, i) => (
                       <option key={i} value={b.id}>
-                        {b.nom_client} - du {b.date_depart} au {b.date_arrivee}{" "}
-                        - {b.statut}
+                        {b.nom_client} | du {b.date_arrivee} au {b.date_depart}{" "}
+                        | {b.statut}
                       </option>
                     ))}
                   </Field>

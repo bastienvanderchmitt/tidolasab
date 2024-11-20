@@ -162,7 +162,9 @@ const Bookings = () => {
             ? "success"
             : type === "Fermeture"
               ? "warning"
-              : "primary",
+              : type === "AirBnb"
+                ? "info"
+                : "primary",
         [type],
       );
       return <Badge color={color}>{type.toUpperCase()}</Badge>;
