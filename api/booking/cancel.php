@@ -14,19 +14,20 @@ try {
 
     // Send email to client
     $to = $client->email;
-    if ($client->language === 'fr') {
-        $subject = 'Tidolasab - Réservation annulée';
-        $message = "<h4>Bonjour,</h4><p>Malheureusement, votre réservation viens d'être annulée.</p><p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
-                    <p>Cordialement,</p>
-                    <p>Ti' Dola Sab</p>";
-    } else {
-        $subject = 'Tidolasab - Booking Cancelled';
-        $message = "<h4>Hello,</h4><p>Unfortunately, your booking has just been cancelled.</p><p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
-                        <p>Best regards,</p>
+    if ($to) {
+        if ($client->language === 'fr') {
+            $subject = 'Tidolasab - Réservation annulée';
+            $message = "<h4>Bonjour,</h4><p>Malheureusement, votre réservation viens d'être annulée.</p><p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                        <p>Cordialement,</p>
                         <p>Ti' Dola Sab</p>";
+        } else {
+            $subject = 'Tidolasab - Booking Cancelled';
+            $message = "<h4>Hello,</h4><p>Unfortunately, your booking has just been cancelled.</p><p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+                            <p>Best regards,</p>
+                            <p>Ti' Dola Sab</p>";
+        }
+        sendEmail($to, $subject, $message);
     }
-    sendEmail($to, $subject, $message);
-
 
     $connexion->commit();
     $result = ['success' => true];

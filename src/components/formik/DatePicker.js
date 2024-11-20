@@ -124,23 +124,23 @@ const DatePicker = ({ formRef }) => {
         },
       }}
       isStart={true}
-      disabled={(date, state) => {
-        // Vérifiez si la date est dans le passé
-        if (state.isPast) {
-          return true;
-        }
-
-        // Vérifiez si la date est le premier jour d'une réservation
-        const isFirstDayReserved = reserved.some((reservation) => {
-          const startDate = moment(reservation.startDate)
-            .add(1, "day")
-            .startOf("day");
-          return startDate.isSame(moment(date), "day");
-        });
-
-        // Si c'est le premier jour d'une réservation, ne pas désactiver
-        return isFirstDayReserved;
-      }}
+      // disabled={(date, state) => {
+      //   // Vérifiez si la date est dans le passé
+      //   if (state.isPast) {
+      //     return true;
+      //   }
+      //
+      //   // Vérifiez si la date est le premier jour d'une réservation
+      //   const isFirstDayReserved = reserved.some((reservation) => {
+      //     const startDate = moment(reservation.startDate)
+      //       .add(1, "day")
+      //       .startOf("day");
+      //     return startDate.isSame(moment(date), "day");
+      //   });
+      //
+      //   // Si c'est le premier jour d'une réservation, ne pas désactiver
+      //   return isFirstDayReserved;
+      // }}
       reserved={reserved}
       dateFnsOptions={{
         weekStartsOn: 1,

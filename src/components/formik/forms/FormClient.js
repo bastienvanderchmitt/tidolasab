@@ -107,13 +107,18 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
           size="lg"
         >
           <Form onSubmit={handleSubmit}>
-            <ModalHeader toggle={toggle}>Réservation</ModalHeader>
+            <ModalHeader toggle={toggle}>
+              Réservation{" "}
+              {type !== "Classique" && (
+                <span className="text-primary">{type}</span>
+              )}
+            </ModalHeader>
             <ModalBody>
               <div
                 className="content-block-form with-action"
                 id="client-form-content"
               >
-                <div className="content">
+                <div className={type === "Fermeture" ? "d-none" : "content"}>
                   <Row>
                     <Col className="form-group mb-4">
                       <Field type="text" name="name" label={t("client.name")} />
