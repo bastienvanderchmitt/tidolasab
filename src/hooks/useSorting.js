@@ -17,20 +17,24 @@ const useSorting = (initialData) => {
 
         // Convertir les valeurs pour le tri
         let comparison = 0;
+
+        // Vérifier si les valeurs peuvent être converties en nombres
+        const aNum = parseFloat(aValue);
+        const bNum = parseFloat(bValue);
+
         if (
-          typeof aValue === "string" &&
-          typeof bValue === "string" &&
-          sortConfig.key !== "montant_paiement"
+          !isNaN(aNum) &&
+          !isNaN(bNum) &&
+          sortConfig.key !== "date_paiement"
         ) {
+          // Si les deux valeurs sont des nombres (ou des chaînes qui peuvent être converties en nombres)
+          comparison = aNum - bNum;
+          // } else if (sortConfig.key === "date_paiement") {
+          //   // Pour les dates, convertir en timestamp
+          //   comparison = new Date(aValue) - new Date(bValue);
+        } else {
+          // Si ce sont des chaînes de caractères
           comparison = aValue.localeCompare(bValue);
-        } else if (
-          (typeof aValue === "number" && typeof bValue === "number") ||
-          sortConfig.key === "montant_paiement"
-        ) {
-          comparison = aValue - bValue;
-        } else if (sortConfig.key === "date_paiement") {
-          // Pour les dates, convertir en timestamp
-          comparison = new Date(aValue) - new Date(bValue);
         }
 
         return sortConfig.direction === "ascending" ? comparison : -comparison;

@@ -141,6 +141,7 @@
     "from": " à partir de ",
     "prices_text": " par nuit. Une demi-journée offerte par semaine. Taxe de séjour de 2€ par nuit et par adulte.",
     "conditions": "Le contrat de location vous sera transmis avec une demande de versement d'un acompte de 50% (via virement bancaire) qui confirmeront votre réservation. Le solde vous sera demandé 14 jours avant l'arrivée.",
+    "christmas": "Durée de séjour de 4 nuits minimum pour la période Noël / Nouvel an.",
     "checkIn_validation": "Veuillez indiquer une date d'arrivée.",
     "checkOut_validation": "Veuillez indiquer une date de départ.",
     "adults_validation": "Veuillez indiquer le nombre d'adultes.",

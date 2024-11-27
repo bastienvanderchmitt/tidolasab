@@ -4,7 +4,27 @@ require_once('../api.php');
 
 global $data, $connexion;
 
+function areDatesChristmasHolidaysValid($date1, $date2) {
+    // Convertir les dates en objets DateTime
+    $startDate = new DateTime('2024-12-21');
+    $endDate = new DateTime('2025-01-06');
+    $d1 = new DateTime($date1);
+    $d2 = new DateTime($date2);
+
+    // Vérifier si les dates sont dans l'intervalle
+    if ($d1 >= $startDate && $d2 <= $endDate) {
+        $interval = $d1->diff($d2);
+        return $interval->days >= 4 && $interval->invert == 0; // >= 4 jours et d1 <= d2
+    } else {
+        return true;
+    }
+}
+
 try {
+
+    if (!areDatesChristmasHolidaysValid($data->checkIn, $data->checkOut))
+        throw new Exception('Durée de séjour de 4 nuits minimum pour la période Noël / Nouvel an.');
+
     $checkExisting = $connexion->safeFetchAll("
         SELECT * FROM reservations 
                  WHERE statut = :statut AND 
@@ -16,6 +36,7 @@ try {
             'statut' => 'validée'
         ]
     );
+
     if (!count($checkExisting)) {
         $connexion->beginTransaction();
 
