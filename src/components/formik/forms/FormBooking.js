@@ -89,17 +89,17 @@ const FormBooking = ({ callbackAdmin }) => {
                     label={t("booking.adults")}
                     helpText={t("booking.adults_age")}
                     onChange={(value) => setAdults(value)}
-                    max={4}
+                    max={2}
                   />
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group mb-4 d-none">
                   <NumberField
                     type="number"
                     name="children"
                     label={t("booking.children")}
                     helpText={t("booking.children_age")}
                     onChange={(value) => setChild(value)}
-                    max={8}
+                    max={4}
                   />
                 </div>
               </div>
@@ -146,6 +146,7 @@ const FormBooking = ({ callbackAdmin }) => {
                 {!callbackAdmin && (
                   <p className="conditions">{t("booking.conditions")}</p>
                 )}
+                <p className="conditions">{t("booking.christmas")}</p>
               </div>
             </div>
           </Form>
