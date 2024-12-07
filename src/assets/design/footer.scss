@@ -13,6 +13,10 @@
     border: solid 1px #b99d7533;
     padding: 25px;
 
+    @media screen and (max-width: 575px) {
+      padding: 15px 10px;
+    }
+
     .footer-title {
       font-family: 'Jost', Arial, sans-serif;
       text-transform: uppercase;
