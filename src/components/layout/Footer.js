@@ -10,17 +10,17 @@ const Footer = () => {
     <section className="footer text-center bg-dark text-white">
       <Container fluid>
         <Row className="text-center">
-          <Col className="footer-card">
+          <Col className="footer-card" xs={6} md={3}>
             <h6 className="footer-title">{t("footer.address")}</h6>
             <p>Morne Lolo, 97112, Grand-Bourg</p>
           </Col>
-          <Col className="footer-card">
+          <Col className="footer-card" xs={6} md={3}>
             <h6 className="footer-title">{t("common.phone")}</h6>
             <a href="tel:0690648904" style={{ textDecorationColor: "#B99D75" }}>
               <p className="gold">06 90 64 89 04</p>
             </a>
           </Col>
-          <Col className="footer-card">
+          <Col className="footer-card" xs={6} md={3}>
             <h6 className="footer-title">Email</h6>
             <a
               href="mailto:tidolasab@gmail.com"
@@ -29,7 +29,7 @@ const Footer = () => {
               <p className="gold">tidolasab@gmail.com</p>
             </a>
           </Col>
-          <Col className="footer-card">
+          <Col className="footer-card" xs={6} md={3}>
             <h6 className="footer-title">{t("footer.social")}</h6>
             <p>
               <a
