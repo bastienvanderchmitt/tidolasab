@@ -72,6 +72,7 @@ const FormBooking = ({ callbackAdmin }) => {
                     name="checkIn"
                     label={t("booking.checkIn")}
                     onClick={scrollToCalendar}
+                    readOnly
                   />
                 </div>
                 <div className="form-group mb-4">
@@ -80,6 +81,7 @@ const FormBooking = ({ callbackAdmin }) => {
                     name="checkOut"
                     label={t("booking.checkOut")}
                     onClick={scrollToCalendar}
+                    readOnly
                   />
                 </div>
                 <div className="form-group mb-4">
