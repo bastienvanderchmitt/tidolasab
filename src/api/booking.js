@@ -4,6 +4,10 @@ export const saveBooking = (data) => {
   return appAxios.post("booking/save.php", data);
 };
 
+export const editBooking = (data) => {
+  return appAxios.post("booking/edit.php", data);
+};
+
 export const getBookings = () => {
   return appAxios.get("booking/getAll.php");
 };

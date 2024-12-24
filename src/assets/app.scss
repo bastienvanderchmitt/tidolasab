@@ -273,3 +273,8 @@ p {
 .activities .card-img-overlay {
   height: fit-content;
 }
+.btn-outline-secondary.active,
+.btn-secondary,
+.btn-outline-secondary:hover {
+  color: $primary;
+}
