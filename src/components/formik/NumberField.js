@@ -56,7 +56,7 @@ const NumberField = ({
             onClick={async () => {
               const val = meta.value > 1 ? meta.value - 1 : 1;
               await setValue(val);
-              onChange(val);
+              onChange && onChange(val);
             }}
           >
             <FontAwesomeIcon icon={faMinus} />
@@ -67,7 +67,7 @@ const NumberField = ({
             onClick={async () => {
               const val = max && meta.value < max ? meta.value + 1 : meta.value;
               await setValue(val);
-              onChange(val);
+              onChange && onChange(val);
             }}
           >
             <FontAwesomeIcon icon={faPlus} />

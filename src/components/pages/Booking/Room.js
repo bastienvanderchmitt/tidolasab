@@ -63,7 +63,7 @@ const Room = () => {
           <FontAwesomeIcon icon={faHouse} className="me-4 text-primary" />
           {t("room.accommodation")}
         </h5>
-        <p className="text-warning">{t("room.closed")}</p>
+        {/*<p className="text-warning">{t("room.closed")}</p>*/}
         <p>{t("room.description_1")}</p>
         <p>
           {t("room.description_2_1")}

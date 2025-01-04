@@ -279,6 +279,7 @@
     "email_required": "Please provide an email.",
     "subject_validation": "Please provide a subject.",
     "message_validation": "Please provide a message.",
+    "recaptcha_required": "Please fill in the reCAPTCHA field to verify you are human.",
     "name": "Name",
     "email": "Email",
     "subject": "Subject",

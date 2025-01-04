@@ -28,6 +28,8 @@ import BookingModal from "./Modals/BookingModal";
 import ValidateModal from "./Modals/ValidateModal";
 import useConfirmDialog from "../../../hooks/useConfirmDialog";
 import useSorting from "../../../hooks/useSorting";
+import useDialog from "../../../hooks/useDialog";
+import EditBookingModal from "./Modals/EditBookingModal";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -123,6 +125,7 @@ const Bookings = () => {
   };
 
   const AdminBooking = ({ bookings, totalWithoutCanceled }) => {
+    const dialog = useDialog();
     const {
       sortedData: bookingsToDisplay,
       requestSort,
@@ -237,7 +240,15 @@ const Bookings = () => {
         </thead>
         <tbody>
           {bookingsToDisplay?.map((b, i) => (
-            <tr key={i} className="text-center">
+            <tr
+              key={i}
+              className="text-center"
+              style={{ cursor: "pointer" }}
+              onClick={async () => {
+                const result = await dialog(<EditBookingModal booking={b} />);
+                if (result.action === "success") reload();
+              }}
+            >
               <td>{b.nom_client}</td>
               <td>
                 <TypeBadge type={b.type} />
