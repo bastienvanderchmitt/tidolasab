@@ -278,6 +278,7 @@
     "email_required": "Veuillez indiquer un email.",
     "subject_validation": "Veuillez indiquer un sujet.",
     "message_validation": "Veuillez indiquer un message.",
+    "recaptcha_required": "Veuillez remplir le champ reCAPTCHA pour vérifier que vous êtes humain.",
     "name": "Nom",
     "email": "Email",
     "subject": "Sujet",
