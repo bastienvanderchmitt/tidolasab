@@ -51,11 +51,11 @@ const Menu = () => {
   return (
     <section
       className={
-        params.image !== "home_banner.jpeg" ? "menu small" : "menu big"
+        params?.image !== "home_banner.jpeg" ? "menu small" : "menu big"
       }
     >
       <Parallax
-        bgImage={require("../../assets/img/banners/" + params.image)}
+        bgImage={require("../../assets/img/banners/" + params?.image)}
         bgImageAlt="the cat"
         strength={200}
         className="text-white text-center p-5"
