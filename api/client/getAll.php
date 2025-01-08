@@ -6,7 +6,14 @@ global $connexion;
 
 try {
 
-    $result = ['clients' => $connexion->safeFetchAll("SELECT c.*, (NOT EXISTS(SELECT 1 FROM reservations_clients rc WHERE rc.id_client = c.id)) as can_delete FROM clients c ORDER BY c.nom;")];
+    $result = ['clients' => $connexion->safeFetchAll("SELECT c.*,
+                                                                   (NOT EXISTS(SELECT 1 FROM reservations_clients rc WHERE rc.id_client = c.id)) as can_delete,
+                                                                   (SELECT GROUP_CONCAT(DISTINCT r.type)
+                                                                    FROM reservations r
+                                                                             JOIN reservations_clients rc ON r.id = rc.id_reservation
+                                                                    WHERE rc.id_client = c.id) as types_reservations
+                                                            FROM clients c
+                                                            ORDER BY c.nom;")];
     http_response_code(200);
 
 } catch (Exception $e) {

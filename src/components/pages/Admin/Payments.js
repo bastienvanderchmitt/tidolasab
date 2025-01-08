@@ -10,6 +10,7 @@ import useDialog from "../../../hooks/useDialog";
 import useToggle from "../../../hooks/useToggle";
 import useConfirmDialog from "../../../hooks/useConfirmDialog";
 import useSorting from "../../../hooks/useSorting";
+import TypeBadge from "./TypeBadge";
 
 const Payments = () => {
   const [reloading, reload] = useToggle(false);
@@ -66,7 +67,7 @@ const AdminPayments = ({ payments, reload }) => {
     getSortIcon,
   } = useSorting(payments);
 
-  const TypeBadge = ({ type }) => {
+  const TypePaymentBadge = ({ type }) => {
     const color = useMemo(
       () =>
         type === "virement"
@@ -90,6 +91,12 @@ const AdminPayments = ({ payments, reload }) => {
     >
       <thead>
         <tr className="text-center">
+          <th
+            onClick={() => requestSort("types_reservations")}
+            style={{ cursor: "pointer" }}
+          >
+            Type <FontAwesomeIcon icon={getSortIcon("types_reservations")} />
+          </th>
           <th
             onClick={() => requestSort("date_paiement")}
             style={{ cursor: "pointer" }}
@@ -124,11 +131,16 @@ const AdminPayments = ({ payments, reload }) => {
       <tbody>
         {sortedPayments?.map((p, i) => (
           <tr key={i} className="text-center">
+            <td>
+              {p.types_reservations?.split(",")?.map((type, j) => (
+                <TypeBadge type={type} key={j} />
+              ))}
+            </td>
             <td>{dateFormat(p.date_paiement)}</td>
             <td>{p.nom}</td>
             <td>{p.prenom}</td>
             <td>
-              <TypeBadge type={p.moyen_paiement} />
+              <TypePaymentBadge type={p.moyen_paiement} />
             </td>
             <td>{p.montant_paiement} €</td>
             <td>
@@ -175,10 +187,10 @@ const AdminPayments = ({ payments, reload }) => {
         ))}
         <tr>
           <td
-            colSpan={4}
+            colSpan={5}
             style={{ backgroundColor: "white", borderRight: "none" }}
           >
-            <strong>Total :</strong>
+            <strong>Total : {payments?.length} paiements</strong>
           </td>
           <td
             style={{

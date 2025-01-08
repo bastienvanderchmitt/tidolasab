@@ -21,7 +21,7 @@ const Accommodation = () => {
       </Row>
       <Row>
         <Col className="p-4" xs={12} xl={6}>
-          <Link to={"/photos"}>
+          <Link to={"/booking"}>
             <div className="position-relative">
               <div className="image-zoom">
                 <img

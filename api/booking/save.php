@@ -49,7 +49,21 @@ try {
             $sql = "UPDATE reservations SET statut = :statut WHERE id = :id_reservation;";
             $connexion->safeExecute($sql, ['statut' => 'validée', 'id_reservation' => $bookingId]);
         } else {
-            $address = $data->address . ", " . $data->postalCode . " " . $data->city . ", " . $data->country;
+            $address = !empty($data->address) ? $data->address : '';
+
+            if (!empty($data->postalCode) || !empty($data->city)) {
+                if (!empty($data->postalCode)) {
+                    $address .= !empty($data->address) ? ", " . $data->postalCode : $data->postalCode;
+                    $address .= !empty($data->city) ? " " . $data->city : '';
+                } else {
+                    $address .= !empty($data->address) ? ", " . $data->city : $data->city;
+                }
+            }
+
+            if (!empty($data->country)) {
+                $address .= (!empty($data->address) || !empty($data->postalCode) || !empty($data->city)) ? ", " . $data->country : $data->country;
+            }
+
             $sql = "INSERT INTO clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse, language = :language;";
             $response = $connexion->safeExecute($sql, ['nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $address, 'language' => $data->language]);
             $clientId = $connexion->lastInsertId();
