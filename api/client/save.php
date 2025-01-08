@@ -7,8 +7,8 @@ global $data, $connexion;
 try {
     $connexion->beginTransaction();
 
-    $sql = "UPDATE clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse WHERE id = :id;";
-    $response = $connexion->safeExecute($sql, ['id' => $data->id, 'nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $data->address]);
+    $sql = "UPDATE clients SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse, note = :note WHERE id = :id;";
+    $response = $connexion->safeExecute($sql, ['id' => $data->id, 'nom' => $data->name, 'prenom' => $data->firstName, 'email' => $data->email, 'telephone' => $data->phone, 'adresse' => $data->address, 'note' => $data->note]);
     $clientId = $connexion->lastInsertId();
 
     $connexion->commit();

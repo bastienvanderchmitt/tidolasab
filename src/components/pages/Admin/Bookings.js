@@ -30,6 +30,7 @@ import useConfirmDialog from "../../../hooks/useConfirmDialog";
 import useSorting from "../../../hooks/useSorting";
 import useDialog from "../../../hooks/useDialog";
 import EditBookingModal from "./Modals/EditBookingModal";
+import TypeBadge from "./TypeBadge";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -141,6 +142,39 @@ const Bookings = () => {
       }, 0);
     }, [bookings, totalWithoutCanceled]);
 
+    const totalNights = useMemo(() => {
+      const filtered = totalWithoutCanceled
+        ? bookings?.filter(
+            (b) => b.type !== "Fermeture" && b.statut !== "annulée",
+          )
+        : bookings?.filter((b) => b.type !== "Fermeture");
+      return filtered?.reduce((acc, current) => {
+        return acc + parseInt(current.nombre_nuits);
+      }, 0);
+    }, [bookings, totalWithoutCanceled]);
+
+    const totalChildren = useMemo(() => {
+      const filtered = totalWithoutCanceled
+        ? bookings?.filter(
+            (b) => b.type !== "Fermeture" && b.statut !== "annulée",
+          )
+        : bookings?.filter((b) => b.type !== "Fermeture");
+      return filtered?.reduce((acc, current) => {
+        return acc + parseInt(current.enfants);
+      }, 0);
+    }, [bookings, totalWithoutCanceled]);
+
+    const totalAdults = useMemo(() => {
+      const filtered = totalWithoutCanceled
+        ? bookings?.filter(
+            (b) => b.type !== "Fermeture" && b.statut !== "annulée",
+          )
+        : bookings?.filter((b) => b.type !== "Fermeture");
+      return filtered?.reduce((acc, current) => {
+        return acc + parseInt(current.adultes);
+      }, 0);
+    }, [bookings, totalWithoutCanceled]);
+
     const StatusBadge = ({ status }) => {
       const color = useMemo(
         () =>
@@ -156,21 +190,6 @@ const Bookings = () => {
         [status],
       );
       return <Badge color={color}>{status.toUpperCase()}</Badge>;
-    };
-
-    const TypeBadge = ({ type }) => {
-      const color = useMemo(
-        () =>
-          type === "Booking"
-            ? "success"
-            : type === "Fermeture"
-              ? "warning"
-              : type === "AirBnb"
-                ? "info"
-                : "primary",
-        [type],
-      );
-      return <Badge color={color}>{type.toUpperCase()}</Badge>;
     };
 
     return (
@@ -303,10 +322,14 @@ const Bookings = () => {
           ))}
           <tr>
             <td
-              colSpan={8}
+              colSpan={5}
               style={{ backgroundColor: "white", borderRight: "none" }}
             >
-              <strong>Total :</strong>
+              <strong>
+                Total :{" "}
+                {bookings?.filter((b) => b.type !== "Fermeture")?.length}{" "}
+                réservations
+              </strong>
             </td>
             <td
               style={{
@@ -316,7 +339,37 @@ const Bookings = () => {
               }}
               className="text-center"
             >
-              <strong>{total} €</strong>
+              <strong>{totalAdults}</strong>
+            </td>
+            <td
+              style={{
+                backgroundColor: "white",
+                borderLeft: "none",
+                borderRight: "none",
+              }}
+              className="text-center"
+            >
+              <strong>{totalChildren}</strong>
+            </td>
+            <td
+              style={{
+                backgroundColor: "white",
+                borderLeft: "none",
+                borderRight: "none",
+              }}
+              className="text-center"
+            >
+              <strong>{totalNights}</strong>
+            </td>
+            <td
+              style={{
+                backgroundColor: "white",
+                borderLeft: "none",
+                borderRight: "none",
+              }}
+              className="text-center"
+            >
+              <strong>{total?.toFixed(2)} €</strong>
             </td>
             <td style={{ backgroundColor: "white", borderLeft: "none" }}></td>
           </tr>

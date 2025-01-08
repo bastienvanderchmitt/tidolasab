@@ -18,7 +18,7 @@ const Booking = () => {
         </Row>
       </Container>
       <RoomImages />
-      <Essentials />
+      <Essentials fromBooking />
     </>
   );
 };

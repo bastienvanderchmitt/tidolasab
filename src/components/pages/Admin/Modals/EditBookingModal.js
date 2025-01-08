@@ -137,7 +137,13 @@ const EditBookingModal = ({ isOpen, close, booking }) => {
                   />
                 </Col>
                 <Col className="form-group mb-4">
-                  <Field type="number" name="total" label="Total (€)" min={0} />
+                  <Field
+                    type="number"
+                    name="total"
+                    label="Total (€)"
+                    min={0}
+                    step="0.0001"
+                  />
                 </Col>
               </Row>
             </ModalBody>

@@ -3,13 +3,15 @@ import useApi from "../../../hooks/useApi";
 import { deleteClient, getClients } from "../../../api/client";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faMessage, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ClientModal from "./Modals/ClientModal";
 import useDialog from "../../../hooks/useDialog";
 import useToggle from "../../../hooks/useToggle";
 import useConfirmDialog from "../../../hooks/useConfirmDialog";
 import toast from "react-hot-toast";
 import useSorting from "../../../hooks/useSorting";
+import TypeBadge from "./TypeBadge";
+import useModalDialog from "../../../hooks/useModalDialog";
 
 const Clients = () => {
   const [reloading, reload] = useToggle(false);
@@ -35,6 +37,7 @@ const Clients = () => {
 const AdminClient = ({ clients, reload }) => {
   const dialog = useDialog();
   const confirm = useConfirmDialog();
+  const modal = useModalDialog();
 
   const {
     sortedData: sortedClients,
@@ -53,6 +56,12 @@ const AdminClient = ({ clients, reload }) => {
     >
       <thead>
         <tr className="text-center">
+          <th
+            onClick={() => requestSort("types_reservations")}
+            style={{ cursor: "pointer" }}
+          >
+            Type <FontAwesomeIcon icon={getSortIcon("types_reservations")} />
+          </th>
           <th onClick={() => requestSort("nom")} style={{ cursor: "pointer" }}>
             Nom <FontAwesomeIcon icon={getSortIcon("nom")} />
           </th>
@@ -86,6 +95,11 @@ const AdminClient = ({ clients, reload }) => {
       <tbody>
         {sortedClients?.map((c, i) => (
           <tr key={i} className="text-center">
+            <td>
+              {c.types_reservations?.split(",")?.map((type, j) => (
+                <TypeBadge type={type} key={j} />
+              ))}
+            </td>
             <td>{c.nom}</td>
             <td>{c.prenom}</td>
             <td>{c.email}</td>
@@ -132,9 +146,38 @@ const AdminClient = ({ clients, reload }) => {
                   <FontAwesomeIcon icon={faTrash} />
                 </Button>
               )}
+              {!!c.note && (
+                <Button
+                  id={"btn-client-note-" + c.id}
+                  onClick={async () => {
+                    await modal(
+                      c.note,
+                      <>
+                        Note :{" "}
+                        <span className="text-primary">
+                          {c.nom + " " + c.prenom}
+                        </span>
+                      </>,
+                    );
+                  }}
+                  color="info"
+                  className="me-2 p-0 pe-1 ps-1"
+                >
+                  <FontAwesomeIcon icon={faMessage} />
+                </Button>
+              )}
             </td>
           </tr>
         ))}
+        <tr>
+          <td
+            colSpan={6}
+            style={{ backgroundColor: "white", borderRight: "none" }}
+          >
+            <strong>Total : {clients?.length} clients</strong>
+          </td>
+          <td style={{ backgroundColor: "white", borderLeft: "none" }}></td>
+        </tr>
       </tbody>
     </Table>
   );

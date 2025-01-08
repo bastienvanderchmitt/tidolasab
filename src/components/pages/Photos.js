@@ -34,6 +34,10 @@ import location_37 from "../../assets/img/locations/location_37.jpeg";
 import location_38 from "../../assets/img/locations/location_38.jpeg";
 import location_39 from "../../assets/img/locations/location_39.jpeg";
 import location_40 from "../../assets/img/locations/location_40.jpeg";
+import location_41 from "../../assets/img/locations/location_41.jpeg";
+import location_42 from "../../assets/img/locations/location_42.jpeg";
+import location_43 from "../../assets/img/room/view_2.jpeg";
+import location_44 from "../../assets/img/room/view_3.jpeg";
 import { useTranslation } from "react-i18next";
 
 const Photos = () => {
@@ -69,6 +73,11 @@ const Photos = () => {
       height: 4,
     },
     {
+      src: location_41,
+      width: 3,
+      height: 2,
+    },
+    {
       src: location_27,
       width: 1,
       height: 1,
@@ -89,8 +98,18 @@ const Photos = () => {
       height: 1,
     },
     {
+      src: location_42,
+      width: 3,
+      height: 2,
+    },
+    {
       src: location_12,
       width: 3,
+      height: 2,
+    },
+    {
+      src: location_43,
+      width: 4,
       height: 2,
     },
     {
@@ -122,6 +141,11 @@ const Photos = () => {
       src: location_22,
       width: 3,
       height: 3,
+    },
+    {
+      src: location_44,
+      width: 4,
+      height: 2,
     },
     {
       src: location_4,

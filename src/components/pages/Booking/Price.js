@@ -112,6 +112,7 @@ const Price = ({ withParticipants, isAdmin }) => {
                 type="number"
                 onChange={(e) => setTotal(e.currentTarget.value)}
                 value={total}
+                step="0.01"
               />
               <InputGroupText>
                 <FontAwesomeIcon icon={faEuro} />

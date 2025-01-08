@@ -23,6 +23,7 @@ const ClientModal = ({ isOpen, close, client }) => {
       email: client ? client.email : "",
       phone: client ? client.telephone : "",
       address: client ? client.adresse : "",
+      note: client ? client.note : "",
     };
   }, [client]);
 
@@ -85,6 +86,11 @@ const ClientModal = ({ isOpen, close, client }) => {
               <Row>
                 <Col className="form-group mb-4">
                   <Field type="text" name="address" label="Adresse" />
+                </Col>
+              </Row>
+              <Row>
+                <Col className="form-group mb-4">
+                  <Field type="textarea" name="note" label="Note" rows={5} />
                 </Col>
               </Row>
             </ModalBody>

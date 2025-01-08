@@ -1,6 +1,8 @@
 import { Col, Container, Row } from "reactstrap";
 import essentials_1 from "../../../assets/img/room/room_6.jpeg";
 import essentials_2 from "../../../assets/img/room/view_1.jpeg";
+import essentials_3 from "../../../assets/img/room/view_4.jpeg";
+import essentials_4 from "../../../assets/img/room/view_5.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlane,
@@ -30,7 +32,7 @@ const Essential = ({ title, text, icon }) => {
   );
 };
 
-const Essentials = () => {
+const Essentials = ({ fromBooking }) => {
   const { t } = useTranslation();
 
   return (
@@ -38,7 +40,11 @@ const Essentials = () => {
       <Row className="p-4">
         <Col className="px-5 d-none d-md-block">
           <div className="image-zoom">
-            <img alt="essential 1" src={essentials_1} className="w-100" />
+            {fromBooking ? (
+              <img alt="essentials_3" src={essentials_3} className="w-100" />
+            ) : (
+              <img alt="essentials_1" src={essentials_1} className="w-100" />
+            )}
           </div>
           <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
         </Col>
@@ -99,15 +105,42 @@ const Essentials = () => {
           </Row>
           <Row>
             <Col>
-              <div className="image-zoom">
-                <img alt="logo" src={essentials_2} className="w-100" />
+              <div className="position-relative">
+                <div className="image-zoom">
+                  {fromBooking ? (
+                    <img
+                      alt="essentials_4"
+                      src={essentials_4}
+                      className="w-100"
+                    />
+                  ) : (
+                    <img
+                      alt="essentials_2"
+                      src={essentials_2}
+                      className="w-100"
+                    />
+                  )}
+                  <div className="offset-border"></div>
+                </div>
               </div>
             </Col>
           </Row>
           <Row>
             <Col className="pt-4 px-5 d-md-none">
               <div className="image-zoom">
-                <img alt="logo" src={essentials_1} className="w-100" />
+                {fromBooking ? (
+                  <img
+                    alt="essentials_3"
+                    src={essentials_3}
+                    className="w-100"
+                  />
+                ) : (
+                  <img
+                    alt="essentials_1"
+                    src={essentials_1}
+                    className="w-100"
+                  />
+                )}
               </div>
               <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
             </Col>
