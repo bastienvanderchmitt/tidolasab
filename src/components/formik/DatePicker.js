@@ -30,6 +30,7 @@ const DatePicker = ({ formRef }) => {
         if (i + 1 !== bookings.length) {
           const nextBooking = bookings[i + 1];
           if (
+            moment(nextBooking.date_arrivee).isSame(endMoment) ||
             moment(nextBooking.date_arrivee)
               .subtract(1, "day")
               .isSame(endMoment)
