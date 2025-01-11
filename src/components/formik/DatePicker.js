@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const DatePicker = ({ formRef }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
@@ -19,11 +20,24 @@ const DatePicker = ({ formRef }) => {
 
   const reserved = useMemo(
     () =>
-      bookings?.map((b) => {
+      bookings?.map((b, i) => {
         const startMoment = moment.tz(b.date_arrivee, tz).startOf("day");
         const startDate = startMoment.add(1, "day").toDate();
 
-        const endMoment = moment.tz(b.date_depart, tz).startOf("day");
+        let endMoment = moment.tz(b.date_depart, tz).startOf("day");
+
+        // If time between two bookings is too small
+        if (i + 1 !== bookings.length) {
+          const nextBooking = bookings[i + 1];
+          if (
+            moment(nextBooking.date_arrivee)
+              .subtract(1, "day")
+              .isSame(endMoment)
+          ) {
+            endMoment.add(2, "day");
+          }
+        }
+
         const endDate = endMoment.toDate();
 
         return {
@@ -35,6 +49,17 @@ const DatePicker = ({ formRef }) => {
   );
 
   const handleChange = (e) => {
+    if (e.length === 2) {
+      const startDate = e[0];
+      const endDate = e[1];
+      const duration = (endDate - startDate) / (1000 * 60 * 60 * 24); // Durée en jours
+
+      if (duration < 2) {
+        toast.error(t("booking.minimum_stay"));
+        return;
+      }
+    }
+
     e[0]?.setHours(14);
     e[1]?.setHours(10);
     e[1]?.setMinutes(0);
