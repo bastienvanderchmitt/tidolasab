@@ -80,6 +80,11 @@ const AdminPayments = ({ payments, reload }) => {
     return <Badge color={color}>{type.toUpperCase()}</Badge>;
   };
 
+  const updatePayment = async (payment) => {
+    const result = await dialog(<PaymentModal payment={payment} />);
+    if (result.action === "success") reload();
+  };
+
   return (
     <Table
       striped
@@ -130,7 +135,12 @@ const AdminPayments = ({ payments, reload }) => {
       </thead>
       <tbody>
         {sortedPayments?.map((p, i) => (
-          <tr key={i} className="text-center">
+          <tr
+            key={i}
+            className="text-center"
+            onDoubleClick={() => updatePayment(p)}
+            style={{ cursor: "pointer" }}
+          >
             <td>
               {p.types_reservations?.split(",")?.map((type, j) => (
                 <TypeBadge type={type} key={j} />
@@ -146,10 +156,7 @@ const AdminPayments = ({ payments, reload }) => {
             <td>
               <Button
                 id={"btn-payment-edit-" + p.id}
-                onClick={async () => {
-                  const result = await dialog(<PaymentModal payment={p} />);
-                  if (result.action === "success") reload();
-                }}
+                onClick={() => updatePayment(p)}
                 color="primary"
                 className="me-2 p-0 pe-1 ps-1"
               >

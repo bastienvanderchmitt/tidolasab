@@ -263,7 +263,7 @@ const Bookings = () => {
               key={i}
               className="text-center"
               style={{ cursor: "pointer" }}
-              onClick={async () => {
+              onDoubleClick={async () => {
                 const result = await dialog(<EditBookingModal booking={b} />);
                 if (result.action === "success") reload();
               }}

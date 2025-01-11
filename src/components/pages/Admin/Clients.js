@@ -45,6 +45,11 @@ const AdminClient = ({ clients, reload }) => {
     getSortIcon,
   } = useSorting(clients);
 
+  const updateClient = async (client) => {
+    const result = await dialog(<ClientModal client={client} />);
+    if (result.action === "success") reload();
+  };
+
   return (
     <Table
       striped
@@ -94,7 +99,12 @@ const AdminClient = ({ clients, reload }) => {
       </thead>
       <tbody>
         {sortedClients?.map((c, i) => (
-          <tr key={i} className="text-center">
+          <tr
+            key={i}
+            className="text-center"
+            onDoubleClick={() => updateClient(c)}
+            style={{ cursor: "pointer" }}
+          >
             <td>
               {c.types_reservations?.split(",")?.map((type, j) => (
                 <TypeBadge type={type} key={j} />
@@ -108,10 +118,7 @@ const AdminClient = ({ clients, reload }) => {
             <td>
               <Button
                 id={"btn-client-" + c.id}
-                onClick={async () => {
-                  const result = await dialog(<ClientModal client={c} />);
-                  if (result.action === "success") reload();
-                }}
+                onClick={() => updateClient(c)}
                 color="primary"
                 className="me-2 p-0 pe-1 ps-1"
               >
