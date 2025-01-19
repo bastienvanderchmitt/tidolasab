@@ -19,7 +19,7 @@ try {
     // Envoi des e-mails de rappel
     foreach ($clients as $client) {
         $to = $client->email;
-        if (isset($to)) {
+        if (!empty($to)) {
             $subject = "Rappel de paiement pour votre réservation";
             $solde = $client->prix_total - $client->solde;
 
