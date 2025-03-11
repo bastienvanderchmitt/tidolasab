@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Col,
   Form,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
@@ -18,6 +19,8 @@ import Field from "../../../formik/Field";
 import useApi from "../../../../hooks/useApi";
 import { getBookings } from "../../../../api/booking";
 import { paymentTypes } from "../../../../helpers/paymentTypes";
+import SearchSelect from "../../../common/SearchSelect";
+import { dateFormat } from "../../../../helpers/dates";
 
 const PaymentModal = ({ isOpen, close, payment }) => {
   const [{ bookings }] = useApi(getBookings);
@@ -102,21 +105,40 @@ const PaymentModal = ({ isOpen, close, payment }) => {
                 </Col>
               </Row>
               <Row className="mt-4">
-                <Col className="form-group mb-4">
-                  <Field
-                    type="select"
-                    name="booking"
-                    label="Réservation associée"
-                  >
-                    <option></option>
-                    {bookings?.map((b, i) => (
-                      <option key={i} value={b.id}>
-                        {b.nom_client} | du {b.date_arrivee} au {b.date_depart}{" "}
-                        | {b.statut}
-                      </option>
-                    ))}
-                  </Field>
+                <Col>
+                  <Label>Réservation associée</Label>
+                  <SearchSelect
+                    valueName="booking"
+                    array={bookings?.map((b) => {
+                      return {
+                        id: b.id,
+                        text:
+                          b.nom_client +
+                          " * du " +
+                          dateFormat(b.date_arrivee) +
+                          " au " +
+                          dateFormat(b.date_depart) +
+                          " * " +
+                          b.statut,
+                      };
+                    })}
+                  />
                 </Col>
+                {/*<Col className="form-group mb-4">*/}
+                {/*  <Field*/}
+                {/*    type="select"*/}
+                {/*    name="booking"*/}
+                {/*    label="Réservation associée"*/}
+                {/*  >*/}
+                {/*    <option></option>*/}
+                {/*    {bookings?.map((b, i) => (*/}
+                {/*      <option key={i} value={b.id}>*/}
+                {/*        {b.nom_client} | du {b.date_arrivee} au {b.date_depart}{" "}*/}
+                {/*        | {b.statut}*/}
+                {/*      </option>*/}
+                {/*    ))}*/}
+                {/*  </Field>*/}
+                {/*</Col>*/}
               </Row>
             </ModalBody>
             <ModalFooter className="d-flex justify-content-between">
