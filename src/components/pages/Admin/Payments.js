@@ -106,7 +106,8 @@ const AdminPayments = ({ payments, reload }) => {
             onClick={() => requestSort("date_paiement")}
             style={{ cursor: "pointer" }}
           >
-            Date <FontAwesomeIcon icon={getSortIcon("date_paiement")} />
+            Date paiement
+            <FontAwesomeIcon icon={getSortIcon("date_paiement")} />
           </th>
           <th onClick={() => requestSort("nom")} style={{ cursor: "pointer" }}>
             Nom <FontAwesomeIcon icon={getSortIcon("nom")} />
@@ -123,6 +124,18 @@ const AdminPayments = ({ payments, reload }) => {
           >
             Moyen de paiement{" "}
             <FontAwesomeIcon icon={getSortIcon("moyen_paiement")} />
+          </th>
+          <th
+            onClick={() => requestSort("date_arrivee")}
+            style={{ cursor: "pointer" }}
+          >
+            Arrivée <FontAwesomeIcon icon={getSortIcon("date_arrivee")} />
+          </th>
+          <th
+            onClick={() => requestSort("date_depart")}
+            style={{ cursor: "pointer" }}
+          >
+            Départ <FontAwesomeIcon icon={getSortIcon("date_depart")} />
           </th>
           <th
             onClick={() => requestSort("montant_paiement")}
@@ -152,6 +165,8 @@ const AdminPayments = ({ payments, reload }) => {
             <td>
               <TypePaymentBadge type={p.moyen_paiement} />
             </td>
+            <td>{dateFormat(p.date_arrivee)}</td>
+            <td>{dateFormat(p.date_depart)}</td>
             <td>{p.montant_paiement} €</td>
             <td>
               <Button
@@ -194,7 +209,7 @@ const AdminPayments = ({ payments, reload }) => {
         ))}
         <tr>
           <td
-            colSpan={5}
+            colSpan={7}
             style={{ backgroundColor: "white", borderRight: "none" }}
           >
             <strong>Total : {payments?.length} paiements</strong>

@@ -133,47 +133,33 @@ const Bookings = () => {
       getSortIcon,
     } = useSorting(bookings);
 
+    const filtered = useMemo(
+      () =>
+        totalWithoutCanceled
+          ? bookings?.filter(
+              (b) => b.type !== "Fermeture" && b.statut !== "annulée",
+            )
+          : bookings?.filter((b) => b.type !== "Fermeture"),
+      [bookings, totalWithoutCanceled],
+    );
+
     const total = useMemo(() => {
-      const filtered = totalWithoutCanceled
-        ? bookings?.filter((b) => b.statut !== "annulée")
-        : bookings;
       return filtered?.reduce((acc, current) => {
         return acc + parseFloat(current.prix_total);
       }, 0);
-    }, [bookings, totalWithoutCanceled]);
+    }, [filtered]);
 
     const totalNights = useMemo(() => {
-      const filtered = totalWithoutCanceled
-        ? bookings?.filter(
-            (b) => b.type !== "Fermeture" && b.statut !== "annulée",
-          )
-        : bookings?.filter((b) => b.type !== "Fermeture");
       return filtered?.reduce((acc, current) => {
         return acc + parseInt(current.nombre_nuits);
       }, 0);
-    }, [bookings, totalWithoutCanceled]);
-
-    const totalChildren = useMemo(() => {
-      const filtered = totalWithoutCanceled
-        ? bookings?.filter(
-            (b) => b.type !== "Fermeture" && b.statut !== "annulée",
-          )
-        : bookings?.filter((b) => b.type !== "Fermeture");
-      return filtered?.reduce((acc, current) => {
-        return acc + parseInt(current.enfants);
-      }, 0);
-    }, [bookings, totalWithoutCanceled]);
+    }, [filtered]);
 
     const totalAdults = useMemo(() => {
-      const filtered = totalWithoutCanceled
-        ? bookings?.filter(
-            (b) => b.type !== "Fermeture" && b.statut !== "annulée",
-          )
-        : bookings?.filter((b) => b.type !== "Fermeture");
       return filtered?.reduce((acc, current) => {
         return acc + parseInt(current.adultes);
       }, 0);
-    }, [bookings, totalWithoutCanceled]);
+    }, [filtered]);
 
     const StatusBadge = ({ status }) => {
       const color = useMemo(
@@ -237,12 +223,6 @@ const Bookings = () => {
               Adultes <FontAwesomeIcon icon={getSortIcon("adultes")} />
             </th>
             <th
-              onClick={() => requestSort("enfants")}
-              style={{ cursor: "pointer" }}
-            >
-              Enfants <FontAwesomeIcon icon={getSortIcon("enfants")} />
-            </th>
-            <th
               onClick={() => requestSort("nombre_nuits")}
               style={{ cursor: "pointer" }}
             >
@@ -278,7 +258,6 @@ const Bookings = () => {
                 <StatusBadge status={b.statut} />
               </td>
               <td>{b.adultes}</td>
-              <td>{b.enfants}</td>
               <td>{b.nombre_nuits}</td>
               <td>{b.prix_total} €</td>
               <td>
@@ -341,16 +320,16 @@ const Bookings = () => {
             >
               <strong>{totalAdults}</strong>
             </td>
-            <td
-              style={{
-                backgroundColor: "white",
-                borderLeft: "none",
-                borderRight: "none",
-              }}
-              className="text-center"
-            >
-              <strong>{totalChildren}</strong>
-            </td>
+            {/*<td*/}
+            {/*  style={{*/}
+            {/*    backgroundColor: "white",*/}
+            {/*    borderLeft: "none",*/}
+            {/*    borderRight: "none",*/}
+            {/*  }}*/}
+            {/*  className="text-center"*/}
+            {/*>*/}
+            {/*  <strong>{totalChildren}</strong>*/}
+            {/*</td>*/}
             <td
               style={{
                 backgroundColor: "white",
@@ -429,13 +408,21 @@ const Bookings = () => {
             <Row className="my-5">
               <Col>
                 <h4>En attente</h4>
-                <AdminBooking bookings={waitingBookings} reload={reload} />
+                <AdminBooking
+                  bookings={waitingBookings}
+                  reload={reload}
+                  totalWithoutCanceled
+                />
               </Col>
             </Row>
             <Row className="my-5">
               <Col>
                 <h4>Validées</h4>
-                <AdminBooking bookings={validatedBookings} reload={reload} />
+                <AdminBooking
+                  bookings={validatedBookings}
+                  reload={reload}
+                  totalWithoutCanceled
+                />
               </Col>
             </Row>
             <Row className="my-5">

@@ -25,7 +25,9 @@ const useSorting = (initialData) => {
         if (
           !isNaN(aNum) &&
           !isNaN(bNum) &&
-          sortConfig.key !== "date_paiement"
+          sortConfig.key !== "date_paiement" &&
+          sortConfig.key !== "date_arrivee" &&
+          sortConfig.key !== "date_depart"
         ) {
           // Si les deux valeurs sont des nombres (ou des chaînes qui peuvent être converties en nombres)
           comparison = aNum - bNum;
