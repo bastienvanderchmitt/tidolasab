@@ -96,7 +96,7 @@ const PaymentModal = ({ isOpen, close, payment }) => {
                   <Field
                     type="number"
                     name="deposit"
-                    label="Acompte versé (€)"
+                    label="Montant (€)"
                     step="0.01"
                   />
                 </Col>

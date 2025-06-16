@@ -11,7 +11,7 @@ import { Input, InputGroup, InputGroupText } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEuro } from "@fortawesome/free-solid-svg-icons";
 
-const Price = ({ withParticipants, isAdmin }) => {
+const Price = ({ withParticipants, isAdmin, reelTotal }) => {
   const { t } = useTranslation();
   const {
     total,
@@ -104,24 +104,40 @@ const Price = ({ withParticipants, isAdmin }) => {
         </>
       ) : null}
       {type !== "Fermeture" && (
-        <div className="content-total">
-          <span className="title-total">{t("price.total")}</span>
-          {isAdmin ? (
-            <InputGroup className="total" style={{ width: "150px" }}>
-              <Input
-                type="number"
-                onChange={(e) => setTotal(e.currentTarget.value)}
-                value={total}
-                step="0.01"
-              />
-              <InputGroupText>
-                <FontAwesomeIcon icon={faEuro} />
-              </InputGroupText>
-            </InputGroup>
-          ) : (
-            <span className="total">{total ? total + " €" : ""}</span>
-          )}
-        </div>
+        <>
+          <div className="content-total">
+            <span className="title-total">{t("price.total")}</span>
+            {isAdmin ? (
+              <InputGroup className="total" style={{ width: "150px" }}>
+                <Input
+                  type="number"
+                  onChange={(e) => setTotal(e.currentTarget.value)}
+                  value={total}
+                  step="0.01"
+                />
+                <InputGroupText>
+                  <FontAwesomeIcon icon={faEuro} />
+                </InputGroupText>
+              </InputGroup>
+            ) : (
+              <span
+                className={
+                  !!total && reelTotal && +reelTotal !== +total
+                    ? "total old"
+                    : "total"
+                }
+              >
+                {total ? total + " €" : ""}
+              </span>
+            )}
+          </div>
+          {!!total && reelTotal && +reelTotal !== +total ? (
+            <div className="content-total">
+              <span className="title-total"></span>
+              <span className="total">{reelTotal + " €"}</span>
+            </div>
+          ) : null}
+        </>
       )}
     </>
   );
