@@ -74,6 +74,8 @@ export const getDaysFromNow = (date) => {
 };
 
 export const dateFormat = (date) => {
-  const [year, month, day] = date.split("-");
-  return `${day}/${month}/${year}`;
+  if (date) {
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year}`;
+  } else return "";
 };
