@@ -4,13 +4,19 @@ import React, { useMemo } from "react";
 import { deletePayment, getPayments } from "../../../api/payment";
 import { dateFormat } from "../../../helpers/dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faMessage,
+  faPlus,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import PaymentModal from "./Modals/PaymentModal";
 import useDialog from "../../../hooks/useDialog";
 import useToggle from "../../../hooks/useToggle";
 import useConfirmDialog from "../../../hooks/useConfirmDialog";
 import useSorting from "../../../hooks/useSorting";
 import TypeBadge from "./TypeBadge";
+import useModalDialog from "../../../hooks/useModalDialog";
 
 const Payments = () => {
   const [reloading, reload] = useToggle(false);
@@ -52,6 +58,7 @@ const Payments = () => {
 const AdminPayments = ({ payments, reload }) => {
   const dialog = useDialog();
   const confirm = useConfirmDialog();
+  const modal = useModalDialog();
 
   const total = useMemo(
     () =>
@@ -204,6 +211,26 @@ const AdminPayments = ({ payments, reload }) => {
               >
                 <FontAwesomeIcon icon={faTrash} />
               </Button>
+              {!!p.note && (
+                <Button
+                  id={"btn-payment-note-" + p.id}
+                  onClick={async () => {
+                    await modal(
+                      p.note,
+                      <>
+                        Note :{" "}
+                        <span className="text-primary">
+                          {p.nom + " " + p.prenom}
+                        </span>
+                      </>,
+                    );
+                  }}
+                  color="info"
+                  className="me-2 p-0 pe-1 ps-1"
+                >
+                  <FontAwesomeIcon icon={faMessage} />
+                </Button>
+              )}
             </td>
           </tr>
         ))}

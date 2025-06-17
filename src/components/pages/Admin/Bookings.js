@@ -17,6 +17,7 @@ import useToggle from "../../../hooks/useToggle";
 import {
   faBan,
   faCheck,
+  faMessage,
   faPause,
   faPlus,
   faSpinner,
@@ -31,6 +32,7 @@ import useSorting from "../../../hooks/useSorting";
 import useDialog from "../../../hooks/useDialog";
 import EditBookingModal from "./Modals/EditBookingModal";
 import TypeBadge from "./TypeBadge";
+import useModalDialog from "../../../hooks/useModalDialog";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -127,6 +129,8 @@ const Bookings = () => {
 
   const AdminBooking = ({ bookings, totalWithoutCanceled }) => {
     const dialog = useDialog();
+    const modal = useModalDialog();
+
     const {
       sortedData: bookingsToDisplay,
       requestSort,
@@ -296,6 +300,24 @@ const Bookings = () => {
                     color="danger"
                   />
                 ) : null}
+                {!!b.note && (
+                  <Button
+                    id={"btn-payment-note-" + b.id}
+                    onClick={async () => {
+                      await modal(
+                        b.note,
+                        <>
+                          Note :{" "}
+                          <span className="text-primary">{b.nom_client}</span>
+                        </>,
+                      );
+                    }}
+                    color="info"
+                    className="me-2 p-0 pe-1 ps-1"
+                  >
+                    <FontAwesomeIcon icon={faMessage} />
+                  </Button>
+                )}
               </td>
             </tr>
           ))}
