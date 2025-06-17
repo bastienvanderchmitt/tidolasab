@@ -13,7 +13,7 @@ try {
                                                                              JOIN reservations_clients rc ON r.id = rc.id_reservation
                                                                     WHERE rc.id_client = c.id) as types_reservations
                                                             FROM clients c
-                                                            ORDER BY c.nom;")];
+                                                            ORDER BY c.id DESC;")];
     http_response_code(200);
 
 } catch (Exception $e) {

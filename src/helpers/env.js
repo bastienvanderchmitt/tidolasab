@@ -5,3 +5,5 @@ export const app_api_url = "http://tidolasab/api";
 export const priceLowSeason = 100;
 export const priceHightSeason = 110;
 export const touristTax = 2;
+
+export const DEFAULT_MAX_LENGTH = 5;

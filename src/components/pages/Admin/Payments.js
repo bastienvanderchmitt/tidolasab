@@ -1,6 +1,6 @@
 import { Badge, Button, Col, Container, Row, Table } from "reactstrap";
 import useApi from "../../../hooks/useApi";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { deletePayment, getPayments } from "../../../api/payment";
 import { dateFormat } from "../../../helpers/dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +17,7 @@ import useConfirmDialog from "../../../hooks/useConfirmDialog";
 import useSorting from "../../../hooks/useSorting";
 import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
+import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
 
 const Payments = () => {
   const [reloading, reload] = useToggle(false);
@@ -56,6 +57,8 @@ const Payments = () => {
 };
 
 const AdminPayments = ({ payments, reload }) => {
+  const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
+
   const dialog = useDialog();
   const confirm = useConfirmDialog();
   const modal = useModalDialog();
@@ -154,7 +157,42 @@ const AdminPayments = ({ payments, reload }) => {
         </tr>
       </thead>
       <tbody>
-        {sortedPayments?.map((p, i) => (
+        {maxLength < sortedPayments?.length ||
+        sortedPayments?.slice(0, maxLength)?.length > DEFAULT_MAX_LENGTH ? (
+          <tr>
+            <th colSpan="9" className="see-more">
+              <div className="list-line action-see-more">
+                <div className="line-action" />
+                {maxLength < sortedPayments?.length && (
+                  <Button
+                    type="button"
+                    color="quaternary"
+                    size="xs"
+                    outline
+                    onClick={() => setMaxLength(maxLength + DEFAULT_MAX_LENGTH)}
+                  >
+                    Voir l'historique
+                  </Button>
+                )}
+
+                {sortedPayments?.slice(0, maxLength)?.length >
+                  DEFAULT_MAX_LENGTH && (
+                  <Button
+                    type="button"
+                    color="quaternary"
+                    size="xs"
+                    outline
+                    onClick={() => setMaxLength(DEFAULT_MAX_LENGTH)}
+                  >
+                    Réduire
+                  </Button>
+                )}
+                <div className="line-action" />
+              </div>
+            </th>
+          </tr>
+        ) : null}
+        {sortedPayments?.slice(0, maxLength)?.map((p, i) => (
           <tr
             key={i}
             className="text-center"

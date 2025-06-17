@@ -33,6 +33,7 @@ import useDialog from "../../../hooks/useDialog";
 import EditBookingModal from "./Modals/EditBookingModal";
 import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
+import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -128,6 +129,8 @@ const Bookings = () => {
   };
 
   const AdminBooking = ({ bookings, totalWithoutCanceled }) => {
+    const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
+
     const dialog = useDialog();
     const modal = useModalDialog();
 
@@ -242,7 +245,45 @@ const Bookings = () => {
           </tr>
         </thead>
         <tbody>
-          {bookingsToDisplay?.map((b, i) => (
+          {maxLength < bookingsToDisplay?.length ||
+          bookingsToDisplay?.slice(0, maxLength)?.length >
+            DEFAULT_MAX_LENGTH ? (
+            <tr>
+              <th colSpan="9" className="see-more">
+                <div className="list-line action-see-more">
+                  <div className="line-action" />
+                  {maxLength < bookingsToDisplay?.length && (
+                    <Button
+                      type="button"
+                      color="quaternary"
+                      size="xs"
+                      outline
+                      onClick={() =>
+                        setMaxLength(maxLength + DEFAULT_MAX_LENGTH)
+                      }
+                    >
+                      Voir l'historique
+                    </Button>
+                  )}
+
+                  {bookingsToDisplay?.slice(0, maxLength)?.length >
+                    DEFAULT_MAX_LENGTH && (
+                    <Button
+                      type="button"
+                      color="quaternary"
+                      size="xs"
+                      outline
+                      onClick={() => setMaxLength(DEFAULT_MAX_LENGTH)}
+                    >
+                      Réduire
+                    </Button>
+                  )}
+                  <div className="line-action" />
+                </div>
+              </th>
+            </tr>
+          ) : null}
+          {bookingsToDisplay?.slice(0, maxLength)?.map((b, i) => (
             <tr
               key={i}
               className="text-center"
