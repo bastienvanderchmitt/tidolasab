@@ -11,6 +11,10 @@
     font-family: Jost, sans-serif;
     font-size: 24px;
     font-weight: 400;
+
+    &.old {
+      text-decoration: line-through;
+    }
   }
   .title-sub-total {
     font-family: Jost, serif;

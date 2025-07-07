@@ -9,8 +9,8 @@ try {
     $connexion->beginTransaction();
 
     $total = $data->type !== 'Fermeture' ? $data->total : 0;
-    $sql = "UPDATE reservations SET date_arrivee = :date_arrivee, date_depart = :date_depart, nombre_nuits = :nombre_nuits, adultes = :adultes, enfants = :enfants, prix_total = :prix_total, type = :type WHERE id = :id;";
-    $response = $connexion->safeExecute($sql, ['id' => $data->id, 'date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut, 'nombre_nuits' => $data->days, 'adultes' => $data->adults, 'enfants' => $data->children, 'prix_total' => $total, 'type' => $data->type]);
+    $sql = "UPDATE reservations SET date_arrivee = :date_arrivee, date_depart = :date_depart, nombre_nuits = :nombre_nuits, adultes = :adultes, enfants = :enfants, prix_total = :prix_total, type = :type , note = :note WHERE id = :id;";
+    $response = $connexion->safeExecute($sql, ['id' => $data->id, 'date_arrivee' => $data->checkIn, 'date_depart' => $data->checkOut, 'nombre_nuits' => $data->days, 'adultes' => $data->adults, 'enfants' => $data->children, 'prix_total' => $total, 'type' => $data->type, 'note' => $data->note ?? '']);
     $bookingId = $connexion->lastInsertId();
 
     if ($data->type === "Fermeture") {

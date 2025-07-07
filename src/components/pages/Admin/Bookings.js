@@ -17,6 +17,7 @@ import useToggle from "../../../hooks/useToggle";
 import {
   faBan,
   faCheck,
+  faMessage,
   faPause,
   faPlus,
   faSpinner,
@@ -31,6 +32,8 @@ import useSorting from "../../../hooks/useSorting";
 import useDialog from "../../../hooks/useDialog";
 import EditBookingModal from "./Modals/EditBookingModal";
 import TypeBadge from "./TypeBadge";
+import useModalDialog from "../../../hooks/useModalDialog";
+import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
 
 const Bookings = () => {
   const [reloading, reload] = useToggle(false);
@@ -126,7 +129,11 @@ const Bookings = () => {
   };
 
   const AdminBooking = ({ bookings, totalWithoutCanceled }) => {
+    const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
+
     const dialog = useDialog();
+    const modal = useModalDialog();
+
     const {
       sortedData: bookingsToDisplay,
       requestSort,
@@ -238,7 +245,45 @@ const Bookings = () => {
           </tr>
         </thead>
         <tbody>
-          {bookingsToDisplay?.map((b, i) => (
+          {maxLength < bookingsToDisplay?.length ||
+          bookingsToDisplay?.slice(0, maxLength)?.length >
+            DEFAULT_MAX_LENGTH ? (
+            <tr>
+              <th colSpan="9" className="see-more">
+                <div className="list-line action-see-more">
+                  <div className="line-action" />
+                  {maxLength < bookingsToDisplay?.length && (
+                    <Button
+                      type="button"
+                      color="quaternary"
+                      size="xs"
+                      outline
+                      onClick={() =>
+                        setMaxLength(maxLength + DEFAULT_MAX_LENGTH)
+                      }
+                    >
+                      Voir l'historique
+                    </Button>
+                  )}
+
+                  {bookingsToDisplay?.slice(0, maxLength)?.length >
+                    DEFAULT_MAX_LENGTH && (
+                    <Button
+                      type="button"
+                      color="quaternary"
+                      size="xs"
+                      outline
+                      onClick={() => setMaxLength(DEFAULT_MAX_LENGTH)}
+                    >
+                      Réduire
+                    </Button>
+                  )}
+                  <div className="line-action" />
+                </div>
+              </th>
+            </tr>
+          ) : null}
+          {bookingsToDisplay?.slice(0, maxLength)?.map((b, i) => (
             <tr
               key={i}
               className="text-center"
@@ -296,6 +341,24 @@ const Bookings = () => {
                     color="danger"
                   />
                 ) : null}
+                {!!b.note && (
+                  <Button
+                    id={"btn-payment-note-" + b.id}
+                    onClick={async () => {
+                      await modal(
+                        b.note,
+                        <>
+                          Note :{" "}
+                          <span className="text-primary">{b.nom_client}</span>
+                        </>,
+                      );
+                    }}
+                    color="info"
+                    className="me-2 p-0 pe-1 ps-1"
+                  >
+                    <FontAwesomeIcon icon={faMessage} />
+                  </Button>
+                )}
               </td>
             </tr>
           ))}

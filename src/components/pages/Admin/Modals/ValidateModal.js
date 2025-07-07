@@ -9,19 +9,49 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Field from "../../../formik/Field";
 import * as Yup from "yup";
 import { validate } from "../../../../api/booking";
 import toast from "react-hot-toast";
 import { Formik } from "formik";
-import { dateFormat } from "../../../../helpers/dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment-timezone";
 import { paymentTypes } from "../../../../helpers/paymentTypes";
+import Price from "../../Booking/Price";
+import { useBookingContext } from "../../../../contexts/BookingContext";
 
 const ValidateModal = ({ isOpen, toggle, booking, reload }) => {
+  const { setAdults, setChild, setType, setSelectedDates } =
+    useBookingContext();
+
+  useEffect(() => {
+    if (booking) {
+      setAdults(+booking.adultes);
+      setChild(+booking.enfants);
+      setType(booking.type);
+      const dates = [
+        new Date(booking.date_arrivee),
+        new Date(booking.date_depart),
+      ];
+      dates[0]?.setHours(14);
+      dates[1]?.setHours(10);
+      dates[1]?.setMinutes(0);
+      dates[1]?.setSeconds(0);
+      setSelectedDates(dates);
+    }
+  }, [booking]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!isOpen) {
+      setAdults(1);
+      setChild(0);
+      setType("Classique");
+      setSelectedDates([]);
+    }
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const initialValues = useMemo(() => {
     return {
       type: "virement",
@@ -78,15 +108,7 @@ const ValidateModal = ({ isOpen, toggle, booking, reload }) => {
                       <span className="text-primary">{booking.nom_client}</span>{" "}
                       :
                     </p>
-                    <ul>
-                      <li>
-                        Pour {booking.nombre_nuits} nuits ({booking.adultes}{" "}
-                        adultes)
-                      </li>
-                      <li>Arrivée le {dateFormat(booking.date_arrivee)}</li>
-                      <li>Départ le {dateFormat(booking.date_depart)}</li>
-                      <li>Prix total : {booking.prix_total} €</li>
-                    </ul>
+                    <Price reelTotal={booking.prix_total} />
                   </Col>
                   <Col>
                     <div>

@@ -31,6 +31,7 @@ const PaymentModal = ({ isOpen, close, payment }) => {
       date: payment ? payment.date_paiement : "",
       booking: payment ? payment.id_reservation : "",
       type: payment ? payment.moyen_paiement : "virement",
+      note: payment ? payment.note : "",
     };
   }, [payment]);
 
@@ -96,7 +97,7 @@ const PaymentModal = ({ isOpen, close, payment }) => {
                   <Field
                     type="number"
                     name="deposit"
-                    label="Acompte versé (€)"
+                    label="Montant (€)"
                     step="0.01"
                   />
                 </Col>
@@ -139,6 +140,11 @@ const PaymentModal = ({ isOpen, close, payment }) => {
                 {/*    ))}*/}
                 {/*  </Field>*/}
                 {/*</Col>*/}
+              </Row>
+              <Row className="mt-4">
+                <Col className="form-group mb-4">
+                  <Field type="textarea" name="note" label="Note" rows={5} />
+                </Col>
               </Row>
             </ModalBody>
             <ModalFooter className="d-flex justify-content-between">

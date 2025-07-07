@@ -29,6 +29,7 @@ const EditBookingModal = ({ isOpen, close, booking }) => {
       children: +booking.enfants,
       total: booking.prix_total,
       type: booking.type,
+      note: booking.note,
     };
   }, [booking]);
 
@@ -144,6 +145,11 @@ const EditBookingModal = ({ isOpen, close, booking }) => {
                     min={0}
                     step="0.0001"
                   />
+                </Col>
+              </Row>
+              <Row className="mt-4">
+                <Col className="form-group mb-4">
+                  <Field type="textarea" name="note" label="Note" rows={5} />
                 </Col>
               </Row>
             </ModalBody>

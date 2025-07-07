@@ -1,7 +1,7 @@
 import { Button, Col, Container, Row, Table } from "reactstrap";
 import useApi from "../../../hooks/useApi";
 import { deleteClient, getClients } from "../../../api/client";
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faMessage, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ClientModal from "./Modals/ClientModal";
@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import useSorting from "../../../hooks/useSorting";
 import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
+import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
 
 const Clients = () => {
   const [reloading, reload] = useToggle(false);
@@ -35,6 +36,8 @@ const Clients = () => {
 };
 
 const AdminClient = ({ clients, reload }) => {
+  const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
+
   const dialog = useDialog();
   const confirm = useConfirmDialog();
   const modal = useModalDialog();
@@ -98,7 +101,42 @@ const AdminClient = ({ clients, reload }) => {
         </tr>
       </thead>
       <tbody>
-        {sortedClients?.map((c, i) => (
+        {maxLength < sortedClients?.length ||
+        sortedClients?.slice(0, maxLength)?.length > DEFAULT_MAX_LENGTH ? (
+          <tr>
+            <th colSpan="9" className="see-more">
+              <div className="list-line action-see-more">
+                <div className="line-action" />
+                {maxLength < sortedClients?.length && (
+                  <Button
+                    type="button"
+                    color="quaternary"
+                    size="xs"
+                    outline
+                    onClick={() => setMaxLength(maxLength + DEFAULT_MAX_LENGTH)}
+                  >
+                    Voir l'historique
+                  </Button>
+                )}
+
+                {sortedClients?.slice(0, maxLength)?.length >
+                  DEFAULT_MAX_LENGTH && (
+                  <Button
+                    type="button"
+                    color="quaternary"
+                    size="xs"
+                    outline
+                    onClick={() => setMaxLength(DEFAULT_MAX_LENGTH)}
+                  >
+                    Réduire
+                  </Button>
+                )}
+                <div className="line-action" />
+              </div>
+            </th>
+          </tr>
+        ) : null}
+        {sortedClients?.slice(0, maxLength)?.map((c, i) => (
           <tr
             key={i}
             className="text-center"

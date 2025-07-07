@@ -9,7 +9,7 @@ try {
     $result = ['bookings' => $connexion->safeFetchAll("SELECT CONCAT(c.nom, ' ', c.prenom) as nom_client, r.* FROM reservations r
                                                                 LEFT JOIN reservations_clients rc ON r.id = rc.id_reservation
                                                                 LEFT JOIN clients c ON c.id = rc.id_client
-                                                              ORDER BY date_arrivee;")];
+                                                              ORDER BY date_arrivee DESC;")];
     http_response_code(200);
 
 } catch (Exception $e) {
