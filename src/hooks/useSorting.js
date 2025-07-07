@@ -36,7 +36,7 @@ const useSorting = (initialData) => {
           //   comparison = new Date(aValue) - new Date(bValue);
         } else {
           // Si ce sont des chaînes de caractères
-          comparison = aValue.localeCompare(bValue);
+          comparison = aValue?.localeCompare(bValue);
         }
 
         return sortConfig.direction === "ascending" ? comparison : -comparison;
