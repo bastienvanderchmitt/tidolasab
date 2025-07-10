@@ -9,6 +9,13 @@ import {
 } from "date-fns";
 import { fr } from "date-fns/locale";
 
+/**
+ * Début Novembre -> Fin Août
+ *
+ * @param startDate
+ * @param endDate
+ * @returns {number}
+ */
 export const getDaysHighSeason = (startDate, endDate) => {
   const intervals = {
     previous: {
@@ -43,9 +50,16 @@ export const getDaysHighSeason = (startDate, endDate) => {
   return days;
 };
 
+/**
+ * Début Septembre -> Fin Octobre
+ *
+ * @param startDate
+ * @param endDate
+ * @returns {number}
+ */
 export const getDaysLowSeason = (startDate, endDate) => {
   const septembreStart = startOfMonth(new Date(startDate.getFullYear(), 8, 1));
-  const octoberEnd = endOfMonth(new Date(endDate.getFullYear(), 9, 31));
+  const octoberEnd = endOfMonth(new Date(startDate.getFullYear(), 9, 31));
 
   let days = 0;
   let currentDate = startDate;
