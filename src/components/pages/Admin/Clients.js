@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row, Table } from "reactstrap";
+import { Button, Col, Row, Table } from "reactstrap";
 import useApi from "../../../hooks/useApi";
 import { deleteClient, getClients } from "../../../api/client";
 import React, { useState } from "react";
@@ -13,34 +13,31 @@ import useSorting from "../../../hooks/useSorting";
 import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
 import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
+import { useNavigate } from "react-router-dom";
+import BreadCrumb from "../../common/BreadCrumb";
 
 const Clients = () => {
   const [reloading, reload] = useToggle(false);
   const [{ clients }] = useApi(getClients, null, null, [reloading]);
   return (
     <>
-      <Row className="admin-title g-0">
-        <Col md={2}>
-          <h1 className="aurore">Clients</h1>
+      <BreadCrumb />
+      <Row className="my-3">
+        <Col>
+          <AdminClient clients={clients} reload={reload} />
         </Col>
       </Row>
-      <Container fluid className="clients admin-content">
-        <Row className="my-5">
-          <Col>
-            <AdminClient clients={clients} reload={reload} />
-          </Col>
-        </Row>
-      </Container>
     </>
   );
 };
 
 const AdminClient = ({ clients, reload }) => {
-  const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
+  const [maxLength, setMaxLength] = useState(10);
 
   const dialog = useDialog();
   const confirm = useConfirmDialog();
   const modal = useModalDialog();
+  const navigate = useNavigate();
 
   const {
     sortedData: sortedClients,
@@ -57,7 +54,7 @@ const AdminClient = ({ clients, reload }) => {
     <Table
       striped
       hover
-      bordered
+      borderless
       className="rounded"
       responsive
       style={{ boxShadow: "0 6px 10px -4px rgba(0, 0, 0, .15)" }}
@@ -109,6 +106,7 @@ const AdminClient = ({ clients, reload }) => {
                 <div className="line-action" />
                 {maxLength < sortedClients?.length && (
                   <Button
+                    className="btn-gold"
                     type="button"
                     color="quaternary"
                     size="xs"
@@ -140,7 +138,7 @@ const AdminClient = ({ clients, reload }) => {
           <tr
             key={i}
             className="text-center"
-            onDoubleClick={() => updateClient(c)}
+            onDoubleClick={() => navigate("/admin/client/" + c.id)}
             style={{ cursor: "pointer" }}
           >
             <td>

@@ -10,7 +10,7 @@ import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
-const DatePicker = ({ formRef }) => {
+const DatePicker = ({ formRef, viewOnly }) => {
   const { selectedDates, setSelectedDates } = useBookingContext();
 
   const { t, i18n } = useTranslation();
@@ -117,6 +117,7 @@ const DatePicker = ({ formRef }) => {
       selected={selectedDates}
       onChange={handleChange}
       dateOfStartMonth={1}
+      disabled={!!viewOnly}
       components={{
         MonthContent: (props) => (
           <div>

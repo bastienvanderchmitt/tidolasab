@@ -1,11 +1,11 @@
 import {
   Badge,
   Button,
+  Card,
   Col,
-  Container,
-  FormGroup,
-  Input,
-  Label,
+  Nav,
+  NavItem,
+  NavLink,
   Row,
   Table,
   UncontrolledTooltip,
@@ -17,8 +17,11 @@ import useToggle from "../../../hooks/useToggle";
 import {
   faBan,
   faCheck,
+  faCircleCheck,
+  faCirclePlay,
   faMessage,
   faPause,
+  faPauseCircle,
   faPlus,
   faSpinner,
   faTrash,
@@ -34,27 +37,54 @@ import EditBookingModal from "./Modals/EditBookingModal";
 import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
 import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
+import BreadCrumb from "../../common/BreadCrumb";
+import moment from "moment-timezone";
+import { bookingTypes } from "../../../helpers/bookingTypes";
 
 const Bookings = () => {
-  const [reloading, reload] = useToggle(false);
-  const [byStatus, switchStatus] = useToggle(true);
   const [isOpenAdd, toggleAdd] = useToggle();
   const [bookingToValidate, setBookingToValidate] = useState(null);
-  const [{ bookings }] = useApi(getBookings, null, null, [reloading]);
+  const [filterType, setFilterType] = useState(null);
+  const [{ bookings }, _, reload] = useApi(getBookings, null, null); // eslint-disable-line no-unused-vars
+
+  const filteredBookings = useMemo(
+    () =>
+      !!filterType ? bookings?.filter((b) => b.type === filterType) : bookings,
+    [bookings, filterType],
+  );
 
   const waitingBookings = useMemo(
-    () => bookings?.filter((b) => b.statut === "en attente"),
-    [bookings],
+    () =>
+      filteredBookings
+        ?.filter((b) => b.statut === "en attente")
+        .sort((a, b) => moment(a.date_arrivee).diff(moment(b.date_arrivee))),
+    [filteredBookings],
+  );
+
+  const nextBookings = useMemo(
+    () =>
+      filteredBookings
+        ?.filter(
+          (b) =>
+            b.statut === "validée" &&
+            moment(b.date_depart).isSameOrAfter(moment()),
+        )
+        .sort((a, b) => moment(a.date_arrivee).diff(moment(b.date_arrivee))),
+    [filteredBookings],
   );
 
   const validatedBookings = useMemo(
-    () => bookings?.filter((b) => b.statut === "validée"),
-    [bookings],
+    () =>
+      filteredBookings?.filter(
+        (b) =>
+          b.statut === "validée" && moment(b.date_depart).isBefore(moment()),
+      ),
+    [filteredBookings],
   );
 
   const canceledBookings = useMemo(
-    () => bookings?.filter((b) => b.statut === "annulée"),
-    [bookings],
+    () => filteredBookings?.filter((b) => b.statut === "annulée"),
+    [filteredBookings],
   );
 
   const ActionBtn = ({ booking, status, libelle, icon, color }) => {
@@ -128,7 +158,7 @@ const Bookings = () => {
     );
   };
 
-  const AdminBooking = ({ bookings, totalWithoutCanceled }) => {
+  const AdminBooking = ({ bookings, totalWithoutCanceled, withHistoric }) => {
     const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
 
     const dialog = useDialog();
@@ -168,6 +198,12 @@ const Bookings = () => {
       }, 0);
     }, [filtered]);
 
+    const showBookings = useMemo(() => {
+      return withHistoric
+        ? bookingsToDisplay?.slice(0, maxLength)
+        : bookingsToDisplay;
+    }, [withHistoric, bookingsToDisplay, maxLength]);
+
     const StatusBadge = ({ status }) => {
       const color = useMemo(
         () =>
@@ -189,7 +225,7 @@ const Bookings = () => {
       <Table
         striped
         hover
-        bordered
+        borderless
         className="rounded"
         responsive
         style={{
@@ -245,15 +281,17 @@ const Bookings = () => {
           </tr>
         </thead>
         <tbody>
-          {maxLength < bookingsToDisplay?.length ||
-          bookingsToDisplay?.slice(0, maxLength)?.length >
-            DEFAULT_MAX_LENGTH ? (
+          {withHistoric &&
+          (maxLength < bookingsToDisplay?.length ||
+            bookingsToDisplay?.slice(0, maxLength)?.length >
+              DEFAULT_MAX_LENGTH) ? (
             <tr>
               <th colSpan="9" className="see-more">
                 <div className="list-line action-see-more">
                   <div className="line-action" />
                   {maxLength < bookingsToDisplay?.length && (
                     <Button
+                      className="btn-gold"
                       type="button"
                       color="quaternary"
                       size="xs"
@@ -283,7 +321,7 @@ const Bookings = () => {
               </th>
             </tr>
           ) : null}
-          {bookingsToDisplay?.slice(0, maxLength)?.map((b, i) => (
+          {showBookings?.map((b, i) => (
             <tr
               key={i}
               className="text-center"
@@ -383,16 +421,6 @@ const Bookings = () => {
             >
               <strong>{totalAdults}</strong>
             </td>
-            {/*<td*/}
-            {/*  style={{*/}
-            {/*    backgroundColor: "white",*/}
-            {/*    borderLeft: "none",*/}
-            {/*    borderRight: "none",*/}
-            {/*  }}*/}
-            {/*  className="text-center"*/}
-            {/*>*/}
-            {/*  <strong>{totalChildren}</strong>*/}
-            {/*</td>*/}
             <td
               style={{
                 backgroundColor: "white",
@@ -436,77 +464,110 @@ const Bookings = () => {
         booking={bookingToValidate}
         reload={reload}
       />
-      <Row className="admin-title g-0">
-        <Col>
-          <h1 className="aurore">Réservations</h1>
-        </Col>
-        <Col className="pt-2" xs={5} sm={3} md={3} lg={4}>
-          <Row>
-            <Col>
-              <Button onClick={toggleAdd} color="secondary">
-                <FontAwesomeIcon icon={faPlus} />
-                <span className="d-none d-lg-inline-block ms-2">Ajouter</span>
-              </Button>
-            </Col>
-            <Col className="pt-1">
-              <FormGroup switch>
-                <Label className="ms-3 pt-1 d-none d-lg-inline-block" check>
-                  {!byStatus ? "Toutes" : "Statut"}
-                </Label>
-                <Input
-                  type="switch"
-                  onChange={() => {}}
-                  checked={byStatus}
-                  onClick={switchStatus}
-                  style={{ height: "23px", width: "50px", cursor: "pointer" }}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Container fluid className="bookings admin-content">
-        {byStatus ? (
+      <BreadCrumb
+        button={
           <>
-            <Row className="my-5">
-              <Col>
-                <h4>En attente</h4>
-                <AdminBooking
-                  bookings={waitingBookings}
-                  reload={reload}
-                  totalWithoutCanceled
-                />
-              </Col>
-            </Row>
-            <Row className="my-5">
-              <Col>
-                <h4>Validées</h4>
-                <AdminBooking
-                  bookings={validatedBookings}
-                  reload={reload}
-                  totalWithoutCanceled
-                />
-              </Col>
-            </Row>
-            <Row className="my-5">
-              <Col>
-                <h4>Annulés</h4>
-                <AdminBooking bookings={canceledBookings} reload={reload} />
-              </Col>
-            </Row>
+            <Button onClick={toggleAdd} className="gold-btn">
+              <FontAwesomeIcon icon={faPlus} />
+              <span className="d-none d-lg-inline-block ms-2">Ajouter</span>
+            </Button>
+            {/*<FormGroup switch>*/}
+            {/*  <Label className="ms-3 pt-1 d-none d-lg-inline-block" check>*/}
+            {/*    {!byStatus ? "Toutes" : "Statut"}*/}
+            {/*  </Label>*/}
+            {/*  <Input*/}
+            {/*    type="switch"*/}
+            {/*    onChange={() => {}}*/}
+            {/*    checked={byStatus}*/}
+            {/*    onClick={switchStatus}*/}
+            {/*    style={{ height: "23px", width: "50px", cursor: "pointer" }}*/}
+            {/*  />*/}
+            {/*</FormGroup>*/}
           </>
-        ) : (
-          <Row className="my-5">
+        }
+      />
+      <Card className="p-2 m-2">
+        <Row className="my-3">
+          <Nav fill tabs style={{ cursor: "pointer" }} className="mx-2">
+            <NavItem>
+              <NavLink active={!filterType} onClick={() => setFilterType(null)}>
+                Toutes
+              </NavLink>
+            </NavItem>
+            {bookingTypes.map((type, i) => (
+              <NavItem key={i}>
+                <NavLink
+                  active={type === filterType}
+                  onClick={() => setFilterType(type)}
+                >
+                  {type}
+                </NavLink>
+              </NavItem>
+            ))}
+          </Nav>
+        </Row>
+        {waitingBookings?.length ? (
+          <Row className="my-3 mx-2">
             <Col>
+              <h4 className="text-warning">
+                <FontAwesomeIcon icon={faPauseCircle} className="me-2" />
+                En attente
+              </h4>
               <AdminBooking
-                bookings={bookings}
+                bookings={waitingBookings}
                 reload={reload}
                 totalWithoutCanceled
               />
             </Col>
           </Row>
-        )}
-      </Container>
+        ) : null}
+        {nextBookings?.length ? (
+          <Row className="my-3 mx-2">
+            <Col>
+              <h4 className="text-info">
+                <FontAwesomeIcon icon={faCirclePlay} className="me-2" />A venir
+                / en cours
+              </h4>
+              <AdminBooking
+                bookings={nextBookings}
+                reload={reload}
+                totalWithoutCanceled
+              />
+            </Col>
+          </Row>
+        ) : null}
+        {validatedBookings?.length ? (
+          <Row className="my-3 mx-2">
+            <Col>
+              <h4 className="text-success">
+                <FontAwesomeIcon icon={faCircleCheck} className="me-2" />
+                Validées
+              </h4>
+              <AdminBooking
+                bookings={validatedBookings}
+                reload={reload}
+                totalWithoutCanceled
+                withHistoric
+              />
+            </Col>
+          </Row>
+        ) : null}
+        {canceledBookings?.length ? (
+          <Row className="my-3 mx-2">
+            <Col>
+              <h4 className="text-danger">
+                <FontAwesomeIcon icon={faBan} className="me-2" />
+                Annulés
+              </h4>
+              <AdminBooking
+                bookings={canceledBookings}
+                reload={reload}
+                withHistoric
+              />
+            </Col>
+          </Row>
+        ) : null}
+      </Card>
     </>
   );
 };

@@ -16,7 +16,7 @@
   },
   "pages": {
     "home": {
-      "title": "Dream Stay in Marie-Galante",
+      "title": "Dream Cottage in Marie-Galante",
       "description": "A seaside haven of warmth, tranquility, and friendliness"
     },
     "booking": {
@@ -81,8 +81,12 @@
   },
   "reviews": {
     "title": "Our clients share",
-    "quote": "“Isabelle and Frank are amazing 👌 They are attentive and caring. The places are very peaceful, calm, and cozy 🌴 We recommend it and of course, we will definitely come back!”",
-    "quote_user": "MARYSELLA – BOOKING"
+    "quote_1": "“Isabelle and Frank are amazing 👌 They are attentive and caring. The places are very peaceful, calm, and cozy 🌴 We recommend it and of course, we will definitely come back!”",
+    "quote_user_1": "MARYSELLA – BOOKING",
+    "quote_2": "“The bungalow is super well-equipped, with a kitchen opening onto the lovely terrace! Close to several points of interest in Marie Galante, and especially the accessibility and kindness of the owners!”",
+    "quote_user_2": "LARA – BOOKING",
+    "quote_3": "“An unforgettable experience, we will definitely come back and for longer.”",
+    "quote_user_3": "FABIENNE – BOOKING"
   },
   "essentials": {
     "photo_title": "Inspired by our story, in the heart of nature to offer a different life experience.",

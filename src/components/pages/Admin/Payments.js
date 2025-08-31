@@ -1,4 +1,4 @@
-import { Badge, Button, Col, Container, Row, Table } from "reactstrap";
+import { Badge, Button, Col, Row, Table } from "reactstrap";
 import useApi from "../../../hooks/useApi";
 import React, { useMemo, useState } from "react";
 import { deletePayment, getPayments } from "../../../api/payment";
@@ -18,6 +18,7 @@ import useSorting from "../../../hooks/useSorting";
 import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
 import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
+import BreadCrumb from "../../common/BreadCrumb";
 
 const Payments = () => {
   const [reloading, reload] = useToggle(false);
@@ -28,36 +29,31 @@ const Payments = () => {
 
   return (
     <>
-      <Row className="admin-title g-0">
-        <Col>
-          <h1 className="aurore">Paiements</h1>
-        </Col>
-        <Col xs={1} className="me-2 pt-1">
+      <BreadCrumb
+        button={
           <Button
             onClick={async () => {
               const result = await dialog(<PaymentModal />);
               if (result.action === "success") reload();
             }}
-            color="secondary"
+            className="gold-btn"
           >
             <FontAwesomeIcon icon={faPlus} />
             <span className="d-none d-lg-inline-block ms-2">Ajouter</span>
           </Button>
+        }
+      />
+      <Row className="my-3">
+        <Col>
+          <AdminPayments payments={payments} reload={reload} />
         </Col>
       </Row>
-      <Container fluid className="clients admin-content">
-        <Row className="my-5">
-          <Col>
-            <AdminPayments payments={payments} reload={reload} />
-          </Col>
-        </Row>
-      </Container>
     </>
   );
 };
 
 const AdminPayments = ({ payments, reload }) => {
-  const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
+  const [maxLength, setMaxLength] = useState(10);
 
   const dialog = useDialog();
   const confirm = useConfirmDialog();
@@ -99,7 +95,7 @@ const AdminPayments = ({ payments, reload }) => {
     <Table
       striped
       hover
-      bordered
+      borderless
       className="rounded"
       responsive
       style={{ boxShadow: "0 6px 10px -4px rgba(0, 0, 0, .15)" }}
@@ -165,6 +161,7 @@ const AdminPayments = ({ payments, reload }) => {
                 <div className="line-action" />
                 {maxLength < sortedPayments?.length && (
                   <Button
+                    className="btn-gold"
                     type="button"
                     color="quaternary"
                     size="xs"

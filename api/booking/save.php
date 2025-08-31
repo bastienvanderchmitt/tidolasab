@@ -6,8 +6,8 @@ global $data, $connexion;
 
 function areDatesChristmasHolidaysValid($date1, $date2) {
     // Convertir les dates en objets DateTime
-    $startDate = new DateTime('2024-12-21');
-    $endDate = new DateTime('2025-01-06');
+    $startDate = new DateTime('2025-12-21');
+    $endDate = new DateTime('2026-01-06');
     $d1 = new DateTime($date1);
     $d2 = new DateTime($date2);
 
@@ -98,8 +98,8 @@ try {
         // Send email to admin
         $to = "tidolasab@gmail.com";
         $subject = 'Nouvelle réservation !';
-        $message = "<h4><a href='https://tidolasab/admin/booking/$bookingId'>Réservation</a> de $data->name $data->firstName</h4>
-                    <ul>
+        $message = isset($clientId) ? "<h4>Réservation de <a href='https://tidolasab/admin/client/$clientId'>$data->name $data->firstName</a></h4>" : "<h4>Réservation de $data->name $data->firstName</h4>";;
+        $message .= "<ul>
                         <li>Du $data->checkIn au $data->checkOut ($data->days nuits)</li>
                         <li>$data->adults adultes, $data->children enfants</li>
                         <li>Pour un total de $data->total €</li>

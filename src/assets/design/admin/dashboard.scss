@@ -1,10 +1,33 @@
 .dashboard {
-  background-color: #f4f3ef;
+  background-color: rgb(230, 236, 248);
   height: 100%;
+
+  .navbar {
+    //box-shadow: rgba(80, 57, 24, 0.15) 0px 5px 30px 0px;
+    //background-color: rgba(255, 255, 255, 0.93);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
+    &.active {
+      backdrop-filter: blur(12px);
+      background-color: rgba(255, 255, 255, 0.93);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+    }
+  }
 
   .nav-item .nav-link.active {
     opacity: 1;
     color: #51bcda;
+  }
+
+  .nav-item .nav-link {
+    color: rgb(101, 119, 146);
+    //font-family: 'Cosmic Relief', Arial, sans-serif;
+    //font-size: 22px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
   }
 
   .sidebar {
@@ -108,15 +131,31 @@
   .admin-title {
     background: white;
     padding: 10px 20px;
-    text-decoration: underline;
+    //text-decoration: underline;
     box-shadow: rgba(80, 57, 24, 0.15) 0px 5px 30px 0px;
     position: sticky;
     top: 0;
     z-index: 2;
+
+    h3 {
+      margin-bottom: 0;
+    }
   }
 
   .admin-content {
-    padding: 40px;
+    padding: 20px;
+  }
+
+  .gold-btn {
+    margin: 0 10px;
+    background: white;
+    border: $gold 1px solid;
+    color: $gold !important;
+
+    &:hover {
+      color: white !important;
+      background: $gold;
+    }
   }
 
   .see-more {
@@ -151,8 +190,12 @@
 
       .btn {
         margin: 0 10px;
-        background-color: $secondary !important;
         border: $gold 1px solid;
+
+        &:hover {
+          color: white;
+          background: $gold;
+        }
       }
 
       .info-nb-line {
@@ -169,5 +212,130 @@
         }
       }
     }
+  }
+}
+
+.card-user {
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, .15);
+  background-color: #fff;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  border: 0;
+  transition: box-shadow .2s ease, -webkit-transform .3s cubic-bezier(.34,2,.6,1);
+  transition: transform .3s cubic-bezier(.34,2,.6,1), box-shadow .2s ease;
+  transition: transform .3s cubic-bezier(.34,2,.6,1), box-shadow .2s ease, -webkit-transform .3s cubic-bezier(.34,2,.6,1);
+
+  .image {
+    overflow: hidden;
+    height: 120px;
+    position: relative;
+
+    img {
+      border-radius: 12px;
+      max-width: 100%;
+    }
+  }
+
+  .card-body {
+    min-height: 175px;
+    padding: 15px 15px 10px;
+
+    .author {
+      text-align: center;
+      text-transform: none;
+      margin-top: -77px;
+
+      .avatar {
+        width: 124px;
+        height: 124px;
+        //border: 1px solid #fff;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.card-client {
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  border-color: transparent;
+  margin-bottom: 20px;
+
+  .avatar-50 {
+    height: 50px;
+    line-height: 45px;
+    width: 50px;
+    display: inline-flex;
+    text-align: center;
+
+    //@media (max-width: 1200px) {
+    //  height: 30px;
+    //  line-height: 20px;
+    //  width: 30px;
+    //}
+
+    svg {
+      align-self: center;
+      margin: 0 auto;
+      display: inline-flex;
+      text-align: center;
+
+      @media (min-width: 1200px) {
+        font-size: 1.5rem !important;
+      }
+    }
+  }
+
+  .small-text {
+    font-size: 0.90rem;
+  }
+}
+
+.row-payment {
+  &:last-of-type {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+}
+
+.next-booking {
+  &:hover {
+    background-color: rgba(14, 161, 171, 0.21) !important;
+  }
+}
+
+table {
+  border-collapse: collapse; /* Pour éviter les doubles bordures */
+  //width: 100%; /* Ajuste la largeur selon tes besoins */
+  border: 2px solid #000; /* Bordure de la table */
+  border-radius: 10px; /* Ajuste la valeur pour le degré d'arrondi */
+  overflow: hidden; /* Pour s'assurer que le contenu ne déborde pas */
+  padding: 20px;
+
+  thead tr th {
+    color: $primary !important;
+  }
+}
+
+.dashboard {
+  .container,
+  .card-body,
+  .modal-title,
+  .modal-content {
+    color: #4182a9;
+  }
+}
+
+// TODO : rajouter admin
+.modal-title,
+.modal-content {
+  color: #4182a9;
+
+  .form-control {
+    color: #4182a9;
   }
 }

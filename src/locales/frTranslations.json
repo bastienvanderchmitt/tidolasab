@@ -16,7 +16,7 @@
   },
   "pages": {
     "home": {
-      "title": "Séjour de Rêve à Marie-Galante",
+      "title": "Gîte de Rêve à Marie-Galante",
       "description": "Havre balnéaire de chaleur, de tranquillité et de convivialité"
     },
     "booking": {
@@ -80,8 +80,12 @@
   },
   "reviews": {
     "title": "Nos clients racontent",
-    "quote": "“Isabelle et Frank sont au top \uD83D\uDC4D Ils sont à l'écoute et attentionnés. Les lieux sont très paisibles, calme et cocooning \uD83C\uDF34 On recommande et bien évidemment on reviendra à coup sûr !”",
-    "quote_user": "MARYSELLA – BOOKING"
+    "quote_1": "“Isabelle et Frank sont au top \uD83D\uDC4D Ils sont à l'écoute et attentionnés. Les lieux sont très paisibles, calme et cocooning \uD83C\uDF34 On recommande et bien évidemment on reviendra à coup sûr !”",
+    "quote_user_1": "MARYSELLA – BOOKING",
+    "quote_2": "“Le bungalow est super bien équipé, avec une cuisine ouverte sur la terrasse très agréable !\nA proximité de plusieurs points d’intérêt sur Marie Galante, et surtout l’accessibilité et la gentillesse des propriétaires !”",
+    "quote_user_2": "LARA – BOOKING",
+    "quote_3": "“Une expérience inoubliable, nous y reviendrons c’est certain et plus longtemps”",
+    "quote_user_3": "FABIENNE – BOOKING"
   },
   "essentials": {
     "photo_title": "Inspiré de notre histoire, en pleine nature pour offrir une expérience de vie différente.",
