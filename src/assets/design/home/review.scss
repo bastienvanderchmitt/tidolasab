@@ -40,8 +40,18 @@
     }
 
     .review-star{
-      color: $gold;
+      //color: $gold;
+      color: #ffdb86;
       margin: 0 4px;
+    }
+  }
+
+  .slick-slider {
+    .slick-prev,
+    .slick-next {
+      @media screen and (max-width: 575px) {
+        display: none !important;
+      }
     }
   }
 }

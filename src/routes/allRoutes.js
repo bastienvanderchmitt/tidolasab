@@ -8,11 +8,24 @@ import Success from "../components/pages/Success";
 import Story from "../components/pages/Story";
 import Activities from "../components/pages/Activities";
 import Photos from "../components/pages/Photos";
-import Dashboard from "../components/pages/Admin/Dashboard";
 import AuthenticationGuard from "../components/pages/Admin/AuthenticationGuard";
 import Privacy from "../components/pages/Rules/Privacy";
 import CreateUser from "../components/pages/Admin/CreateUser";
 import { pages } from "../helpers/pages";
+import PrivateRoutes from "../components/pages/Admin/PrivateRoutes";
+import Bookings from "../components/pages/Admin/Bookings";
+import Clients from "../components/pages/Admin/Clients";
+import Payments from "../components/pages/Admin/Payments";
+import Statistics from "../components/pages/Admin/Statistics";
+import Client from "../components/pages/Admin/Client";
+import { Navigate } from "react-router-dom";
+import {
+  faChartSimple,
+  faEuroSign,
+  faFileLines,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import Dashboard from "../components/pages/Admin/Dashboard";
 
 const staticSteps = [
   {
@@ -67,6 +80,47 @@ const staticSteps = [
   // },
 ];
 
+const adminRoutes = [
+  {
+    path: "/admin/",
+    element: <Navigate to="/admin/dashboard" replace />,
+  },
+  {
+    path: "/admin/dashboard",
+    element: <Dashboard />,
+    label: "Dashboard",
+  },
+  {
+    path: "/admin/bookings",
+    element: <Bookings />,
+    icon: faFileLines,
+    label: "Réservations",
+  },
+  {
+    path: "/admin/clients",
+    element: <Clients />,
+    icon: faUser,
+    label: "Clients",
+  },
+  {
+    path: "/admin/payments",
+    element: <Payments />,
+    icon: faEuroSign,
+    label: "Paiements",
+  },
+  // {
+  //   path: "/admin/statistics",
+  //   element: <Statistics />,
+  //   icon: faChartSimple,
+  //   label: "Statistiques",
+  // },
+  {
+    path: "/admin/client/:id",
+    element: <Client />,
+    label: "Détail client",
+  },
+];
+
 const allRoutes = [
   {
     path: "/",
@@ -76,16 +130,19 @@ const allRoutes = [
   },
   {
     path: "/admin/login",
+    errorElement: <Error />,
     element: <Login />,
   },
   {
-    path: "/admin/",
-    element: <AuthenticationGuard component={Dashboard} />,
+    element: <PrivateRoutes />,
+    errorElement: <Error />,
+    children: adminRoutes,
   },
   {
     path: "/admin/user/create",
+    errorElement: <Error />,
     element: <AuthenticationGuard component={CreateUser} />,
   },
 ];
 
-export { allRoutes };
+export { allRoutes, adminRoutes };

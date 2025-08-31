@@ -11,3 +11,7 @@ export const deleteClient = (data) => {
 export const getClients = () => {
   return appAxios.get("client/getAll.php");
 };
+
+export const getClient = (id) => {
+  return appAxios.get("client/getById.php", { params: { id } });
+};

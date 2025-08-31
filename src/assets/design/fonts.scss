@@ -30,3 +30,14 @@
   font-weight:normal;
   font-style:normal;
 }
+
+@font-face {
+  font-family: "Comic Relief";
+  src: url('../fonts/ComicRelief-Regular.ttf');
+}
+
+.cosmic {
+  font-family: 'Comic Relief', system-ui;
+  font-weight:normal;
+  font-style:normal;
+}

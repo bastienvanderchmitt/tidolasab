@@ -19,6 +19,8 @@
       padding-left: 15%;
       padding-right: 15%;
       max-width: none;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
 
       .nav-item {
         //margin: auto;

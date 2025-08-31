@@ -26,7 +26,7 @@ const HighlightText = ({ text, highlighted }) => {
     ));
 };
 
-const SearchSelect = ({ array, valueName }) => {
+const SearchSelect = ({ array, valueName, callback }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,6 +53,7 @@ const SearchSelect = ({ array, valueName }) => {
     setSearchTerm("");
     setSelectedIndex(selectedIndex);
     setFieldValue(valueName, item.id);
+    callback && callback(item.id);
   };
 
   const handleKeyDown = (event) => {
@@ -100,8 +101,8 @@ const SearchSelect = ({ array, valueName }) => {
       </InputGroup>
       <Field type="select" name="booking" className="d-none" />
       {!!searchTerm && (
-        <ListGroup>
-          <SimpleBar style={{ maxHeight: "200px" }}>
+        <ListGroup style={{ position: "absolute" }}>
+          <SimpleBar style={{ maxHeight: "200px", zIndex: "999" }}>
             {filteredArray.length > 0 ? (
               filteredArray.map((item, index) => (
                 <ListGroupItem
