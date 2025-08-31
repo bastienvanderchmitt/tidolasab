@@ -6,8 +6,8 @@ global $data, $connexion;
 
 function areDatesChristmasHolidaysValid($date1, $date2) {
     // Convertir les dates en objets DateTime
-    $startDate = new DateTime('2025-12-21');
-    $endDate = new DateTime('2026-01-06');
+    $startDate = new DateTime('2026-12-21');
+    $endDate = new DateTime('2027-01-06');
     $d1 = new DateTime($date1);
     $d2 = new DateTime($date2);
 
