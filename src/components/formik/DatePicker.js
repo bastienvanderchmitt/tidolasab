@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
 const DatePicker = ({ formRef, viewOnly }) => {
-  const { selectedDates, setSelectedDates } = useBookingContext();
+  const { selectedDates, setSelectedDates, type } = useBookingContext();
 
   const { t, i18n } = useTranslation();
   const [{ bookings }, isLoading] = useApi(getReservedBookings);
@@ -55,7 +55,7 @@ const DatePicker = ({ formRef, viewOnly }) => {
       const endDate = e[1];
       const duration = (endDate - startDate) / (1000 * 60 * 60 * 24); // Durée en jours
 
-      if (duration < 2) {
+      if (duration < 2 && type !== "Fermeture") {
         toast.error(t("booking.minimum_stay"));
         return;
       }

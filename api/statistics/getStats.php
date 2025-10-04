@@ -23,7 +23,17 @@ try {
     $totalPaiements = $connexion->safeFetch("SELECT SUM(montant_paiement) as total FROM paiements");
 
     // Récupérer le nombre de réservations par statut
-    $reservationsParStatut = $connexion->safeFetchAll("SELECT statut, COUNT(*) as total FROM reservations GROUP BY statut");
+    $reservationsParStatut = $connexion->safeFetchAll("SELECT 
+                                                            s.statut, 
+                                                            COALESCE(COUNT(r.statut), 0) AS total
+                                                        FROM (
+                                                            SELECT 'en attente' AS statut
+                                                            UNION SELECT 'annulée'
+                                                            UNION SELECT 'validée'
+                                                        ) s
+                                                        LEFT JOIN reservations r ON s.statut = r.statut
+                                                        GROUP BY s.statut
+                                                        ORDER BY s.statut;");
 
     // Récupérer le nombre de réservations par type
     $reservationsParType = $connexion->safeFetchAll("SELECT type, COUNT(*) as total FROM reservations GROUP BY type");
