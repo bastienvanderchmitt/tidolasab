@@ -16,9 +16,6 @@ export default function useApi(
   const [isLoading, setIsLoading] = useState(condition);
   const [dep, reload] = useToggle(false);
 
-  // console.log("dep", dep);
-  // console.log("deps", deps);
-
   useEffect(() => {
     const source = axios.CancelToken.source();
 

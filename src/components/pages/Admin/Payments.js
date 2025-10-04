@@ -284,7 +284,7 @@ const AdminPayments = ({ payments, reload }) => {
             }}
             className="text-center"
           >
-            <strong>{total} €</strong>
+            <strong>{total?.toFixed(2)} €</strong>
           </td>
           <td style={{ backgroundColor: "white", borderLeft: "none" }}></td>
         </tr>

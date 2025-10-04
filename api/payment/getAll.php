@@ -13,9 +13,9 @@ try {
         WHERE rc.id_client = c.id) as types_reservations
         # SUM(p.montant_paiement) AS solde_client
         FROM paiements p 
-            INNER JOIN reservations r ON r.id = p.id_reservation
-            INNER JOIN reservations_clients rc ON r.id = rc.id_reservation
-            INNER JOIN clients c ON c.id = rc.id_client
+            LEFT JOIN reservations r ON r.id = p.id_reservation
+            LEFT JOIN reservations_clients rc ON r.id = rc.id_reservation
+            LEFT JOIN clients c ON c.id = rc.id_client
         ORDER BY date_paiement DESC;
     ")];
     http_response_code(200);
