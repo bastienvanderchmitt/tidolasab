@@ -1,17 +1,13 @@
 import { useAdminContext } from "../../../contexts/AdminContext";
 import {
   Button,
-  Col,
-  Collapse,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
   Nav,
   Navbar,
-  NavbarToggler,
   NavItem,
   NavLink,
-  Row,
   UncontrolledDropdown,
 } from "reactstrap";
 import { authService } from "../../../helpers/authService";
@@ -19,7 +15,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/img/logo_final.png";
 import {
   faBars,
-  faPowerOff,
   faSignOutAlt,
   faTimes,
   faUser,

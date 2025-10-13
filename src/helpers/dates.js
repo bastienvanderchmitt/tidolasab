@@ -5,9 +5,7 @@ import {
   startOfDay,
   startOfMonth,
   differenceInDays,
-  format,
 } from "date-fns";
-import { fr } from "date-fns/locale";
 
 /**
  * Début Novembre -> Fin Août
@@ -77,9 +75,16 @@ export const getDaysLowSeason = (startDate, endDate) => {
 };
 
 export const getFrenchDate = (date, withYear) => {
-  return date
-    ? format(date, withYear ? "d MMMM yyyy" : "d MMMM", { locale: fr })
-    : "";
+  if (!date) return "";
+
+  const options = {
+    day: "numeric",
+    month: "long",
+    ...(withYear && { year: "numeric" }),
+    timeZone: "Europe/Paris", // Force CET/CEST, ignore fuseau local
+  };
+
+  return date.toLocaleDateString("fr-FR", options);
 };
 
 export const getDaysFromNow = (date) => {

@@ -16,11 +16,9 @@ import PrivateRoutes from "../components/pages/Admin/PrivateRoutes";
 import Bookings from "../components/pages/Admin/Bookings";
 import Clients from "../components/pages/Admin/Clients";
 import Payments from "../components/pages/Admin/Payments";
-import Statistics from "../components/pages/Admin/Statistics";
 import Client from "../components/pages/Admin/Client";
 import { Navigate } from "react-router-dom";
 import {
-  faChartSimple,
   faEuroSign,
   faFileLines,
   faUser,
@@ -108,12 +106,6 @@ const adminRoutes = [
     icon: faEuroSign,
     label: "Paiements",
   },
-  // {
-  //   path: "/admin/statistics",
-  //   element: <Statistics />,
-  //   icon: faChartSimple,
-  //   label: "Statistiques",
-  // },
   {
     path: "/admin/client/:id",
     element: <Client />,

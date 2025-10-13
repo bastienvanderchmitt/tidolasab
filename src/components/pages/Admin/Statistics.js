@@ -4,7 +4,6 @@ import {
   CardText,
   CardTitle,
   Col,
-  Container,
   ListGroup,
   ListGroupItem,
   Row,
@@ -22,33 +21,6 @@ import React from "react";
 
 const Statistics = () => {
   const [{ statistics }] = useApi(getStats);
-  console.log("statistics", statistics);
-
-  const CardStat = ({ color, icon, number, alias, text }) => {
-    return (
-      <Card className={"bg-" + color + "-subtle card-client"}>
-        <CardBody>
-          <Row>
-            <Col className="col-auto">
-              <div className="avatar avatar-50 bg-white text-danger-emphasis rounded">
-                <FontAwesomeIcon
-                  icon={icon}
-                  className={"text-" + color + " p-2"}
-                />
-              </div>
-            </Col>
-            <Col>
-              <h5 className="mb-0">
-                <span className={"text-" + color}>{number}</span>{" "}
-                <small className="opacity-50">{alias}</small>
-              </h5>
-              <p className="opacity-50 mb-0">{text}</p>
-            </Col>
-          </Row>
-        </CardBody>
-      </Card>
-    );
-  };
 
   return (
     <>

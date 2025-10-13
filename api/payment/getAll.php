@@ -9,7 +9,7 @@ try {
     $result = ['payments' => $connexion->safeFetchAll("SELECT c.nom, c.prenom, p.*, r.date_arrivee, r.date_depart, 
        (SELECT GROUP_CONCAT(DISTINCT r.type)
         FROM reservations r
-                 JOIN reservations_clients rc ON r.id = rc.id_reservation
+                 LEFT JOIN reservations_clients rc ON r.id = rc.id_reservation
         WHERE rc.id_client = c.id) as types_reservations
         # SUM(p.montant_paiement) AS solde_client
         FROM paiements p 

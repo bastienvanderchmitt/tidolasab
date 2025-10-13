@@ -6,9 +6,7 @@ import { getClient } from "../../../api/client";
 import toast, { LoaderIcon } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBan,
   faCalendar,
-  faCircleCheck,
   faEdit,
   faEnvelope,
   faEuro,
@@ -19,10 +17,8 @@ import {
   faHashtag,
   faHouse,
   faMoon,
-  faPauseCircle,
   faPen,
   faPhone,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import ClientModal from "./Modals/ClientModal";
 import useDialog from "../../../hooks/useDialog";
