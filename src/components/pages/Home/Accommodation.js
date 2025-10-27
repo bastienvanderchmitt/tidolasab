@@ -3,7 +3,10 @@ import accommodation from "../../../assets/img/room/view_2.jpeg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Assets from "./Assets";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDays,
+  faWheelchairAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
@@ -43,8 +46,16 @@ const Accommodation = () => {
           <div>
             <Assets />
           </div>
-          <div className="">
-            <p>{t("accommodation.description")}</p>
+          <div className="text-center m-2">
+            <p style={{ fontSize: "14px", fontStyle: "oblique" }}>
+              <FontAwesomeIcon icon={faWheelchairAlt} className="me-2" />
+              {t("accommodation.pmr")}
+            </p>
+          </div>
+          <div className="text-warning-emphasis">
+            <p style={{ fontSize: "20px" }}>
+              <strong>{t("accommodation.description")}</strong>
+            </p>
           </div>
           <div className="more-btn">
             <Link to={"/booking"}>
