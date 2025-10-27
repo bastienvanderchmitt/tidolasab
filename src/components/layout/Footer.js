@@ -2,6 +2,7 @@ import { Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from "react-i18next";
+import cgu from "../../assets/pdf/CGU.pdf";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -50,7 +51,14 @@ const Footer = () => {
           </Col>
         </Row>
         <Row>
-          <Col className="py-4">© Copyright Tidolasab.</Col>
+          <Col className="py-4" xs={12} md={6}>
+            © Copyright Tidolasab.
+          </Col>
+          <Col className="py-4" xs={12} md={6}>
+            <a href={cgu} download>
+              Conditions d'utilisation
+            </a>
+          </Col>
           {/*<Col className="footer-col">*/}
           {/*  <Row>*/}
           {/*<Col>*/}

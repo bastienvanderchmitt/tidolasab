@@ -13,6 +13,8 @@ import stove from "../../../assets/img/icons/stove.png";
 import toaster from "../../../assets/img/icons/toaster.png";
 import toilets from "../../../assets/img/icons/toilets.png";
 import wifi_signal from "../../../assets/img/icons/wifi_signal.png";
+import speaker from "../../../assets/img/icons/speaker.png";
+import cooking_robot from "../../../assets/img/icons/cooking_robot.png";
 import { useTranslation } from "react-i18next";
 import Assets from "../Home/Assets";
 
@@ -47,6 +49,8 @@ const Room = () => {
     { icon: douche, text: t("amenities.shower") },
     { icon: toilets, text: t("amenities.wc") },
     { icon: serviette, text: t("amenities.towels") },
+    { icon: speaker, text: t("amenities.speaker") },
+    { icon: cooking_robot, text: t("amenities.robot") },
   ];
 
   return (
@@ -59,7 +63,7 @@ const Room = () => {
         </Col>
       </Row>
       <Row className="pt-4 pb-4">
-        <h5 className="pt-3 marcellus">
+        <h5 className="pt-3 marcellus text-primary">
           <FontAwesomeIcon icon={faHouse} className="me-4 text-primary" />
           {t("room.accommodation")}
         </h5>
@@ -79,15 +83,15 @@ const Room = () => {
         <p>{t("room.access_description")}</p>
       </Row>
       <Row>
-        <h4 className="title-3 pt-4">{t("room.beaches")}</h4>
-        <div className="room-list">
+        <h4 className="title-3 pt-4 text-primary">{t("room.beaches")}</h4>
+        <div className="room-list" style={{ fontSize: "18px" }}>
           <Badge>Folle Anse</Badge>
           <Badge>Anse Bambou</Badge>
           <Badge>Anse de Mays</Badge>
           <Badge>Anse Canot</Badge>
           <Badge>Vieux Fort</Badge>
-          <Badge>la Feuillère et petite Anse</Badge>
           <Badge>Grand-Bourg</Badge>
+          <Badge>la Feuillère et petite Anse</Badge>
         </div>
       </Row>
       <Row className="amenities">

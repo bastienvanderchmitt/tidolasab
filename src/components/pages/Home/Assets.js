@@ -8,6 +8,7 @@ import {
   faHouse,
   faWaterLadder,
   faWind,
+  faBabyCarriage,
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
@@ -47,6 +48,10 @@ const Assets = () => {
       <li>
         <FontAwesomeIcon icon={faSquareParking} className="me-2" />
         <span>{t("assets.parking")}</span>
+      </li>
+      <li>
+        <FontAwesomeIcon icon={faBabyCarriage} className="me-2" />
+        <span>{t("assets.baby")}</span>
       </li>
     </ul>
   );

@@ -66,17 +66,19 @@
     "subtitle_2": "Au coeur d'une verdure luxuriante, bienvenue à Marie-Galante.",
     "photo_link": "Vue depuis le jardin",
     "breadcrumb": "Jardin tropical / Calme & Reposant / Nature",
-    "description": "Notre case Ti’ Dola Sab est une habitation indépendante toute en bois, de construction récente avec tout le confort nécessaire."
+    "description": "Notre case Ti’ Dola Sab est une habitation indépendante toute en bois, de construction récente avec tout le confort nécessaire.",
+    "pmr": "Accessibilité partielle aux personnes à mobilité réduite du fait que nous disposons de 3 marches pour accéder à la terrasse et que la porte de la salle de bain est de 69 cm de large."
   },
   "assets" : {
     "people": "2 personnes",
     "pool": "Piscine",
     "clim": "Climatisation",
-    "bed": "1 lit king size / 1 BZ",
+    "bed": "1 lit king size / 1 Canapé",
     "bathroom": "1 salle de bain",
     "front": "Grande terrasse",
     "wifi": "Wifi",
-    "parking": "Parking"
+    "parking": "Parking",
+    "baby": "Lit parapluie et réhausseur"
   },
   "reviews": {
     "title": "Nos clients racontent",
@@ -116,15 +118,15 @@
     "description_3": "Il ne vous reste plus qu'à profiter d'instants magiques.",
     "description_4": "Notre plaisir : vous accueillir et partager notre paradis. Une corbeille de bienvenue vous attend à votre arrivée (à partir de 14h et départ jusqu'à 11h).",
     "access_title": "Accès et situation",
-    "access_description": "Nous sommes très bien situé pour visiter et parcourir l'île avec notre emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et St Louis sont à 10mn de Ti' Dola Sab. Pour faire vos courses, 2mn à pied et vous pouvez vous ravitailler sur Morne Lolo. Une des trois distilleries est à 2mn en voiture.",
-    "beaches": "Les plus belles plages de l'île sont à 10mn :",
+    "access_description": "Nous sommes très bien situé pour visiter et parcourir l'île avec notre emplacement central. Les 3 grandes villes Grand-Bourg, Capesterre et St Louis sont à 10 minutes de Ti' Dola Sab. Pour faire vos courses, 2 minutes à pied et vous pouvez vous ravitailler sur Morne Lolo. Une des trois distilleries est à 2 minutes en voiture.",
+    "beaches": "Les plus belles plages de l'île sont à 10 minutes :",
     "equipments": "Équipements du gîte"
   },
   "amenities": {
     "wifi": "Wifi",
     "clim": "Brasseurs d'air / Climatisation",
     "hob": "Plaques à induction",
-    "micro-wave": "Micro-ondes",
+    "micro-wave": "Micro-ondes / Mini four",
     "coffee": "Cafetière",
     "fridge": "Réfrigérateur / Congélateur",
     "toaster": "Grille-pain",
@@ -132,7 +134,9 @@
     "dishes": "Vaisselle pour 4 personnes",
     "shower": "Douche italienne",
     "wc": "WC indépendant",
-    "towels": "Serviettes de bain"
+    "towels": "Serviettes de bain",
+    "speaker": "Enceinte connectée",
+    "robot": "Robot de cuisson"
   },
   "booking": {
     "checkIn": "Arrivée le:",
@@ -145,7 +149,7 @@
     "from": " à partir de ",
     "prices_text": " par nuit. Une demi-journée offerte par semaine. Taxe de séjour de 2€ par nuit et par adulte.",
     "conditions": "Le contrat de location vous sera transmis avec une demande de versement d'un acompte de 50% (via virement bancaire) qui confirmeront votre réservation. Le solde vous sera demandé 14 jours avant l'arrivée.",
-    "christmas": "Durée de séjour de 2 nuits minimum (4 pour la période Noël / Nouvel an).",
+    "christmas": "Bébés de - de 6 mois acceptés. Durée de séjour de 2 nuits minimum (4 pour la période Noël / Nouvel an).",
     "checkIn_validation": "Veuillez indiquer une date d'arrivée (calendrier ci-dessous).",
     "checkOut_validation": "Veuillez indiquer une date de départ (calendrier ci-dessous).",
     "adults_validation": "Veuillez indiquer le nombre d'adultes.",
