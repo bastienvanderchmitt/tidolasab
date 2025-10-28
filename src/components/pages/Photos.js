@@ -2,6 +2,8 @@ import { useCallback, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
+import { useTranslation } from "react-i18next";
+
 import location_1 from "../../assets/img/locations/location_1.jpeg";
 import location_2 from "../../assets/img/locations/location_2.jpeg";
 import location_3 from "../../assets/img/locations/location_3.jpeg";
@@ -38,7 +40,11 @@ import location_41 from "../../assets/img/locations/location_41.jpeg";
 import location_42 from "../../assets/img/locations/location_42.jpeg";
 import location_43 from "../../assets/img/room/view_2.jpeg";
 import location_44 from "../../assets/img/room/view_3.jpeg";
-import { useTranslation } from "react-i18next";
+import room_1 from "../../assets/img/room/room_1.jpeg";
+import room_2 from "../../assets/img/room/room_2.jpeg";
+import room_4 from "../../assets/img/room/room_4.jpeg";
+import room_5 from "../../assets/img/room/room_5.jpeg";
+import room_7 from "../../assets/img/room/room_7.jpeg";
 
 const Photos = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -144,6 +150,31 @@ const Photos = () => {
     },
     {
       src: location_44,
+      width: 4,
+      height: 2,
+    },
+    {
+      src: room_1,
+      width: 1.5,
+      height: 2,
+    },
+    {
+      src: room_2,
+      width: 2,
+      height: 2,
+    },
+    {
+      src: room_4,
+      width: 2,
+      height: 2,
+    },
+    {
+      src: room_5,
+      width: 3,
+      height: 3,
+    },
+    {
+      src: room_7,
       width: 4,
       height: 2,
     },
