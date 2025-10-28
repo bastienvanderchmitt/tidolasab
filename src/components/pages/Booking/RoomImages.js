@@ -4,7 +4,6 @@ import { Container, Row } from "reactstrap";
 import { useCallback, useState } from "react";
 import room_1 from "../../../assets/img/room/room_1.jpeg";
 import room_2 from "../../../assets/img/room/room_2.jpeg";
-// import room_3 from "../../../assets/img/room/room_3.jpeg";
 import room_4 from "../../../assets/img/room/room_4.jpeg";
 import room_5 from "../../../assets/img/room/room_5.jpeg";
 import room_7 from "../../../assets/img/room/room_7.jpeg";
@@ -31,11 +30,6 @@ const RoomImages = () => {
       width: 2,
       height: 1,
     },
-    // {
-    //   src: room_3,
-    //   width: 3,
-    //   height: 4,
-    // },
     {
       src: view_2,
       width: 5,
@@ -67,6 +61,7 @@ const RoomImages = () => {
     setCurrentImage(0);
     setViewerIsOpen(false);
   };
+
   return (
     <div className="room-images">
       <Container>

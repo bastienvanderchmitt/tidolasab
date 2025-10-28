@@ -1,12 +1,12 @@
 {
-  "common" : {
+  "common": {
     "booking": "Réserver",
     "cancel": "Annuler",
     "days": "jours",
     "phone": "Téléphone",
     "error": "Une erreur est survenue."
   },
-  "menu" : {
+  "menu": {
     "home": "Accueil",
     "booking": "Réservation",
     "history": "Histoire",
@@ -16,7 +16,7 @@
   },
   "pages": {
     "home": {
-      "title": "Gîte de Rêve à Marie-Galante",
+      "title": "Gîte de rêve à Marie-Galante",
       "description": "Havre balnéaire de chaleur, de tranquillité et de convivialité"
     },
     "booking": {
@@ -48,7 +48,7 @@
       "description": "Désolé mais nous n'avons pas trouvé la page que vous recherchez. Elle a peut-être été déplacée ou supprimée."
     }
   },
-  "preview" : {
+  "preview": {
     "welcome": "BIENVENUE A TI' DOLA SAB",
     "title": "Dans l’une des plus authentiques et des plus belles îles de la Guadeloupe, au coeur des Caraïbes",
     "subtitle": "Venez prendre le temps de découvrir les charmes authentiques de Marie-Galante, ses habitants et la culture antillaise.",
@@ -69,7 +69,7 @@
     "description": "Notre case Ti’ Dola Sab est une habitation indépendante toute en bois, de construction récente avec tout le confort nécessaire.",
     "pmr": "Accessibilité partielle aux personnes à mobilité réduite du fait que nous disposons de 3 marches pour accéder à la terrasse et que la porte de la salle de bain est de 69 cm de large."
   },
-  "assets" : {
+  "assets": {
     "people": "2 personnes",
     "pool": "Piscine",
     "clim": "Climatisation",

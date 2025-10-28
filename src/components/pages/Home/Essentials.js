@@ -24,7 +24,9 @@ const Essential = ({ title, text, icon }) => {
           <FontAwesomeIcon icon={icon} />
         </Col>
         <Col>
-          <h5>{title}</h5>
+          <h5 className="text-primary-emphasis text-decoration-underline">
+            {title}
+          </h5>
           <p>{text}</p>
         </Col>
       </Row>
