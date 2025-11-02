@@ -297,6 +297,7 @@
   },
   "footer": {
     "address": "Adresse",
-    "social": "Réseaux sociaux"
+    "social": "Réseaux sociaux",
+    "cgu": "CGU"
   }
 }
