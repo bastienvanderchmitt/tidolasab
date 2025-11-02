@@ -298,6 +298,7 @@
   },
   "footer": {
     "address": "Address",
-    "social": "Social networks"
+    "social": "Social networks",
+    "cgu": "Terms of use"
   }
 }

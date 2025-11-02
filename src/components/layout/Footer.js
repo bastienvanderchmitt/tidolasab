@@ -56,7 +56,7 @@ const Footer = () => {
           </Col>
           <Col className="py-4" xs={12} md={6}>
             <a href={cgu} download>
-              Conditions d'utilisation
+              {t("footer.cgu")}
             </a>
           </Col>
           {/*<Col className="footer-col">*/}
