@@ -1,4 +1,4 @@
-import Essentials from "./Home/Essentials";
+// import Essentials from "./Home/Essentials";
 import { Col, Container, Row } from "reactstrap";
 import Room from "./Booking/Room";
 import Sidebar from "./Booking/Sidebar";
@@ -18,7 +18,7 @@ const Booking = () => {
         </Row>
       </Container>
       <RoomImages />
-      <Essentials fromBooking />
+      {/*<Essentials fromBooking />*/}
     </>
   );
 };

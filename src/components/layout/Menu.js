@@ -13,7 +13,11 @@ import logo from "../../assets/img/logo_final.png";
 import logoFull from "../../assets/img/logo_full.png";
 import CustomNavItem from "./Menu/CustomNavItem";
 import { useCallback, useEffect, useMemo } from "react";
-import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faCircleXmark,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useOutlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -195,7 +199,16 @@ const Menu = () => {
               <div className="titles">
                 <div className="header-subtitle">{t(params.subtitle)}</div>
                 <h1 className="header-title">{t(params.title)}</h1>
-                <div className="header-description">
+                <div className="mt-2 mb-3">
+                  {[1, 2, 3, 4].map((_, key) => (
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      className="fa-regular header-stars"
+                      key={key}
+                    />
+                  ))}
+                </div>
+                <div className="header-description title-paradise">
                   {t(params.description)}
                 </div>
               </div>

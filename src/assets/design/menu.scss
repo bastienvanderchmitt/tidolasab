@@ -35,6 +35,51 @@
   &.big {
     .header {
       height: 800px;
+
+      .header-subtitle,
+      .header-description {
+        font-family: Jost, sans-serif;
+        font-size: 18px;
+        font-weight:400;
+        max-width: 624px;
+      }
+
+      .header-title {
+        font-family: Marcellus, serif;
+        font-size: 80px;
+        font-style: normal;
+        font-weight: 400;
+        max-width: 624px;
+        margin-top: -275px;
+      }
+
+      .header-stars {
+        color: $gold;
+        margin: 0 4px;
+        display: inline-block;
+      }
+
+      .title-paradise {
+        /* Ta couleur de base avec des variantes lagon */
+        background: linear-gradient(
+                        to right,
+                        #cce9ea,
+                        rgba(129, 225, 232, 0.52),
+                        rgba(217, 239, 241, 0.7),
+                        #cce9ea
+        );
+        background-size: 200% auto;
+
+        /* On applique le dégradé au texte uniquement */
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        /* Animation de mouvement */
+        animation: shine 6s linear infinite;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
     }
   }
 
@@ -51,8 +96,9 @@
   .header {
     .header-subtitle,
     .header-description {
-      font-family: Jost, sans-serif;
-      font-size: 18px;
+      //font-family: Jost, sans-serif;
+      font-family: Marcellus, serif;
+      font-size: 20px;
       font-weight:400;
       max-width: 600px;
     }
@@ -63,6 +109,10 @@
       font-style: normal;
       font-weight: 400;
       max-width: 600px;
+    }
+
+    .header-stars {
+      display: none;
     }
   }
 
@@ -156,5 +206,12 @@
         color: $primary;
       }
     }
+  }
+}
+
+/* L'animation qui fait bouger les reflets */
+@keyframes shine {
+  to {
+    background-position: 200% center;
   }
 }

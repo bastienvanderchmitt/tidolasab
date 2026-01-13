@@ -557,7 +557,7 @@ const Bookings = () => {
             <Col>
               <h4 className="text-danger">
                 <FontAwesomeIcon icon={faBan} className="me-2" />
-                Annulés
+                Annulées
               </h4>
               <AdminBooking
                 bookings={canceledBookings}
