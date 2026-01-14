@@ -17,6 +17,12 @@ import {
 import { Formik } from "formik";
 import Field from "../../../formik/Field";
 import { bookingTypes } from "../../../../helpers/bookingTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faEdit,
+  faPlusSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
 const EditBookingModal = ({ isOpen, close, booking }) => {
   const initialValues = useMemo(() => {
@@ -74,7 +80,18 @@ const EditBookingModal = ({ isOpen, close, booking }) => {
         {({ isSubmitting, handleSubmit, setFieldValue, values }) => (
           <Form onSubmit={handleSubmit}>
             <ModalHeader>
-              {booking ? "Edition" : "Ajout"} réservation
+              {booking ? (
+                <span>
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
+                  Edition
+                </span>
+              ) : (
+                <span>
+                  <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
+                  Ajout
+                </span>
+              )}{" "}
+              réservation
             </ModalHeader>
             <ModalBody>
               <Row>
@@ -156,13 +173,13 @@ const EditBookingModal = ({ isOpen, close, booking }) => {
             <ModalFooter className="d-flex justify-content-between">
               <Button
                 type="button"
-                color="tertiary"
                 outline
                 onClick={() => close({ action: "cancel" })}
               >
                 Annuler
               </Button>
               <Button type="submit" color="secondary" disabled={isSubmitting}>
+                <FontAwesomeIcon icon={faCheck} className="me-2" />
                 Confirmer
               </Button>
             </ModalFooter>

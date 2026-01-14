@@ -19,6 +19,7 @@ import {
   faCheck,
   faCircleCheck,
   faCirclePlay,
+  faEdit,
   faMessage,
   faPause,
   faPauseCircle,
@@ -40,6 +41,7 @@ import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
 import BreadCrumb from "../../common/BreadCrumb";
 import moment from "moment-timezone";
 import { bookingTypes } from "../../../helpers/bookingTypes";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const [isOpenAdd, toggleAdd] = useToggle();
@@ -161,6 +163,7 @@ const Bookings = () => {
   const AdminBooking = ({ bookings, totalWithoutCanceled, withHistoric }) => {
     const [maxLength, setMaxLength] = useState(DEFAULT_MAX_LENGTH);
 
+    const navigate = useNavigate();
     const dialog = useDialog();
     const modal = useModalDialog();
 
@@ -326,10 +329,7 @@ const Bookings = () => {
               key={i}
               className="text-center"
               style={{ cursor: "pointer" }}
-              onDoubleClick={async () => {
-                const result = await dialog(<EditBookingModal booking={b} />);
-                if (result.action === "success") reload();
-              }}
+              onDoubleClick={() => navigate("/admin/client/" + b.id_client)}
             >
               <td>{b.nom_client}</td>
               <td>
@@ -344,6 +344,19 @@ const Bookings = () => {
               <td>{b.nombre_nuits}</td>
               <td>{b.prix_total} €</td>
               <td>
+                <Button
+                  id={"btn-edit-booking-" + b.id}
+                  onClick={async () => {
+                    const result = await dialog(
+                      <EditBookingModal booking={b} />,
+                    );
+                    if (result.action === "success") reload();
+                  }}
+                  color="primary"
+                  className="me-2 p-0 pe-1 ps-1"
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
                 {b.statut !== "en attente" ? (
                   <ActionBtn
                     booking={b}
@@ -467,7 +480,7 @@ const Bookings = () => {
       <BreadCrumb
         button={
           <>
-            <Button onClick={toggleAdd} className="gold-btn">
+            <Button onClick={toggleAdd} className="gold-btn zoom-effect">
               <FontAwesomeIcon icon={faPlus} />
               <span className="d-none d-lg-inline-block ms-2">Ajouter</span>
             </Button>

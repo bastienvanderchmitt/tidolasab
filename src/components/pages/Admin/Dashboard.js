@@ -31,7 +31,11 @@ const Dashboard = () => {
 
   const CardStat = ({ color, icon, number, alias, text }) => {
     return (
-      <Card className={"border-" + color + "-subtle border-2 card-client"}>
+      <Card
+        className={
+          "border-" + color + "-subtle border-2 card-client zoom-effect"
+        }
+      >
         <CardBody>
           <Row>
             <Col className="col-auto">
@@ -173,7 +177,7 @@ const Dashboard = () => {
                   </Row>
                   {statistics.reservations_a_venir?.map((booking, i) => (
                     <Row
-                      className="bg-secondary-subtle p-2 pt-3 m-2 rounded next-booking"
+                      className="bg-secondary-subtle p-2 pt-3 m-2 rounded next-booking zoom-effect"
                       onClick={() =>
                         navigate("/admin/client/" + booking.id_client)
                       }
@@ -221,14 +225,14 @@ const Dashboard = () => {
               </Card>
             </Col>
             <Col className="mt-4 mt-lg-0 d-flex">
-              <Card className="flex-fill">
+              <Card className="flex-fill zoom-effect">
                 <CardBody>
                   <DatePicker viewOnly />
                 </CardBody>
               </Card>
             </Col>
           </Row>
-          <Row className="my-3 p-2">
+          <Row className="my-3 p-2 zoom-effect">
             <Col>
               <Card>
                 <CardBody>
@@ -250,7 +254,7 @@ const Dashboard = () => {
               </Card>
             </Col>
           </Row>
-          <Row className="my-3 p-2">
+          <Row className="my-3 p-2 zoom-effect">
             <Col>
               <StackedChart
                 data={{
@@ -273,7 +277,7 @@ const Dashboard = () => {
               </Col>
             ))}
           </Row>
-          <Row className="my-3 p-2">
+          <Row className="my-3 p-2 zoom-effect">
             <Col>
               <AreaChart
                 data={{

@@ -14,6 +14,12 @@ import {
 } from "reactstrap";
 import { Formik } from "formik";
 import Field from "../../../formik/Field";
+import {
+  faCheck,
+  faEdit,
+  faPlusSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ClientModal = ({ isOpen, close, client }) => {
   const initialValues = useMemo(() => {
@@ -65,7 +71,20 @@ const ClientModal = ({ isOpen, close, client }) => {
       >
         {({ isSubmitting, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
-            <ModalHeader>{client ? "Edition" : "Ajout"} client</ModalHeader>
+            <ModalHeader>
+              {client ? (
+                <span>
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
+                  Edition
+                </span>
+              ) : (
+                <span>
+                  <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
+                  Ajout
+                </span>
+              )}{" "}
+              client
+            </ModalHeader>
             <ModalBody>
               <Row>
                 <Col className="form-group mb-4">
@@ -97,13 +116,13 @@ const ClientModal = ({ isOpen, close, client }) => {
             <ModalFooter className="d-flex justify-content-between">
               <Button
                 type="button"
-                color="tertiary"
                 outline
                 onClick={() => close({ action: "cancel" })}
               >
                 Annuler
               </Button>
               <Button type="submit" color="secondary" disabled={isSubmitting}>
+                <FontAwesomeIcon icon={faCheck} className="me-2" />
                 Confirmer
               </Button>
             </ModalFooter>

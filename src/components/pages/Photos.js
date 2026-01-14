@@ -45,6 +45,8 @@ import room_2 from "../../assets/img/room/room_2.jpeg";
 import room_4 from "../../assets/img/room/room_4.jpeg";
 import room_5 from "../../assets/img/room/room_5.jpeg";
 import room_7 from "../../assets/img/room/room_7.jpeg";
+import location_45 from "../../assets/img/locations/location_45.jpeg";
+import location_46 from "../../assets/img/locations/location_46.jpeg";
 
 const Photos = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -255,6 +257,16 @@ const Photos = () => {
     },
     {
       src: location_38,
+      width: 2,
+      height: 2,
+    },
+    {
+      src: location_45,
+      width: 2,
+      height: 2,
+    },
+    {
+      src: location_46,
       width: 2,
       height: 2,
     },

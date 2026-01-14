@@ -19,6 +19,7 @@ import {
   faMoon,
   faPen,
   faPhone,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import ClientModal from "./Modals/ClientModal";
 import useDialog from "../../../hooks/useDialog";
@@ -67,7 +68,11 @@ const Client = () => {
 
   const CardClient = ({ color, icon, number, alias, text }) => {
     return (
-      <Card className={"border-" + color + "-subtle border-2 card-client"}>
+      <Card
+        className={
+          "border-" + color + "-subtle border-2 card-client zoom-effect"
+        }
+      >
         <CardBody>
           <Row>
             <Col className="col-auto">
@@ -183,7 +188,7 @@ const Client = () => {
         </div>
         <CardBody>
           <Row
-            className="p-2"
+            className="p-2 zoom-effect"
             style={{ borderBottom: "1px solid rgb(229, 231, 235)" }}
           >
             <Col xs={12} lg={4} className="p-2">
@@ -244,23 +249,9 @@ const Client = () => {
   };
 
   const RowPayment = ({ payment }) => {
-    // const color = useMemo(
-    //   () =>
-    //     payment.moyen_paiement === "virement"
-    //       ? "success"
-    //       : payment.moyen_paiement === "chèque"
-    //         ? "secondary"
-    //         : "primary",
-    //   [payment.moyen_paiement],
-    // );
-    //
-    // const type =
-    //   payment.moyen_paiement.charAt(0).toUpperCase() +
-    //   payment.moyen_paiement.slice(1);
-
     return (
       <Row
-        className={"row-payment g-0 p-3"}
+        className={"row-payment g-0 p-3 zoom-effect"}
         style={{ borderBottom: "1px solid rgb(229, 231, 235)" }}
       >
         <Col>
@@ -338,7 +329,7 @@ const Client = () => {
       <Row className="my-3">
         {/*Card User*/}
         <Col lg={4}>
-          <Card className="card-user">
+          <Card className="card-user zoom-effect">
             <div className="image">
               <img alt="..." src="https://picsum.photos/700/400" />
             </div>
@@ -358,7 +349,7 @@ const Client = () => {
 
         {/*Card Address*/}
         <Col lg={8}>
-          <Card className="card-user">
+          <Card className="card-user zoom-effect">
             <CardBody style={{ minHeight: "297px" }}>
               <Row>
                 <Col>
@@ -464,10 +455,20 @@ const Client = () => {
         </Col>
         <Col xs={12} lg={5}>
           <Card className="card-client rounded border-0">
-            <div className="bg-secondary-subtle p-3 rounded">
+            <div className="bg-secondary-subtle p-3 rounded-top d-flex justify-content-between">
               <h5 className="text-primary" style={{ paddingBottom: "8px" }}>
                 Paiements
               </h5>
+              <Button
+                onClick={async () => {
+                  const result = await dialog(<PaymentModal client={client} />);
+                  if (result.action === "success") reload();
+                }}
+                className="gold-btn"
+              >
+                <FontAwesomeIcon icon={faPlus} />
+                <span className="d-none d-lg-inline-block ms-2">Ajouter</span>
+              </Button>
             </div>
             <CardBody className="p-0">
               {client.payments?.length > 0 ? (

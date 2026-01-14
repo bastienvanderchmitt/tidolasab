@@ -21,19 +21,29 @@ import { getBookings } from "../../../../api/booking";
 import { paymentTypes } from "../../../../helpers/paymentTypes";
 import SearchSelect from "../../../common/SearchSelect";
 import { dateFormat } from "../../../../helpers/dates";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faEdit,
+  faPlusSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
-const PaymentModal = ({ isOpen, close, payment }) => {
+const PaymentModal = ({ isOpen, close, payment, client }) => {
   const [{ bookings }] = useApi(getBookings);
 
   const initialValues = useMemo(() => {
     return {
       deposit: payment ? payment.montant_paiement : "",
       date: payment ? payment.date_paiement : "",
-      booking: payment ? payment.id_reservation : "",
+      booking: payment
+        ? payment.id_reservation
+        : client
+          ? client.bookings[0]?.id
+          : "",
       type: payment ? payment.moyen_paiement : "virement",
       note: payment ? payment.note : "",
     };
-  }, [payment]);
+  }, [payment, client]);
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
@@ -73,7 +83,20 @@ const PaymentModal = ({ isOpen, close, payment }) => {
       >
         {({ isSubmitting, handleSubmit, values, setFieldValue }) => (
           <Form onSubmit={handleSubmit}>
-            <ModalHeader>{payment ? "Edition" : "Ajout"} paiement</ModalHeader>
+            <ModalHeader>
+              {payment ? (
+                <span>
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
+                  Edition
+                </span>
+              ) : (
+                <span>
+                  <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
+                  Ajout
+                </span>
+              )}{" "}
+              paiement
+            </ModalHeader>
             <ModalBody>
               <Row className="mt-3 mb-4">
                 <Col>
@@ -150,13 +173,13 @@ const PaymentModal = ({ isOpen, close, payment }) => {
             <ModalFooter className="d-flex justify-content-between">
               <Button
                 type="button"
-                color="tertiary"
                 outline
                 onClick={() => close({ action: "cancel" })}
               >
                 Annuler
               </Button>
               <Button type="submit" color="secondary" disabled={isSubmitting}>
+                <FontAwesomeIcon icon={faCheck} className="me-2" />
                 Confirmer
               </Button>
             </ModalFooter>

@@ -19,6 +19,7 @@ import TypeBadge from "./TypeBadge";
 import useModalDialog from "../../../hooks/useModalDialog";
 import { DEFAULT_MAX_LENGTH } from "../../../helpers/env";
 import BreadCrumb from "../../common/BreadCrumb";
+import { useNavigate } from "react-router-dom";
 
 const Payments = () => {
   const [reloading, reload] = useToggle(false);
@@ -36,7 +37,7 @@ const Payments = () => {
               const result = await dialog(<PaymentModal />);
               if (result.action === "success") reload();
             }}
-            className="gold-btn"
+            className="gold-btn zoom-effect"
           >
             <FontAwesomeIcon icon={faPlus} />
             <span className="d-none d-lg-inline-block ms-2">Ajouter</span>
@@ -58,6 +59,7 @@ const AdminPayments = ({ payments, reload }) => {
   const dialog = useDialog();
   const confirm = useConfirmDialog();
   const modal = useModalDialog();
+  const navigate = useNavigate();
 
   const total = useMemo(
     () =>
@@ -193,7 +195,7 @@ const AdminPayments = ({ payments, reload }) => {
           <tr
             key={i}
             className="text-center"
-            onDoubleClick={() => updatePayment(p)}
+            onDoubleClick={() => navigate("/admin/client/" + p.id_client)}
             style={{ cursor: "pointer" }}
           >
             <td>
