@@ -17,7 +17,7 @@ try {
     if ($to) {
         if ($client->language === 'fr') {
             $subject = 'Tidolasab - Réservation annulée';
-            $message = "<h4>Bonjour,</h4><p>Malheureusement, votre réservation viens d'être annulée.</p><p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
+            $message = "<h4>Bonjour,</h4><p>Malheureusement, votre réservation vient d'être annulée.</p><p>Pour tout renseignement supplémentaire, n'hésitez pas à nous contacter au <a href=\"tel:0690648904\">06 90 64 89 04</a> ou à <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
                         <p>Cordialement,</p>
                         <p>Ti' Dola Sab</p>";
         } else {

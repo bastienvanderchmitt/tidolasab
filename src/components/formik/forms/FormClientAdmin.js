@@ -5,6 +5,8 @@ import { Button, Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 import { Formik } from "formik";
 import { saveClient } from "../../../api/client";
 import Field from "../Field";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FormClientAdmin = ({ client }) => {
   const initialValues = useMemo(() => {
@@ -80,6 +82,7 @@ const FormClientAdmin = ({ client }) => {
             </CardBody>
             <CardFooter className="d-flex justify-content-between">
               <Button type="submit" color="secondary" disabled={isSubmitting}>
+                <FontAwesomeIcon icon={faCheck} className="me-2" />
                 Confirmer
               </Button>
             </CardFooter>

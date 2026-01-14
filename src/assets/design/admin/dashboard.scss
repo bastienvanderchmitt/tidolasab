@@ -339,3 +339,15 @@ table {
     color: #4182a9;
   }
 }
+
+.zoom-effect {
+  /* Définit la durée et la fluidité de l'animation */
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom-effect:hover {
+  /* Agrandit l'élément (1.1 = 110%) */
+  transform: scale(1.02);
+  /* Optionnel : place l'élément au-dessus des autres s'ils se chevauchent */
+  z-index: 10;
+}

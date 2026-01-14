@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ConfirmDialog = ({ isOpen, close, title, content }) => {
   return (
@@ -16,6 +18,7 @@ const ConfirmDialog = ({ isOpen, close, title, content }) => {
           Annuler
         </Button>
         <Button color="secondary" onClick={() => close(true)}>
+          <FontAwesomeIcon icon={faCheck} className="me-2" />
           Confirmer
         </Button>
       </ModalFooter>

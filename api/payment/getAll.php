@@ -6,7 +6,7 @@ global $connexion;
 
 try {
 
-    $result = ['payments' => $connexion->safeFetchAll("SELECT c.nom, c.prenom, p.*, r.date_arrivee, r.date_depart, 
+    $result = ['payments' => $connexion->safeFetchAll("SELECT c.nom, c.prenom, p.*, r.date_arrivee, r.date_depart, rc.id_client,
        (SELECT GROUP_CONCAT(DISTINCT r.type)
         FROM reservations r
                  LEFT JOIN reservations_clients rc ON r.id = rc.id_reservation
