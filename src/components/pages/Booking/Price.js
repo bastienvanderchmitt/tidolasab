@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  priceHightSeason,
-  priceLowSeason,
+  // priceHighSeason,
+  // priceLowSeason,
   touristTax,
 } from "../../../helpers/env";
 import { useBookingContext } from "../../../contexts/BookingContext";
@@ -19,6 +19,8 @@ const Price = ({ withParticipants, isAdmin, reelTotal }) => {
     days,
     daysHighSeason,
     daysLowSeason,
+    priceLowSeason,
+    priceHighSeason,
     discount,
     selectedDates,
     adults,
@@ -70,11 +72,11 @@ const Price = ({ withParticipants, isAdmin, reelTotal }) => {
           {daysHighSeason ? (
             <div className="content-total">
               <span className="title-sub-total">
-                {t("price.high_season_price")} ({priceHightSeason} €) x{" "}
+                {t("price.high_season_price")} ({priceHighSeason} €) x{" "}
                 {daysHighSeason} {t("common.days")} :
               </span>
               <span className="sub-total">
-                {daysHighSeason * priceHightSeason + " €"}
+                {daysHighSeason * priceHighSeason + " €"}
               </span>
             </div>
           ) : null}
