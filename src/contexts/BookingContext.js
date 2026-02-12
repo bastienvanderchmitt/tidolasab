@@ -1,7 +1,8 @@
 import React, { useState, createContext, useEffect, useMemo } from "react";
 import useContextFactory from "../hooks/useContextFactory";
 import { getDaysHighSeason, getDaysLowSeason } from "../helpers/dates";
-import { priceHightSeason, priceLowSeason, touristTax } from "../helpers/env";
+import { touristTax } from "../helpers/env";
+import { usePriceHighSeason, usePriceLowSeason } from "../hooks/usePrices";
 const BookingContext = createContext({});
 
 export const useBookingContext = () => {
@@ -45,20 +46,23 @@ const BookingContextProvider = ({ children }) => {
       : null;
   }, [selectedDates]);
 
+  const priceLowSeason = usePriceLowSeason(checkIn);
+  const priceHighSeason = usePriceHighSeason(checkIn);
+
   const discount = useMemo(() => {
     const freeHalfDays = Math.floor(days / 7);
     return Math.round(
       freeHalfDays *
-        ((daysHighSeason * priceHightSeason + daysLowSeason * priceLowSeason) /
+        ((daysHighSeason * priceHighSeason + daysLowSeason * priceLowSeason) /
           days /
           2),
     );
-  }, [days, daysHighSeason, daysLowSeason]);
+  }, [days, daysHighSeason, daysLowSeason, priceLowSeason, priceHighSeason]);
 
   useEffect(() => {
     if (days) {
       setTotal(
-        daysHighSeason * priceHightSeason +
+        daysHighSeason * priceHighSeason +
           daysLowSeason * priceLowSeason +
           days * adults * touristTax -
           discount,
@@ -66,7 +70,16 @@ const BookingContextProvider = ({ children }) => {
     } else {
       setTotal(null);
     }
-  }, [days, adults, daysHighSeason, daysLowSeason, discount, setTotal]);
+  }, [
+    days,
+    adults,
+    daysHighSeason,
+    daysLowSeason,
+    priceLowSeason,
+    priceHighSeason,
+    discount,
+    setTotal,
+  ]);
 
   return (
     <BookingContext.Provider
@@ -86,6 +99,8 @@ const BookingContextProvider = ({ children }) => {
         setBooked,
         daysHighSeason,
         daysLowSeason,
+        priceLowSeason,
+        priceHighSeason,
         discount,
         type,
         setType,

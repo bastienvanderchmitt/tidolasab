@@ -10,13 +10,20 @@ import FormClient from "./FormClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Price from "../../pages/Booking/Price";
-import { priceLowSeason } from "../../../helpers/env";
+// import { priceLowSeason } from "../../../helpers/env";
 import { useTranslation } from "react-i18next";
 import { bookingTypes } from "../../../helpers/bookingTypes";
 
 const FormBooking = ({ callbackAdmin }) => {
-  const { checkIn, checkOut, setAdults, setChild, type, setType } =
-    useBookingContext();
+  const {
+    checkIn,
+    checkOut,
+    priceLowSeason,
+    setAdults,
+    setChild,
+    type,
+    setType,
+  } = useBookingContext();
   const [isOpen, toggle] = useToggle();
 
   const { t } = useTranslation();
