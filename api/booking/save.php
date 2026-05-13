@@ -92,7 +92,7 @@ try {
                         <p>For any additional information, please feel free to contact us at <a href=\"tel:0690648904\">06 90 64 89 04</a> or at <a href=\"mailto:tidolasab@gmail.com\">tidolasab@gmail.com</a>.</p>
                         <p>Best regards,</p>
                         <p>Ti' Dola Sab</p>";
-        if (!$data->isAdmin)
+        if (!$data->isAdmin || $data->type === "Classique")
             sendEmail($to, $subject, $message, true, true);
 
         // Send email to admin
@@ -110,7 +110,8 @@ try {
                         <li>Téléphone : $data->phone</li>
                         <li>Adresse : $address</li>
                     </ul>";
-        if (!$data->isAdmin)
+//        if (!$data->isAdmin)
+        if ($data->type !== 'Fermeture')
             sendEmail($to, $subject, $message);
 
         $connexion->commit();
