@@ -4,7 +4,7 @@ import { Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeartCircleCheck, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import Slider from "react-slick";
+import { Slider } from "../../../helpers/cjsComponents";
 
 const Reviews = () => {
   const { t } = useTranslation();

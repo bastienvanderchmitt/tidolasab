@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "reactstrap";
-import Slider from "react-slick";
+import { Slider } from "../../../helpers/cjsComponents";
 import palm_tree from "../../../assets/img/icons/palm_tree.png";
 import caroussel_1 from "../../../assets/img/caroussel/caroussel_1.jpeg";
 import caroussel_2 from "../../../assets/img/caroussel/caroussel_2.jpeg";

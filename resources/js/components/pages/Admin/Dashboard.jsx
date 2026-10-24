@@ -1,4 +1,4 @@
-import ReactApexChart from "react-apexcharts";
+import { Chart as ReactApexChart } from "../../../helpers/cjsComponents";
 import useApi from "../../../hooks/useApi";
 import { getStats } from "../../../api/statistics";
 import { Card, CardBody, Col, Row } from "reactstrap";
