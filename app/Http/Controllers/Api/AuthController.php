@@ -42,6 +42,22 @@ class AuthController extends Controller
         return response()->json(['user' => $request->user()]);
     }
 
+    public function index(): JsonResponse
+    {
+        return response()->json(['users' => User::orderBy('name')->get()]);
+    }
+
+    public function destroy(Request $request, User $user): JsonResponse
+    {
+        if ($user->is($request->user())) {
+            throw new BusinessException(__('errors.cannot_delete_self'));
+        }
+
+        $user->delete();
+
+        return response()->json(['success' => true]);
+    }
+
     public function store(StoreUserRequest $request): JsonResponse
     {
         $user = User::create($request->validated());

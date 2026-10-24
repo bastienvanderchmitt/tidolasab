@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\BookingStatus;
 use App\Mail\ContactMessage;
 use App\Mail\PaymentReminder;
 use App\Models\Booking;
@@ -56,20 +55,4 @@ it('rappelle le solde aux clients qui arrivent dans 14 jours', function () {
 
     Mail::assertSent(PaymentReminder::class, 1);
     Mail::assertSent(PaymentReminder::class, fn ($mail) => $mail->hasTo('due@example.com') && $mail->balance === 171.0);
-});
-
-it('calcule les statistiques du tableau de bord', function () {
-    Carbon::setTestNow('2026-10-24');
-    Booking::factory()->between('2026-11-01', '2026-11-11')->validated()->withClient()->create(['prix_total' => 1000]);
-    Booking::factory()->between('2026-12-01', '2026-12-04')->state(['statut' => BookingStatus::Cancelled])->create();
-
-    $stats = $this->actingAs(admin())->getJson('/api/statistics')->assertOk()->json('statistics');
-
-    expect($stats)
-        ->total_reservations->toBe(1)
-        ->reservations_a_venir->toHaveCount(1)
-        ->and(collect($stats['reservations_par_statut'])->pluck('total', 'statut')->all())
-        ->toBe(['annulée' => 1, 'en attente' => 0, 'validée' => 1])
-        // 10 nuits réservées sur les 181 nuits du 24/10/2026 au 24/04/2027
-        ->and($stats['pourcentage_remplissage'])->toEqual(round(10 / 182 * 100, 2));
 });

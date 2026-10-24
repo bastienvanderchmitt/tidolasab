@@ -21,8 +21,15 @@ it('refuse les routes d’administration sans session', function (string $method
     ['POST', '/api/payments'],
     ['PUT', '/api/payments/1'],
     ['DELETE', '/api/payments/1'],
-    ['GET', '/api/statistics'],
+    ['POST', '/api/payments/1/confirm'],
+    ['GET', '/api/bookings/1'],
+    ['GET', '/api/dashboard'],
+    ['GET', '/api/revenue'],
+    ['GET', '/api/settings'],
+    ['PUT', '/api/settings'],
+    ['GET', '/api/users'],
     ['POST', '/api/users'],
+    ['DELETE', '/api/users/1'],
     ['GET', '/api/user'],
 ]);
 

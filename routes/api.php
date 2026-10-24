@@ -4,9 +4,10 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PricingController;
-use App\Http\Controllers\Api\StatisticsController;
+use App\Http\Controllers\Api\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 // Site public
@@ -21,9 +22,12 @@ Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('users', [AuthController::class, 'index']);
     Route::post('users', [AuthController::class, 'store']);
+    Route::delete('users/{user}', [AuthController::class, 'destroy']);
 
     Route::get('bookings', [BookingController::class, 'index']);
+    Route::get('bookings/{booking}', [BookingController::class, 'show']);
     Route::put('bookings/{booking}', [BookingController::class, 'update']);
     Route::delete('bookings/{booking}', [BookingController::class, 'destroy']);
     Route::post('bookings/{booking}/validate', [BookingController::class, 'validateBooking']);
@@ -39,6 +43,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('payments', [PaymentController::class, 'store']);
     Route::put('payments/{payment}', [PaymentController::class, 'update']);
     Route::delete('payments/{payment}', [PaymentController::class, 'destroy']);
+    Route::post('payments/{payment}/confirm', [PaymentController::class, 'confirm']);
 
-    Route::get('statistics', [StatisticsController::class, 'index']);
+    Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::get('revenue', [DashboardController::class, 'revenue']);
+
+    Route::get('settings', [SettingsController::class, 'show']);
+    Route::put('settings', [SettingsController::class, 'update']);
 });

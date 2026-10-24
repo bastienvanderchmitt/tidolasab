@@ -7,6 +7,8 @@ use Carbon\CarbonPeriod;
 
 class PricingService
 {
+    public function __construct(private readonly BookingSettings $settings) {}
+
     /**
      * Prix d'un séjour du soir de $checkIn au matin de $checkOut.
      */
@@ -16,7 +18,7 @@ class PricingService
         $departure = CarbonImmutable::parse($checkOut)->startOfDay();
 
         [$lowPrice, $highPrice] = $this->ratesFor($arrival->year);
-        $lowMonths = config('tidolasab.low_season_months');
+        $lowMonths = array_map('intval', $this->settings->get('low_season_months'));
 
         $nights = $lowNights = 0;
         foreach (CarbonPeriod::create($arrival, $departure->subDay()) as $night) {
@@ -28,11 +30,12 @@ class PricingService
         $highNights = $nights - $lowNights;
 
         $accommodation = $highNights * $highPrice + $lowNights * $lowPrice;
-        $touristTax = $nights * $adults * config('tidolasab.tourist_tax');
+        $touristTax = $nights * $adults * (float) $this->settings->get('tourist_tax');
 
-        // Une demi-nuit (au prix moyen du séjour) offerte par tranche de 7 nuits
-        $discount = $nights > 0
-            ? round(intdiv($nights, config('tidolasab.discount_nights_threshold')) * ($accommodation / $nights / 2))
+        // Une demi-nuit (au prix moyen du séjour) offerte par tranche de N nuits, 0 = pas de remise
+        $threshold = (int) $this->settings->get('discount_nights_threshold');
+        $discount = $nights > 0 && $threshold > 0
+            ? round(intdiv($nights, $threshold) * ($accommodation / $nights / 2))
             : 0.0;
 
         return new Quote(
@@ -52,7 +55,7 @@ class PricingService
      */
     public function ratesFor(int $year): array
     {
-        $rate = collect(config('tidolasab.rates'))
+        $rate = collect($this->settings->get('rates'))
             ->sortBy('from_year')
             ->last(fn (array $rate) => $rate['from_year'] <= $year);
 

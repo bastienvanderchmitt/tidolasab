@@ -30,7 +30,9 @@ describe("computeQuote", () => {
   });
 
   it("répartit un séjour sur les deux saisons", () => {
-    expect(computeQuote(pricing, "2026-10-30", "2026-11-02", 1).total).toBe(316);
+    expect(computeQuote(pricing, "2026-10-30", "2026-11-02", 1).total).toBe(
+      316,
+    );
   });
 
   it("offre une demi-nuit par tranche de 7 nuits", () => {
@@ -44,10 +46,19 @@ describe("computeQuote", () => {
   });
 
   it("applique les tarifs selon l'année d'arrivée", () => {
-    expect(computeQuote(pricing, "2027-02-01", "2027-02-03", 1).total).toBe(234);
+    expect(computeQuote(pricing, "2027-02-01", "2027-02-03", 1).total).toBe(
+      234,
+    );
     expect(
       computeQuote(pricing, "2026-12-30", "2027-01-02", 1).highSeasonPrice,
     ).toBe(110);
+  });
+
+  it("désactive la remise avec un seuil à 0", () => {
+    const noDiscount = { ...pricing, discount_nights_threshold: 0 };
+    expect(
+      computeQuote(noDiscount, "2026-09-01", "2026-09-08", 1).discount,
+    ).toBe(0);
   });
 
   it("ne calcule rien sans dates", () => {

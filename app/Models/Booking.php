@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Table('reservations')]
-#[Fillable(['date_arrivee', 'date_depart', 'nombre_nuits', 'adultes', 'enfants', 'prix_total', 'statut', 'type', 'note'])]
+#[Fillable(['date_arrivee', 'date_depart', 'nombre_nuits', 'adultes', 'enfants', 'prix_total', 'taxe_sejour', 'statut', 'type', 'note'])]
 class Booking extends Model
 {
     use HasFactory;
@@ -32,6 +32,7 @@ class Booking extends Model
             'adultes' => 'integer',
             'enfants' => 'integer',
             'prix_total' => 'decimal:2',
+            'taxe_sejour' => 'decimal:2',
             'statut' => BookingStatus::class,
             'type' => BookingType::class,
         ];
@@ -58,8 +59,8 @@ class Booking extends Model
      */
     public function scopeOverlapping(Builder $query, string $checkIn, string $checkOut): void
     {
-        $query->where('statut', BookingStatus::Validated)
-            ->where('date_arrivee', '<', $checkOut)
-            ->where('date_depart', '>', $checkIn);
+        $query->where($this->qualifyColumn('statut'), BookingStatus::Validated)
+            ->where($this->qualifyColumn('date_arrivee'), '<', $checkOut)
+            ->where($this->qualifyColumn('date_depart'), '>', $checkIn);
     }
 }

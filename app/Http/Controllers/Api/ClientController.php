@@ -20,6 +20,15 @@ class ClientController extends Controller
                             FROM reservations r
                             JOIN reservations_clients rc ON r.id = rc.id_reservation
                            WHERE rc.id_client = clients.id) as types_reservations')
+            ->selectRaw('(SELECT COUNT(*) FROM reservations_clients rc WHERE rc.id_client = clients.id) as nombre_reservations')
+            ->selectRaw('(SELECT MAX(r.date_arrivee)
+                            FROM reservations r
+                            JOIN reservations_clients rc ON r.id = rc.id_reservation
+                           WHERE rc.id_client = clients.id) as dernier_sejour')
+            ->selectRaw("(SELECT COALESCE(SUM(p.montant_paiement), 0)
+                            FROM paiements p
+                            JOIN reservations_clients rc ON p.id_reservation = rc.id_reservation
+                           WHERE rc.id_client = clients.id AND p.statut = 'confirmé') as total_paye")
             ->orderByDesc('id')
             ->get();
 

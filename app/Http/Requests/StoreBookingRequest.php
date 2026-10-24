@@ -21,6 +21,8 @@ class StoreBookingRequest extends FormRequest
             'children' => ['nullable', 'integer', 'min:0', 'max:20'],
             'type' => [$isAdmin ? 'required' : 'nullable', Rule::enum(BookingType::class)],
             'total' => ['nullable', 'numeric', 'min:0'],
+            'touristTax' => ['nullable', 'numeric', 'min:0'],
+            'clientId' => ['nullable', 'integer', Rule::exists('clients', 'id')],
             'note' => ['nullable', 'string', 'max:5000'],
             'name' => [$clientField, 'string', 'max:255'],
             'firstName' => [$clientField, 'string', 'max:255'],

@@ -33,12 +33,24 @@ class BookingController extends Controller
         $bookings = Booking::query()
             ->select('reservations.*', 'rc.id_client')
             ->selectRaw("CONCAT(c.nom, ' ', c.prenom) as nom_client")
+            ->selectRaw("(SELECT COALESCE(SUM(p.montant_paiement), 0) FROM paiements p WHERE p.id_reservation = reservations.id AND p.statut = 'confirmé') as total_paye")
+            ->selectRaw("(SELECT COALESCE(SUM(p.montant_paiement), 0) FROM paiements p WHERE p.id_reservation = reservations.id AND p.statut = 'brouillon') as total_brouillon")
             ->leftJoin('reservations_clients as rc', 'rc.id_reservation', '=', 'reservations.id')
             ->leftJoin('clients as c', 'c.id', '=', 'rc.id_client')
             ->orderByDesc('date_arrivee')
-            ->get();
+            ->get()
+            ->each(fn (Booking $booking) => $this->appendPaymentTerms($booking));
 
         return response()->json(['bookings' => $bookings]);
+    }
+
+    public function show(Booking $booking): JsonResponse
+    {
+        $booking->load(['clients', 'payments' => fn ($query) => $query->orderBy('date_paiement')]);
+        $booking->clients->each->makeHidden('pivot');
+        $this->appendPaymentTerms($booking);
+
+        return response()->json(['booking' => $booking]);
     }
 
     public function store(StoreBookingRequest $request): JsonResponse
@@ -79,6 +91,15 @@ class BookingController extends Controller
         $this->bookings->setPending($booking);
 
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Montant à demander au client à la validation (acompte ou totalité si l'arrivée est proche).
+     */
+    private function appendPaymentTerms(Booking $booking): void
+    {
+        $booking->setAttribute('acompte_attendu', $this->bookings->amountDueAtBooking($booking));
+        $booking->setAttribute('paiement_total_requis', $this->bookings->requiresFullPayment($booking));
     }
 
     public function destroy(Booking $booking): JsonResponse

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Enums\BookingStatus;
 use App\Enums\BookingType;
+use App\Enums\PaymentMethod;
+use App\Enums\PaymentStatus;
 use App\Exceptions\BusinessException;
 use App\Mail\AdminNewBooking;
 use App\Mail\BookingCancelled;
@@ -20,13 +22,17 @@ use Illuminate\Support\Facades\Mail;
 
 class BookingService
 {
-    public function __construct(private readonly PricingService $pricing) {}
+    public function __construct(
+        private readonly PricingService $pricing,
+        private readonly BookingSettings $settings,
+    ) {}
 
     /**
      * Crée une réservation depuis le site public ou depuis l'admin.
      *
      * Côté public, le type est toujours « Classique » et le prix est recalculé ici.
-     * L'admin peut choisir le type (Booking, AirBnb, Fermeture) et saisir le prix.
+     * L'admin peut choisir le type (Booking, AirBnb, Fermeture), saisir le prix
+     * et rattacher la réservation à un client existant.
      */
     public function create(array $data, bool $isAdmin): Booking
     {
@@ -43,7 +49,7 @@ class BookingService
             default => $quote->total,
         };
 
-        [$booking, $client] = DB::transaction(function () use ($data, $type, $quote, $total) {
+        [$booking, $client] = DB::transaction(function () use ($data, $type, $quote, $total, $isAdmin) {
             $this->ensureDatesAvailable($data['checkIn'], $data['checkOut']);
 
             $booking = Booking::create([
@@ -53,6 +59,8 @@ class BookingService
                 'adultes' => (int) $data['adults'],
                 'enfants' => (int) ($data['children'] ?? 0),
                 'prix_total' => $total,
+                // Côté public, la taxe est toujours celle du calcul
+                'taxe_sejour' => $this->touristTaxFor($type, $quote, $isAdmin ? $data : []),
                 'type' => $type,
                 'statut' => $type === BookingType::Fermeture ? BookingStatus::Validated : BookingStatus::Pending,
                 'note' => $data['note'] ?? null,
@@ -60,14 +68,16 @@ class BookingService
 
             $client = null;
             if ($type !== BookingType::Fermeture) {
-                $client = Client::create([
-                    'nom' => $data['name'] ?? '',
-                    'prenom' => $data['firstName'] ?? '',
-                    'email' => $data['email'] ?? '',
-                    'telephone' => $data['phone'] ?? '',
-                    'adresse' => $this->formatAddress($data),
-                    'language' => $data['language'] ?? 'fr',
-                ]);
+                $client = $isAdmin && ! empty($data['clientId'])
+                    ? Client::findOrFail($data['clientId'])
+                    : Client::create([
+                        'nom' => $data['name'] ?? '',
+                        'prenom' => $data['firstName'] ?? '',
+                        'email' => $data['email'] ?? '',
+                        'telephone' => $data['phone'] ?? '',
+                        'adresse' => $this->formatAddress($data),
+                        'language' => $data['language'] ?? 'fr',
+                    ]);
                 $booking->clients()->attach($client);
             }
 
@@ -75,11 +85,15 @@ class BookingService
         });
 
         if ($client?->email && (! $isAdmin || $type === BookingType::Classique)) {
-            $this->sendToClient($client, new BookingReceived($booking));
+            $this->sendToClient($client, new BookingReceived(
+                $booking,
+                $this->amountDueAtBooking($booking),
+                $this->requiresFullPayment($booking),
+            ));
         }
 
         if ($type !== BookingType::Fermeture) {
-            $this->send(config('tidolasab.admin_email'), new AdminNewBooking($booking, $client));
+            $this->send(config('tidolasab.admin_email'), new AdminNewBooking($booking, $client, $this->requiresFullPayment($booking)));
         }
 
         return $booking;
@@ -96,17 +110,22 @@ class BookingService
                 $this->ensureDatesAvailable($data['checkIn'], $data['checkOut'], $booking);
             }
 
+            $quote = $this->pricing->quote($data['checkIn'], $data['checkOut'], (int) $data['adults']);
+
             $booking->update([
                 'date_arrivee' => $data['checkIn'],
                 'date_depart' => $data['checkOut'],
-                'nombre_nuits' => CarbonImmutable::parse($data['checkIn'])->diffInDays($data['checkOut']),
+                'nombre_nuits' => $quote->nights,
                 'adultes' => (int) $data['adults'],
                 'enfants' => (int) ($data['children'] ?? 0),
                 'prix_total' => $type === BookingType::Fermeture ? 0 : (float) $data['total'],
+                'taxe_sejour' => $this->touristTaxFor($type, $quote, $data),
                 'type' => $type,
                 'statut' => $status,
                 'note' => $data['note'] ?? null,
             ]);
+
+            $this->syncBalanceDraft($booking);
         });
 
         return $booking;
@@ -114,6 +133,7 @@ class BookingService
 
     /**
      * Valide la réservation et enregistre l'acompte reçu.
+     * Pour une réservation directe, le solde restant devient un paiement brouillon.
      */
     public function validate(Booking $booking, float $deposit, string $date, string $method): Booking
     {
@@ -125,12 +145,22 @@ class BookingService
                 'montant_paiement' => $deposit,
                 'date_paiement' => $date,
                 'moyen_paiement' => $method,
+                'statut' => PaymentStatus::Confirmed,
             ]);
+
+            $this->syncBalanceDraft($booking);
         });
 
         $client = $booking->primaryClient();
         if ($client?->email && $booking->type === BookingType::Classique) {
-            $this->sendToClient($client, new BookingValidated($booking, $client, $deposit));
+            $balance = $this->balance($booking);
+            $this->sendToClient($client, new BookingValidated(
+                $booking,
+                $client,
+                $deposit,
+                $balance,
+                $balance > 0 ? $this->balanceDueDate($booking) : null,
+            ));
         }
 
         return $booking;
@@ -138,7 +168,10 @@ class BookingService
 
     public function cancel(Booking $booking): Booking
     {
-        $booking->update(['statut' => BookingStatus::Cancelled]);
+        DB::transaction(function () use ($booking) {
+            $booking->update(['statut' => BookingStatus::Cancelled]);
+            $booking->payments()->draft()->delete();
+        });
 
         $client = $booking->primaryClient();
         if ($client?->email) {
@@ -150,7 +183,10 @@ class BookingService
 
     public function setPending(Booking $booking): Booking
     {
-        $booking->update(['statut' => BookingStatus::Pending]);
+        DB::transaction(function () use ($booking) {
+            $booking->update(['statut' => BookingStatus::Pending]);
+            $booking->payments()->draft()->delete();
+        });
 
         $client = $booking->primaryClient();
         if ($client?->email) {
@@ -164,26 +200,124 @@ class BookingService
     {
         DB::transaction(function () use ($booking) {
             $booking->clients()->detach();
+            $booking->payments()->draft()->delete();
             $booking->delete();
         });
     }
 
     /**
-     * Acompte et solde restant d'une réservation.
+     * Encaisse un paiement brouillon. S'il reste un solde, un nouveau brouillon est créé.
+     */
+    public function confirmDraft(Payment $draft, ?float $amount, string $date, string $method): Payment
+    {
+        if (! $draft->isDraft()) {
+            throw new BusinessException(__('booking.payment_not_draft'));
+        }
+
+        DB::transaction(function () use ($draft, $amount, $date, $method) {
+            $draft->update([
+                'statut' => PaymentStatus::Confirmed,
+                'montant_paiement' => $amount ?? $draft->montant_paiement,
+                'date_paiement' => $date,
+                'moyen_paiement' => $method,
+            ]);
+
+            $this->syncBalanceDraft($draft->booking);
+        });
+
+        return $draft;
+    }
+
+    /**
+     * Tient à jour le brouillon du solde d'une réservation directe validée :
+     * montant = prix total - paiements encaissés, supprimé quand tout est réglé.
+     */
+    public function syncBalanceDraft(Booking $booking): void
+    {
+        $drafts = $booking->payments()->draft()->orderBy('id')->get();
+        $remaining = $this->balance($booking);
+        $expected = $booking->type === BookingType::Classique && $booking->statut === BookingStatus::Validated;
+
+        if (! $expected || $remaining <= 0) {
+            $drafts->each->delete();
+
+            return;
+        }
+
+        $draft = $drafts->shift();
+        $drafts->each->delete();
+
+        if ($draft) {
+            $draft->update(['montant_paiement' => $remaining]);
+        } else {
+            $booking->payments()->create([
+                'montant_paiement' => $remaining,
+                'date_paiement' => $this->balanceDueDate($booking)->toDateString(),
+                'moyen_paiement' => PaymentMethod::Transfer,
+                'statut' => PaymentStatus::Draft,
+                'note' => __('booking.balance_draft_note'),
+            ]);
+        }
+    }
+
+    /**
+     * Solde restant : prix total moins les paiements encaissés (hors brouillons).
      */
     public function balance(Booking $booking): float
     {
-        return round($booking->prix_total - Payment::where('id_reservation', $booking->id)->sum('montant_paiement'), 2);
+        return round($booking->prix_total - Payment::where('id_reservation', $booking->id)->confirmed()->sum('montant_paiement'), 2);
+    }
+
+    /**
+     * Arrivée dans moins de « balance_due_days + 1 » jours : le solde serait déjà dû,
+     * la totalité du séjour est donc demandée à la réservation.
+     */
+    public function requiresFullPayment(Booking $booking): bool
+    {
+        return today()->diffInDays($booking->date_arrivee, false) <= (int) $this->settings->get('balance_due_days');
+    }
+
+    /**
+     * Montant demandé à la réservation : l'acompte, ou la totalité si l'arrivée est proche.
+     */
+    public function amountDueAtBooking(Booking $booking): float
+    {
+        return $this->requiresFullPayment($booking)
+            ? (float) $booking->prix_total
+            : round($booking->prix_total * (int) $this->settings->get('deposit_percent') / 100, 2);
+    }
+
+    /**
+     * Échéance du solde : X jours avant l'arrivée, au plus tôt aujourd'hui.
+     */
+    public function balanceDueDate(Booking $booking): CarbonImmutable
+    {
+        $due = CarbonImmutable::parse($booking->date_arrivee)->subDays((int) $this->settings->get('balance_due_days'));
+
+        return $due->max(today()->toImmutable());
+    }
+
+    /**
+     * La taxe de séjour n'est comprise que dans les réservations directes :
+     * les plateformes la collectent elles-mêmes.
+     */
+    private function touristTaxFor(BookingType $type, Quote $quote, array $data): float
+    {
+        if ($type !== BookingType::Classique) {
+            return 0;
+        }
+
+        return isset($data['touristTax']) ? (float) $data['touristTax'] : $quote->touristTax;
     }
 
     private function ensureStayAllowed(string $checkIn, string $checkOut, int $nights): void
     {
-        $minimum = config('tidolasab.minimum_nights');
+        $minimum = (int) $this->settings->get('minimum_nights');
         if ($nights < $minimum) {
             throw new BusinessException(__('booking.minimum_nights', ['nights' => $minimum]));
         }
 
-        foreach (config('tidolasab.minimum_stay_periods') as $period) {
+        foreach ($this->settings->get('minimum_stay_periods') as $period) {
             $overlapsPeriod = $checkIn <= $period['end'] && $checkOut > $period['start'];
             if ($overlapsPeriod && $nights < $period['nights']) {
                 throw new BusinessException(__('booking.minimum_stay_period', [

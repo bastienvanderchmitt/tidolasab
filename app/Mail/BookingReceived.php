@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Booking;
+use App\Services\BookingSettings;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
@@ -10,10 +11,15 @@ use Illuminate\Mail\Mailables\Envelope;
 
 /**
  * Envoyé au client à la création de sa réservation, avec le RIB et le contrat.
+ * Si l'arrivée est proche, la totalité du séjour est demandée au lieu de l'acompte.
  */
 class BookingReceived extends Mailable
 {
-    public function __construct(public Booking $booking) {}
+    public function __construct(
+        public Booking $booking,
+        public float $amountDue,
+        public bool $fullPayment,
+    ) {}
 
     public function envelope(): Envelope
     {
@@ -22,12 +28,11 @@ class BookingReceived extends Mailable
 
     public function content(): Content
     {
-        $percent = config('tidolasab.deposit_percent');
+        $settings = app(BookingSettings::class);
 
         return new Content(view: 'emails.booking-received', with: [
-            'depositPercent' => $percent,
-            'depositAmount' => round($this->booking->prix_total * $percent / 100, 2),
-            'balanceDueDays' => config('tidolasab.balance_due_days'),
+            'depositPercent' => $settings->get('deposit_percent'),
+            'balanceDueDays' => $settings->get('balance_due_days'),
         ]);
     }
 

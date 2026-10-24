@@ -7,18 +7,19 @@ use App\Enums\BookingType;
 use App\Mail\PaymentReminder;
 use App\Models\Booking;
 use App\Services\BookingService;
+use App\Services\BookingSettings;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
 #[Signature('reminders:send')]
-#[Description('Rappelle le solde à payer aux clients dont le séjour commence dans 14 jours')]
+#[Description('Rappelle le solde à payer aux clients dont le séjour commence dans X jours (réglage « balance_due_days »)')]
 class SendPaymentReminders extends Command
 {
-    public function handle(BookingService $bookings): int
+    public function handle(BookingService $bookings, BookingSettings $settings): int
     {
-        $days = config('tidolasab.balance_due_days');
+        $days = (int) $settings->get('balance_due_days');
 
         $upcoming = Booking::query()
             ->with('clients')

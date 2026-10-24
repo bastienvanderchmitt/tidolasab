@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\BookingSettings;
 use App\Services\PricingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,17 +13,9 @@ use Illuminate\Http\Request;
  */
 class PricingController extends Controller
 {
-    public function show(): JsonResponse
+    public function show(BookingSettings $settings): JsonResponse
     {
-        return response()->json(['pricing' => [
-            'rates' => config('tidolasab.rates'),
-            'low_season_months' => config('tidolasab.low_season_months'),
-            'tourist_tax' => config('tidolasab.tourist_tax'),
-            'discount_nights_threshold' => config('tidolasab.discount_nights_threshold'),
-            'minimum_nights' => config('tidolasab.minimum_nights'),
-            'minimum_stay_periods' => config('tidolasab.minimum_stay_periods'),
-            'deposit_percent' => config('tidolasab.deposit_percent'),
-        ]]);
+        return response()->json(['pricing' => $settings->all()]);
     }
 
     public function quote(Request $request, PricingService $pricing): JsonResponse

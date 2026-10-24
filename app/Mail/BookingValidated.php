@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\Booking;
 use App\Models\Client;
+use Carbon\CarbonInterface;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -14,6 +15,8 @@ class BookingValidated extends Mailable
         public Booking $booking,
         public Client $client,
         public float $deposit,
+        public float $balance,
+        public ?CarbonInterface $balanceDueDate,
     ) {}
 
     public function envelope(): Envelope
@@ -23,11 +26,6 @@ class BookingValidated extends Mailable
 
     public function content(): Content
     {
-        return new Content(view: 'emails.booking-validated', with: [
-            'balance' => round($this->booking->prix_total - $this->deposit, 2),
-            'balanceDueDate' => $this->booking->date_arrivee
-                ->subDays(config('tidolasab.balance_due_days'))
-                ->format('d/m/Y'),
-        ]);
+        return new Content(view: 'emails.booking-validated');
     }
 }

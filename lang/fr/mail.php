@@ -12,6 +12,7 @@ return [
         'thanks' => 'Nous vous remercions pour votre confiance.',
         'processing' => 'Votre réservation est en cours de validation.',
         'deposit' => 'Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et de votre acompte de :percent% (:amount €).',
+        'full_payment' => 'Votre séjour vous sera confirmé à réception de votre contrat ci-joint signé et du règlement de la totalité du séjour (:amount €), votre arrivée ayant lieu dans moins de :days jours.',
         'balance' => 'Le solde restant vous sera demandé :days jours avant l\'arrivée.',
     ],
 
@@ -31,6 +32,7 @@ return [
         'total' => 'Prix total :',
         'deposit' => 'Acompte versé :',
         'balance' => 'Solde à régler :',
+        'fully_paid' => 'Votre séjour est intégralement réglé, merci !',
         'balance_due' => 'Solde à régler avant le :date',
     ],
 

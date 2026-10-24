@@ -39,6 +39,7 @@ umask 022
 
 cd "$RELEASE"
 "$PHP" artisan migrate --force
+"$PHP" artisan payments:sync-drafts
 "$PHP" artisan optimize
 
 # Bascule sans coupure

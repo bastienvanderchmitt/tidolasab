@@ -157,9 +157,11 @@ it('valide une réservation, enregistre l’acompte et prévient le client', fun
         ->assertJson(['success' => true]);
 
     expect($booking->fresh()->statut)->toBe(BookingStatus::Validated)
-        ->and($booking->payments()->sum('montant_paiement'))->toEqual(171);
+        ->and($booking->payments()->confirmed()->sum('montant_paiement'))->toEqual(171);
 
-    Mail::assertSent(BookingValidated::class, fn ($mail) => $mail->hasTo('client@example.com'));
+    Mail::assertSent(BookingValidated::class, fn ($mail) => $mail->hasTo('client@example.com')
+        && $mail->balance === 171.0
+        && $mail->balanceDueDate->toDateString() === '2026-11-17');
 });
 
 it('refuse de valider une réservation sur des dates déjà prises', function () {

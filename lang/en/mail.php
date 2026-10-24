@@ -12,6 +12,7 @@ return [
         'thanks' => 'Thank you for your trust.',
         'processing' => 'Your booking is being processed.',
         'deposit' => 'Your stay will be confirmed upon receipt of your signed contract attached and your deposit of :percent% (:amount €).',
+        'full_payment' => 'Your stay will be confirmed upon receipt of your signed contract attached and payment of the full amount of your stay (:amount €), as your arrival is in less than :days days.',
         'balance' => 'The remaining balance will be requested :days days before arrival.',
     ],
 
@@ -31,6 +32,7 @@ return [
         'total' => 'Total price:',
         'deposit' => 'Deposit paid:',
         'balance' => 'Balance to be paid:',
+        'fully_paid' => 'Your stay is fully paid, thank you!',
         'balance_due' => 'Balance to be paid by :date',
     ],
 

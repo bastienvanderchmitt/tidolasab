@@ -17,6 +17,7 @@ class UpdateBookingRequest extends FormRequest
             'children' => ['nullable', 'integer', 'min:0', 'max:20'],
             'type' => ['required', Rule::enum(BookingType::class)],
             'total' => ['nullable', 'numeric', 'min:0'],
+            'touristTax' => ['nullable', 'numeric', 'min:0'],
             'note' => ['nullable', 'string', 'max:5000'],
         ];
     }

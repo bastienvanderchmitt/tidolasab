@@ -41,12 +41,14 @@ export const computeQuote = (pricing, checkIn, checkOut, adults) => {
 
   const accommodation = highNights * highPrice + lowNights * lowPrice;
   const touristTax = nights * adults * pricing.tourist_tax;
-  const discount = nights
-    ? Math.round(
-        Math.floor(nights / pricing.discount_nights_threshold) *
-          (accommodation / nights / 2),
-      )
-    : 0;
+  // 0 = pas de remise semaine
+  const discount =
+    nights && pricing.discount_nights_threshold > 0
+      ? Math.round(
+          Math.floor(nights / pricing.discount_nights_threshold) *
+            (accommodation / nights / 2),
+        )
+      : 0;
 
   return {
     nights,

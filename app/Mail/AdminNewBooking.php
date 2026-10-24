@@ -10,7 +10,11 @@ use Illuminate\Mail\Mailables\Envelope;
 
 class AdminNewBooking extends Mailable
 {
-    public function __construct(public Booking $booking, public ?Client $client) {}
+    public function __construct(
+        public Booking $booking,
+        public ?Client $client,
+        public bool $fullPayment = false,
+    ) {}
 
     public function envelope(): Envelope
     {
