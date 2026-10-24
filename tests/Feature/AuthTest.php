@@ -78,3 +78,11 @@ it('ne permet de créer un administrateur qu’une fois connecté', function () 
         ->assertCreated()
         ->assertJsonMissingPath('user.password');
 });
+
+it('ouvre la session quel que soit le domaine qui sert le site', function () {
+    User::factory()->create(['login' => 'isabelle', 'password' => Hash::make('un-bon-mot-de-passe')]);
+
+    $this->withHeader('Referer', 'https://www.tidolasab.com/admin/login')
+        ->postJson('https://www.tidolasab.com/api/login', ['login' => 'isabelle', 'password' => 'un-bon-mot-de-passe'])
+        ->assertOk();
+});

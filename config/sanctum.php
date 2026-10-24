@@ -18,11 +18,13 @@ return [
     |
     */
 
+    // Le front est servi par Laravel sur le même domaine que l'API : le domaine
+    // de la requête suffit, quel que soit l'environnement (local, LWS, www ou non).
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s%s',
+        '%s%s%s',
         'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
         Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
+        Sanctum::currentRequestHost(),
     ))),
 
     /*

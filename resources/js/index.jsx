@@ -3,8 +3,11 @@ import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 import "./index.css";
 import App from "./App";
+import CrashFallback from "./components/layout/CrashFallback";
 import "./i18n";
 
+// Point d'entrée : aucun composant n'est déclaré ici, sinon le React Refresh de Vite
+// ré-importe ce module et l'application est montée deux fois.
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
   enabled: !!import.meta.env.VITE_SENTRY_DSN,
@@ -15,17 +18,9 @@ Sentry.init({
 
 document.title = "Ti' Dola Sab";
 
-const Fallback = () => (
-  <div style={{ padding: "4rem 1rem", textAlign: "center" }}>
-    <h1>Oups</h1>
-    <p>Une erreur inattendue est survenue, nous en avons été informés.</p>
-    <a href="/">Retour à l'accueil</a>
-  </div>
-);
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Sentry.ErrorBoundary fallback={<Fallback />}>
+  <Sentry.ErrorBoundary fallback={<CrashFallback />}>
     <App />
   </Sentry.ErrorBoundary>,
 );
