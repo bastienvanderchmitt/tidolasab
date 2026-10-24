@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as Sentry from "@sentry/react";
 import i18n from "../i18n";
-import { authService } from "./authService";
 
 const appAxios = axios.create({
   baseURL: "/api",
@@ -9,10 +8,6 @@ const appAxios = axios.create({
   withXSRFToken: true,
   headers: { Accept: "application/json" },
 });
-
-// Cookie XSRF-TOKEN requis par Sanctum avant toute requête authentifiée
-export const initCsrf = () =>
-  axios.get("/sanctum/csrf-cookie", { withCredentials: true });
 
 appAxios.interceptors.request.use((config) => {
   config.headers["Accept-Language"] = i18n.language || "fr";
@@ -38,16 +33,6 @@ appAxios.interceptors.response.use(
         error: message,
         errors: {},
       });
-    }
-
-    if (response.status === 401 || response.status === 419) {
-      authService.logout();
-      if (
-        window.location.pathname.startsWith("/admin") &&
-        window.location.pathname !== "/admin/login"
-      ) {
-        window.location.href = "/admin/login";
-      }
     }
 
     const message = response.data?.message || i18n.t("common.error");

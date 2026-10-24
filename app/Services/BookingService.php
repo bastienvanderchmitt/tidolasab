@@ -196,8 +196,16 @@ class BookingService
         return $booking;
     }
 
+    /**
+     * Une réservation avec des paiements encaissés s'annule mais ne se supprime pas,
+     * sinon ces paiements disparaîtraient du chiffre d'affaires.
+     */
     public function delete(Booking $booking): void
     {
+        if ($booking->payments()->confirmed()->exists()) {
+            throw new BusinessException(__('booking.has_payments'));
+        }
+
         DB::transaction(function () use ($booking) {
             $booking->clients()->detach();
             $booking->payments()->draft()->delete();

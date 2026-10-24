@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 export default defineConfig({
   plugins: [
     laravel({
-      input: ["resources/js/index.jsx"],
+      input: ["resources/js/index.jsx", "resources/js/admin/main.jsx"],
       refresh: true,
     }),
     react(),

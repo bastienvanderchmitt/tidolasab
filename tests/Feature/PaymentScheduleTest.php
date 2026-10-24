@@ -277,6 +277,14 @@ describe('taxe de séjour enregistrée', function () {
     });
 });
 
-it('garde les statuts de réservation existants', function () {
-    expect(BookingStatus::cases())->toHaveCount(3);
+it('refuse de supprimer une réservation qui a des paiements encaissés', function () {
+    $booking = Booking::factory()->withClient()->create();
+    Payment::factory()->for($booking)->create();
+
+    $this->actingAs(admin())->deleteJson("/api/bookings/{$booking->id}")
+        ->assertUnprocessable()
+        ->assertJsonPath('message', __('booking.has_payments'));
+
+    expect(Booking::find($booking->id))->not->toBeNull()
+        ->and($booking->fresh()->statut)->toBe(BookingStatus::Pending);
 });

@@ -8,4 +8,5 @@ return [
     'payment_not_draft' => 'Ce paiement est déjà encaissé.',
     'balance_draft_note' => 'Solde',
     'draft_not_deletable' => 'Le solde attendu se met à jour automatiquement : modifiez le prix de la réservation pour le changer.',
+    'has_payments' => 'Cette réservation a des paiements encaissés : annulez-la plutôt que de la supprimer.',
 ];
