@@ -28,6 +28,7 @@ const Accommodation = () => {
             <div className="position-relative">
               <div className="image-zoom">
                 <img
+                  loading="lazy"
                   src={accommodation}
                   alt="accommodation"
                   className="w-100"

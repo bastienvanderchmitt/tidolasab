@@ -293,7 +293,11 @@ const Photos = () => {
         </Col>
       </Row>
       <Row className="p-4 photos-panel text-center">
-        <Gallery photos={images} onClick={openLightbox} />
+        <Gallery
+          // Les photos ne sont chargées qu'à l'approche de l'écran
+          photos={images.map((photo) => ({ ...photo, loading: "lazy" }))}
+          onClick={openLightbox}
+        />
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>

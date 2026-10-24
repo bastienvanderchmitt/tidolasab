@@ -27,6 +27,18 @@ vendor/bin/pest   # back : utilise la base tidolasab_test (voir phpunit.xml)
 yarn test         # front
 ```
 
+## Images
+
+Après l'ajout de nouvelles photos dans `resources/js/assets/img`, lancer :
+
+```sh
+scripts/optimize-images.sh
+```
+
+Le script (ImageMagick) redimensionne à 2048 px maximum, recompresse et supprime les
+métadonnées, dont les coordonnées GPS. Il peut être relancé sans risque : les images
+déjà optimisées ne sont pas modifiées.
+
 ## Règles métier
 
 Tarifs, saisons, taxe de séjour, durées minimales et acompte sont dans

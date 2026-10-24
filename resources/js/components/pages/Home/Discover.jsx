@@ -22,7 +22,12 @@ const Discover = () => {
             <Link to={"/activities"}>
               <div className="position-relative">
                 <div className="image-zoom">
-                  <img src={mg_beach} className="w-100" alt="beach" />
+                  <img
+                    loading="lazy"
+                    src={mg_beach}
+                    className="w-100"
+                    alt="beach"
+                  />
                   <div className="offset-border"></div>
                   <div className="overlay-label">
                     <div className="overlay-label-text">

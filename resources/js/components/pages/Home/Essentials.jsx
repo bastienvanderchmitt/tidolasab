@@ -43,9 +43,19 @@ const Essentials = ({ fromBooking }) => {
         <Col className="px-5 d-none d-md-block">
           <div className="image-zoom">
             {fromBooking ? (
-              <img alt="essentials_3" src={essentials_3} className="w-100" />
+              <img
+                loading="lazy"
+                alt="essentials_3"
+                src={essentials_3}
+                className="w-100"
+              />
             ) : (
-              <img alt="essentials_1" src={essentials_1} className="w-100" />
+              <img
+                loading="lazy"
+                alt="essentials_1"
+                src={essentials_1}
+                className="w-100"
+              />
             )}
           </div>
           <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
@@ -111,12 +121,14 @@ const Essentials = ({ fromBooking }) => {
                 <div className="image-zoom">
                   {fromBooking ? (
                     <img
+                      loading="lazy"
                       alt="essentials_4"
                       src={essentials_4}
                       className="w-100"
                     />
                   ) : (
                     <img
+                      loading="lazy"
                       alt="essentials_2"
                       src={essentials_2}
                       className="w-100"
@@ -132,12 +144,14 @@ const Essentials = ({ fromBooking }) => {
               <div className="image-zoom">
                 {fromBooking ? (
                   <img
+                    loading="lazy"
                     alt="essentials_3"
                     src={essentials_3}
                     className="w-100"
                   />
                 ) : (
                   <img
+                    loading="lazy"
                     alt="essentials_1"
                     src={essentials_1}
                     className="w-100"
