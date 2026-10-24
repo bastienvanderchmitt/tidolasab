@@ -1,5 +1,5 @@
 import { Badge, Col, Container, Row } from "reactstrap";
-import franck_isa from "../../assets/img/story/franck_isa.jpeg";
+import franck_isa from "../../assets/img/story/franck_isa.webp";
 import { useTranslation } from "react-i18next";
 
 const Story = () => {

@@ -1,13 +1,13 @@
 import { Col, Container, Row } from "reactstrap";
 import { Slider } from "../../../helpers/cjsComponents";
 import palm_tree from "../../../assets/img/icons/palm_tree.png";
-import caroussel_1 from "../../../assets/img/caroussel/caroussel_1.jpeg";
-import caroussel_2 from "../../../assets/img/caroussel/caroussel_2.jpeg";
-import caroussel_3 from "../../../assets/img/caroussel/caroussel_3.jpeg";
-import caroussel_4 from "../../../assets/img/caroussel/caroussel_4.jpeg";
-import caroussel_5 from "../../../assets/img/caroussel/caroussel_5.jpeg";
-import caroussel_6 from "../../../assets/img/caroussel/caroussel_6.jpeg";
-import caroussel_7 from "../../../assets/img/caroussel/caroussel_7.jpeg";
+import caroussel_1 from "../../../assets/img/caroussel/caroussel_1.webp";
+import caroussel_2 from "../../../assets/img/caroussel/caroussel_2.webp";
+import caroussel_3 from "../../../assets/img/caroussel/caroussel_3.webp";
+import caroussel_4 from "../../../assets/img/caroussel/caroussel_4.webp";
+import caroussel_5 from "../../../assets/img/caroussel/caroussel_5.webp";
+import caroussel_6 from "../../../assets/img/caroussel/caroussel_6.webp";
+import caroussel_7 from "../../../assets/img/caroussel/caroussel_7.webp";
 import { useTranslation } from "react-i18next";
 
 const Preview = () => {

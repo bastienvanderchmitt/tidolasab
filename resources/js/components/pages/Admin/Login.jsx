@@ -20,7 +20,7 @@ import Field from "../../formik/Field";
 import logo from "../../../assets/img/logo_final.png";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import banner from "../../../assets/img/locations/location_11.jpeg";
+import banner from "../../../assets/img/locations/location_11.webp";
 
 const Login = () => {
   const { signIn, isAuthenticated } = useAdminContext();

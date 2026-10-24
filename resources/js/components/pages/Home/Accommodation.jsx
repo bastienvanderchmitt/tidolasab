@@ -1,5 +1,5 @@
 import { Button, Col, Container, Row } from "reactstrap";
-import accommodation from "../../../assets/img/room/view_2.jpeg";
+import accommodation from "../../../assets/img/room/view_2.webp";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Assets from "./Assets";

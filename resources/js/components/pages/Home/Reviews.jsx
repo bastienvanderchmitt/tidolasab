@@ -1,4 +1,4 @@
-import beach_palm from "../../../assets/img/discover/beach_palm.jpg";
+import beach_palm from "../../../assets/img/discover/beach_palm.webp";
 import { Parallax } from "react-parallax";
 import { Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

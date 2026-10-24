@@ -35,9 +35,11 @@ Après l'ajout de nouvelles photos dans `resources/js/assets/img`, lancer :
 scripts/optimize-images.sh
 ```
 
-Le script (ImageMagick) redimensionne à 2048 px maximum, recompresse et supprime les
-métadonnées, dont les coordonnées GPS. Il peut être relancé sans risque : les images
-déjà optimisées ne sont pas modifiées.
+Le script (ImageMagick) convertit les photos JPEG en WebP (le JPEG est supprimé :
+importer le fichier `.webp` dans le code), redimensionne à 2048 px maximum et supprime
+les métadonnées, dont les coordonnées GPS. Les PNG (icônes, logos) sont seulement
+compressés. Il peut être relancé sans risque : les images déjà optimisées ne sont pas
+modifiées.
 
 ## Règles métier
 

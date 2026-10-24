@@ -60,7 +60,7 @@ const Menu = () => {
   return (
     <section
       className={
-        params?.image !== "home_banner.jpg" ? "menu small" : "menu big"
+        params?.image !== "home_banner.webp" ? "menu small" : "menu big"
       }
     >
       <Parallax

@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "reactstrap";
-import banner from "../../assets/img/locations/location_11.jpeg";
+import banner from "../../assets/img/locations/location_11.webp";
 import FormContact from "../formik/forms/FormContact";
 import { useTranslation } from "react-i18next";
 

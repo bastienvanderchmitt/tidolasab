@@ -2,13 +2,13 @@ import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import { Container, Row } from "reactstrap";
 import { useCallback, useState } from "react";
-import room_1 from "../../../assets/img/room/room_1.jpeg";
-import room_2 from "../../../assets/img/room/room_2.jpeg";
-import room_4 from "../../../assets/img/room/room_4.jpeg";
-import room_5 from "../../../assets/img/room/room_5.jpeg";
-import room_7 from "../../../assets/img/room/room_7.jpeg";
-import view_3 from "../../../assets/img/room/view_3.jpeg";
-import view_2 from "../../../assets/img/room/view_2.jpeg";
+import room_1 from "../../../assets/img/room/room_1.webp";
+import room_2 from "../../../assets/img/room/room_2.webp";
+import room_4 from "../../../assets/img/room/room_4.webp";
+import room_5 from "../../../assets/img/room/room_5.webp";
+import room_7 from "../../../assets/img/room/room_7.webp";
+import view_3 from "../../../assets/img/room/view_3.webp";
+import view_2 from "../../../assets/img/room/view_2.webp";
 
 const RoomImages = () => {
   const [currentImage, setCurrentImage] = useState(0);

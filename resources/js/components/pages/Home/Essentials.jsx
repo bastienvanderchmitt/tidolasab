@@ -1,8 +1,8 @@
 import { Col, Container, Row } from "reactstrap";
-import essentials_1 from "../../../assets/img/room/room_6.jpeg";
-import essentials_2 from "../../../assets/img/room/view_1.jpeg";
-import essentials_3 from "../../../assets/img/room/view_4.jpeg";
-import essentials_4 from "../../../assets/img/room/view_5.jpeg";
+import essentials_1 from "../../../assets/img/room/room_6.webp";
+import essentials_2 from "../../../assets/img/room/view_1.webp";
+import essentials_3 from "../../../assets/img/room/view_4.webp";
+import essentials_4 from "../../../assets/img/room/view_5.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlane,

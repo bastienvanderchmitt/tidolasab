@@ -11,15 +11,15 @@ import {
 } from "reactstrap";
 import { faLocationPin } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import location_23 from "../../assets/img/locations/location_23.jpeg";
-import location_9 from "../../assets/img/locations/location_9.jpeg";
-import location_20 from "../../assets/img/locations/location_20.jpeg";
-import location_25 from "../../assets/img/locations/location_25.jpeg";
-import location_24 from "../../assets/img/locations/location_24.jpeg";
-import location_3_square from "../../assets/img/locations/location_3_square.jpeg";
-import location_4_square from "../../assets/img/locations/location_4_square.jpeg";
-import location_6_square from "../../assets/img/locations/location_6_square.jpeg";
-import location_10_square from "../../assets/img/locations/location_10_square.jpeg";
+import location_23 from "../../assets/img/locations/location_23.webp";
+import location_9 from "../../assets/img/locations/location_9.webp";
+import location_20 from "../../assets/img/locations/location_20.webp";
+import location_25 from "../../assets/img/locations/location_25.webp";
+import location_24 from "../../assets/img/locations/location_24.webp";
+import location_3_square from "../../assets/img/locations/location_3_square.webp";
+import location_4_square from "../../assets/img/locations/location_4_square.webp";
+import location_6_square from "../../assets/img/locations/location_6_square.webp";
+import location_10_square from "../../assets/img/locations/location_10_square.webp";
 import { useTranslation } from "react-i18next";
 
 const Activities = () => {
