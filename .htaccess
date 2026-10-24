@@ -1,0 +1,6 @@
+# Si la racine web LWS ne peut pas pointer sur public/, tout y est redirigé :
+# les fichiers du projet (.env, vendor, ...) ne sont jamais servis.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

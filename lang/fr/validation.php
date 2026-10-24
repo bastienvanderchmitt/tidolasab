@@ -1,0 +1,51 @@
+<?php
+
+// Messages des règles utilisées par l'API ; les autres retombent sur lang/en.
+return [
+    'after' => 'Le champ :attribute doit être une date postérieure au :date.',
+    'after_or_equal' => 'Le champ :attribute doit être une date postérieure ou égale au :date.',
+    'boolean' => 'Le champ :attribute doit être vrai ou faux.',
+    'date' => 'Le champ :attribute n\'est pas une date valide.',
+    'date_format' => 'Le champ :attribute ne correspond pas au format :format.',
+    'email' => 'Le champ :attribute doit être une adresse email valide.',
+    'enum' => 'La valeur du champ :attribute est invalide.',
+    'exists' => 'La valeur du champ :attribute est invalide.',
+    'in' => 'La valeur du champ :attribute est invalide.',
+    'integer' => 'Le champ :attribute doit être un entier.',
+    'max' => [
+        'numeric' => 'Le champ :attribute ne doit pas dépasser :max.',
+        'string' => 'Le champ :attribute ne doit pas dépasser :max caractères.',
+    ],
+    'min' => [
+        'numeric' => 'Le champ :attribute doit être au moins égal à :min.',
+        'string' => 'Le champ :attribute doit contenir au moins :min caractères.',
+    ],
+    'numeric' => 'Le champ :attribute doit être un nombre.',
+    'required' => 'Le champ :attribute est obligatoire.',
+    'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+    'unique' => 'La valeur du champ :attribute est déjà utilisée.',
+
+    'attributes' => [
+        'checkIn' => 'date d\'arrivée',
+        'checkOut' => 'date de départ',
+        'adults' => 'adultes',
+        'children' => 'enfants',
+        'name' => 'nom',
+        'firstName' => 'prénom',
+        'email' => 'email',
+        'phone' => 'téléphone',
+        'address' => 'adresse',
+        'postalCode' => 'code postal',
+        'city' => 'ville',
+        'country' => 'pays',
+        'subject' => 'sujet',
+        'message' => 'message',
+        'login' => 'identifiant',
+        'password' => 'mot de passe',
+        'deposit' => 'montant',
+        'date' => 'date',
+        'type' => 'type',
+        'booking' => 'réservation',
+        'total' => 'total',
+    ],
+];

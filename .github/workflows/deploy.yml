@@ -1,0 +1,115 @@
+name: Tests et déploiement
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:11
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: tidolasab_test
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          extensions: pdo_mysql, mbstring, intl
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: composer install --no-interaction --prefer-dist
+      - run: yarn install --frozen-lockfile
+
+      - name: Tests back (Pest)
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          vendor/bin/pest
+        env:
+          DB_HOST: 127.0.0.1
+          DB_USERNAME: root
+          DB_PASSWORD: root
+
+      - name: Tests front (Vitest)
+        run: yarn test
+
+  deploy:
+    needs: tests
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Dépendances PHP de production
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Build du front
+        run: yarn install --frozen-lockfile && yarn build
+        env:
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          VITE_SENTRY_RELEASE: ${{ github.sha }}
+
+      - name: Envoi des cartes de sources à Sentry
+        if: env.SENTRY_AUTH_TOKEN != ''
+        run: |
+          npx @sentry/cli@2 sourcemaps upload --release "$GITHUB_SHA" public/build
+          find public/build -name '*.map' -delete
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+
+      - name: Archive de la release
+        run: |
+          find public/build -name '*.map' -delete
+          tar -czf release.tar.gz \
+            --exclude=./.git --exclude=./node_modules --exclude=./tests \
+            --exclude=./storage --exclude=./.env --exclude=./release.tar.gz \
+            --exclude=./resources/js --exclude=./api --exclude=./build \
+            .
+
+      - name: Envoi sur LWS (SFTP)
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ secrets.LWS_HOST }}
+          username: ${{ secrets.LWS_USER }}
+          key: ${{ secrets.LWS_SSH_KEY }}
+          port: ${{ secrets.LWS_PORT || 22 }}
+          source: release.tar.gz,deploy/remote.sh
+          target: ${{ vars.LWS_APP_PATH }}/incoming
+
+      - name: Activation de la release (SSH)
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.LWS_HOST }}
+          username: ${{ secrets.LWS_USER }}
+          key: ${{ secrets.LWS_SSH_KEY }}
+          port: ${{ secrets.LWS_PORT || 22 }}
+          script: sh ${{ vars.LWS_APP_PATH }}/incoming/deploy/remote.sh ${{ vars.LWS_APP_PATH }} ${{ github.sha }} ${{ vars.LWS_PHP || 'php85' }}

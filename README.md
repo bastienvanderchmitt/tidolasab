@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Ti' Dola Sab
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Site de réservation du gîte Ti' Dola Sab (Marie-Galante) et son back-office.
 
-## Available Scripts
+- **Back** : Laravel 13 (PHP 8.5, minimum 8.3), MariaDB, authentification admin par session (Sanctum)
+- **Front** : React 18 compilé par Vite, servi par Laravel (`resources/js`)
+- **Suivi des erreurs** : Sentry (back et front)
+- **Hébergement** : LWS (mutualisé)
 
-In the project directory, you can run:
+## Installation locale
 
-### `yarn start`
+```sh
+composer install
+yarn install
+cp .env.example .env   # puis renseigner DB_*, LEGACY_PASSWORD_SALT, RECAPTCHA_SECRET_KEY
+php artisan key:generate
+php artisan migrate
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Lancer le site : `php artisan serve` et, dans un autre terminal, `yarn dev`.
+Les emails sont écrits dans `storage/logs/laravel.log` (`MAIL_MAILER=log`).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tests
 
-### `yarn test`
+```sh
+vendor/bin/pest   # back : utilise la base tidolasab_test (voir phpunit.xml)
+yarn test         # front
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Règles métier
 
-### `yarn build`
+Tarifs, saisons, taxe de séjour, durées minimales et acompte sont dans
+`config/tidolasab.php`. Le front lit ces règles via `GET /api/pricing`, et le prix
+est toujours recalculé par le serveur (`App\Services\PricingService`).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Pour changer les tarifs d'une nouvelle année, ajouter une entrée dans `rates`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## API
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Accès  | Route |
+|--------|-------|
+| Public | `GET /api/bookings/reserved`, `GET /api/pricing`, `POST /api/bookings`, `POST /api/contact`, `POST /api/login` |
+| Admin  | tout le reste (`auth:sanctum`) : réservations, clients, paiements, statistiques, utilisateurs |
 
-### `yarn eject`
+Les erreurs sont toujours renvoyées en JSON : `{ "message": "...", "errors": { "champ": ["..."] } }`
+(422 pour une règle métier ou une validation, 401 sans session, 404, 500).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Déploiement (LWS)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Le workflow `.github/workflows/deploy.yml` lance les tests à chaque push, puis sur `main` :
+build du front et des dépendances dans la CI, envoi par SFTP, et activation par SSH
+(`deploy/remote.sh` : sauvegarde de la base, migrations, cache, bascule du lien `current`).
+Le script n'utilise que des commandes disponibles sur le shell restreint LWS.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+À configurer une fois :
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Sur LWS :
+   - dans le panneau, passer la version PHP du site en **8.5**. En ligne de commande,
+     `php` reste en 8.2 : utiliser `php85` ;
+   - créer `<app>/shared/.env` (production, `APP_DEBUG=false`) ;
+   - faire pointer la racine web du domaine sur `<app>/current/public`.
+2. Dans GitHub (environnement `production`) :
+   - secrets : `LWS_HOST`, `LWS_USER`, `LWS_SSH_KEY`, `LWS_PORT`, `VITE_SENTRY_DSN`, `SENTRY_AUTH_TOKEN`
+   - variables : `LWS_APP_PATH`, `LWS_PHP` (`php85` par défaut), `SENTRY_ORG`, `SENTRY_PROJECT`
+3. Cron LWS : `cd <app>/current && php85 artisan schedule:run` chaque minute,
+   ou `php85 artisan reminders:send` une fois par jour (rappel du solde à J-14).
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Avant chaque migration, `deploy/remote.sh` sauvegarde la base dans `<app>/shared/backups`
+(10 dernières sauvegardes conservées).
