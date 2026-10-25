@@ -30,7 +30,7 @@ import {
   TypeBadge,
 } from "../components/Badges";
 import { date, daysUntil, money, nights, shortDate } from "../utils/format";
-import { methodLabel } from "../utils/labels";
+import { isRefund, methodLabel } from "../utils/labels";
 import { openClientForm } from "./ClientFormModal";
 import { openPaymentForm } from "../payments/PaymentFormModal";
 import { useConfirmDraft } from "../payments/ConfirmDraftModal";
@@ -212,9 +212,14 @@ const ClientPage = () => {
                                 p.statut === "brouillon" &&
                                 daysUntil(p.date_paiement) < 0
                               }
+                              refund={isRefund(p)}
                             />
                           </Table.Td>
-                          <Table.Td ta="right" fw={500}>
+                          <Table.Td
+                            ta="right"
+                            fw={500}
+                            c={isRefund(p) ? "grape" : undefined}
+                          >
                             {money(p.montant_paiement)}
                           </Table.Td>
                           <Table.Td ta="right">

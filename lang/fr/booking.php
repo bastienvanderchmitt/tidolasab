@@ -8,5 +8,7 @@ return [
     'payment_not_draft' => 'Ce paiement est déjà encaissé.',
     'balance_draft_note' => 'Solde',
     'draft_not_deletable' => 'Le solde attendu se met à jour automatiquement : modifiez le prix de la réservation pour le changer.',
+    'refunds_exceed_paid' => 'Les remboursements ne peuvent pas dépasser les sommes encaissées sur cette réservation.',
+    'refund_leaves_balance' => 'Ce séjour est maintenu : baissez d’abord son prix (ou annulez la réservation), puis remboursez la différence.',
     'has_payments' => 'Cette réservation a des paiements encaissés : annulez-la plutôt que de la supprimer.',
 ];

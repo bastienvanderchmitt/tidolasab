@@ -30,12 +30,14 @@ class PaymentController extends Controller
     }
 
     /**
-     * Enregistre un paiement encaissé ; le solde attendu de la réservation est recalculé.
+     * Enregistre un paiement encaissé, ou un remboursement (montant négatif) ;
+     * le solde attendu de la réservation est recalculé.
      */
     public function store(SavePaymentRequest $request): JsonResponse
     {
         $payment = DB::transaction(function () use ($request) {
             $payment = Payment::create($this->attributes($request));
+            $this->bookings->ensureRefundsCovered($payment->booking, $payment);
             $this->bookings->syncBalanceDraft($payment->booking);
 
             return $payment;
@@ -58,9 +60,12 @@ class PaymentController extends Controller
                 $attributes = array_intersect_key($attributes, array_flip(['date_paiement', 'moyen_paiement', 'note']));
             }
             $payment->update($attributes);
+            $booking = $payment->fresh()->booking;
 
-            $this->bookings->syncBalanceDraft($payment->fresh()->booking);
+            $this->bookings->ensureRefundsCovered($booking, $payment);
+            $this->bookings->syncBalanceDraft($booking);
             if ($previousBooking && $previousBooking->id !== $payment->id_reservation) {
+                $this->bookings->ensureRefundsCovered($previousBooking);
                 $this->bookings->syncBalanceDraft($previousBooking);
             }
         });
@@ -90,6 +95,7 @@ class PaymentController extends Controller
             $booking = $payment->booking;
             $payment->delete();
             if ($booking instanceof Booking) {
+                $this->bookings->ensureRefundsCovered($booking);
                 $this->bookings->syncBalanceDraft($booking);
             }
         });

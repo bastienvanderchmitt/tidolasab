@@ -100,6 +100,7 @@ class BookingController extends Controller
     {
         $booking->setAttribute('acompte_attendu', $this->bookings->amountDueAtBooking($booking));
         $booking->setAttribute('paiement_total_requis', $this->bookings->requiresFullPayment($booking));
+        $booking->setAttribute('remboursable', $this->bookings->refundable($booking));
     }
 
     public function destroy(Booking $booking): JsonResponse

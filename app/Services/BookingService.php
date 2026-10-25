@@ -244,9 +244,8 @@ class BookingService
     {
         $drafts = $booking->payments()->draft()->orderBy('id')->get();
         $remaining = $this->balance($booking);
-        $expected = $booking->type === BookingType::Classique && $booking->statut === BookingStatus::Validated;
 
-        if (! $expected || $remaining <= 0) {
+        if (! $this->expectsBalance($booking) || $remaining <= 0) {
             $drafts->each->delete();
 
             return;
@@ -269,11 +268,54 @@ class BookingService
     }
 
     /**
+     * Montant encaissé net : paiements encaissés moins remboursements (hors brouillons).
+     */
+    public function paid(Booking $booking): float
+    {
+        return round((float) Payment::where('id_reservation', $booking->id)->confirmed()->sum('montant_paiement'), 2);
+    }
+
+    /**
+     * Montant qui peut encore être remboursé. Pour une réservation directe validée,
+     * seul le trop-perçu l'est : rembourser davantage ferait réapparaître un solde à payer.
+     */
+    public function refundable(Booking $booking): float
+    {
+        $paid = $this->paid($booking);
+
+        return max(0, $this->expectsBalance($booking) ? round($paid - $booking->prix_total, 2) : $paid);
+    }
+
+    /**
+     * À appeler dans une transaction, après l'enregistrement ou la suppression d'un paiement :
+     * les remboursements ne peuvent pas dépasser les sommes encaissées, ni créer un solde
+     * à payer sur un séjour maintenu (il faut d'abord baisser son prix).
+     */
+    public function ensureRefundsCovered(Booking $booking, ?Payment $saved = null): void
+    {
+        if ($this->paid($booking) < 0) {
+            throw new BusinessException(__('booking.refunds_exceed_paid'));
+        }
+
+        if ($saved?->isRefund() && $this->expectsBalance($booking) && $this->balance($booking) > 0) {
+            throw new BusinessException(__('booking.refund_leaves_balance'));
+        }
+    }
+
+    /**
      * Solde restant : prix total moins les paiements encaissés (hors brouillons).
      */
     public function balance(Booking $booking): float
     {
-        return round($booking->prix_total - Payment::where('id_reservation', $booking->id)->confirmed()->sum('montant_paiement'), 2);
+        return round($booking->prix_total - $this->paid($booking), 2);
+    }
+
+    /**
+     * Seule une réservation directe validée attend un solde (paiement brouillon).
+     */
+    private function expectsBalance(Booking $booking): bool
+    {
+        return $booking->type === BookingType::Classique && $booking->statut === BookingStatus::Validated;
     }
 
     /**

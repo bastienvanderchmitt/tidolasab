@@ -8,6 +8,7 @@ use App\Mail\PaymentReminder;
 use App\Models\Booking;
 use App\Models\Client;
 use App\Models\Payment;
+use App\Services\BookingService;
 use App\Support\Money;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -287,4 +288,71 @@ it('refuse de supprimer une réservation qui a des paiements encaissés', functi
 
     expect(Booking::find($booking->id))->not->toBeNull()
         ->and($booking->fresh()->statut)->toBe(BookingStatus::Pending);
+});
+
+describe('remboursements', function () {
+    function refund(Booking $booking, float $amount)
+    {
+        return test()->actingAs(admin())->postJson('/api/payments', [
+            'booking' => $booking->id, 'deposit' => -$amount, 'date' => '2026-10-25', 'type' => 'virement',
+        ]);
+    }
+
+    it('rembourse tout ou partie d’une réservation annulée', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['prix_total' => 342]);
+        validateBooking($booking, 171);
+        $this->actingAs(admin())->postJson("/api/bookings/{$booking->id}/cancel")->assertOk();
+
+        $this->actingAs(admin())->getJson("/api/bookings/{$booking->id}")->assertJsonPath('booking.remboursable', 171);
+        refund($booking, 100)->assertCreated();
+
+        expect(app(BookingService::class)->paid($booking))->toBe(71.0)
+            ->and(draftOf($booking))->toBeNull();
+    });
+
+    it('refuse de rembourser plus que les sommes encaissées', function () {
+        $booking = Booking::factory()->withClient()->create(['statut' => BookingStatus::Cancelled]);
+        Payment::factory()->for($booking)->create(['montant_paiement' => 100]);
+
+        refund($booking, 100.01)
+            ->assertUnprocessable()
+            ->assertJsonPath('message', __('booking.refunds_exceed_paid'));
+
+        expect($booking->payments()->count())->toBe(1);
+    });
+
+    it('ne rembourse que le trop-perçu d’un séjour maintenu', function () {
+        $admin = admin();
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['prix_total' => 342]);
+        validateBooking($booking, 342);
+
+        refund($booking, 50)
+            ->assertUnprocessable()
+            ->assertJsonPath('message', __('booking.refund_leaves_balance'));
+
+        // Prix baissé : la différence se rembourse sans recréer de solde
+        $this->actingAs($admin)->putJson("/api/bookings/{$booking->id}", [
+            'checkIn' => '2026-12-01', 'checkOut' => '2026-12-04', 'adults' => 2, 'type' => 'Classique', 'total' => 292,
+        ])->assertOk();
+        $this->actingAs($admin)->getJson("/api/bookings/{$booking->id}")->assertJsonPath('booking.remboursable', 50);
+
+        refund($booking, 50)->assertCreated();
+        expect(draftOf($booking))->toBeNull();
+    });
+
+    it('refuse de supprimer un paiement déjà remboursé', function () {
+        $booking = Booking::factory()->withClient()->create(['statut' => BookingStatus::Cancelled]);
+        $payment = Payment::factory()->for($booking)->create(['montant_paiement' => 100]);
+        refund($booking, 100)->assertCreated();
+
+        $this->actingAs(admin())->deleteJson("/api/payments/{$payment->id}")
+            ->assertUnprocessable()
+            ->assertJsonPath('message', __('booking.refunds_exceed_paid'));
+    });
+
+    it('refuse un montant nul', function () {
+        $booking = Booking::factory()->withClient()->create();
+
+        refund($booking, 0)->assertUnprocessable()->assertJsonValidationErrors('deposit');
+    });
 });

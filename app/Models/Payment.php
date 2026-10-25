@@ -35,6 +35,14 @@ class Payment extends Model
         return $this->statut === PaymentStatus::Draft;
     }
 
+    /**
+     * Un remboursement est un paiement encaissé de montant négatif.
+     */
+    public function isRefund(): bool
+    {
+        return ! $this->isDraft() && $this->montant_paiement < 0;
+    }
+
     public function scopeConfirmed(Builder $query): void
     {
         $query->where($this->qualifyColumn('statut'), PaymentStatus::Confirmed);

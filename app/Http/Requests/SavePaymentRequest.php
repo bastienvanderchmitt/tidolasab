@@ -12,7 +12,8 @@ class SavePaymentRequest extends FormRequest
     {
         return [
             'booking' => ['required', 'integer', Rule::exists('reservations', 'id')],
-            'deposit' => ['required', 'numeric'],
+            // Négatif pour un remboursement, jamais nul
+            'deposit' => ['required', 'numeric', 'not_in:0'],
             'date' => ['required', 'date_format:Y-m-d'],
             'type' => ['required', Rule::enum(PaymentMethod::class)],
             'note' => ['nullable', 'string', 'max:5000'],

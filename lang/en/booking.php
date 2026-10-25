@@ -8,5 +8,7 @@ return [
     'payment_not_draft' => 'This payment has already been received.',
     'balance_draft_note' => 'Balance',
     'draft_not_deletable' => 'The expected balance updates automatically: change the booking price to adjust it.',
+    'refunds_exceed_paid' => 'Refunds cannot exceed the amounts received for this booking.',
+    'refund_leaves_balance' => 'This stay is still on: lower its price first (or cancel the booking), then refund the difference.',
     'has_payments' => 'This booking has received payments: cancel it instead of deleting it.',
 ];

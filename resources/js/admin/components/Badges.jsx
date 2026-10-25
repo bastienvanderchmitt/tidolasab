@@ -3,6 +3,7 @@ import {
   BOOKING_STATUSES,
   BOOKING_TYPES,
   PAYMENT_STATUSES,
+  REFUND_STATUS,
 } from "../utils/labels";
 
 export const StatusBadge = ({ status }) => {
@@ -29,11 +30,10 @@ export const TypeBadge = ({ type }) => {
   );
 };
 
-export const PaymentStatusBadge = ({ status, overdue }) => {
-  const { label, color } = PAYMENT_STATUSES[status] ?? {
-    label: status,
-    color: "gray",
-  };
+export const PaymentStatusBadge = ({ status, overdue, refund }) => {
+  const { label, color } = refund
+    ? REFUND_STATUS
+    : (PAYMENT_STATUSES[status] ?? { label: status, color: "gray" });
   return (
     <Badge color={overdue ? "red" : color} variant="light">
       {overdue ? "En retard" : label}

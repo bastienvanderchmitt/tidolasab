@@ -20,6 +20,7 @@ import {
   IconDots,
   IconEdit,
   IconPlus,
+  IconReceiptRefund,
   IconSearch,
   IconTrash,
 } from "@tabler/icons-react";
@@ -29,7 +30,7 @@ import QueryState from "../components/QueryState";
 import StatCard from "../components/StatCard";
 import { PaymentStatusBadge, TypeBadge } from "../components/Badges";
 import { confirmAction } from "../components/confirm";
-import { PAYMENT_METHODS, methodLabel } from "../utils/labels";
+import { PAYMENT_METHODS, isRefund, methodLabel } from "../utils/labels";
 import { date, dayjs, daysUntil, money, shortDate } from "../utils/format";
 import { useConfirmDraft } from "./ConfirmDraftModal";
 import { openPaymentForm } from "./PaymentFormModal";
@@ -67,6 +68,7 @@ const PaymentsPage = () => {
         if (status === "confirmé" || status === "brouillon")
           return p.statut === status;
         if (status === "overdue") return isOverdue(p);
+        if (status === "refund") return isRefund(p);
         return true;
       })
       .filter((p) => !year || dayjs(p.date_paiement).year() === Number(year))
@@ -94,11 +96,14 @@ const PaymentsPage = () => {
     list.reduce((total, p) => total + Number(p.montant_paiement), 0);
   const confirmedRows = rows.filter((p) => p.statut === "confirmé");
   const draftRows = rows.filter((p) => p.statut === "brouillon");
+  const refundRows = confirmedRows.filter(isRefund);
 
   const askDelete = (p) =>
     confirmAction({
-      title: "Supprimer le paiement",
-      message: `Supprimer le paiement de ${money(p.montant_paiement)} du ${date(p.date_paiement)} ? Le solde attendu de la réservation sera recalculé.`,
+      title: isRefund(p)
+        ? "Supprimer le remboursement"
+        : "Supprimer le paiement",
+      message: `Supprimer ${isRefund(p) ? "le remboursement" : "le paiement"} de ${money(Math.abs(p.montant_paiement))} du ${date(p.date_paiement)} ? Le solde attendu de la réservation sera recalculé.`,
       confirmLabel: "Supprimer",
       onConfirm: () => remove.mutate(p.id),
     });
@@ -110,6 +115,13 @@ const PaymentsPage = () => {
         description="Encaissements et soldes attendus (brouillons)"
       >
         <Button
+          variant="default"
+          leftSection={<IconReceiptRefund size={16} />}
+          onClick={() => openPaymentForm({ refund: true })}
+        >
+          Remboursement
+        </Button>
+        <Button
           leftSection={<IconPlus size={16} />}
           onClick={() => openPaymentForm()}
         >
@@ -119,9 +131,13 @@ const PaymentsPage = () => {
 
       <SimpleGrid cols={{ base: 1, sm: 2 }} mb="md">
         <StatCard
-          label="Encaissé (sélection)"
+          label="Encaissé net (sélection)"
           value={money(sum(confirmedRows))}
-          hint={`${confirmedRows.length} paiements`}
+          hint={
+            refundRows.length > 0
+              ? `${confirmedRows.length - refundRows.length} paiements · ${money(-sum(refundRows))} remboursés`
+              : `${confirmedRows.length} paiements`
+          }
           icon={IconCash}
         />
         <StatCard
@@ -143,6 +159,7 @@ const PaymentsPage = () => {
               { value: "confirmé", label: "Encaissés" },
               { value: "brouillon", label: "Attendus" },
               { value: "overdue", label: "En retard" },
+              { value: "refund", label: "Remboursements" },
             ]}
           />
           <Select
@@ -245,13 +262,14 @@ const PaymentsPage = () => {
                         <PaymentStatusBadge
                           status={p.statut}
                           overdue={isOverdue(p)}
+                          refund={isRefund(p)}
                         />
                       </Table.Td>
                       <Table.Td ta="right">
                         <Text
                           size="sm"
                           fw={600}
-                          c={Number(p.montant_paiement) < 0 ? "red" : undefined}
+                          c={isRefund(p) ? "grape" : undefined}
                         >
                           {money(p.montant_paiement)}
                         </Text>

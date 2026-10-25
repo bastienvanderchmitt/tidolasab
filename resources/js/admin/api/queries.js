@@ -55,10 +55,15 @@ export const useApiMutation = (request, successMessage) => {
 
   return useMutation({
     mutationFn: request,
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries();
-      if (successMessage) {
-        notifications.show({ color: "teal", message: successMessage });
+      // Le message peut dépendre des données envoyées
+      const message =
+        typeof successMessage === "function"
+          ? successMessage(variables)
+          : successMessage;
+      if (message) {
+        notifications.show({ color: "teal", message });
       }
     },
     onError: (error) => {

@@ -15,6 +15,8 @@ import {
   IconCheck,
   IconClockPause,
   IconEdit,
+  IconPlus,
+  IconReceiptRefund,
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
@@ -26,9 +28,10 @@ import {
   TypeBadge,
 } from "../components/Badges";
 import { daysUntil, date, guests, money, nights } from "../utils/format";
-import { methodLabel } from "../utils/labels";
+import { isRefund, methodLabel } from "../utils/labels";
 import { useBookingActions } from "./useBookingActions";
 import { useConfirmDraft } from "../payments/ConfirmDraftModal";
+import { openPaymentForm } from "../payments/PaymentFormModal";
 
 const Row = ({ label, children }) => (
   <Group justify="space-between" gap="xs" wrap="nowrap">
@@ -63,10 +66,11 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
           const confirmed = booking.payments.filter(
             (p) => p.statut === "confirmé",
           );
-          const paid = confirmed.reduce(
-            (sum, p) => sum + Number(p.montant_paiement),
-            0,
-          );
+          const sum = (list) =>
+            list.reduce((total, p) => total + Number(p.montant_paiement), 0);
+          const refunded = -sum(confirmed.filter(isRefund));
+          const paid = sum(confirmed);
+          const refundable = Number(booking.remboursable);
           const total = Number(booking.prix_total);
           const summary = {
             ...listItem,
@@ -131,7 +135,15 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
                         {money(booking.taxe_sejour)}
                       </Row>
                     )}
-                    <Row label="Encaissé">{money(paid)}</Row>
+                    {refunded > 0 ? (
+                      <>
+                        <Row label="Reçu">{money(paid + refunded)}</Row>
+                        <Row label="Remboursé">{money(-refunded)}</Row>
+                        <Row label="Encaissé net">{money(paid)}</Row>
+                      </>
+                    ) : (
+                      <Row label="Encaissé">{money(paid)}</Row>
+                    )}
                     <Progress
                       value={
                         total > 0 ? Math.min(100, (paid / total) * 100) : 0
@@ -159,9 +171,13 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
                                   p.statut === "brouillon" &&
                                   daysUntil(p.date_paiement) < 0
                                 }
+                                refund={isRefund(p)}
                               />
                             </Table.Td>
-                            <Table.Td ta="right">
+                            <Table.Td
+                              ta="right"
+                              c={isRefund(p) ? "grape" : undefined}
+                            >
                               {money(p.montant_paiement)}
                             </Table.Td>
                             <Table.Td ta="right">
@@ -185,6 +201,33 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
                       </Table.Tbody>
                     </Table>
                   )}
+
+                  <Group gap="xs">
+                    <Button
+                      size="xs"
+                      variant="light"
+                      leftSection={<IconPlus size={14} />}
+                      onClick={() => openPaymentForm({ bookingId: booking.id })}
+                    >
+                      Paiement
+                    </Button>
+                    {refundable > 0 && (
+                      <Button
+                        size="xs"
+                        variant="light"
+                        color="grape"
+                        leftSection={<IconReceiptRefund size={14} />}
+                        onClick={() =>
+                          openPaymentForm({
+                            bookingId: booking.id,
+                            refund: true,
+                          })
+                        }
+                      >
+                        Rembourser {money(refundable)}
+                      </Button>
+                    )}
+                  </Group>
                 </>
               )}
 

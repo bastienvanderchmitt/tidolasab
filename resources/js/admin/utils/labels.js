@@ -5,8 +5,8 @@ export const BOOKING_STATUSES = {
 };
 
 export const BOOKING_TYPES = {
-  Classique: { label: "Directe", color: "blue" },
-  Booking: { label: "Booking", color: "indigo" },
+  Classique: { label: "Directe", color: "violet" },
+  Booking: { label: "Booking", color: "blue" },
   AirBnb: { label: "Airbnb", color: "pink" },
   Fermeture: { label: "Fermeture", color: "dark" },
 };
@@ -21,6 +21,12 @@ export const PAYMENT_STATUSES = {
   confirmé: { label: "Encaissé", color: "teal" },
   brouillon: { label: "Attendu", color: "orange" },
 };
+
+export const REFUND_STATUS = { label: "Remboursé", color: "grape" };
+
+// Un remboursement est un paiement encaissé de montant négatif
+export const isRefund = (p) =>
+  p.statut === "confirmé" && Number(p.montant_paiement) < 0;
 
 export const methodLabel = (value) =>
   PAYMENT_METHODS.find((m) => m.value === value)?.label ?? value;
