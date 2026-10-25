@@ -174,7 +174,11 @@
     "city": "Ville",
     "country": "Pays",
     "title": "Vos coordonnées",
-    "intro": "Elles nous servent à vous envoyer le contrat de location."
+    "intro": "Elles nous servent à vous envoyer le contrat de location.",
+    "phone_format": "Numéro invalide : indiquez de 8 à 15 chiffres, avec l'indicatif pour l'étranger (+32…).",
+    "address_format": "Indiquez une adresse complète (numéro et rue).",
+    "postalCode_format": "Code postal invalide pour ce pays.",
+    "country_not_found": "Aucun pays trouvé"
   },
   "price": {
     "tax": "Taxe de séjour",

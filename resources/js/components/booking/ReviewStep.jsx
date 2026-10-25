@@ -1,8 +1,17 @@
-import { Alert, Anchor, Box, Paper, SimpleGrid, Stack, Text } from "@mantine/core";
+import {
+  Alert,
+  Anchor,
+  Box,
+  Paper,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useBookingContext } from "../../contexts/BookingContext";
 import PriceSummary from "./PriceSummary";
+import { countryName } from "../../helpers/countries";
 import { formatDate } from "./format";
 import classes from "./Booking.module.css";
 
@@ -23,7 +32,7 @@ const Block = ({ title, onEdit, children }) => {
 };
 
 const ReviewStep = ({ form, goTo }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { checkIn, checkOut, adults, quote } = useBookingContext();
   const client = form.values;
 
@@ -54,7 +63,7 @@ const ReviewStep = ({ form, goTo }) => {
           </Text>
           <Text size="sm" c="dimmed">
             {client.address}, {client.postalCode} {client.city},{" "}
-            {client.country}
+            {countryName(client.country, i18n.language)}
           </Text>
         </Block>
       </SimpleGrid>

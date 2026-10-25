@@ -34,7 +34,7 @@ it('met à jour un client', function () {
 
     $this->actingAs(admin())->putJson("/api/clients/{$client->id}", [
         'name' => 'Martin', 'firstName' => 'Léa', 'email' => 'lea@example.com',
-        'phone' => '0690', 'address' => 'Grand-Bourg', 'note' => 'Fidèle',
+        'phone' => '0690 11 22 33', 'address' => 'Grand-Bourg', 'note' => 'Fidèle',
     ])->assertOk()->assertJsonPath('clientId', $client->id);
 
     expect($client->fresh())->nom->toBe('Martin')->note->toBe('Fidèle');

@@ -6,6 +6,7 @@ import { IconSend } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useSendContact } from "../../../api/queries";
+import { isEmail } from "../../../helpers/validation";
 
 const ContactForm = () => {
   const { t } = useTranslation();
@@ -19,18 +20,23 @@ const ContactForm = () => {
       email: (value) =>
         !value
           ? t("contact.email_required")
-          : /^\S+@\S+\.\S+$/.test(value)
+          : isEmail(value)
             ? null
             : t("contact.email_validation"),
-      subject: (value) => (value.trim() ? null : t("contact.subject_validation")),
-      message: (value) => (value.trim() ? null : t("contact.message_validation")),
+      subject: (value) =>
+        value.trim() ? null : t("contact.subject_validation"),
+      message: (value) =>
+        value.trim() ? null : t("contact.message_validation"),
     },
   });
 
   const submit = async (values) => {
     const token = recaptchaRef.current?.getValue();
     if (!token) {
-      notifications.show({ color: "orange", message: t("contact.recaptcha_required") });
+      notifications.show({
+        color: "orange",
+        message: t("contact.recaptcha_required"),
+      });
       return;
     }
 
@@ -39,7 +45,10 @@ const ContactForm = () => {
       notifications.show({ color: "teal", message: t("contact.sent") });
       form.reset();
     } catch (error) {
-      notifications.show({ color: "red", message: error.message || t("common.error") });
+      notifications.show({
+        color: "red",
+        message: error.message || t("common.error"),
+      });
     } finally {
       // Un jeton reCAPTCHA ne sert qu'une fois : sans cela, un nouvel essai serait refusé
       recaptchaRef.current?.reset();
@@ -49,21 +58,31 @@ const ContactForm = () => {
   return (
     <form onSubmit={form.onSubmit(submit)}>
       <Stack gap="md">
-        <TextInput label={t("contact.name")} autoComplete="name" {...form.getInputProps("name")} />
+        <TextInput
+          label={t("contact.name")}
+          autoComplete="name"
+          {...form.getInputProps("name")}
+        />
         <TextInput
           label={t("contact.email")}
           type="email"
           autoComplete="email"
           {...form.getInputProps("email")}
         />
-        <TextInput label={t("contact.subject")} {...form.getInputProps("subject")} />
+        <TextInput
+          label={t("contact.subject")}
+          {...form.getInputProps("subject")}
+        />
         <Textarea
           label={t("contact.message")}
           autosize
           minRows={5}
           {...form.getInputProps("message")}
         />
-        <ReCAPTCHA sitekey="6LeV2q0qAAAAAHkX-olZaIJBgZX7VjcDOdXU7Qb1" ref={recaptchaRef} />
+        <ReCAPTCHA
+          sitekey="6LeV2q0qAAAAAHkX-olZaIJBgZX7VjcDOdXU7Qb1"
+          ref={recaptchaRef}
+        />
         <Button
           type="submit"
           size="md"

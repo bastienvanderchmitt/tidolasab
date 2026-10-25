@@ -47,6 +47,8 @@ const useStayPicker = () => {
     onChange,
     excludeDate,
     minDate: today(),
+    // Ouvre le calendrier sur le mois d'arrivée (lien partagé, barre rapide)
+    defaultDate: checkIn ?? undefined,
     weekendDays: [],
     getDayProps: (date) => ({ "data-taken": taken.has(date) || undefined }),
     classNames: { day: classes.day },

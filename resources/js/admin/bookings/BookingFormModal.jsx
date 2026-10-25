@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import { isEmail, isPhone } from "../../helpers/validation";
 import {
   bookingApi,
   useApiMutation,
@@ -89,7 +90,8 @@ const BookingFormModal = ({ booking, defaults = {}, onDone }) => {
         !v
           ? "Indiquez le nom"
           : null,
-      email: (v) => (!v || /^\S+@\S+\.\S+$/.test(v) ? null : "Email invalide"),
+      email: (v) => (!v || isEmail(v) ? null : "Email invalide"),
+      phone: (v) => (!v || isPhone(v) ? null : "Numéro de téléphone invalide"),
     },
   });
 

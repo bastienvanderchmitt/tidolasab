@@ -175,7 +175,11 @@
     "city": "City",
     "country": "Country",
     "title": "Your details",
-    "intro": "We use them to send you the rental agreement."
+    "intro": "We use them to send you the rental agreement.",
+    "phone_format": "Invalid number: enter 8 to 15 digits, with the country code if outside France (+44…).",
+    "address_format": "Please enter a full address (number and street).",
+    "postalCode_format": "Invalid postal code for this country.",
+    "country_not_found": "No country found"
   },
   "price": {
     "tax": "Tourist tax",

@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { isEmail } from "../../helpers/validation";
 import { modals } from "@mantine/modals";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { useApiMutation, userApi, useUsers } from "../api/queries";
@@ -27,7 +28,7 @@ const UserForm = ({ onDone }) => {
     initialValues: { name: "", email: "", login: "", password: "" },
     validate: {
       name: (v) => (v ? null : "Indiquez le nom"),
-      email: (v) => (/^\S+@\S+\.\S+$/.test(v) ? null : "Email invalide"),
+      email: (v) => (isEmail(v) ? null : "Email invalide"),
       login: (v) => (v ? null : "Indiquez l'identifiant"),
       password: validatePassword,
     },

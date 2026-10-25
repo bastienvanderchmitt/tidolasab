@@ -224,3 +224,27 @@ it('liste les réservations avec le nom du client', function () {
 
     expect(Client::count())->toBe(1);
 });
+
+it('accepte les coordonnées françaises et étrangères bien formées', function (array $contact) {
+    $this->postJson('/api/bookings', bookingPayload($contact))->assertCreated();
+})->with([
+    'Guadeloupe' => [['phone' => '06 90 11 22 33', 'postalCode' => '97140', 'countryCode' => 'GP']],
+    'international' => [['phone' => '+590 690 11 22 33', 'postalCode' => '97140', 'countryCode' => 'FR']],
+    'Royaume-Uni' => [['phone' => '+44 (0)20 7946 0958', 'postalCode' => 'SW1A 1AA', 'countryCode' => 'GB']],
+    'Belgique' => [['phone' => '+32 2 123 45 67', 'postalCode' => '1000', 'countryCode' => 'BE']],
+]);
+
+it('refuse des coordonnées mal formées', function (string $field, array $contact) {
+    $this->postJson('/api/bookings', bookingPayload($contact))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors($field);
+})->with([
+    'email sans extension' => ['email', ['email' => 'marie@gmail']],
+    'email avec espace' => ['email', ['email' => 'marie @gmail.com']],
+    'email avec double @' => ['email', ['email' => 'marie@@gmail.com']],
+    'téléphone trop court' => ['phone', ['phone' => '0690']],
+    'téléphone avec lettres' => ['phone', ['phone' => '06 90 AB CD EF']],
+    'code postal français à 4 chiffres' => ['postalCode', ['postalCode' => '9714', 'countryCode' => 'FR']],
+    'adresse sans lettre' => ['address', ['address' => '12345']],
+    'ville sans lettre' => ['city', ['city' => '97140']],
+]);

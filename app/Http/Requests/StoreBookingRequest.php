@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Enums\BookingType;
+use App\Rules\PhoneNumber;
+use App\Rules\PostalCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,12 +28,14 @@ class StoreBookingRequest extends FormRequest
             'note' => ['nullable', 'string', 'max:5000'],
             'name' => [$clientField, 'string', 'max:255'],
             'firstName' => [$clientField, 'string', 'max:255'],
-            'email' => [$clientField, 'email', 'max:255'],
-            'phone' => [$clientField, 'string', 'max:20'],
-            'address' => [$clientField, 'string', 'max:1000'],
-            'postalCode' => [$clientField, 'string', 'max:20'],
-            'city' => [$clientField, 'string', 'max:255'],
+            'email' => [$clientField, 'email:rfc,strict', 'max:255'],
+            'phone' => [$clientField, 'string', 'max:20', new PhoneNumber],
+            'address' => [$clientField, 'string', 'min:5', 'max:1000', 'regex:/\pL/u'],
+            'postalCode' => [$clientField, 'string', 'max:20', new PostalCode($this->input('countryCode'))],
+            'city' => [$clientField, 'string', 'max:255', 'regex:/\pL/u'],
             'country' => [$clientField, 'string', 'max:255'],
+            // Code ISO envoyé par le site public, pour le format du code postal
+            'countryCode' => ['nullable', 'string', 'size:2', 'alpha'],
             'language' => ['nullable', 'string', 'size:2'],
         ];
     }

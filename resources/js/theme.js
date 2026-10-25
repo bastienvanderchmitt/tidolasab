@@ -44,5 +44,6 @@ export const theme = createTheme({
     Modal: { defaultProps: { radius: "lg", centered: true } },
     TextInput: { defaultProps: { radius: "md", size: "md" } },
     Textarea: { defaultProps: { radius: "md", size: "md" } },
+    Select: { defaultProps: { radius: "md", size: "md" } },
   },
 });

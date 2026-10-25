@@ -7,6 +7,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { isEmail, isPhone } from "../../helpers/validation";
 import { modals } from "@mantine/modals";
 import { clientApi, useApiMutation } from "../api/queries";
 
@@ -23,7 +24,8 @@ const ClientForm = ({ client, onDone }) => {
       note: client.note ?? "",
     },
     validate: {
-      email: (v) => (!v || /^\S+@\S+\.\S+$/.test(v) ? null : "Email invalide"),
+      email: (v) => (!v || isEmail(v) ? null : "Email invalide"),
+      phone: (v) => (!v || isPhone(v) ? null : "Numéro de téléphone invalide"),
     },
   });
 
