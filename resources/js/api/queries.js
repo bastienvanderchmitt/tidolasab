@@ -4,7 +4,7 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { notifications } from "@mantine/notifications";
 import i18n from "../i18n";
 import { getReservedBookings, saveBooking } from "./booking";
 import { sendEmail } from "./contact";
@@ -16,7 +16,11 @@ import { getPricing } from "./pricing";
  */
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error) => toast.error(error?.message || i18n.t("common.error")),
+    onError: (error) =>
+      notifications.show({
+        color: "red",
+        message: error?.message || i18n.t("common.error"),
+      }),
   }),
   defaultOptions: {
     queries: {
@@ -46,6 +50,9 @@ export const useReservedBookings = () =>
 export const useSaveBooking = () =>
   useMutation({
     mutationFn: (data) => saveBooking(data).then(({ data }) => data),
+    // Les dates qui viennent d'être demandées ne sont plus libres
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["bookings", "reserved"] }),
   });
 
 export const useSendContact = () =>

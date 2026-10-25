@@ -1,0 +1,86 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 200;
+  color: white;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+}
+
+.header[data-solid] {
+  background-color: rgba(251, 248, 243, 0.88);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 24px -12px rgba(34, 48, 58, 0.25);
+  color: var(--tds-ink);
+}
+
+.inner {
+  max-width: 1280px;
+  height: var(--tds-header-height);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+}
+
+.name {
+  font-family: Marcellus, serif;
+  font-size: 1.35rem;
+  white-space: nowrap;
+}
+
+.link {
+  position: relative;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 6px 0;
+  opacity: 0.88;
+  transition: opacity 0.2s ease;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--tds-sand);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.link:hover,
+.active {
+  opacity: 1;
+}
+
+.link:hover::after,
+.active::after {
+  transform: scaleX(1);
+}
+
+.drawerNav .link {
+  font-family: Marcellus, serif;
+  font-size: 1.6rem;
+  color: var(--tds-ink);
+  align-self: flex-start;
+}

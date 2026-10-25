@@ -1,9 +1,5 @@
-import { useCallback, useState } from "react";
-import { Col, Container, Row } from "reactstrap";
-import Gallery from "react-photo-gallery";
-import Carousel, { Modal, ModalGateway } from "react-images";
+import { Container } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-
 import location_1 from "../../assets/img/locations/location_1.webp";
 import location_2 from "../../assets/img/locations/location_2.webp";
 import location_3 from "../../assets/img/locations/location_3.webp";
@@ -47,272 +43,69 @@ import room_5 from "../../assets/img/room/room_5.webp";
 import room_7 from "../../assets/img/room/room_7.webp";
 import location_45 from "../../assets/img/locations/location_45.webp";
 import location_46 from "../../assets/img/locations/location_46.webp";
+import SectionTitle from "../common/SectionTitle";
+import PhotoGallery from "../common/PhotoGallery";
+
+const photos = [
+  location_26,
+  location_14,
+  location_32,
+  location_31,
+  location_28,
+  location_41,
+  location_27,
+  location_29,
+  location_1,
+  location_2,
+  location_42,
+  location_12,
+  location_43,
+  location_3,
+  location_7,
+  location_20,
+  location_10,
+  location_9,
+  location_22,
+  location_44,
+  room_1,
+  room_2,
+  room_4,
+  room_5,
+  room_7,
+  location_4,
+  location_11,
+  location_17,
+  location_35,
+  location_16,
+  location_15,
+  location_5,
+  location_21,
+  location_30,
+  location_33,
+  location_34,
+  location_36,
+  location_40,
+  location_37,
+  location_39,
+  location_38,
+  location_45,
+  location_46,
+];
 
 const Photos = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [viewerIsOpen, setViewerIsOpen] = useState(false);
-
   const { t } = useTranslation();
 
-  const images = [
-    {
-      src: location_26,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_14,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_32,
-      width: 3,
-      height: 4,
-    },
-    {
-      src: location_31,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_28,
-      width: 3,
-      height: 4,
-    },
-    {
-      src: location_41,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_27,
-      width: 1,
-      height: 1,
-    },
-    {
-      src: location_29,
-      width: 1,
-      height: 1,
-    },
-    {
-      src: location_1,
-      width: 4,
-      height: 3,
-    },
-    {
-      src: location_2,
-      width: 2,
-      height: 1,
-    },
-    {
-      src: location_42,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_12,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_43,
-      width: 4,
-      height: 2,
-    },
-    {
-      src: location_3,
-      width: 3,
-      height: 4,
-    },
-    {
-      src: location_7,
-      width: 3,
-      height: 3,
-    },
-    {
-      src: location_20,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_10,
-      width: 2.5,
-      height: 2,
-    },
-    {
-      src: location_9,
-      width: 4,
-      height: 3,
-    },
-    {
-      src: location_22,
-      width: 3,
-      height: 3,
-    },
-    {
-      src: location_44,
-      width: 4,
-      height: 2,
-    },
-    {
-      src: room_1,
-      width: 1.5,
-      height: 2,
-    },
-    {
-      src: room_2,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: room_4,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: room_5,
-      width: 3,
-      height: 3,
-    },
-    {
-      src: room_7,
-      width: 4,
-      height: 2,
-    },
-    {
-      src: location_4,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_11,
-      width: 5,
-      height: 3,
-    },
-    {
-      src: location_17,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_35,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_16,
-      width: 2,
-      height: 1,
-    },
-    {
-      src: location_15,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_5,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_21,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_30,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_33,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_34,
-      width: 1,
-      height: 1,
-    },
-    {
-      src: location_36,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_40,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_37,
-      width: 3,
-      height: 2,
-    },
-    {
-      src: location_39,
-      width: 2,
-      height: 1,
-    },
-    {
-      src: location_38,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_45,
-      width: 2,
-      height: 2,
-    },
-    {
-      src: location_46,
-      width: 2,
-      height: 2,
-    },
-  ];
-
-  const openLightbox = useCallback((event, { photo, index }) => {
-    setCurrentImage(index);
-    setViewerIsOpen(true);
-  }, []);
-
-  const closeLightbox = () => {
-    setCurrentImage(0);
-    setViewerIsOpen(false);
-  };
-
   return (
-    <Container className="photos" style={{ paddingBottom: "100px" }}>
-      <Row className="p-4 m-lg-4 photos-header">
-        <Col className="text-center">
-          <h4 className="title-4 pt-4">{t("photos.title")}</h4>
-          <h4 className="title-2 pt-2">{t("photos.subtitle")}</h4>
-          <p className="pt-3 m-auto">{t("photos.description")}</p>
-          <p>{t("photos.sub_description")}</p>
-        </Col>
-      </Row>
-      <Row className="p-4 photos-panel text-center">
-        <Gallery
-          // Les photos ne sont chargées qu'à l'approche de l'écran
-          photos={images.map((photo) => ({ ...photo, loading: "lazy" }))}
-          onClick={openLightbox}
-        />
-        <ModalGateway>
-          {viewerIsOpen ? (
-            <Modal onClose={closeLightbox}>
-              <Carousel
-                currentIndex={currentImage}
-                views={images.map((x) => ({
-                  ...x,
-                  srcset: x.srcSet,
-                  caption: x.title,
-                }))}
-              />
-            </Modal>
-          ) : null}
-        </ModalGateway>
-      </Row>
+    <Container size="xl" className="section">
+      <SectionTitle
+        align="center"
+        eyebrow={t("photos.title")}
+        title={t("photos.subtitle")}
+      >
+        <p>{t("photos.description")}</p>
+        <p>{t("photos.sub_description")}</p>
+      </SectionTitle>
+      <PhotoGallery photos={photos} columns={4} />
     </Container>
   );
 };

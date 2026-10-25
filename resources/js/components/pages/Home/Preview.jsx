@@ -1,92 +1,85 @@
-import { Col, Container, Row } from "reactstrap";
-import { Slider } from "../../../helpers/cjsComponents";
-import palm_tree from "../../../assets/img/icons/palm_tree.png";
-import caroussel_1 from "../../../assets/img/caroussel/caroussel_1.webp";
-import caroussel_2 from "../../../assets/img/caroussel/caroussel_2.webp";
-import caroussel_3 from "../../../assets/img/caroussel/caroussel_3.webp";
-import caroussel_4 from "../../../assets/img/caroussel/caroussel_4.webp";
-import caroussel_5 from "../../../assets/img/caroussel/caroussel_5.webp";
-import caroussel_6 from "../../../assets/img/caroussel/caroussel_6.webp";
-import caroussel_7 from "../../../assets/img/caroussel/caroussel_7.webp";
+import { useRef } from "react";
+import { ActionIcon, Container } from "@mantine/core";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import palm_tree from "../../../assets/img/icons/palm_tree.png";
+import SectionTitle from "../../common/SectionTitle";
+import classes from "./Home.module.css";
+
+const photos = import.meta.glob("../../../assets/img/caroussel/*.webp", {
+  eager: true,
+  import: "default",
+});
 
 const Preview = () => {
   const { t } = useTranslation();
+  const stripRef = useRef(null);
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+  // Défile d'une photo, la molette verticale ne faisant pas défiler en largeur
+  const slide = (direction) => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    const edge = parseFloat(getComputedStyle(strip).paddingLeft);
+    const starts = [...strip.querySelectorAll("img")].map(
+      (photo) => photo.offsetLeft - strip.offsetLeft - edge,
+    );
+    // Photo actuellement alignée à gauche, puis la suivante ou la précédente
+    const current = starts.findIndex((start) => start >= strip.scrollLeft - 2);
+    const target = Math.min(
+      Math.max(current + direction, 0),
+      starts.length - 1,
+    );
+    strip.scrollTo({ left: starts[target], behavior: "smooth" });
   };
 
   return (
-    <div className="preview">
-      <Container>
-        <Row className="p-4 text-center preview">
-          <Col className="preview-content align-self-center">
-            <img className="palm-tree" alt="palm_tree" src={palm_tree} />
-            <h4 className="title-4 pt-4">{t("preview.welcome")}</h4>
-            <h4 className="title-2 pt-2">{t("preview.title")}</h4>
-            <p className="pt-5">{t("preview.subtitle")}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="slider-container">
-              <Slider {...settings}>
-                <div className="slick-image-container">
-                  <img src={caroussel_1} alt="caroussel_1" />
-                </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_2} alt="caroussel_2" />
-                </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_3} alt="caroussel_3" />
-                </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_4} alt="caroussel_4" />
-                </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_5} alt="caroussel_5" />
-                </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_6} alt="caroussel_6" />
-                </div>
-                <div className="slick-image-container">
-                  <img src={caroussel_7} alt="caroussel_7" />
-                </div>
-              </Slider>
-            </div>
-            <h4 className="aurore pt-3">{t("preview.description")}</h4>
-          </Col>
-        </Row>
+    <section className={`section ${classes.preview}`}>
+      <Container size="lg">
+        <img className={classes.palm} alt="" src={palm_tree} />
+        <SectionTitle
+          align="center"
+          eyebrow={t("preview.welcome")}
+          title={t("preview.title")}
+        >
+          <p>{t("preview.subtitle")}</p>
+        </SectionTitle>
       </Container>
-    </div>
+
+      <div className={classes.slider}>
+        {/* Défilement horizontal natif, aimanté sur chaque photo */}
+        <div ref={stripRef} className={classes.strip}>
+          {Object.values(photos).map((photo) => (
+            <img key={photo} src={photo} alt="" loading="lazy" />
+          ))}
+        </div>
+        <ActionIcon
+          className={classes.prev}
+          onClick={() => slide(-1)}
+          variant="white"
+          radius="xl"
+          size="xl"
+          aria-label="Photo précédente"
+        >
+          <IconChevronLeft />
+        </ActionIcon>
+        <ActionIcon
+          className={classes.next}
+          onClick={() => slide(1)}
+          variant="white"
+          radius="xl"
+          size="xl"
+          aria-label="Photo suivante"
+        >
+          <IconChevronRight />
+        </ActionIcon>
+      </div>
+
+      <Container size="lg">
+        <p className={`${classes.caption} handwritten`}>
+          {t("preview.description")}
+        </p>
+      </Container>
+    </section>
   );
 };
 

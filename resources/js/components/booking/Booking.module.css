@@ -1,0 +1,148 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 40px;
+  align-items: start;
+}
+
+.main {
+  scroll-margin-top: calc(var(--tds-header-height) + 24px);
+  background: white;
+  border-radius: var(--mantine-radius-lg);
+  box-shadow: var(--tds-shadow);
+  padding: clamp(20px, 4vw, 40px);
+}
+
+.stepTitle {
+  margin: 0 0 4px;
+  font-family: Marcellus, serif;
+  font-weight: 400;
+  font-size: 1.8rem;
+}
+
+.calendar {
+  display: flex;
+  justify-content: center;
+  padding: 16px 8px;
+  border: 1px solid var(--mantine-color-gray-2);
+  border-radius: var(--mantine-radius-lg);
+}
+
+.legend {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--tds-muted);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend i {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.legend i[data-kind="selected"] {
+  background: var(--mantine-color-lagon-7);
+}
+
+.legend i[data-kind="taken"] {
+  border: 1px solid var(--mantine-color-gray-3);
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0 3px,
+    var(--mantine-color-gray-3) 3px 5px
+  );
+}
+
+.guests {
+  padding: 16px 20px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--tds-cream);
+}
+
+.actions {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--mantine-color-gray-2);
+}
+
+.blockTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tds-muted);
+}
+
+.summary {
+  position: sticky;
+  top: calc(var(--tds-header-height) + 24px);
+  overflow: hidden;
+  background: white;
+  box-shadow: var(--tds-shadow);
+}
+
+.summaryCover {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.summaryTitle {
+  font-family: Marcellus, serif;
+  font-size: 1.5rem;
+}
+
+.moments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: var(--mantine-radius-md);
+}
+
+.moment {
+  padding: 10px 14px;
+}
+
+.moment + .moment {
+  border-left: 1px solid var(--mantine-color-gray-3);
+}
+
+.momentLabel {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tds-muted);
+}
+
+/* Barre fixe en bas d'écran (mobile) : total et action de l'étape */
+.mobileBar {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: white;
+  box-shadow: 0 -8px 24px -12px rgba(34, 48, 58, 0.3);
+}
+
+@media (max-width: 62em) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .page {
+    padding-bottom: 88px;
+  }
+}

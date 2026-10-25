@@ -1,76 +1,56 @@
-import React, { useState, createContext, useEffect, useMemo } from "react";
+import React, { useState, createContext, useMemo } from "react";
 import useContextFactory from "../hooks/useContextFactory";
 import { computeQuote } from "../helpers/pricing";
-import { usePricing } from "../api/queries";
+import { takenNights } from "../helpers/availability";
+import { usePricing, useReservedBookings } from "../api/queries";
 const BookingContext = createContext({});
 
 export const useBookingContext = () => {
   return useContextFactory("BookingContext", BookingContext);
 };
 
+/**
+ * Séjour en cours de saisie, partagé entre la barre de réservation rapide,
+ * la page de réservation et la page de confirmation.
+ * Les dates sont des chaînes YYYY-MM-DD, sans fuseau horaire.
+ */
 const BookingContextProvider = ({ children }) => {
-  const [selectedDates, setSelectedDates] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [adults, setAdults] = useState(1);
-  const [child, setChild] = useState(0);
-  const [type, setType] = useState("Classique");
-  const [booked, setBooked] = useState(false);
-
-  const checkIn =
-    selectedDates?.length && selectedDates[0]
-      ? selectedDates[0]?.toISOString().slice(0, 10)
-      : "";
-
-  const checkOut =
-    selectedDates?.length && selectedDates[1]
-      ? selectedDates[1]?.toISOString().slice(0, 10)
-      : "";
+  const [checkIn, setCheckIn] = useState(null);
+  const [checkOut, setCheckOut] = useState(null);
+  const [adults, setAdults] = useState(2);
+  const [booked, setBooked] = useState(null);
 
   const { data: pricing } = usePricing();
+  const { data: bookings, isPending: isLoadingBookings } =
+    useReservedBookings();
 
+  const taken = useMemo(() => takenNights(bookings), [bookings]);
+
+  // Indicatif : le serveur recalcule le prix à l'enregistrement
   const quote = useMemo(
     () => computeQuote(pricing, checkIn, checkOut, adults),
     [pricing, checkIn, checkOut, adults],
   );
 
-  const days = quote?.nights || null;
-  const daysHighSeason = quote?.highSeasonNights ?? null;
-  const daysLowSeason = quote?.lowSeasonNights ?? null;
-  const priceLowSeason = quote?.lowSeasonPrice;
-  const priceHighSeason = quote?.highSeasonPrice;
-  const touristTax = quote?.touristTax ?? 0;
-  const discount = quote?.discount ?? 0;
-
-  // Indicatif : le serveur recalcule le prix à l'enregistrement
-  useEffect(() => {
-    setTotal(quote?.nights ? quote.total : null);
-  }, [quote]);
+  const setStay = ([nextCheckIn, nextCheckOut]) => {
+    setCheckIn(nextCheckIn || null);
+    setCheckOut(nextCheckOut || null);
+  };
 
   return (
     <BookingContext.Provider
       value={{
-        selectedDates,
-        setSelectedDates,
         checkIn,
         checkOut,
-        days,
-        total,
-        setTotal,
+        setStay,
         adults,
         setAdults,
-        child,
-        setChild,
+        quote,
+        pricing,
+        taken,
+        isLoadingBookings,
         booked,
         setBooked,
-        daysHighSeason,
-        daysLowSeason,
-        priceLowSeason,
-        priceHighSeason,
-        discount,
-        touristTax,
-        pricing,
-        type,
-        setType,
       }}
     >
       {children}

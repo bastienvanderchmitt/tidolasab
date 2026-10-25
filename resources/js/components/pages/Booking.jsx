@@ -1,25 +1,222 @@
-// import Essentials from "./Home/Essentials";
-import { Col, Container, Row } from "reactstrap";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Box, Button, Container, Group, Stepper, Text } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
+import { IconArrowLeft, IconArrowRight, IconSend } from "@tabler/icons-react";
+import { useBookingContext } from "../../contexts/BookingContext";
+import { useSaveBooking } from "../../api/queries";
+import { validateStay } from "../../helpers/availability";
+import StayStep from "../booking/StayStep";
+import ClientStep, { clientFields } from "../booking/ClientStep";
+import ReviewStep from "../booking/ReviewStep";
+import BookingSummaryCard from "../booking/BookingSummaryCard";
+import { MAX_ADULTS } from "../booking/GuestsInput";
+import { bookingSearch } from "../booking/bookingSearch";
+import { formatPrice } from "../booking/format";
 import Room from "./Booking/Room";
-import Sidebar from "./Booking/Sidebar";
-import RoomImages from "./Booking/RoomImages";
+import classes from "../booking/Booking.module.css";
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 const Booking = () => {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const {
+    checkIn,
+    checkOut,
+    setStay,
+    adults,
+    setAdults,
+    quote,
+    pricing,
+    taken,
+    isLoadingBookings,
+    setBooked,
+  } = useBookingContext();
+  const save = useSaveBooking();
+  const [step, setStep] = useState(0);
+  const mainRef = useRef(null);
+  const urlRead = useRef(false);
+
+  const form = useForm({
+    initialValues: Object.fromEntries(clientFields.map(({ name }) => [name, ""])),
+    validate: {
+      ...Object.fromEntries(
+        clientFields.map(({ name }) => [
+          name,
+          (value) => (value.trim() ? null : t(`client.${name}_validation`)),
+        ]),
+      ),
+      email: (value) =>
+        /^\S+@\S+\.\S+$/.test(value) ? null : t("client.email_validation"),
+    },
+  });
+
+  // Séjour transmis par la barre rapide ou par un lien partagé
+  useEffect(() => {
+    const urlCheckIn = searchParams.get("checkIn");
+    const urlCheckOut = searchParams.get("checkOut");
+    const urlAdults = Number(searchParams.get("adults"));
+
+    if (ISO_DATE.test(urlCheckIn ?? "")) {
+      setStay([urlCheckIn, ISO_DATE.test(urlCheckOut ?? "") ? urlCheckOut : null]);
+    }
+    if (urlAdults >= 1) setAdults(Math.min(urlAdults, MAX_ADULTS));
+    urlRead.current = true;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // L'URL suit le séjour choisi, pour pouvoir le partager
+  useEffect(() => {
+    if (!urlRead.current) return;
+    setSearchParams(bookingSearch(checkIn, checkOut, adults), {
+      replace: true,
+      preventScrollReset: true,
+    });
+  }, [checkIn, checkOut, adults, setSearchParams]);
+
+  const stayError =
+    checkIn && checkOut ? validateStay(checkIn, checkOut, taken, pricing) : null;
+  const stayReady = !!checkIn && !!checkOut && !stayError && !isLoadingBookings;
+
+  // Arrivée avec un séjour valide : on passe directement aux coordonnées
+  const skippedDates = useRef(false);
+  useEffect(() => {
+    if (skippedDates.current || isLoadingBookings || !pricing) return;
+    skippedDates.current = true;
+    if (stayReady) setStep(1);
+  }, [isLoadingBookings, pricing, stayReady]);
+
+  const goTo = (nextStep) => {
+    setStep(nextStep);
+    mainRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const submit = async () => {
+    try {
+      await save.mutateAsync({
+        ...form.values,
+        checkIn,
+        checkOut,
+        adults,
+        children: 0,
+        // Exigé par l'API quand une session admin est ouverte dans le navigateur
+        type: "Classique",
+        language: i18n.language,
+      });
+      setBooked({ checkIn, checkOut, adults, quote });
+      setStay([null, null]);
+      navigate("/success");
+    } catch (error) {
+      const fieldErrors = Object.fromEntries(
+        Object.entries(error.errors ?? {})
+          .filter(([field]) => field in form.values)
+          .map(([field, messages]) => [field, messages[0]]),
+      );
+      if (Object.keys(fieldErrors).length) {
+        form.setErrors(fieldErrors);
+        goTo(1);
+      }
+      notifications.show({
+        color: "red",
+        message: error.message || t("common.error"),
+      });
+    }
+  };
+
+  const next = () => {
+    if (step === 0 && stayReady) goTo(1);
+    if (step === 1 && !form.validate().hasErrors) goTo(2);
+    if (step === 2) submit();
+  };
+
+  const nextLabel =
+    step === 2 ? t("review.submit") : t("common.continue");
+  const nextDisabled = step === 0 && !stayReady;
+  const nextIcon = step === 2 ? <IconSend size={18} /> : <IconArrowRight size={18} />;
+
   return (
-    <>
-      <Container>
-        <Row>
-          <Col lg={8}>
-            <Room />
-          </Col>
-          <Col lg={4}>
-            <Sidebar />
-          </Col>
-        </Row>
+    <div className={classes.page}>
+      <Container size="lg" mt={-56} pos="relative">
+        <div className={classes.layout}>
+          <section ref={mainRef} className={classes.main}>
+            <Stepper
+              active={step}
+              onStepClick={goTo}
+              allowNextStepsSelect={false}
+              size="sm"
+              mb={32}
+            >
+              <Stepper.Step label={t("stepper.dates")} />
+              <Stepper.Step label={t("stepper.contact")} />
+              <Stepper.Step label={t("stepper.review")} />
+            </Stepper>
+
+            {step === 0 && <StayStep error={stayError} />}
+            {step === 1 && <ClientStep form={form} />}
+            {step === 2 && <ReviewStep form={form} goTo={goTo} />}
+
+            <Group justify="space-between" className={classes.actions}>
+              {step > 0 ? (
+                <Button
+                  variant="subtle"
+                  color="gray"
+                  leftSection={<IconArrowLeft size={18} />}
+                  onClick={() => goTo(step - 1)}
+                >
+                  {t("common.back")}
+                </Button>
+              ) : (
+                <span />
+              )}
+              <Button
+                size="md"
+                onClick={next}
+                disabled={nextDisabled}
+                loading={save.isPending}
+                rightSection={nextIcon}
+                visibleFrom="md"
+              >
+                {nextLabel}
+              </Button>
+            </Group>
+          </section>
+
+          <Box visibleFrom="md">
+            <BookingSummaryCard />
+          </Box>
+        </div>
       </Container>
-      <RoomImages />
-      {/*<Essentials fromBooking />*/}
-    </>
+
+      <Room />
+
+      <Box hiddenFrom="md" className={classes.mobileBar}>
+        <div>
+          {quote?.nights ? (
+            <>
+              <Text fw={600}>{formatPrice(quote.total)}</Text>
+              <Text size="xs" c="dimmed">
+                {t("quick.nights", { count: quote.nights })}
+              </Text>
+            </>
+          ) : (
+            <Text size="sm" c="dimmed">
+              {t("stay.no_dates")}
+            </Text>
+          )}
+        </div>
+        <Button
+          onClick={next}
+          disabled={nextDisabled}
+          loading={save.isPending}
+          rightSection={nextIcon}
+        >
+          {nextLabel}
+        </Button>
+      </Box>
+    </div>
   );
 };
 

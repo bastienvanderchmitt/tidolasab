@@ -1,0 +1,10 @@
+/* Nuits déjà réservées : barrées, pour les distinguer des jours passés */
+.day[data-taken]:not([data-selected]):not([data-in-range]) {
+  text-decoration: line-through;
+  color: var(--mantine-color-gray-5);
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0 4px,
+    var(--mantine-color-gray-1) 4px 6px
+  );
+}

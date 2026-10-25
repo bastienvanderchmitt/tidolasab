@@ -14,53 +14,43 @@ const staticSteps = [
   {
     path: "/",
     element: <Home />,
-    params: pages.home,
+    handle: pages.home,
   },
   {
     path: "/booking",
     element: <Booking />,
-    params: pages.booking,
+    handle: pages.booking,
   },
   {
     path: "/story",
     element: <Story />,
-    params: pages.story,
+    handle: pages.story,
   },
   {
     path: "/activities",
     element: <Activities />,
-    params: pages.activities,
+    handle: pages.activities,
   },
   {
     path: "/photos",
     element: <Photos />,
-    params: pages.photos,
+    handle: pages.photos,
   },
   {
     path: "/contact",
     element: <Contact />,
-    params: pages.contact,
+    handle: pages.contact,
   },
   {
     path: "/success",
     element: <Success />,
-    params: pages.success,
+    handle: pages.success,
   },
   {
     path: "/privacy",
     element: <Privacy />,
-    params: pages.privacy,
+    handle: pages.privacy,
   },
-  // {
-  //   path: "/terms-of-use",
-  //   element: <Terms />,
-  //   params: pages.terms,
-  // },
-  // {
-  //   path: "/policy",
-  //   element: <Politic />,
-  //   params: pages.politic,
-  // },
 ];
 
 const allRoutes = [

@@ -1,5 +1,4 @@
 import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
 import { useEffect } from "react";
 import * as Sentry from "@sentry/react";
 
@@ -26,9 +25,9 @@ const Error = () => {
   return (
     <div className="error-page">
       <div className="palm-leaves"></div>
-      <Container fluid>
-        <Row>
-          <Col className="error-content">
+      <div className="error-container">
+        <div>
+          <div className="error-content">
             <div className="glitch-wrapper">
               <h1 className="glitch-text">{isNotFound ? "404" : "Oups"}</h1>
             </div>
@@ -41,9 +40,9 @@ const Error = () => {
               Retour à l'accueil
               <span className="button-arrow">→</span>
             </Link>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
       <style>
         {`
             .error-page {

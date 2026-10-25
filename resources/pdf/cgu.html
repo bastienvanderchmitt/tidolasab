@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>CGU Ti' Dola Sab</title>
+<!--
+  Source des CGU (resources/js/assets/pdf/CGU.pdf).
+  Pour régénérer le PDF après modification :
+    chromium --headless --no-pdf-header-footer --print-to-pdf=resources/js/assets/pdf/CGU.pdf resources/pdf/cgu.html
+-->
+<style>
+  @font-face { font-family: "Marcellus"; src: url("../js/assets/fonts/Marcellus-Regular.ttf"); }
+  @font-face { font-family: "Jost"; src: url("../js/assets/fonts/Jost-Regular.ttf"); }
+  @font-face { font-family: "LaBelleAurore"; src: url("../js/assets/fonts/LaBelleAurore-Regular.ttf"); }
+
+  :root {
+    --lagon: #0ea1ab;
+    --lagon-dark: #007c84;
+    --lagon-light: #e1fbfc;
+    --sable: #e3cfb4;
+    --sable-dark: #b99d75;
+    --cream: #fbf8f3;
+    --ink: #22303a;
+    --muted: #5d6b73;
+    --danger: #b3412f;
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm 15mm 18mm;
+
+    @bottom-left {
+      content: "Ti' Dola Sab · Morne Lolo, 97112 Grand-Bourg · tidolasab@gmail.com";
+      font-family: Jost, sans-serif;
+      font-size: 7.5pt;
+      color: #5d6b73;
+      border-top: 1px solid #e3cfb4;
+      vertical-align: top;
+      padding-top: 6px;
+    }
+
+    @bottom-right {
+      content: "Page " counter(page) " / " counter(pages);
+      font-family: Jost, sans-serif;
+      font-size: 7.5pt;
+      color: #5d6b73;
+      border-top: 1px solid #e3cfb4;
+      vertical-align: top;
+      padding-top: 6px;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    font-family: Jost, sans-serif;
+    font-size: 10pt;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  svg { flex-shrink: 0; }
+
+  /* En-tête */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: linear-gradient(120deg, var(--lagon) 0%, #30bfc7 100%);
+    color: white;
+  }
+
+  .header img { width: 64px; height: 64px; }
+
+  .header h1 {
+    margin: 0;
+    font-family: Marcellus, serif;
+    font-weight: 400;
+    font-size: 21pt;
+    line-height: 1.1;
+  }
+
+  .header .tagline {
+    font-family: LaBelleAurore, cursive;
+    font-size: 15pt;
+    opacity: 0.95;
+  }
+
+  .header .meta {
+    margin-left: auto;
+    text-align: right;
+    font-size: 8pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  /* Points clés */
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 14px 0 6px;
+  }
+
+  .key {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--cream);
+    border: 1px solid var(--sable);
+  }
+
+  .key .label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 7pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .key .label svg { width: 14px; height: 14px; color: var(--lagon); }
+
+  .key .value {
+    margin-top: 2px;
+    font-family: Marcellus, serif;
+    font-size: 13pt;
+  }
+
+  .key .hint { font-size: 7.5pt; color: var(--muted); }
+
+  /* Sections */
+  section { margin-top: 20px; break-inside: avoid; }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--sable);
+    font-family: Marcellus, serif;
+    font-weight: 400;
+    font-size: 13.5pt;
+  }
+
+  h2 .num {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--lagon);
+    color: white;
+    font-family: Jost, sans-serif;
+    font-size: 9pt;
+  }
+
+  p { margin: 0 0 6px; }
+
+  .rules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 22px;
+  }
+
+  .rule { display: flex; gap: 9px; break-inside: avoid; }
+
+  .rule .icon {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--lagon-light);
+    color: var(--lagon-dark);
+    flex-shrink: 0;
+  }
+
+  .rule .icon svg { width: 15px; height: 15px; }
+
+  .rule h3 {
+    margin: 2px 0 1px;
+    font-family: Jost, sans-serif;
+    font-weight: 600;
+    font-size: 9.6pt;
+  }
+
+  .rule p { margin: 0; color: #3a4750; }
+
+  /* Phytoépuration */
+  .eco {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--lagon-light);
+    border: 1px solid #a2e3e7;
+  }
+
+  .eco .intro { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+  .eco .intro svg { color: var(--lagon-dark); width: 22px; height: 22px; }
+
+  .eco-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .eco h3 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 6px;
+    font-size: 8pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--danger);
+  }
+
+  .eco h3 svg { width: 14px; height: 14px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .chip {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid #f0cfc8;
+    font-size: 8pt;
+  }
+
+  .eco .advice {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed #a2e3e7;
+    color: var(--lagon-dark);
+  }
+
+  .eco .advice svg { width: 16px; height: 16px; }
+
+  .warning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--danger);
+  }
+
+  .warning svg { width: 16px; height: 16px; }
+
+  /* Forfait, animaux */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--sable);
+    background: var(--cream);
+  }
+
+  .card .price {
+    float: right;
+    font-family: Marcellus, serif;
+    font-size: 16pt;
+    color: var(--lagon-dark);
+  }
+
+  .card h3 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 4px;
+    font-family: Marcellus, serif;
+    font-weight: 400;
+    font-size: 12pt;
+  }
+
+  .card h3 svg { color: var(--lagon); }
+
+  /* Assistance */
+  .help { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; align-items: stretch; }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--ink);
+    color: white;
+  }
+
+  .contact .phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Marcellus, serif;
+    font-size: 15pt;
+    color: var(--sable);
+  }
+
+  .contact p { margin: 0; color: rgba(255, 255, 255, 0.82); }
+
+  .emergency { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+  .sos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    border-radius: 12px;
+    border: 1px solid #f0cfc8;
+    background: #fdf3f1;
+    color: var(--danger);
+    text-align: center;
+  }
+
+  .sos strong { font-family: Marcellus, serif; font-size: 18pt; line-height: 1; }
+  .sos span { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.1em; }
+
+
+  /* Mot de la fin */
+  .closing {
+    margin-top: 36px;
+    text-align: center;
+    break-inside: avoid;
+  }
+
+  .closing img { width: 48px; height: 48px; margin: 0 auto 6px; display: block; }
+
+  .closing p {
+    margin: 0;
+    font-family: LaBelleAurore, cursive;
+    font-size: 17pt;
+    color: var(--lagon-dark);
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="../js/assets/img/logo_full.png" alt="">
+  <div>
+    <h1>Conditions générales d'utilisation</h1>
+    <div class="tagline">Case Ti' Dola Sab · Marie-Galante</div>
+  </div>
+  <div class="meta">Morne Lolo<br>97112 Grand-Bourg</div>
+</header>
+
+<div class="keys">
+  <div class="key">
+    <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-enter"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5"></path><path d="M21 7h-7m3 -3l-3 3l3 3"></path></svg> Arrivée</div>
+    <div class="value">Dès 14h</div>
+    <div class="hint">Remise des clefs</div>
+  </div>
+  <div class="key">
+    <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-exit"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path><path d="M14 7h7m-3 -3l3 3l-3 3"></path></svg> Départ</div>
+    <div class="value">Avant 10h</div>
+    <div class="hint">État des lieux</div>
+  </div>
+  <div class="key">
+    <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="shield-check"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"></path><path d="M15 19l2 2l4 -4"></path></svg> Caution</div>
+    <div class="value">500 €</div>
+    <div class="hint">Chèque ou espèces</div>
+  </div>
+  <div class="key">
+    <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="sparkles"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6"></path></svg> Nettoyage</div>
+    <div class="value">80 €</div>
+    <div class="hint">Forfait si nécessaire</div>
+  </div>
+</div>
+
+<section>
+  <h2><span class="num">1</span> Arrivée et départ</h2>
+  <div class="rules">
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-enter"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5"></path><path d="M21 7h-7m3 -3l-3 3l3 3"></path></svg></span>
+      <div>
+        <h3>Arrivée</h3>
+        <p>L'arrivée se fait l'après-midi, à partir de 14 heures : remise des clefs et dépôt de votre caution de 500 € par chèque ou espèces.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-exit"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path><path d="M14 7h7m-3 -3l3 3l-3 3"></path></svg></span>
+      <div>
+        <h3>Départ</h3>
+        <p>Le départ se fait le matin, avant 10 heures : état des lieux et remise de votre caution.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">2</span> Utilisation des lieux</h2>
+  <div class="rules">
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="wheelchair"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"></path><path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 17a3 3 0 0 0 -3 -3h-3.4"></path><path d="M3 3h1a2 2 0 0 1 2 2v6"></path><path d="M6 8h11"></path><path d="M15 8v6"></path></svg></span>
+      <div>
+        <h3>Accès PMR</h3>
+        <p>Accessibilité partielle aux PMR : trois marches permettent d'accéder à la terrasse et la porte de la salle de douche mesure 69 cm de largeur.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="home"><path d="M5 12l-2 0l9 -9l9 9l-2 0"></path><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path></svg></span>
+      <div>
+        <h3>Mobilier</h3>
+        <p>Tous les meubles sont à votre disposition. Veuillez les garder en bon état, ne pas les déplacer et veiller à leur propreté. Vous êtes responsables de tout vol et de toute dégradation.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="leaf"><path d="M5 21c.5 -4.5 2.5 -8 7 -10"></path><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3l.014 0"></path></svg></span>
+      <div>
+        <h3>Environnement</h3>
+        <p>Pour respecter au mieux l'environnement, veuillez éteindre les lumières lorsque vous quittez une pièce.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="droplet"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"></path></svg></span>
+      <div>
+        <h3>Eau de pluie</h3>
+        <p>Le gîte est raccordé à la récupération d'eau de pluie : merci de ne pas la laisser couler inutilement. Cette eau est filtrée, toutefois nous vous recommandons de boire de l'eau minérale en bouteille.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="lock"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6"></path><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path><path d="M8 11v-4a4 4 0 1 1 8 0v4"></path></svg></span>
+      <div>
+        <h3>Portail</h3>
+        <p>Pour la sécurité de tous et votre tranquillité, le portail d'entrée doit rester fermé.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="smoking-no"><path d="M8 13l0 4"></path><path d="M16 5v.5a2 2 0 0 0 2 2a2 2 0 0 1 2 2v.5"></path><path d="M3 3l18 18"></path><path d="M17 13h3a1 1 0 0 1 1 1v2c0 .28 -.115 .533 -.3 .714m-3.7 .286h-13a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1h9"></path></svg></span>
+      <div>
+        <h3>Tabac et feu</h3>
+        <p>Il est strictement interdit de fumer à l'intérieur. Les cendriers sont prévus pour l'extérieur : merci de ne pas jeter vos mégots à terre. Tout feu sauvage est interdit.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="baby-carriage"><path d="M6 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M16 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M2 5h2.5l1.632 4.897a6 6 0 0 0 5.693 4.103h2.675a5.5 5.5 0 0 0 0 -11h-.5v6"></path><path d="M6 9h14"></path><path d="M9 17l1 -3"></path><path d="M16 14l1 3"></path></svg></span>
+      <div>
+        <h3>Enfants</h3>
+        <p>Pour des raisons de sécurité, l'accès au gîte est autorisé uniquement aux bébés ne pouvant se déplacer seuls.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="pool"><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"></path><path d="M2 16a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"></path><path d="M15 12v-7.5a1.5 1.5 0 0 1 3 0"></path><path d="M9 12v-7.5a1.5 1.5 0 0 0 -3 0"></path><path d="M15 5l-6 0"></path><path d="M9 10l6 0"></path></svg></span>
+      <div>
+        <h3>Piscine</h3>
+        <p>La baignade dans la piscine est sous l'entière responsabilité d'un parent ou d'un adulte.</p>
+      </div>
+    </div>
+    <div class="rule" style="grid-column: 1 / -1">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="recycle"><path d="M12 17l-2 2l2 2"></path><path d="M10 19h9a2 2 0 0 0 1.75 -2.75l-.55 -1"></path><path d="M8.536 11l-.732 -2.732l-2.732 .732"></path><path d="M7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141 .024"></path><path d="M15.464 11l2.732 .732l.732 -2.732"></path><path d="M18.196 11.732l-4.5 -7.794a2 2 0 0 0 -3.256 -.14l-.591 .976"></path></svg></span>
+      <div>
+        <h3>Ordures ménagères</h3>
+        <p>Nous vous recommandons fortement de participer au tri des déchets. Un container est mis à votre disposition à l'entrée du chemin, et des poubelles de tri du verre et des emballages sont disponibles sur Morne Lolo, en face de la supérette Sympa Shop. Lors de votre départ, veuillez ne rien laisser dans les poubelles et les rendre propres.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">3</span> Assainissement par phytoépuration</h2>
+  <div class="eco">
+    <div class="intro">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="plant-2"><path d="M2 9a10 10 0 1 0 20 0"></path><path d="M12 19a10 10 0 0 1 10 -10"></path><path d="M2 9a10 10 0 0 1 10 10"></path><path d="M12 4a9.7 9.7 0 0 1 2.99 7.5"></path><path d="M9.01 11.5a9.7 9.7 0 0 1 2.99 -7.5"></path></svg>
+      <p><strong>Le gîte est sur phytoépuration</strong>, qui fonctionne grâce à l'action de plantes épuratrices, plantées dans des bassins, qui filtrent et dépolluent les eaux usées.</p>
+    </div>
+    <div class="eco-columns">
+      <div>
+        <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="ban"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M5.7 5.7l12.6 12.6"></path></svg> Ne rien jeter dans les canalisations</h3>
+        <p>Objets difficilement dégradables, susceptibles de boucher les canalisations :</p>
+        <div class="chips">
+          <span class="chip">Mégots de cigarettes</span>
+          <span class="chip">Lingettes</span>
+          <span class="chip">Couches jetables</span>
+          <span class="chip">Protections périodiques</span>
+          <span class="chip">Préservatifs</span>
+          <span class="chip">Cotons-tiges</span>
+          <span class="chip">Autres déchets ménagers</span>
+        </div>
+      </div>
+      <div>
+        <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="alert-triangle"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></svg> Produits formellement interdits</h3>
+        <div class="chips">
+          <span class="chip">Huiles et graisses de friture</span>
+          <span class="chip">Tous types de pesticides</span>
+          <span class="chip">Déboucheurs chimiques</span>
+          <span class="chip">Produits antimicrobiens (eau de Javel, bactéricide, fongicide)</span>
+          <span class="chip">Détergents chimiques</span>
+        </div>
+      </div>
+    </div>
+    <div class="advice">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="leaf"><path d="M5 21c.5 -4.5 2.5 -8 7 -10"></path><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3l.014 0"></path></svg>
+      <span>Dans la mesure du possible, nous conseillons de choisir des produits ménagers biodégradables, hypoallergéniques, naturels et non toxiques.</span>
+    </div>
+  </div>
+  <div class="warning"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="alert-triangle"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></svg> Tout dommage causé par votre négligence sera à votre charge.</div>
+</section>
+
+<section>
+  <h2><span class="num">4</span> Nettoyage et animaux</h2>
+  <div class="duo">
+    <div class="card">
+      <span class="price">80 €</span>
+      <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="sparkles"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6"></path></svg> Forfait nettoyage</h3>
+      <p>Ce forfait peut s'appliquer en fin de séjour si le client n'a pas choisi d'effectuer lui-même le nettoyage des lieux, ou si l'état des lieux après son départ indique que le nettoyage a été insuffisant.</p>
+    </div>
+    <div class="card">
+      <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="paw"><path d="M14.7 13.5c-1.1 -2 -1.441 -2.5 -2.7 -2.5c-1.259 0 -1.736 .755 -2.836 2.747c-.942 1.703 -2.846 1.845 -3.321 3.291c-.097 .265 -.145 .677 -.143 .962c0 1.176 .787 2 1.8 2c1.259 0 3 -1 4.5 -1s3.241 1 4.5 1c1.013 0 1.8 -.823 1.8 -2c0 -.285 -.049 -.697 -.146 -.962c-.475 -1.451 -2.512 -1.835 -3.454 -3.538"></path><path d="M20.188 8.082a1.039 1.039 0 0 0 -.406 -.082h-.015c-.735 .012 -1.56 .75 -1.993 1.866c-.519 1.335 -.28 2.7 .538 3.052c.129 .055 .267 .082 .406 .082c.739 0 1.575 -.742 2.011 -1.866c.516 -1.335 .273 -2.7 -.54 -3.052l-.001 0"></path><path d="M9.474 9c.055 0 .109 0 .163 -.011c.944 -.128 1.533 -1.346 1.32 -2.722c-.203 -1.297 -1.047 -2.267 -1.932 -2.267c-.055 0 -.109 0 -.163 .011c-.944 .128 -1.533 1.346 -1.32 2.722c.204 1.293 1.048 2.267 1.933 2.267"></path><path d="M16.456 6.733c.214 -1.376 -.375 -2.594 -1.32 -2.722a1.164 1.164 0 0 0 -.162 -.011c-.885 0 -1.728 .97 -1.93 2.267c-.214 1.376 .375 2.594 1.32 2.722c.054 .007 .108 .011 .162 .011c.885 0 1.73 -.974 1.93 -2.267"></path><path d="M5.69 12.918c.816 -.352 1.054 -1.719 .536 -3.052c-.436 -1.124 -1.271 -1.866 -2.009 -1.866c-.14 0 -.277 .027 -.407 .082c-.816 .352 -1.054 1.719 -.536 3.052c.436 1.124 1.271 1.866 2.009 1.866c.14 0 .277 -.027 .407 -.082"></path></svg> Animaux</h3>
+      <p>Nos amis les animaux ne sont pas admis.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">5</span> Assistance et urgences</h2>
+  <div class="help">
+    <div class="contact">
+      <div class="phone"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="phone"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path></svg> +590 690 64 89 04</div>
+      <p>En cas de panne ou de dysfonctionnement, contactez-nous sans attendre : nous ferons au mieux pour remédier à la situation.</p>
+      <p>En cas de casse, de sinistre ou de dégradation, merci de le signaler durant votre séjour.</p>
+    </div>
+    <div>
+      <p style="margin-bottom: 6px; color: var(--muted)">En cas d'urgence, prévenez les secours :</p>
+      <div class="emergency">
+        <div class="sos"><strong>18</strong><span>Pompiers</span></div>
+        <div class="sos"><strong>15</strong><span>Samu</span></div>
+        <div class="sos"><strong>17</strong><span>Police</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <img src="../js/assets/img/logo_full.png" alt="">
+  <p>Nous vous souhaitons un excellent séjour à Ti' Dola Sab !</p>
+</div>
+
+</body>
+</html>

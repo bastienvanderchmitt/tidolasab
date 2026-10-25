@@ -1,47 +1,37 @@
-import mg_beach from "../../../assets/img/locations/location_4.webp";
-import { Col, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Button, Container, SimpleGrid } from "@mantine/core";
+import { IconArrowRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import mg_beach from "../../../assets/img/locations/location_4.webp";
+import SectionTitle from "../../common/SectionTitle";
+import classes from "./Home.module.css";
 
 const Discover = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="discover">
-      <Container>
-        <Row className="p-4 discover-content">
-          <Col className="p-5" xs={12} xl={6}>
-            <Row>
-              <Col>
-                <h4 className="title-4 pt-4">{t("discover.title")}</h4>
-              </Col>
-            </Row>
-            <p className="pt-4">{t("discover.description")}</p>
-          </Col>
-          <Col>
-            <Link to={"/activities"}>
-              <div className="position-relative">
-                <div className="image-zoom">
-                  <img
-                    loading="lazy"
-                    src={mg_beach}
-                    className="w-100"
-                    alt="beach"
-                  />
-                  <div className="offset-border"></div>
-                  <div className="overlay-label">
-                    <div className="overlay-label-text">
-                      {t("discover.see")}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h4 className="aurore pt-3">{t("discover.image_title")}</h4>
-            </Link>
-          </Col>
-        </Row>
+    <section className={`section ${classes.tinted}`}>
+      <Container size="lg">
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={56} className={classes.split}>
+          <div>
+            <SectionTitle eyebrow={t("discover.title")} title={t("discover.image_title")}>
+              <p>{t("discover.description")}</p>
+            </SectionTitle>
+            <Button
+              component={Link}
+              to="/activities"
+              variant="outline"
+              rightSection={<IconArrowRight size={18} />}
+            >
+              {t("discover.see")}
+            </Button>
+          </div>
+          <Link to="/activities" className={classes.photo}>
+            <img src={mg_beach} alt="" loading="lazy" />
+          </Link>
+        </SimpleGrid>
       </Container>
-    </div>
+    </section>
   );
 };
 

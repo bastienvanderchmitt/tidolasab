@@ -1,77 +1,60 @@
-import { Button, Col, Container, Row } from "reactstrap";
-import accommodation from "../../../assets/img/room/view_2.webp";
 import { Link } from "react-router-dom";
+import { Button, Container, Group, SimpleGrid, Text } from "@mantine/core";
+import { IconCalendarEvent, IconWheelchair } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import view_1 from "../../../assets/img/room/view_1.webp";
+import view_2 from "../../../assets/img/room/view_2.webp";
+import view_5 from "../../../assets/img/room/view_5.webp";
+import SectionTitle from "../../common/SectionTitle";
+import PhotoSlider from "../../common/PhotoSlider";
 import Assets from "./Assets";
-import {
-  faCalendarDays,
-  faWheelchairAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import classes from "./Home.module.css";
 
 const Accommodation = () => {
   const { t } = useTranslation();
 
   return (
-    <Container className="accommodation">
-      <Row className="p-4 accommodation-header">
-        <Col className="text-center">
-          <h4 className="title-4 pt-4">{t("accommodation.title")}</h4>
-          <h4 className="title-2 pt-2">{t("accommodation.subtitle")}</h4>
-          <p className="pt-3">{t("accommodation.subtitle_2")}</p>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="p-4" xs={12} xl={6}>
-          <Link to={"/booking"}>
-            <div className="position-relative">
-              <div className="image-zoom">
-                <img
-                  loading="lazy"
-                  src={accommodation}
-                  alt="accommodation"
-                  className="w-100"
-                />
-                <div className="offset-border"></div>
-              </div>
-            </div>
-            <h4 className="aurore pt-3 text-center">
-              {t("accommodation.photo_link")}
-            </h4>
-          </Link>
-        </Col>
-        <Col className="p-4 text-center accommodation-content" xs={12} xl={6}>
-          <div className="title-4">{t("accommodation.breadcrumb")}</div>
-          <h4 className="title-2 pt-2">Case Ti' Dola Sab</h4>
+    <section className="section">
+      <Container size="lg">
+        <SectionTitle
+          align="center"
+          eyebrow={t("accommodation.title")}
+          title={t("accommodation.subtitle")}
+        >
+          <p>{t("accommodation.subtitle_2")}</p>
+        </SectionTitle>
+
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={56} className={classes.split}>
+          <PhotoSlider
+            photos={[view_1, view_2, view_5]}
+            caption={t("accommodation.photo_link")}
+          />
           <div>
+            <p className="eyebrow">{t("accommodation.breadcrumb")}</p>
+            <h3 className={classes.cardTitle}>Case Ti' Dola Sab</h3>
             <Assets />
+            <Group gap={8} c="dimmed" mt="md">
+              <IconWheelchair size={18} />
+              <Text size="sm" fs="italic">
+                {t("accommodation.pmr")}
+              </Text>
+            </Group>
+            <Text fw={500} size="lg" mt="lg">
+              {t("accommodation.description")}
+            </Text>
+            <Button
+              component={Link}
+              to="/booking"
+              size="md"
+              mt="xl"
+              leftSection={<IconCalendarEvent size={18} />}
+            >
+              {t("common.booking")}
+            </Button>
           </div>
-          <div className="text-center m-2">
-            <p style={{ fontSize: "14px", fontStyle: "oblique" }}>
-              <FontAwesomeIcon icon={faWheelchairAlt} className="me-2" />
-              {t("accommodation.pmr")}
-            </p>
-          </div>
-          <div className="text-warning-emphasis">
-            <p style={{ fontSize: "20px" }}>
-              <strong>{t("accommodation.description")}</strong>
-            </p>
-          </div>
-          <div className="more-btn">
-            <Link to={"/booking"}>
-              <Button
-                color="primary"
-                className="text-uppercase animate__animated animate__pulse animate__infinite"
-              >
-                <FontAwesomeIcon icon={faCalendarDays} className="me-2" />
-                {t("common.booking")}
-              </Button>
-            </Link>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+        </SimpleGrid>
+      </Container>
+    </section>
   );
 };
 

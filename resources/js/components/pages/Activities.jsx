@@ -1,16 +1,6 @@
-import {
-  Card,
-  CardBody,
-  CardImg,
-  CardImgOverlay,
-  CardText,
-  CardTitle,
-  Col,
-  Container,
-  Row,
-} from "reactstrap";
-import { faLocationPin } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Container, SimpleGrid, Text } from "@mantine/core";
+import { IconMapPin } from "@tabler/icons-react";
+import { useTranslation } from "react-i18next";
 import location_23 from "../../assets/img/locations/location_23.webp";
 import location_9 from "../../assets/img/locations/location_9.webp";
 import location_20 from "../../assets/img/locations/location_20.webp";
@@ -20,125 +10,56 @@ import location_3_square from "../../assets/img/locations/location_3_square.webp
 import location_4_square from "../../assets/img/locations/location_4_square.webp";
 import location_6_square from "../../assets/img/locations/location_6_square.webp";
 import location_10_square from "../../assets/img/locations/location_10_square.webp";
-import { useTranslation } from "react-i18next";
+import SectionTitle from "../common/SectionTitle";
+import classes from "./Pages.module.css";
+
+const photos = [
+  location_20,
+  location_10_square,
+  location_6_square,
+  location_4_square,
+  location_25,
+  location_9,
+  location_23,
+  location_3_square,
+  location_24,
+];
 
 const Activities = () => {
   const { t } = useTranslation();
 
-  const activities = [
-    {
-      title: t("activities.activity_1.title"),
-      img: location_20,
-      description: t("activities.activity_1.description"),
-      location: t("activities.activity_1.location"),
-    },
-    {
-      title: t("activities.activity_2.title"),
-      img: location_10_square,
-      description: t("activities.activity_2.description"),
-      location: t("activities.activity_2.location"),
-    },
-    {
-      title: t("activities.activity_3.title"),
-      img: location_6_square,
-      description: t("activities.activity_3.description"),
-      location: t("activities.activity_3.location"),
-    },
-    {
-      title: t("activities.activity_4.title"),
-      img: location_4_square,
-      description: t("activities.activity_4.description"),
-      location: t("activities.activity_4.location"),
-    },
-    {
-      title: t("activities.activity_5.title"),
-      img: location_25,
-      description: t("activities.activity_5.description"),
-      location: t("activities.activity_5.location"),
-    },
-    {
-      title: t("activities.activity_6.title"),
-      img: location_9,
-      description: t("activities.activity_6.description"),
-      location: t("activities.activity_6.location"),
-    },
-    {
-      title: t("activities.activity_7.title"),
-      img: location_23,
-      description: t("activities.activity_7.description"),
-      location: t("activities.activity_7.location"),
-    },
-    {
-      title: t("activities.activity_8.title"),
-      img: location_3_square,
-      description: t("activities.activity_8.description"),
-      location: t("activities.activity_8.location"),
-    },
-    {
-      title: t("activities.activity_9.title"),
-      img: location_24,
-      description: t("activities.activity_9.description"),
-      location: t("activities.activity_9.location"),
-    },
-  ];
-
-  const Activity = ({ activity }) => {
-    return (
-      <Card className="my-2">
-        <CardImg
-          alt="Card image cap"
-          src={activity.img}
-          style={{
-            height: 320,
-          }}
-          top
-          width="100%"
-        />
-        <CardImgOverlay className="nav-pills">
-          <CardTitle
-            tag="h5"
-            className="nav-link active p-2"
-            style={{ width: "fit-content" }}
-          >
-            {activity.title}
-          </CardTitle>
-        </CardImgOverlay>
-        <CardBody style={{ minHeight: "160px" }}>
-          <CardText>{activity.description}</CardText>
-          <CardText>
-            <small
-              className="text-muted"
-              style={{ position: "absolute", bottom: "10px" }}
-            >
-              <FontAwesomeIcon
-                icon={faLocationPin}
-                className="me-2 text-secondary"
-              />
-              {activity.location}
-            </small>
-          </CardText>
-        </CardBody>
-      </Card>
-    );
-  };
-
   return (
-    <Container className="activities" style={{ paddingBottom: "100px" }}>
-      <Row className="p-4 m-lg-4 accommodation-header">
-        <Col className="text-center">
-          <h4 className="title-4 pt-4">{t("activities.title")}</h4>
-          <h4 className="title-2 pt-2">{t("activities.subtitle")}</h4>
-          <p className="pt-3">{t("activities.description")}</p>
-          <p className="pt-3">{t("activities.sub_description")}</p>
-        </Col>
-      </Row>
-      <Row className="p-4">
-        {activities?.map((activity, key) => (
-          <Col xs={12} sm={4} key={key}>
-            <Activity activity={activity} />
-          </Col>
-        ))}
-      </Row>
+    <Container size="lg" className="section">
+      <SectionTitle
+        align="center"
+        eyebrow={t("activities.title")}
+        title={t("activities.subtitle")}
+      >
+        <p>{t("activities.description")}</p>
+        <p>{t("activities.sub_description")}</p>
+      </SectionTitle>
+
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">
+        {photos.map((photo, index) => {
+          const key = `activities.activity_${index + 1}`;
+          return (
+            <article key={key} className={classes.activity}>
+              <div className={classes.activityPhoto}>
+                <img src={photo} alt="" loading="lazy" />
+              </div>
+              <div className={classes.activityBody}>
+                <h3>{t(`${key}.title`)}</h3>
+                <Text size="sm" c="dimmed" lh={1.65}>
+                  {t(`${key}.description`)}
+                </Text>
+                <Text size="sm" className={classes.location}>
+                  <IconMapPin size={16} /> {t(`${key}.location`)}
+                </Text>
+              </div>
+            </article>
+          );
+        })}
+      </SimpleGrid>
     </Container>
   );
 };

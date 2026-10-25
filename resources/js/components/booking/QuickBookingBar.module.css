@@ -1,0 +1,75 @@
+.wrapper {
+  position: relative;
+  z-index: 10;
+  margin-top: -56px;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 28px;
+  padding: 14px 14px 14px 28px;
+  background: white;
+  box-shadow: var(--tds-shadow);
+  border-radius: 999px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 56px;
+}
+
+.field + .field {
+  padding-left: 28px;
+  border-left: 1px solid var(--mantine-color-gray-2);
+}
+
+.label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tds-muted);
+}
+
+.input {
+  min-width: 0;
+}
+
+.submit {
+  height: 56px;
+  padding-inline: 28px;
+}
+
+/* Mobile : champs empilés dans une carte */
+@media (max-width: 62em) {
+  .wrapper {
+    margin-top: -40px;
+  }
+
+  .bar {
+    grid-template-columns: 1fr;
+    border-radius: var(--mantine-radius-lg);
+    padding: 16px 20px 20px;
+    gap: 4px;
+  }
+
+  .field + .field {
+    padding-left: 0;
+    padding-top: 8px;
+    border-left: 0;
+    border-top: 1px solid var(--mantine-color-gray-2);
+  }
+
+  .field[data-summary] {
+    min-height: 40px;
+  }
+
+  .submit {
+    margin-top: 8px;
+    width: 100%;
+  }
+}

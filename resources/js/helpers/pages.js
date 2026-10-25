@@ -4,12 +4,15 @@ export const pages = {
     subtitle: null,
     description: "pages.home.description",
     image: "home_banner.webp",
+    large: true,
   },
   booking: {
     title: "pages.booking.title",
     subtitle: null,
     description: "pages.booking.description",
     image: "room_banner.webp",
+    // La page porte déjà son propre module de réservation
+    hideQuickBooking: true,
   },
   story: {
     title: "pages.story.title",
@@ -40,25 +43,14 @@ export const pages = {
     subtitle: null,
     description: null,
     image: "activities_banner.webp",
+    hideQuickBooking: true,
   },
-  // privacy: {
-  //   title: "Confidentialité",
-  //   subtitle: null,
-  //   description: null,
-  //   image: "rules_banner.webp",
-  // },
-  // terms: {
-  //   title: "Conditions d'utilisation",
-  //   subtitle: null,
-  //   description: null,
-  //   image: "rules_banner.webp",
-  // },
-  // politic: {
-  //   title: "Politique",
-  //   subtitle: null,
-  //   description: null,
-  //   image: "rules_banner.webp",
-  // },
+  privacy: {
+    title: "pages.privacy.title",
+    subtitle: null,
+    description: null,
+    image: "rules_banner.webp",
+  },
   error: {
     title: "pages.error.title",
     subtitle: null,

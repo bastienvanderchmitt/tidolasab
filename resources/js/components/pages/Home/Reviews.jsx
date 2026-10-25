@@ -1,63 +1,37 @@
-import beach_palm from "../../../assets/img/discover/beach_palm.webp";
-import { Parallax } from "react-parallax";
-import { Col, Container, Row } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeartCircleCheck, faStar } from "@fortawesome/free-solid-svg-icons";
+import { Container, SimpleGrid } from "@mantine/core";
+import { IconQuote, IconStarFilled } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
-import { Slider } from "../../../helpers/cjsComponents";
+import beach_palm from "../../../assets/img/discover/beach_palm.webp";
+import classes from "./Home.module.css";
 
 const Reviews = () => {
   const { t } = useTranslation();
 
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: null,
-    prevArrow: null,
-  };
-
   return (
-    <>
-      <Parallax
-        blur={2}
-        bgImage={beach_palm}
-        bgImageAlt="the beach_palm"
-        strength={200}
-        className="text-white text-center p-sm-5"
-      >
-        <Container className="review">
-          <Slider {...settings}>
-            {[1, 2, 3].map((i) => (
-              <div className="slick-image-container" key={i}>
-                <Row className="p-sm-4 text-center">
-                  <Col className="review-content align-self-center">
-                    <FontAwesomeIcon
-                      icon={faHeartCircleCheck}
-                      className="review-icon"
-                    />
-                    <h4 className="title-review pt-2">{t("reviews.title")}</h4>
-                    <p className="quote">{t("reviews.quote_" + i)}</p>
-                    <p className="quote-user">{t("reviews.quote_user_" + i)}</p>
-                    <div>
-                      {[1, 2, 3, 4, 5].map((_, key) => (
-                        <FontAwesomeIcon
-                          icon={faStar}
-                          className="review-star"
-                          key={key}
-                        />
-                      ))}
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            ))}
-          </Slider>
-        </Container>
-      </Parallax>
-    </>
+    <section
+      className={`section ${classes.reviews}`}
+      style={{ backgroundImage: `url(${beach_palm})` }}
+    >
+      <Container size="lg">
+        <p className={`${classes.reviewsTitle} handwritten`}>{t("reviews.title")}</p>
+        <SimpleGrid cols={{ base: 1, md: 3 }} spacing="lg">
+          {[1, 2, 3].map((i) => (
+            <figure key={i} className={classes.review}>
+              <IconQuote size={28} className={classes.quoteIcon} />
+              <blockquote>{t("reviews.quote_" + i)}</blockquote>
+              <figcaption>
+                <span>{t("reviews.quote_user_" + i)}</span>
+                <span className={classes.stars}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <IconStarFilled key={star} size={13} />
+                  ))}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </SimpleGrid>
+      </Container>
+    </section>
   );
 };
 

@@ -1,10 +1,10 @@
 {
   "common": {
     "booking": "Book",
-    "cancel": "Cancel",
-    "days": "days",
     "phone": "Phone",
-    "error": "An error has occurred."
+    "error": "An error has occurred.",
+    "continue": "Continue",
+    "back": "Back"
   },
   "menu": {
     "home": "Home",
@@ -46,6 +46,9 @@
     "error": {
       "title": "Oops, page not found",
       "description": "Sorry, but we couldn't find the page you are looking for. It may have been moved or deleted."
+    },
+    "privacy": {
+      "title": "Privacy"
     }
   },
   "preview": {
@@ -140,25 +143,18 @@
     "robot": "Cooking robot"
   },
   "booking": {
-    "checkIn": "Check-in on:",
-    "checkOut": "Check-out on:",
     "adults": "Adults",
     "adults_age": "13 years and older",
-    "children": "Children",
-    "children_age": "Ages 2 to 12",
-    "prices": "Rates:",
-    "from": " from ",
-    "prices_text": " per night. One half-day offered per week. Tourist tax of 2€ per night per adult.",
     "conditions": "The rental agreement will be sent to you with a request for a deposit of 50% (via bank transfer) to confirm your booking. The balance will be requested 14 days before arrival.",
     "christmas": "Babies under 6 months accepted. Minimum stay of 2 nights (4 for the Christmas/New Year period).",
-    "checkIn_validation": "Please indicate a check-in date (calendar beneath).",
-    "checkOut_validation": "Please indicate a check-out date (calendar beneath).",
-    "adults_validation": "Please indicate the number of adults.",
-    "booked": "Booked",
-    "booked_start": "Booked from 2pm",
-    "begin": "Begin",
-    "end": "End",
-    "minimum_stay": "The length of stay must be at least 2 nights."
+    "adults_count_one": "{{count}} adult",
+    "adults_count_other": "{{count}} adults",
+    "errors": {
+      "dates_required": "Choose your check-in and check-out dates.",
+      "past": "The check-in date has already passed.",
+      "unavailable": "These dates are no longer available, please choose another period.",
+      "minimum": "During this period, the minimum stay is {{nights}} nights."
+    }
   },
   "client": {
     "name_validation": "Please provide a name.",
@@ -177,39 +173,34 @@
     "address": "Address",
     "postalCode": "Postal code",
     "city": "City",
-    "country": "Country"
+    "country": "Country",
+    "title": "Your details",
+    "intro": "We use them to send you the rental agreement."
   },
   "price": {
-    "nights": "Number of nights:",
-    "from": "from",
-    "to": "to",
-    "adult": "adult",
-    "child": "child",
-    "children": "children",
-    "high_season_price": "High season rate",
-    "low_season_price": "Low season rate",
-    "tax": "Tourist tax:",
-    "discount": "Discount:",
-    "total": "Total:"
+    "tax": "Tourist tax",
+    "discount": "Long stay discount",
+    "total": "Total",
+    "line_one": "High season · {{price}} × {{count}} night",
+    "line_other": "High season · {{price}} × {{count}} nights",
+    "line_low_one": "Low season · {{price}} × {{count}} night",
+    "line_low_other": "Low season · {{price}} × {{count}} nights",
+    "deposit": "{{percent}}% deposit on confirmation: {{amount}}"
   },
   "success": {
-    "title": "Thank you, your reservation has been received!",
+    "title": "Thank you, your booking request has been received!",
     "subtitle": "Order details",
-    "less": "Only",
-    "patience": "days to wait, hang in there!",
-    "desc_1_1": "An email with the",
-    "desc_1_2": "rental contract",
-    "desc_1_3": " and our",
-    "desc_1_4": " has just been sent to the address you provided.",
-    "desc_2_1": "Your stay will be confirmed upon receipt of your contract and your",
-    "desc_2_2": " 50% deposit",
-    "desc_3_1": "The",
-    "desc_3_2": " remaining balance",
-    "desc_3_3": " will be requested",
-    "desc_3_4": "14 days before arrival.",
-    "activities_1": "Feel free to check out the",
-    "activities_2": " to discover what the island has to offer.",
-    "activities": "activities"
+    "activities": "See activities",
+    "countdown_one": "Only {{count}} day to go!",
+    "countdown_other": "Only {{count}} days to go!",
+    "next_steps": "What's next?",
+    "step_email": "Agreement and bank details by email",
+    "step_email_text": "An email with the rental agreement and our bank details has just been sent to you.",
+    "step_deposit": "Deposit",
+    "step_deposit_text": "Your stay is confirmed once we receive the signed agreement and the {{percent}}% deposit ({{amount}}).",
+    "step_balance": "Balance",
+    "step_balance_text": "The balance will be requested {{days}} days before arrival.",
+    "activities_text": "In the meantime, discover what the island has to offer."
   },
   "history": {
     "title": "Meet the team",
@@ -294,11 +285,52 @@
     "subject": "Subject",
     "message": "Message",
     "sent": "Message sent.",
-    "send": "SEND"
+    "send": "Send",
+    "form_title": "Write to us"
   },
   "footer": {
     "address": "Address",
     "social": "Social networks",
-    "cgu": "Terms of use"
+    "cgu": "Terms of use",
+    "contact": "Get in touch",
+    "discover": "Discover",
+    "privacy": "Privacy"
+  },
+  "quick": {
+    "stay": "Stay",
+    "stay_placeholder": "Check-in → Check-out",
+    "guests": "Guests",
+    "nights_one": "{{count}} night",
+    "nights_other": "{{count}} nights",
+    "min_price": "From {{price}} / night",
+    "availability": "Availability"
+  },
+  "stay": {
+    "title": "Your dates",
+    "pick_arrival": "Select your check-in date in the calendar.",
+    "pick_departure": "Check-in on {{date}}: now select your check-out date.",
+    "selected_one": "{{count}} night, from {{from}} to {{to}}.",
+    "selected_other": "{{count}} nights, from {{from}} to {{to}}.",
+    "legend_selected": "Your stay",
+    "legend_taken": "Already booked",
+    "schedule": "Check-in from 2pm, check-out before 10am.",
+    "arrival": "Check-in",
+    "departure": "Check-out",
+    "arrival_time": "from 2pm",
+    "departure_time": "before 10am",
+    "no_dates": "Choose your dates"
+  },
+  "review": {
+    "title": "Review",
+    "intro": "Check your request before sending it to us.",
+    "stay": "Stay",
+    "contact": "Details",
+    "edit": "Edit",
+    "submit": "Send my request"
+  },
+  "stepper": {
+    "dates": "Dates",
+    "contact": "Details",
+    "review": "Confirmation"
   }
 }

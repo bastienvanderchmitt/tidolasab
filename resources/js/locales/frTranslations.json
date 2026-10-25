@@ -1,10 +1,10 @@
 {
   "common": {
     "booking": "Réserver",
-    "cancel": "Annuler",
-    "days": "jours",
     "phone": "Téléphone",
-    "error": "Une erreur est survenue."
+    "error": "Une erreur est survenue.",
+    "continue": "Continuer",
+    "back": "Retour"
   },
   "menu": {
     "home": "Accueil",
@@ -46,6 +46,9 @@
     "error": {
       "title": "Ouups, page non trouvée",
       "description": "Désolé mais nous n'avons pas trouvé la page que vous recherchez. Elle a peut-être été déplacée ou supprimée."
+    },
+    "privacy": {
+      "title": "Confidentialité"
     }
   },
   "preview": {
@@ -82,7 +85,7 @@
   },
   "reviews": {
     "title": "Nos clients racontent",
-    "quote_1": "“Isabelle et Frank sont au top \uD83D\uDC4D Ils sont à l'écoute et attentionnés. Les lieux sont très paisibles, calme et cocooning \uD83C\uDF34 On recommande et bien évidemment on reviendra à coup sûr !”",
+    "quote_1": "“Isabelle et Frank sont au top 👍 Ils sont à l'écoute et attentionnés. Les lieux sont très paisibles, calme et cocooning 🌴 On recommande et bien évidemment on reviendra à coup sûr !”",
     "quote_user_1": "MARYSELLA – BOOKING",
     "quote_2": "“Le bungalow est super bien équipé, avec une cuisine ouverte sur la terrasse très agréable !\nA proximité de plusieurs points d’intérêt sur Marie Galante, et surtout l’accessibilité et la gentillesse des propriétaires !”",
     "quote_user_2": "LARA – BOOKING",
@@ -139,25 +142,18 @@
     "robot": "Robot de cuisson"
   },
   "booking": {
-    "checkIn": "Arrivée le:",
-    "checkOut": "Départ le:",
     "adults": "Adultes",
     "adults_age": "13 ans et plus",
-    "children": "Enfants",
-    "children_age": "De 2 à 12 ans",
-    "prices": "Tarifs:",
-    "from": " à partir de ",
-    "prices_text": " par nuit. Une demi-journée offerte par semaine. Taxe de séjour de 2€ par nuit et par adulte.",
     "conditions": "Le contrat de location vous sera transmis avec une demande de versement d'un acompte de 50% (via virement bancaire) qui confirmeront votre réservation. Le solde vous sera demandé 14 jours avant l'arrivée.",
     "christmas": "Bébés de - de 6 mois acceptés. Durée de séjour de 2 nuits minimum (4 pour la période Noël / Nouvel an).",
-    "checkIn_validation": "Veuillez indiquer une date d'arrivée (calendrier ci-dessous).",
-    "checkOut_validation": "Veuillez indiquer une date de départ (calendrier ci-dessous).",
-    "adults_validation": "Veuillez indiquer le nombre d'adultes.",
-    "booked": "Réservé",
-    "booked_start": "Réservé à partir de 14h",
-    "begin": "Début",
-    "end": "Fin",
-    "minimum_stay": "La durée de séjour doit être d'au moins 2 nuits."
+    "adults_count_one": "{{count}} adulte",
+    "adults_count_other": "{{count}} adultes",
+    "errors": {
+      "dates_required": "Choisissez vos dates d'arrivée et de départ.",
+      "past": "La date d'arrivée est déjà passée.",
+      "unavailable": "Ces dates ne sont plus disponibles, merci de choisir une autre période.",
+      "minimum": "Sur cette période, le séjour est de {{nights}} nuits minimum."
+    }
   },
   "client": {
     "name_validation": "Veuillez indiquer un nom.",
@@ -176,39 +172,34 @@
     "address": "Adresse",
     "postalCode": "Code postal",
     "city": "Ville",
-    "country": "Pays"
+    "country": "Pays",
+    "title": "Vos coordonnées",
+    "intro": "Elles nous servent à vous envoyer le contrat de location."
   },
   "price": {
-    "nights": "Nombre de nuits :",
-    "from": "du",
-    "to": "au",
-    "adult": "adulte",
-    "child": "enfant",
-    "children": "enfants",
-    "high_season_price": "Tarif haute saison",
-    "low_season_price": "Tarif basse saison",
-    "tax": "Taxe de séjour :",
-    "discount": "Réduction :",
-    "total": "Total :"
+    "tax": "Taxe de séjour",
+    "discount": "Remise longue durée",
+    "total": "Total",
+    "line_one": "Haute saison · {{price}} × {{count}} nuit",
+    "line_other": "Haute saison · {{price}} × {{count}} nuits",
+    "line_low_one": "Basse saison · {{price}} × {{count}} nuit",
+    "line_low_other": "Basse saison · {{price}} × {{count}} nuits",
+    "deposit": "Acompte de {{percent}} % à la confirmation : {{amount}}"
   },
   "success": {
-    "title": "Merci, votre réservation a bien été reçue !",
+    "title": "Merci, votre demande de réservation est bien reçue !",
     "subtitle": "Détail de la commande",
-    "less": "Plus que",
-    "patience": "jours à patientier, courage !",
-    "desc_1_1": "Un email avec le",
-    "desc_1_2": "contrat de location",
-    "desc_1_3": " et notre",
-    "desc_1_4": " vient de vous être envoyé sur l'adresse que vous avez saisi.",
-    "desc_2_1": "Votre séjour vous sera confirmé à réception de votre contrat et de votre",
-    "desc_2_2": " acompte de 50%",
-    "desc_3_1": "Le",
-    "desc_3_2": " solde restant",
-    "desc_3_3": " vous sera demandé",
-    "desc_3_4": "14 jours avant l'arrivée",
-    "activities_1": "N'hésitez pas à aller faire un tour du côté des",
-    "activities_2": " pour découvrir ce que l'île peut vous offrir.",
-    "activities": "activitées"
+    "activities": "Voir les activités",
+    "countdown_one": "Plus que {{count}} jour avant le départ !",
+    "countdown_other": "Plus que {{count}} jours avant le départ !",
+    "next_steps": "Et maintenant ?",
+    "step_email": "Contrat et RIB par email",
+    "step_email_text": "Un email avec le contrat de location et notre RIB vient de vous être envoyé.",
+    "step_deposit": "Acompte",
+    "step_deposit_text": "Votre séjour est confirmé à réception du contrat signé et de l'acompte de {{percent}} % ({{amount}}).",
+    "step_balance": "Solde",
+    "step_balance_text": "Le solde vous sera demandé {{days}} jours avant l'arrivée.",
+    "activities_text": "En attendant, découvrez ce que l'île peut vous offrir."
   },
   "history": {
     "title": "Découvrez la team",
@@ -293,11 +284,52 @@
     "subject": "Sujet",
     "message": "Message",
     "sent": "Message envoyé.",
-    "send": "ENVOYER"
+    "send": "Envoyer",
+    "form_title": "Écrivez-nous"
   },
   "footer": {
     "address": "Adresse",
     "social": "Réseaux sociaux",
-    "cgu": "CGU"
+    "cgu": "CGU",
+    "contact": "Nous joindre",
+    "discover": "Découvrir",
+    "privacy": "Confidentialité"
+  },
+  "quick": {
+    "stay": "Séjour",
+    "stay_placeholder": "Arrivée → Départ",
+    "guests": "Voyageurs",
+    "nights_one": "{{count}} nuit",
+    "nights_other": "{{count}} nuits",
+    "min_price": "À partir de {{price}} / nuit",
+    "availability": "Disponibilités"
+  },
+  "stay": {
+    "title": "Vos dates",
+    "pick_arrival": "Sélectionnez votre date d'arrivée dans le calendrier.",
+    "pick_departure": "Arrivée le {{date}} : sélectionnez maintenant votre date de départ.",
+    "selected_one": "{{count}} nuit, du {{from}} au {{to}}.",
+    "selected_other": "{{count}} nuits, du {{from}} au {{to}}.",
+    "legend_selected": "Votre séjour",
+    "legend_taken": "Déjà réservé",
+    "schedule": "Arrivée à partir de 14h, départ avant 10h.",
+    "arrival": "Arrivée",
+    "departure": "Départ",
+    "arrival_time": "à partir de 14h",
+    "departure_time": "avant 10h",
+    "no_dates": "Choisissez vos dates"
+  },
+  "review": {
+    "title": "Vérification",
+    "intro": "Relisez votre demande avant de nous l’envoyer.",
+    "stay": "Séjour",
+    "contact": "Coordonnées",
+    "edit": "Modifier",
+    "submit": "Envoyer ma demande"
+  },
+  "stepper": {
+    "dates": "Dates",
+    "contact": "Coordonnées",
+    "review": "Confirmation"
   }
 }

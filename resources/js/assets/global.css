@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "LaBelleAurore";
+  src: url("./fonts/LaBelleAurore-Regular.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("./fonts/Jost-Regular.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Marcellus";
+  src: url("./fonts/Marcellus-Regular.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Comic Relief";
+  src: url("./fonts/ComicRelief-Regular.ttf");
+  font-display: swap;
+}
+
+:root {
+  --tds-cream: #fbf8f3;
+  --tds-sand: #e3cfb4;
+  --tds-sand-dark: #b99d75;
+  --tds-ink: #22303a;
+  --tds-muted: #5d6b73;
+  --tds-shadow: 0 18px 50px -20px rgba(34, 48, 58, 0.28);
+  --tds-header-height: 76px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--tds-cream);
+  color: var(--tds-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Sur-titre en capitales au-dessus des titres de section */
+.eyebrow {
+  font-family: Jost, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mantine-color-lagon-8);
+}
+
+/* Accroches manuscrites */
+.handwritten {
+  font-family: LaBelleAurore, cursive;
+  font-weight: normal;
+}
+
+.section {
+  padding-block: clamp(56px, 9vw, 112px);
+}

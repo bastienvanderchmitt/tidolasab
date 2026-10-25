@@ -1,81 +1,90 @@
-import React, { useEffect } from "react";
-import { useBookingContext } from "../../contexts/BookingContext";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Col, Container, Row } from "reactstrap";
-import { getDaysFromNow } from "../../helpers/dates";
-import Price from "./Booking/Price";
 import { useTranslation } from "react-i18next";
+import { Button, Container, Paper, SimpleGrid, Stack, Text, ThemeIcon, Timeline } from "@mantine/core";
+import { IconCheck, IconMail, IconCoinEuro, IconBeach } from "@tabler/icons-react";
+import { useBookingContext } from "../../contexts/BookingContext";
+import { nightsBetween, today } from "../../helpers/availability";
+import PriceSummary from "../booking/PriceSummary";
+import { formatDate, formatPrice } from "../booking/format";
+import classes from "./Success.module.css";
 
 const Success = () => {
-  const { total, booked, selectedDates } = useBookingContext();
-
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { booked, pricing } = useBookingContext();
 
   useEffect(() => {
-    !booked && navigate("/");
+    if (!booked) navigate("/");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  if (!booked) return null;
+
+  const { checkIn, checkOut, adults, quote } = booked;
+  const depositPercent = pricing?.deposit_percent ?? 50;
+  const balanceDays = pricing?.balance_due_days ?? 14;
+
   return (
-    <Container>
-      <Row>
-        <Row className="p-4">
-          <Col className="p-5">
-            <Row>
-              <Col>
-                <h4 className="title-4 pt-4 mb-2">{t("success.title")}</h4>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <span className="title-2 mt-4">{t("success.subtitle")}</span>
-              </Col>
-            </Row>
-            <Row className="my-4">
-              <Col style={{ maxWidth: "650px" }}>
-                <Price withParticipants />
-              </Col>
-            </Row>
-            <Row className="my-4 py-4">
-              <Col>
-                <span className="title-3 mt-4">
-                  {t("success.less")}{" "}
-                  <span className="gold marcellus">
-                    {getDaysFromNow(selectedDates[0])}
-                  </span>{" "}
-                  {t("success.patience")} &#128521;
-                </span>
-              </Col>
-            </Row>
-            <Row className="bg-secondary my-4 rounded">
-              <p className="pt-4 px-4">
-                {t("success.desc_1_1")}{" "}
-                <span className="bold">{t("success.desc_1_2")}</span>
-                {t("success.desc_1_3")} <span className="bold">RIB</span>
-                {t("success.desc_1_4")}
-              </p>
-              <p className="px-4">
-                {t("success.desc_2_1")}
-                <span className="bold">{t("success.desc_2_2")}</span> (
-                {total / 2} €).
-              </p>
-              <p className="px-4">
-                {t("success.desc_3_1")}
-                <span className="bold">{t("success.desc_3_2")}</span>
-                {t("success.desc_3_3")}{" "}
-                <span className="bold">{t("success.desc_3_4")}</span>.
-              </p>
-            </Row>
-            <Row>
-              <p className="pt-4">
-                {t("success.activities_1")}{" "}
-                <Link to="/activities">{t("success.activities")}</Link>
-                {t("success.activities_2")}
-              </p>
-            </Row>
-          </Col>
-        </Row>
-      </Row>
+    <Container size="lg" className="section">
+      <Stack align="center" gap="xs" ta="center" mb={48}>
+        <ThemeIcon size={64} radius="xl" color="lagon">
+          <IconCheck size={34} />
+        </ThemeIcon>
+        <h2 className={classes.title}>{t("success.title")}</h2>
+        <Text className="handwritten" fz={26} c="lagon.8">
+          {t("success.countdown", { count: nightsBetween(today(), checkIn) })}
+        </Text>
+      </Stack>
+
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
+        <Paper p="xl" className={classes.card}>
+          <Text className="eyebrow" mb="md">
+            {t("success.subtitle")}
+          </Text>
+          <Text fw={500}>
+            {formatDate(checkIn, { weekday: "long", year: "numeric" })} →{" "}
+            {formatDate(checkOut, { weekday: "long", year: "numeric" })}
+          </Text>
+          <Text size="sm" c="dimmed" mb="lg">
+            {t("quick.nights", { count: quote?.nights ?? 0 })} ·{" "}
+            {t("booking.adults_count", { count: adults })}
+          </Text>
+          <PriceSummary quote={quote} />
+        </Paper>
+
+        <Paper p="xl" className={classes.card}>
+          <Text className="eyebrow" mb="lg">
+            {t("success.next_steps")}
+          </Text>
+          <Timeline active={0} bulletSize={32} lineWidth={2}>
+            <Timeline.Item bullet={<IconMail size={16} />} title={t("success.step_email")}>
+              <Text size="sm" c="dimmed">
+                {t("success.step_email_text")}
+              </Text>
+            </Timeline.Item>
+            <Timeline.Item bullet={<IconCoinEuro size={16} />} title={t("success.step_deposit")}>
+              <Text size="sm" c="dimmed">
+                {t("success.step_deposit_text", {
+                  percent: depositPercent,
+                  amount: formatPrice(((quote?.total ?? 0) * depositPercent) / 100),
+                })}
+              </Text>
+            </Timeline.Item>
+            <Timeline.Item bullet={<IconBeach size={16} />} title={t("success.step_balance")}>
+              <Text size="sm" c="dimmed">
+                {t("success.step_balance_text", { days: balanceDays })}
+              </Text>
+            </Timeline.Item>
+          </Timeline>
+        </Paper>
+      </SimpleGrid>
+
+      <Stack align="center" mt={56} gap="md" ta="center">
+        <Text c="dimmed">{t("success.activities_text")}</Text>
+        <Button component={Link} to="/activities" variant="light">
+          {t("success.activities")}
+        </Button>
+      </Stack>
     </Container>
   );
 };

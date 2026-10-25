@@ -1,169 +1,65 @@
-import { Col, Container, Row } from "reactstrap";
-import essentials_1 from "../../../assets/img/room/room_6.webp";
-import essentials_2 from "../../../assets/img/room/view_1.webp";
-import essentials_3 from "../../../assets/img/room/view_4.webp";
-import essentials_4 from "../../../assets/img/room/view_5.webp";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Container, SimpleGrid } from "@mantine/core";
 import {
-  faPlane,
-  faWifi,
-  faBroomBall,
-  faUmbrellaBeach,
-  faBowlRice,
-  faMartiniGlassCitrus,
-  faWind,
-  faSwimmingPool,
-} from "@fortawesome/free-solid-svg-icons";
+  IconAirConditioning,
+  IconBeach,
+  IconGlassCocktail,
+  IconPlane,
+  IconPool,
+  IconSparkles,
+  IconToolsKitchen2,
+  IconWifi,
+} from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import essentials_1 from "../../../assets/img/room/room_6.webp";
+import essentials_2 from "../../../assets/img/room/view_3.webp";
+import SectionTitle from "../../common/SectionTitle";
+import classes from "./Home.module.css";
 
-const Essential = ({ title, text, icon }) => {
-  return (
-    <Col sm={12} md={6} className="essential">
-      <Row>
-        <Col xs={3}>
-          <FontAwesomeIcon icon={icon} />
-        </Col>
-        <Col>
-          <h5 className="text-primary-emphasis text-decoration-underline">
-            {title}
-          </h5>
-          <p>{text}</p>
-        </Col>
-      </Row>
-    </Col>
-  );
-};
+const essentials = [
+  { icon: IconPlane, title: "airport_title", text: "airport_description" },
+  { icon: IconBeach, title: "stuff_title", text: "stuff_description" },
+  { icon: IconPool, title: "pool_title", text: "pool_description" },
+  { icon: IconAirConditioning, title: "clim" },
+  { icon: IconWifi, title: "wifi_title", text: "wifi_description" },
+  { icon: IconGlassCocktail, title: "rhum_title", text: "rhum_description" },
+  { icon: IconSparkles, title: "clean_title", text: "clean_description" },
+  { icon: IconToolsKitchen2, title: "food_title", text: "food_description" },
+];
 
-const Essentials = ({ fromBooking }) => {
+const Essentials = () => {
   const { t } = useTranslation();
 
   return (
-    <Container className="essentials">
-      <Row className="p-4">
-        <Col className="px-5 d-none d-md-block">
-          <div className="image-zoom">
-            {fromBooking ? (
-              <img
-                loading="lazy"
-                alt="essentials_3"
-                src={essentials_3}
-                className="w-100"
-              />
-            ) : (
-              <img
-                loading="lazy"
-                alt="essentials_1"
-                src={essentials_1}
-                className="w-100"
-              />
-            )}
+    <section className="section">
+      <Container size="lg">
+        <SimpleGrid cols={{ base: 1, md: 5 }} spacing={56}>
+          <div className={classes.essentialsPhotos}>
+            <img src={essentials_1} alt="" loading="lazy" />
+            <img src={essentials_2} alt="" loading="lazy" />
+            <p className="handwritten">{t("essentials.photo_title")}</p>
           </div>
-          <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
-        </Col>
-        <Col>
-          <Row>
-            <Col>
-              <h4 className="title-4">{t("essentials.title")}</h4>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h4 className="title-2 pt-2">{t("essentials.subtitle")}</h4>
-            </Col>
-          </Row>
-          <Row className="pt-5">
-            <Essential
-              title={t("essentials.airport_title")}
-              icon={faPlane}
-              text={t("essentials.airport_description")}
+          <div className={classes.essentialsList}>
+            <SectionTitle
+              eyebrow={t("essentials.title")}
+              title={t("essentials.subtitle")}
             />
-            <Essential
-              title={t("essentials.stuff_title")}
-              icon={faUmbrellaBeach}
-              text={t("essentials.stuff_description")}
-            />
-          </Row>
-          <Row className="pt-1 pb-2">
-            <Essential
-              title={t("essentials.pool_title")}
-              icon={faSwimmingPool}
-              text={t("essentials.pool_description")}
-            />
-            <Essential title={t("essentials.clim")} icon={faWind} />
-          </Row>
-          <Row>
-            <Essential
-              title={t("essentials.wifi_title")}
-              icon={faWifi}
-              text={t("essentials.wifi_description")}
-            />
-            <Essential
-              title={t("essentials.rhum_title")}
-              icon={faMartiniGlassCitrus}
-              text={t("essentials.rhum_description")}
-            />
-          </Row>
-          <Row className="pb-4">
-            <Essential
-              title={t("essentials.clean_title")}
-              icon={faBroomBall}
-              text={t("essentials.clean_description")}
-            />
-            <Essential
-              title={t("essentials.food_title")}
-              icon={faBowlRice}
-              text={t("essentials.food_description")}
-            />
-          </Row>
-          <Row>
-            <Col>
-              <div className="position-relative">
-                <div className="image-zoom">
-                  {fromBooking ? (
-                    <img
-                      loading="lazy"
-                      alt="essentials_4"
-                      src={essentials_4}
-                      className="w-100"
-                    />
-                  ) : (
-                    <img
-                      loading="lazy"
-                      alt="essentials_2"
-                      src={essentials_2}
-                      className="w-100"
-                    />
-                  )}
-                  <div className="offset-border"></div>
+            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" verticalSpacing="xl">
+              {essentials.map(({ icon: Icon, title, text }) => (
+                <div key={title} className={classes.essential}>
+                  <span className={classes.essentialIcon}>
+                    <Icon size={22} stroke={1.6} />
+                  </span>
+                  <div>
+                    <h3>{t(`essentials.${title}`)}</h3>
+                    {text && <p>{t(`essentials.${text}`)}</p>}
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="pt-4 px-5 d-md-none">
-              <div className="image-zoom">
-                {fromBooking ? (
-                  <img
-                    loading="lazy"
-                    alt="essentials_3"
-                    src={essentials_3}
-                    className="w-100"
-                  />
-                ) : (
-                  <img
-                    loading="lazy"
-                    alt="essentials_1"
-                    src={essentials_1}
-                    className="w-100"
-                  />
-                )}
-              </div>
-              <h4 className="aurore pt-3">{t("essentials.photo_title")}</h4>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+              ))}
+            </SimpleGrid>
+          </div>
+        </SimpleGrid>
+      </Container>
+    </section>
   );
 };
 

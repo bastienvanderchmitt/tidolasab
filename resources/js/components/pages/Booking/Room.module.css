@@ -1,0 +1,50 @@
+.title {
+  margin: 4px 0 0;
+  font-family: Marcellus, serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 0;
+  font-family: Marcellus, serif;
+  font-weight: 400;
+  font-size: 1.35rem;
+  color: var(--mantine-color-lagon-8);
+}
+
+.text p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--tds-muted);
+}
+
+.block {
+  margin-top: 72px;
+}
+
+.handTitle {
+  margin: 0 0 16px;
+  font-size: 1.8rem;
+  color: var(--mantine-color-lagon-8);
+}
+
+.amenity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--mantine-radius-lg);
+  background: white;
+  border: 1px solid var(--mantine-color-sable-1);
+}
+
+.amenity img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: 0.8;
+}
