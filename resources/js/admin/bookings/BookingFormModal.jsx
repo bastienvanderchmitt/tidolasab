@@ -20,7 +20,8 @@ import {
   useQuote,
 } from "../api/queries";
 import { BOOKING_TYPES } from "../utils/labels";
-import { dayjs, nights } from "../utils/format";
+import { nights } from "../utils/format";
+import { daysBetween } from "../planning/calendar";
 
 const TYPE_OPTIONS = Object.entries(BOOKING_TYPES).map(
   ([value, { label }]) => ({ value, label }),
@@ -69,7 +70,7 @@ const BookingFormModal = ({ booking, defaults = {}, onDone }) => {
     },
     validate: {
       dates: ([start, end]) =>
-        start && end && dayjs(end).isAfter(start)
+        start && end && end > start
           ? null
           : "Choisissez les dates d'arrivée et de départ",
       adults: (v, values) =>
@@ -96,8 +97,8 @@ const BookingFormModal = ({ booking, defaults = {}, onDone }) => {
   const [checkIn, checkOut] = dates;
   const isClosure = type === "Fermeture";
   const isDirect = type === "Classique";
-  const nightCount =
-    checkIn && checkOut ? dayjs(checkOut).diff(checkIn, "day") : 0;
+  // Dates « YYYY-MM-DD » : compte indépendant du fuseau du navigateur
+  const nightCount = checkIn && checkOut ? daysBetween(checkIn, checkOut) : 0;
 
   // Prix proposé pour une réservation directe, recalculé quand le séjour change.
   // En modification, le prix enregistré est gardé tant que le séjour ne change pas.

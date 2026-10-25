@@ -1,179 +1,333 @@
 import { useMemo, useState } from "react";
 import {
   ActionIcon,
-  Badge,
   Box,
+  Button,
   Card,
   Group,
   SimpleGrid,
   Text,
   Tooltip,
-  UnstyledButton,
 } from "@mantine/core";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconPlus,
+} from "@tabler/icons-react";
 import { useBookings } from "../api/queries";
 import PageHeader from "../components/PageHeader";
 import QueryState from "../components/QueryState";
 import { BOOKING_TYPES } from "../utils/labels";
-import { dayjs, money, nights } from "../utils/format";
+import { money, nights } from "../utils/format";
 import BookingDrawer from "../bookings/BookingDrawer";
 import { useBookingActions } from "../bookings/useBookingActions";
-import { monthCells, occupancy } from "./calendar";
+import {
+  addDays,
+  addMonths,
+  dayLabel,
+  monthCells,
+  monthLabel,
+  occupancy,
+  suggestedCheckOut,
+  todayISO,
+  weekday,
+} from "./calendar";
+import classes from "./PlanningPage.module.css";
 
 const WEEKDAYS = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."];
+const MONTHS_SHOWN = 3;
 
-const Month = ({ month, nightsMap, onOpen, onCreate }) => {
-  const start = month.startOf("month");
-  const offset = (start.day() + 6) % 7;
-  const today = dayjs().format("YYYY-MM-DD");
-  const cells = [
-    ...Array(offset).fill(null),
-    ...Array.from({ length: month.daysInMonth() }, (_, i) =>
-      start.add(i, "day"),
-    ),
-  ];
+const colorOf = (booking) => BOOKING_TYPES[booking.type]?.color ?? "gray";
+const nameOf = (booking) =>
+  booking.nom_client || BOOKING_TYPES[booking.type]?.label;
+const isPending = (booking) => booking.statut === "en attente";
+
+const summary = (booking) =>
+  [
+    nameOf(booking),
+    nights(booking.nombre_nuits),
+    booking.type !== "Fermeture" && money(booking.prix_total),
+    isPending(booking) && "en attente",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+const barStyle = (booking) => {
+  const color = colorOf(booking);
+  return isPending(booking)
+    ? {
+        background: `var(--mantine-color-${color}-2)`,
+        color: `var(--mantine-color-${color}-9)`,
+      }
+    : {
+        background: `var(--mantine-color-${color}-6)`,
+        color: "var(--mantine-color-white)",
+      };
+};
+
+/**
+ * Demi-case colorée : la moitié gauche est la nuit de la veille, la droite celle du jour.
+ */
+const Bar = ({ booking, side, start, end, onOpen }) => (
+  <Tooltip label={summary(booking)} withinPortal>
+    <button
+      type="button"
+      aria-label={summary(booking)}
+      className={[
+        classes.bar,
+        classes[side],
+        start && classes.start,
+        end && classes.end,
+        isPending(booking) && classes.pending,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      style={barStyle(booking)}
+      onClick={(event) => {
+        event.stopPropagation();
+        onOpen(booking);
+      }}
+    />
+  </Tooltip>
+);
+
+const Day = ({ day, today, nightsMap, onOpen, onCreate }) => {
+  const night = nightsMap.get(day);
+  const previous = nightsMap.get(addDays(day, -1));
+  const isPast = day < today;
+  const canCreate = !night && !isPast;
+
+  // Nom sur la première nuit de la réservation dans la ligne (semaine du mois),
+  // étalé sur les nuits suivantes de la même ligne
+  const showLabel =
+    night &&
+    (previous?.id !== night.id || weekday(day) === 0 || day.endsWith("-01"));
+  const sameRow = (d) => weekday(d) !== 0 && d.slice(0, 7) === day.slice(0, 7);
+  let span = 1;
+  while (
+    showLabel &&
+    sameRow(addDays(day, span)) &&
+    nightsMap.get(addDays(day, span))?.id === night.id
+  ) {
+    span++;
+  }
+  // La barre s'arrête au milieu de la case du départ, ou au bord de la ligne
+  const continues = nightsMap.get(addDays(day, span))?.id === night?.id;
+
+  const cellClasses = [
+    classes.cell,
+    isPast && classes.past,
+    canCreate && classes.free,
+    day === today && classes.today,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const content = (
+    <div
+      className={cellClasses}
+      role={canCreate ? "button" : undefined}
+      tabIndex={canCreate ? 0 : undefined}
+      onClick={canCreate ? () => onCreate(day) : undefined}
+      onKeyDown={
+        canCreate
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onCreate(day);
+              }
+            }
+          : undefined
+      }
+    >
+      <span className={classes.number}>{Number(day.slice(8))}</span>
+      {canCreate && <IconPlus size={14} className={classes.add} />}
+      {previous && (
+        <Bar
+          booking={previous}
+          side="left"
+          end={previous.id !== night?.id}
+          onOpen={onOpen}
+        />
+      )}
+      {night && (
+        <Bar
+          booking={night}
+          side="right"
+          start={previous?.id !== night.id}
+          end={false}
+          onOpen={onOpen}
+        />
+      )}
+      {showLabel && (
+        <span
+          className={classes.label}
+          style={{
+            width: continues
+              ? `calc(${span} * 100% - 50% - 14px)`
+              : `calc(${span} * 100% - 16px)`,
+            color: barStyle(night).color,
+          }}
+        >
+          {nameOf(night)}
+        </span>
+      )}
+    </div>
+  );
+
+  return canCreate ? (
+    <Tooltip
+      label={`Nouvelle réservation le ${dayLabel(day)}`}
+      openDelay={400}
+      withinPortal
+    >
+      {content}
+    </Tooltip>
+  ) : (
+    content
+  );
+};
+
+const Month = ({ month, today, nightsMap, onOpen, onCreate }) => {
+  const cells = monthCells(month);
+  const days = cells.filter(Boolean);
+  // Taux d'occupation : nuits validées, hors fermetures
+  const booked = days.filter((d) => {
+    const b = nightsMap.get(d);
+    return b && b.statut === "validée" && b.type !== "Fermeture";
+  }).length;
 
   return (
     <Card>
-      <Text fw={600} tt="capitalize" mb="sm">
-        {month.format("MMMM YYYY")}
-      </Text>
-      <SimpleGrid cols={7} spacing={4} verticalSpacing={4}>
+      <Group justify="space-between" mb="sm" align="baseline">
+        <Text fw={600} tt="capitalize">
+          {monthLabel(month)}
+        </Text>
+        <Text size="xs" c="dimmed">
+          {nights(booked)} · {Math.round((booked / days.length) * 100)} %
+        </Text>
+      </Group>
+      <div className={classes.grid}>
         {WEEKDAYS.map((d) => (
-          <Text key={d} size="xs" c="dimmed" ta="center">
+          <div key={d} className={classes.weekday}>
             {d}
-          </Text>
+          </div>
         ))}
-        {cells.map((day, i) => {
-          if (!day) return <Box key={`empty-${i}`} />;
-          const key = day.format("YYYY-MM-DD");
-          const booking = nightsMap.get(key);
-          const color = booking
-            ? (BOOKING_TYPES[booking.type]?.color ?? "gray")
-            : null;
-          const isArrival = booking && booking.date_arrivee === key;
-          const pending = booking?.statut === "en attente";
-
-          const cell = (
-            <UnstyledButton
-              onClick={() =>
-                booking ? onOpen(booking) : key >= today && onCreate(key)
-              }
-              h={52}
-              p={4}
-              style={{
-                borderRadius: "var(--mantine-radius-sm)",
-                border:
-                  key === today
-                    ? "2px solid var(--mantine-color-lagon-7)"
-                    : "1px solid var(--mantine-color-default-border)",
-                background: booking
-                  ? `var(--mantine-color-${color}-${pending ? "1" : "6"})`
-                  : key < today
-                    ? "var(--mantine-color-default-hover)"
-                    : undefined,
-                color: booking && !pending ? "white" : undefined,
-                overflow: "hidden",
-              }}
-            >
-              <Text size="xs" fw={600}>
-                {day.date()}
-              </Text>
-              {isArrival && (
-                <Text size="10px" lineClamp={1} fw={500}>
-                  {booking.nom_client || BOOKING_TYPES[booking.type]?.label}
-                </Text>
-              )}
-            </UnstyledButton>
-          );
-
-          return booking ? (
-            <Tooltip
-              key={key}
-              label={`${booking.nom_client || BOOKING_TYPES[booking.type]?.label} · ${nights(booking.nombre_nuits)}${
-                booking.type !== "Fermeture"
-                  ? ` · ${money(booking.prix_total)}`
-                  : ""
-              }${pending ? " · en attente" : ""}`}
-            >
-              {cell}
-            </Tooltip>
+        {cells.map((day, i) =>
+          day ? (
+            <Day
+              key={day}
+              day={day}
+              today={today}
+              nightsMap={nightsMap}
+              onOpen={onOpen}
+              onCreate={onCreate}
+            />
           ) : (
-            <Box key={key}>{cell}</Box>
-          );
-        })}
-      </SimpleGrid>
+            <div
+              key={`empty-${i}`}
+              className={`${classes.cell} ${classes.empty}`}
+            />
+          ),
+        )}
+      </div>
     </Card>
   );
 };
 
+const Legend = () => (
+  <Group gap="md" mb="md">
+    {Object.entries(BOOKING_TYPES).map(([key, { label, color }]) => (
+      <Group key={key} gap={6}>
+        <Box
+          w={22}
+          h={12}
+          style={{
+            borderRadius: 6,
+            background: `var(--mantine-color-${color}-6)`,
+          }}
+        />
+        <Text size="sm">{label}</Text>
+      </Group>
+    ))}
+    <Group gap={6}>
+      <Box
+        w={22}
+        h={12}
+        className={classes.pending}
+        style={{
+          borderRadius: 6,
+          background: "var(--mantine-color-gray-3)",
+        }}
+      />
+      <Text size="sm">En attente</Text>
+    </Group>
+  </Group>
+);
+
 const PlanningPage = () => {
   const bookings = useBookings();
   const { openCreate } = useBookingActions();
-  const [first, setFirst] = useState(dayjs().startOf("month"));
+  const today = todayISO();
+  const [first, setFirst] = useState(() => addMonths(today, 0));
   const [selected, setSelected] = useState(null);
 
   const nightsMap = useMemo(
     () => occupancy(bookings.data ?? []),
     [bookings.data],
   );
-  const months = [0, 1, 2].map((n) => first.add(n, "month"));
+  const months = Array.from({ length: MONTHS_SHOWN }, (_, n) =>
+    addMonths(first, n),
+  );
 
   return (
     <>
       <PageHeader
         title="Planning"
-        description="Nuits occupées ; cliquez sur un jour libre pour créer une réservation"
+        description="Cliquez sur un jour libre pour créer une réservation, sur une réservation pour l'ouvrir"
       >
         <Group gap="xs">
           <ActionIcon
             variant="default"
             size="lg"
             aria-label="Mois précédents"
-            onClick={() => setFirst(first.subtract(3, "month"))}
+            onClick={() => setFirst(addMonths(first, -MONTHS_SHOWN))}
           >
             <IconChevronLeft size={18} />
           </ActionIcon>
-          <UnstyledButton onClick={() => setFirst(dayjs().startOf("month"))}>
-            <Text size="sm" fw={500}>
-              Aujourd'hui
-            </Text>
-          </UnstyledButton>
+          <Button
+            variant="default"
+            onClick={() => setFirst(addMonths(today, 0))}
+          >
+            Aujourd'hui
+          </Button>
           <ActionIcon
             variant="default"
             size="lg"
             aria-label="Mois suivants"
-            onClick={() => setFirst(first.add(3, "month"))}
+            onClick={() => setFirst(addMonths(first, MONTHS_SHOWN))}
           >
             <IconChevronRight size={18} />
           </ActionIcon>
         </Group>
       </PageHeader>
 
-      <Group gap="xs" mb="md">
-        {Object.entries(BOOKING_TYPES).map(([key, { label, color }]) => (
-          <Badge key={key} color={color} variant="filled">
-            {label}
-          </Badge>
-        ))}
-        <Badge color="gray" variant="light">
-          En attente : couleur claire
-        </Badge>
-      </Group>
+      <Legend />
 
       <QueryState query={bookings}>
         {() => (
           <SimpleGrid cols={{ base: 1, md: 2, xl: 3 }}>
             {months.map((month) => (
               <Month
-                key={month.format("YYYY-MM")}
+                key={month}
                 month={month}
+                today={today}
                 nightsMap={nightsMap}
-                onOpen={(b) => setSelected(b)}
+                onOpen={setSelected}
                 onCreate={(checkIn) =>
                   openCreate({
                     checkIn,
-                    checkOut: dayjs(checkIn).add(2, "day").format("YYYY-MM-DD"),
+                    checkOut: suggestedCheckOut(checkIn, nightsMap),
                   })
                 }
               />

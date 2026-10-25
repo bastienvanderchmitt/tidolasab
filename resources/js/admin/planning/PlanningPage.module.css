@@ -1,0 +1,146 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid var(--mantine-color-default-border);
+  border-left: 1px solid var(--mantine-color-default-border);
+}
+
+.weekday {
+  padding: 6px 0;
+  text-align: center;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+  text-transform: capitalize;
+  border-right: 1px solid var(--mantine-color-default-border);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+/* Toutes les cases ont la même taille, occupées ou non */
+.cell {
+  position: relative;
+  height: 64px;
+  border-right: 1px solid var(--mantine-color-default-border);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.empty {
+  background: var(--mantine-color-default-hover);
+  opacity: 0.4;
+}
+
+.past {
+  background: var(--mantine-color-default-hover);
+}
+
+.past .number {
+  color: var(--mantine-color-dimmed);
+}
+
+.free {
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.free:hover {
+  background: var(--mantine-color-lagon-light);
+}
+
+.free .add {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.free:hover .add {
+  opacity: 1;
+}
+
+.free:focus-visible {
+  outline: 2px solid var(--mantine-color-lagon-6);
+  outline-offset: -2px;
+}
+
+.number {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.today .number {
+  top: 3px;
+  left: 3px;
+  min-width: 20px;
+  padding: 0 4px;
+  border-radius: 10px;
+  text-align: center;
+  color: var(--mantine-color-white);
+  background: var(--mantine-color-lagon-6);
+}
+
+.add {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: var(--mantine-color-lagon-6);
+}
+
+/* Une nuit va du milieu d'une case au milieu de la suivante : les arrivées et
+   départs du même jour se partagent la case */
+.bar {
+  position: absolute;
+  bottom: 8px;
+  height: 22px;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+}
+
+.left {
+  left: 0;
+  width: 50%;
+}
+
+/* 1 px de plus : la barre recouvre le trait de la grille et reste continue */
+.right {
+  left: 50%;
+  width: calc(50% + 1px);
+}
+
+.start {
+  border-top-left-radius: 11px;
+  border-bottom-left-radius: 11px;
+  margin-left: 2px;
+  width: calc(50% - 1px);
+}
+
+.end {
+  border-top-right-radius: 11px;
+  border-bottom-right-radius: 11px;
+  width: calc(50% - 2px);
+}
+
+.pending {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 6px,
+    rgba(255, 255, 255, 0.45) 6px 9px
+  );
+}
+
+/* Nom affiché sur la première nuit de chaque semaine, par-dessus les cases suivantes */
+.label {
+  position: absolute;
+  bottom: 8px;
+  left: calc(50% + 10px);
+  height: 22px;
+  line-height: 22px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  z-index: 1;
+}
