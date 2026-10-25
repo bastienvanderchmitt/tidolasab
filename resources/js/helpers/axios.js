@@ -35,7 +35,11 @@ appAxios.interceptors.response.use(
       });
     }
 
-    const message = response.data?.message || i18n.t("common.error");
+    // Limite de requêtes atteinte : message traduit plutôt que celui de Laravel
+    const message =
+      response.status === 429
+        ? i18n.t("common.too_many_requests")
+        : response.data?.message || i18n.t("common.error");
     return Promise.reject({
       status: response.status,
       message,

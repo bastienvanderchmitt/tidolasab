@@ -49,4 +49,11 @@ return [
         'regards' => 'Au plaisir de vous recevoir,',
         'host' => 'Isabelle',
     ],
+
+    'verification' => [
+        'subject' => 'Ti\' Dola Sab - Votre code de confirmation : :code',
+        'intro' => 'Voici votre code pour confirmer votre demande de réservation à Ti\' Dola Sab :',
+        'validity' => 'Saisissez-le sur le site pour finaliser votre demande. Il est valable :minutes minutes.',
+        'ignore' => 'Si vous n\'êtes pas à l\'origine de cette demande, vous pouvez ignorer cet email.',
+    ],
 ];

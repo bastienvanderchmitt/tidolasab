@@ -37,6 +37,8 @@ class StoreBookingRequest extends FormRequest
             // Code ISO envoyé par le site public, pour le format du code postal
             'countryCode' => ['nullable', 'string', 'size:2', 'alpha'],
             'language' => ['nullable', 'string', 'size:2'],
+            // Code reçu par email, exigé pour une réservation publique (EmailVerification)
+            'verificationCode' => [$isAdmin ? 'nullable' : 'required', 'string', 'digits:6'],
         ];
     }
 }

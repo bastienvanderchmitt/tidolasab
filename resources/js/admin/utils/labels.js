@@ -32,6 +32,7 @@ export const methodLabel = (value) =>
   PAYMENT_METHODS.find((m) => m.value === value)?.label ?? value;
 
 export const EMAIL_TYPES = {
+  BookingVerificationCode: "Code de confirmation",
   BookingReceived: "Demande reçue",
   BookingValidated: "Réservation validée",
   BookingPending: "Remise en attente",

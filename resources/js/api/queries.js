@@ -6,7 +6,11 @@ import {
 } from "@tanstack/react-query";
 import { notifications } from "@mantine/notifications";
 import i18n from "../i18n";
-import { getReservedBookings, saveBooking } from "./booking";
+import {
+  getReservedBookings,
+  saveBooking,
+  sendVerificationCode,
+} from "./booking";
 import { sendEmail } from "./contact";
 import { getPricing } from "./pricing";
 
@@ -53,6 +57,11 @@ export const useSaveBooking = () =>
     // Les dates qui viennent d'être demandées ne sont plus libres
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["bookings", "reserved"] }),
+  });
+
+export const useSendVerificationCode = () =>
+  useMutation({
+    mutationFn: (data) => sendVerificationCode(data).then(({ data }) => data),
   });
 
 export const useSendContact = () =>

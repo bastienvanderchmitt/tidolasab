@@ -16,6 +16,7 @@ Route::get('bookings/reserved', [BookingController::class, 'reserved']);
 Route::get('pricing', [PricingController::class, 'show']);
 Route::get('pricing/quote', [PricingController::class, 'quote'])->middleware('throttle:60,1');
 Route::post('bookings', [BookingController::class, 'store'])->middleware('throttle:10,1');
+Route::post('bookings/verification-code', [BookingController::class, 'sendVerificationCode'])->middleware('throttle:5,1');
 Route::post('contact', [ContactController::class, 'send'])->middleware('throttle:5,1');
 Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::get('emails/{token}/pixel.gif', [EmailController::class, 'pixel'])->name('emails.pixel')->middleware('throttle:60,1');

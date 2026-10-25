@@ -18,7 +18,7 @@ beforeEach(function () {
 
 function bookingPayload(array $overrides = []): array
 {
-    return array_merge([
+    $payload = array_merge([
         'checkIn' => '2026-12-01',
         'checkOut' => '2026-12-04',
         'adults' => 2,
@@ -33,6 +33,12 @@ function bookingPayload(array $overrides = []): array
         'country' => 'France',
         'language' => 'fr',
     ], $overrides);
+
+    if (is_string($payload['email'])) {
+        $payload['verificationCode'] ??= verificationCode($payload['email']);
+    }
+
+    return $payload;
 }
 
 it('enregistre une réservation publique au prix calculé par le serveur', function () {

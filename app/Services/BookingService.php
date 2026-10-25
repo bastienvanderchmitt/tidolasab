@@ -68,16 +68,7 @@ class BookingService
 
             $client = null;
             if ($type !== BookingType::Fermeture) {
-                $client = $isAdmin && ! empty($data['clientId'])
-                    ? Client::findOrFail($data['clientId'])
-                    : Client::create([
-                        'nom' => $data['name'] ?? '',
-                        'prenom' => $data['firstName'] ?? '',
-                        'email' => $data['email'] ?? '',
-                        'telephone' => $data['phone'] ?? '',
-                        'adresse' => $this->formatAddress($data),
-                        'language' => $data['language'] ?? 'fr',
-                    ]);
+                $client = $this->clientFor($data, $isAdmin);
                 $booking->clients()->attach($client);
             }
 
@@ -392,6 +383,47 @@ class BookingService
         if ($taken) {
             throw new BusinessException(__('booking.dates_unavailable'));
         }
+    }
+
+    /**
+     * Client de la réservation : celui choisi dans l'admin, sinon la fiche existante
+     * ayant le même email (vérifié par code côté public), sinon une nouvelle fiche.
+     */
+    private function clientFor(array $data, bool $isAdmin): Client
+    {
+        if ($isAdmin && ! empty($data['clientId'])) {
+            return Client::findOrFail($data['clientId']);
+        }
+
+        $email = EmailVerification::normalize((string) ($data['email'] ?? ''));
+        $details = array_filter([
+            'telephone' => $data['phone'] ?? null,
+            'adresse' => $this->formatAddress($data),
+            'language' => $data['language'] ?? null,
+        ]);
+
+        $existing = $email === '' ? null : Client::query()
+            ->whereRaw('LOWER(TRIM(email)) = ?', [$email])
+            ->latest('id')
+            ->first();
+
+        if ($existing) {
+            // Côté public, les coordonnées les plus récentes font foi ; l'admin ne fait que compléter
+            $existing->update($isAdmin
+                ? array_filter($details, fn ($value, $field) => blank($existing->{$field}), ARRAY_FILTER_USE_BOTH)
+                : $details);
+
+            return $existing;
+        }
+
+        return Client::create([
+            'nom' => $data['name'] ?? '',
+            'prenom' => $data['firstName'] ?? '',
+            'email' => $email,
+            'telephone' => $data['phone'] ?? '',
+            'adresse' => $this->formatAddress($data),
+            'language' => $data['language'] ?? 'fr',
+        ]);
     }
 
     private function formatAddress(array $data): string

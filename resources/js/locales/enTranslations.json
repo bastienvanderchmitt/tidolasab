@@ -4,7 +4,8 @@
     "phone": "Phone",
     "error": "An error has occurred.",
     "continue": "Continue",
-    "back": "Back"
+    "back": "Back",
+    "too_many_requests": "Too many attempts, please wait a minute before trying again."
   },
   "menu": {
     "home": "Home",
@@ -179,7 +180,8 @@
     "phone_format": "Invalid number: enter 8 to 15 digits, with the country code if outside France (+44…).",
     "address_format": "Please enter a full address (number and street).",
     "postalCode_format": "Invalid postal code for this country.",
-    "country_not_found": "No country found"
+    "country_not_found": "No country found",
+    "email_suggestion": "Did you mean"
   },
   "price": {
     "tax": "Tourist tax",
@@ -336,5 +338,15 @@
     "dates": "Dates",
     "contact": "Details",
     "review": "Confirmation"
+  },
+  "verify": {
+    "explain": "To complete your request, we will send a confirmation code to {{email}}. It makes sure the rental agreement will reach you.",
+    "send_code": "Get my code",
+    "title": "Enter the code sent by email",
+    "sent": "A 6-digit code has just been sent to {{email}}.",
+    "resend": "Resend the code",
+    "resend_in": "Resend the code ({{seconds}} s)",
+    "edit_email": "Change my email",
+    "spam": "Nothing received? Please check your spam folder."
   }
 }

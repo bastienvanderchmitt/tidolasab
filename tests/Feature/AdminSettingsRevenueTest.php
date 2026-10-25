@@ -73,6 +73,7 @@ describe('réglages', function () {
         $payload = [
             'checkIn' => '2026-12-01', 'adults' => 2, 'name' => 'D', 'firstName' => 'M', 'email' => 'm@example.com',
             'phone' => '0690112233', 'address' => '1 rue des Palmiers', 'postalCode' => '97140', 'city' => 'Capesterre', 'country' => 'France',
+            'verificationCode' => verificationCode('m@example.com'),
         ];
 
         $this->postJson('/api/bookings', [...$payload, 'checkOut' => '2026-12-03'])->assertUnprocessable();

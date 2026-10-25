@@ -9,7 +9,10 @@ use App\Http\Requests\UpdateBookingRequest;
 use App\Http\Requests\ValidateBookingRequest;
 use App\Models\Booking;
 use App\Services\BookingService;
+use App\Services\EmailVerification;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class BookingController extends Controller
 {
@@ -53,11 +56,38 @@ class BookingController extends Controller
         return response()->json(['booking' => $booking]);
     }
 
-    public function store(StoreBookingRequest $request): JsonResponse
+    public function store(StoreBookingRequest $request, EmailVerification $verification): JsonResponse
     {
-        $booking = $this->bookings->create($request->validated(), $request->user('sanctum') !== null);
+        $isAdmin = $request->user('sanctum') !== null;
+        $data = $request->validated();
+
+        // Côté public, l'adresse email est prouvée par le code reçu avant tout envoi du contrat
+        if (! $isAdmin && ! $verification->check($data['email'], $data['verificationCode'] ?? null)) {
+            throw ValidationException::withMessages(['verificationCode' => __('booking.code_invalid')]);
+        }
+
+        $booking = $this->bookings->create($data, $isAdmin);
+
+        if (! $isAdmin) {
+            $verification->forget($data['email']);
+        }
 
         return response()->json(['bookingId' => $booking->id], 201);
+    }
+
+    public function sendVerificationCode(Request $request, EmailVerification $verification): JsonResponse
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email:rfc,strict', 'max:255'],
+            'language' => ['nullable', 'string', 'size:2'],
+        ]);
+
+        $verification->send($data['email'], ($data['language'] ?? 'fr') === 'fr' ? 'fr' : 'en');
+
+        return response()->json([
+            'expiresIn' => EmailVerification::TTL_MINUTES * 60,
+            'resendIn' => EmailVerification::RESEND_SECONDS,
+        ]);
     }
 
     public function update(UpdateBookingRequest $request, Booking $booking): JsonResponse

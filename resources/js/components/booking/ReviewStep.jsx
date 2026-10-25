@@ -11,6 +11,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useBookingContext } from "../../contexts/BookingContext";
 import PriceSummary from "./PriceSummary";
+import VerificationPanel from "./VerificationPanel";
 import { countryName } from "../../helpers/countries";
 import { formatDate } from "./format";
 import classes from "./Booking.module.css";
@@ -31,7 +32,7 @@ const Block = ({ title, onEdit, children }) => {
   );
 };
 
-const ReviewStep = ({ form, goTo }) => {
+const ReviewStep = ({ form, goTo, verification, onCodeComplete }) => {
   const { t, i18n } = useTranslation();
   const { checkIn, checkOut, adults, quote } = useBookingContext();
   const client = form.values;
@@ -78,6 +79,13 @@ const ReviewStep = ({ form, goTo }) => {
       <Alert color="lagon" variant="light" icon={<IconInfoCircle size={18} />}>
         {t("booking.conditions")}
       </Alert>
+
+      <VerificationPanel
+        verification={verification}
+        email={client.email}
+        onComplete={onCodeComplete}
+        onEditEmail={() => goTo(1)}
+      />
     </Stack>
   );
 };

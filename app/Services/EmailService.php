@@ -20,8 +20,9 @@ class EmailService
     /**
      * Un email qui échoue ne doit pas annuler l'action : l'erreur est enregistrée
      * dans le suivi et remontée à Sentry.
+     * Avec $immediately, l'email part tout de suite au lieu de passer par la file.
      */
-    public function send(string $to, Mailable $mail, ?Booking $booking = null, ?Client $client = null, ?string $type = null): ?SentEmail
+    public function send(string $to, Mailable $mail, ?Booking $booking = null, ?Client $client = null, ?string $type = null, bool $immediately = false): ?SentEmail
     {
         if ($to === config('tidolasab.admin_email')) {
             rescue(fn () => Mail::to($to)->queue($mail));
@@ -29,7 +30,7 @@ class EmailService
             return null;
         }
 
-        return rescue(function () use ($to, $mail, $booking, $client, $type) {
+        return rescue(function () use ($to, $mail, $booking, $client, $type, $immediately) {
             $email = SentEmail::create([
                 'type' => $type ?? class_basename($mail),
                 'destinataire' => $to,
@@ -39,7 +40,8 @@ class EmailService
             ]);
 
             try {
-                Mail::to($to)->queue($mail->trackAs($email));
+                $pending = Mail::to($to);
+                $immediately ? $pending->sendNow($mail->trackAs($email)) : $pending->queue($mail->trackAs($email));
             } catch (Throwable $exception) {
                 $email->update(['statut' => EmailStatus::Failed, 'erreur' => mb_substr($exception->getMessage(), 0, 2000)]);
                 report($exception);

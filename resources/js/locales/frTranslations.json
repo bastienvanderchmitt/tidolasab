@@ -4,7 +4,8 @@
     "phone": "Téléphone",
     "error": "Une erreur est survenue.",
     "continue": "Continuer",
-    "back": "Retour"
+    "back": "Retour",
+    "too_many_requests": "Trop de tentatives, merci de patienter une minute avant de réessayer."
   },
   "menu": {
     "home": "Accueil",
@@ -178,7 +179,8 @@
     "phone_format": "Numéro invalide : indiquez de 8 à 15 chiffres, avec l'indicatif pour l'étranger (+32…).",
     "address_format": "Indiquez une adresse complète (numéro et rue).",
     "postalCode_format": "Code postal invalide pour ce pays.",
-    "country_not_found": "Aucun pays trouvé"
+    "country_not_found": "Aucun pays trouvé",
+    "email_suggestion": "Vouliez-vous dire"
   },
   "price": {
     "tax": "Taxe de séjour",
@@ -335,5 +337,15 @@
     "dates": "Dates",
     "contact": "Coordonnées",
     "review": "Confirmation"
+  },
+  "verify": {
+    "explain": "Pour finaliser votre demande, nous allons vous envoyer un code de confirmation à {{email}}. Il nous assure que le contrat de location vous parviendra bien.",
+    "send_code": "Recevoir mon code",
+    "title": "Saisissez le code reçu par email",
+    "sent": "Un code à 6 chiffres vient d’être envoyé à {{email}}.",
+    "resend": "Renvoyer le code",
+    "resend_in": "Renvoyer le code ({{seconds}} s)",
+    "edit_email": "Modifier mon email",
+    "spam": "Rien reçu ? Pensez à vérifier vos courriers indésirables."
   }
 }

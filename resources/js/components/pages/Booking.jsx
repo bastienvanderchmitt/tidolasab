@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 import { Box, Button, Container, Group, Stepper, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { IconArrowLeft, IconArrowRight, IconSend } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconMail,
+  IconSend,
+} from "@tabler/icons-react";
 import { useBookingContext } from "../../contexts/BookingContext";
 import { useSaveBooking } from "../../api/queries";
 import { validateStay } from "../../helpers/availability";
@@ -21,6 +26,7 @@ import ReviewStep from "../booking/ReviewStep";
 import BookingSummaryCard from "../booking/BookingSummaryCard";
 import { MAX_ADULTS } from "../booking/GuestsInput";
 import { bookingSearch } from "../booking/bookingSearch";
+import useEmailVerification from "../booking/useEmailVerification";
 import { formatPrice } from "../booking/format";
 import Room from "./Booking/Room";
 import classes from "../booking/Booking.module.css";
@@ -85,6 +91,8 @@ const Booking = () => {
     },
   });
 
+  const verification = useEmailVerification(form.values.email);
+
   // Séjour transmis par la barre rapide ou par un lien partagé
   useEffect(() => {
     const urlCheckIn = searchParams.get("checkIn");
@@ -129,7 +137,9 @@ const Booking = () => {
     mainRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const submit = async () => {
+  const submit = async (code = verification.code) => {
+    // La saisie du dernier chiffre envoie aussi la demande : pas de double envoi
+    if (save.isPending) return;
     try {
       await save.mutateAsync({
         ...form.values,
@@ -143,11 +153,19 @@ const Booking = () => {
         // Exigé par l'API quand une session admin est ouverte dans le navigateur
         type: "Classique",
         language: i18n.language,
+        verificationCode: code,
       });
       setBooked({ checkIn, checkOut, adults, quote });
       setStay([null, null]);
       navigate("/success");
     } catch (error) {
+      // Code faux ou expiré : affiché sous la saisie du code
+      const codeError = error.errors?.verificationCode?.[0];
+      if (codeError) {
+        verification.setError(codeError);
+        return;
+      }
+
       const fieldErrors = Object.fromEntries(
         Object.entries(error.errors ?? {})
           .map(([field, messages]) => [
@@ -171,13 +189,31 @@ const Booking = () => {
   const next = () => {
     if (step === 0 && stayReady) goTo(1);
     if (step === 1 && !form.validate().hasErrors) goTo(2);
-    if (step === 2) submit();
+    // Dernière étape : d'abord le code par email, puis la réservation
+    if (step === 2 && !verification.isSent) verification.send();
+    if (step === 2 && verification.isSent && verification.code.length === 6) {
+      submit();
+    }
   };
 
-  const nextLabel = step === 2 ? t("review.submit") : t("common.continue");
-  const nextDisabled = step === 0 && !stayReady;
+  const nextLabel =
+    step < 2
+      ? t("common.continue")
+      : verification.isSent
+        ? t("review.submit")
+        : t("verify.send_code");
+  const nextDisabled =
+    (step === 0 && !stayReady) ||
+    (step === 2 && verification.isSent && verification.code.length < 6);
+  const nextLoading = save.isPending || verification.isSending;
   const nextIcon =
-    step === 2 ? <IconSend size={18} /> : <IconArrowRight size={18} />;
+    step < 2 ? (
+      <IconArrowRight size={18} />
+    ) : verification.isSent ? (
+      <IconSend size={18} />
+    ) : (
+      <IconMail size={18} />
+    );
 
   return (
     <div className={classes.page}>
@@ -198,7 +234,14 @@ const Booking = () => {
 
             {step === 0 && <StayStep error={stayError} />}
             {step === 1 && <ClientStep form={form} />}
-            {step === 2 && <ReviewStep form={form} goTo={goTo} />}
+            {step === 2 && (
+              <ReviewStep
+                form={form}
+                goTo={goTo}
+                verification={verification}
+                onCodeComplete={submit}
+              />
+            )}
 
             <Group justify="space-between" className={classes.actions}>
               {step > 0 ? (
@@ -217,7 +260,7 @@ const Booking = () => {
                 size="md"
                 onClick={next}
                 disabled={nextDisabled}
-                loading={save.isPending}
+                loading={nextLoading}
                 rightSection={nextIcon}
                 visibleFrom="md"
               >
@@ -252,7 +295,7 @@ const Booking = () => {
         <Button
           onClick={next}
           disabled={nextDisabled}
-          loading={save.isPending}
+          loading={nextLoading}
           rightSection={nextIcon}
         >
           {nextLabel}

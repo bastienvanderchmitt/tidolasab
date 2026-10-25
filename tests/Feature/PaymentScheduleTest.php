@@ -24,7 +24,7 @@ function publicBooking(string $checkIn, string $checkOut): array
         'checkIn' => $checkIn, 'checkOut' => $checkOut, 'adults' => 2, 'children' => 0,
         'name' => 'Dupont', 'firstName' => 'Marie', 'email' => 'marie@example.com', 'phone' => '0690112233',
         'address' => '1 rue des Palmiers', 'postalCode' => '97140', 'city' => 'Capesterre', 'country' => 'France',
-        'language' => 'fr',
+        'language' => 'fr', 'verificationCode' => verificationCode('marie@example.com'),
     ];
 }
 

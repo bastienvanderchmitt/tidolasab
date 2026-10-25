@@ -12,4 +12,7 @@ return [
     'refund_leaves_balance' => 'Ce séjour est maintenu : baissez d’abord son prix (ou annulez la réservation), puis remboursez la différence.',
     'email_not_resendable' => 'Le contenu de cet email n’a pas été généré : il ne peut pas être renvoyé.',
     'has_payments' => 'Cette réservation a des paiements encaissés : annulez-la plutôt que de la supprimer.',
+    'code_wait' => 'Un code vient de vous être envoyé, patientez :seconds secondes avant d\'en demander un nouveau.',
+    'code_not_sent' => 'Le code n\'a pas pu être envoyé à cette adresse. Vérifiez votre email ou contactez-nous.',
+    'code_invalid' => 'Ce code est incorrect ou a expiré.',
 ];

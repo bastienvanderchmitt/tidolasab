@@ -1,7 +1,15 @@
-import { Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core";
+import {
+  Anchor,
+  Select,
+  SimpleGrid,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { countryOptions } from "../../helpers/countries";
+import { suggestEmail } from "../../helpers/emailSuggestion";
 import classes from "./Booking.module.css";
 
 export const clientFields = [
@@ -26,6 +34,7 @@ const ClientStep = ({ form }) => {
     () => countryOptions(i18n.language),
     [i18n.language],
   );
+  const emailSuggestion = suggestEmail(form.values.email);
 
   return (
     <Stack gap="lg">
@@ -46,6 +55,32 @@ const ClientStep = ({ form }) => {
               nothingFoundMessage={t("client.country_not_found")}
               {...form.getInputProps("country")}
             />
+          ) : field.name === "email" ? (
+            <div key={field.name}>
+              <TextInput
+                label={t("client.email")}
+                type="email"
+                autoComplete={field.autoComplete}
+                withAsterisk
+                {...form.getInputProps("email")}
+              />
+              {/* Faute de frappe probable dans le domaine : correction en un clic */}
+              {emailSuggestion && (
+                <Text size="sm" mt={6} c="orange.8">
+                  {t("client.email_suggestion")}{" "}
+                  <Anchor
+                    component="button"
+                    type="button"
+                    size="sm"
+                    fw={600}
+                    onClick={() => form.setFieldValue("email", emailSuggestion)}
+                  >
+                    {emailSuggestion}
+                  </Anchor>{" "}
+                  ?
+                </Text>
+              )}
+            </div>
           ) : (
             <TextInput
               key={field.name}

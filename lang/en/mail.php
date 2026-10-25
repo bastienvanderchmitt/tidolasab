@@ -49,4 +49,11 @@ return [
         'regards' => 'We look forward to welcoming you,',
         'host' => 'Isabelle',
     ],
+
+    'verification' => [
+        'subject' => 'Ti\' Dola Sab - Your confirmation code: :code',
+        'intro' => 'Here is your code to confirm your booking request at Ti\' Dola Sab:',
+        'validity' => 'Enter it on the website to complete your request. It is valid for :minutes minutes.',
+        'ignore' => 'If you did not make this request, you can ignore this email.',
+    ],
 ];
