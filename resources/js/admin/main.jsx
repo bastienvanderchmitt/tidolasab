@@ -29,6 +29,7 @@ import ClientsPage from "./clients/ClientsPage";
 import ClientPage from "./clients/ClientPage";
 import PaymentsPage from "./payments/PaymentsPage";
 import RevenuePage from "./revenue/RevenuePage";
+import EmailsPage from "./emails/EmailsPage";
 import SettingsPage from "./settings/SettingsPage";
 import UsersPage from "./users/UsersPage";
 
@@ -73,6 +74,7 @@ const router = createBrowserRouter(
             { path: "clients/:id", element: <ClientPage /> },
             { path: "paiements", element: <PaymentsPage /> },
             { path: "chiffre-affaires", element: <RevenuePage /> },
+            { path: "emails", element: <EmailsPage /> },
             { path: "reglages", element: <SettingsPage /> },
             { path: "administrateurs", element: <UsersPage /> },
             { path: "*", element: <Navigate to="/" replace /> },

@@ -10,5 +10,6 @@ return [
     'draft_not_deletable' => 'The expected balance updates automatically: change the booking price to adjust it.',
     'refunds_exceed_paid' => 'Refunds cannot exceed the amounts received for this booking.',
     'refund_leaves_balance' => 'This stay is still on: lower its price first (or cancel the booking), then refund the difference.',
+    'email_not_resendable' => 'This email was never generated, so it cannot be sent again.',
     'has_payments' => 'This booking has received payments: cancel it instead of deleting it.',
 ];

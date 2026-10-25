@@ -2,8 +2,10 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\TracksEmail;
 use App\Models\Booking;
 use App\Services\BookingSettings;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
@@ -13,8 +15,10 @@ use Illuminate\Mail\Mailables\Envelope;
  * Envoyé au client à la création de sa réservation, avec le RIB et le contrat.
  * Si l'arrivée est proche, la totalité du séjour est demandée au lieu de l'acompte.
  */
-class BookingReceived extends Mailable
+class BookingReceived extends Mailable implements ShouldQueue
 {
+    use TracksEmail;
+
     public function __construct(
         public Booking $booking,
         public float $amountDue,

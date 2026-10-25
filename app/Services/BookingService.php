@@ -18,13 +18,13 @@ use App\Models\Payment;
 use Carbon\CarbonImmutable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class BookingService
 {
     public function __construct(
         private readonly PricingService $pricing,
         private readonly BookingSettings $settings,
+        private readonly EmailService $emails,
     ) {}
 
     /**
@@ -85,7 +85,7 @@ class BookingService
         });
 
         if ($client?->email && (! $isAdmin || $type === BookingType::Classique)) {
-            $this->sendToClient($client, new BookingReceived(
+            $this->sendToClient($client, $booking, new BookingReceived(
                 $booking,
                 $this->amountDueAtBooking($booking),
                 $this->requiresFullPayment($booking),
@@ -93,7 +93,7 @@ class BookingService
         }
 
         if ($type !== BookingType::Fermeture) {
-            $this->send(config('tidolasab.admin_email'), new AdminNewBooking($booking, $client, $this->requiresFullPayment($booking)));
+            $this->emails->send(config('tidolasab.admin_email'), new AdminNewBooking($booking, $client, $this->requiresFullPayment($booking)), $booking, $client);
         }
 
         return $booking;
@@ -154,7 +154,7 @@ class BookingService
         $client = $booking->primaryClient();
         if ($client?->email && $booking->type === BookingType::Classique) {
             $balance = $this->balance($booking);
-            $this->sendToClient($client, new BookingValidated(
+            $this->sendToClient($client, $booking, new BookingValidated(
                 $booking,
                 $client,
                 $deposit,
@@ -175,7 +175,7 @@ class BookingService
 
         $client = $booking->primaryClient();
         if ($client?->email) {
-            $this->sendToClient($client, new BookingCancelled);
+            $this->sendToClient($client, $booking, new BookingCancelled);
         }
 
         return $booking;
@@ -190,7 +190,7 @@ class BookingService
 
         $client = $booking->primaryClient();
         if ($client?->email) {
-            $this->sendToClient($client, new BookingPending($client));
+            $this->sendToClient($client, $booking, new BookingPending($client));
         }
 
         return $booking;
@@ -404,16 +404,8 @@ class BookingService
             ->implode(', ');
     }
 
-    private function sendToClient(Client $client, Mailable $mail): void
+    private function sendToClient(Client $client, Booking $booking, Mailable $mail): void
     {
-        $this->send($client->email, $mail->locale($client->mailLocale()));
-    }
-
-    /**
-     * Un email qui échoue ne doit pas annuler l'action : l'erreur est remontée à Sentry.
-     */
-    private function send(string $to, Mailable $mail): void
-    {
-        rescue(fn () => Mail::to($to)->send($mail));
+        $this->emails->send($client->email, $mail->locale($client->mailLocale()), $booking, $client);
     }
 }

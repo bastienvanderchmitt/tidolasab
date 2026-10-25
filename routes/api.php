@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PricingController;
 use App\Http\Controllers\Api\SettingsController;
@@ -17,6 +18,7 @@ Route::get('pricing/quote', [PricingController::class, 'quote'])->middleware('th
 Route::post('bookings', [BookingController::class, 'store'])->middleware('throttle:10,1');
 Route::post('contact', [ContactController::class, 'send'])->middleware('throttle:5,1');
 Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1');
+Route::get('emails/{token}/pixel.gif', [EmailController::class, 'pixel'])->name('emails.pixel')->middleware('throttle:60,1');
 
 // Administration
 Route::middleware('auth:sanctum')->group(function () {
@@ -44,6 +46,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('payments/{payment}', [PaymentController::class, 'update']);
     Route::delete('payments/{payment}', [PaymentController::class, 'destroy']);
     Route::post('payments/{payment}/confirm', [PaymentController::class, 'confirm']);
+
+    Route::get('emails', [EmailController::class, 'index']);
+    Route::get('emails/{email}', [EmailController::class, 'show']);
+    Route::post('emails/{email}/resend', [EmailController::class, 'resend']);
 
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('revenue', [DashboardController::class, 'revenue']);

@@ -21,6 +21,7 @@ import {
   IconExternalLink,
   IconHome,
   IconLayoutDashboard,
+  IconMail,
   IconLogout,
   IconMoon,
   IconSettings,
@@ -38,6 +39,7 @@ const LINKS = [
   { to: "/clients", label: "Clients", icon: IconUsers },
   { to: "/paiements", label: "Paiements", icon: IconCash },
   { to: "/chiffre-affaires", label: "Chiffre d'affaires", icon: IconChartBar },
+  { to: "/emails", label: "Emails", icon: IconMail },
   { to: "/reglages", label: "Réglages", icon: IconSettings },
   { to: "/administrateurs", label: "Administrateurs", icon: IconUserShield },
 ];

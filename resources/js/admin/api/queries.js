@@ -31,6 +31,19 @@ export const useClient = (id) =>
 export const usePayments = () =>
   useQuery({ queryKey: ["payments"], queryFn: get("payments", "payments") });
 
+export const useEmails = (params = {}) =>
+  useQuery({
+    queryKey: ["emails", params],
+    queryFn: get("emails", "emails", params),
+  });
+
+export const useEmail = (id) =>
+  useQuery({
+    queryKey: ["emails", id],
+    queryFn: get(`emails/${id}`, "email"),
+    enabled: !!id,
+  });
+
 export const useRevenue = (basis) =>
   useQuery({
     queryKey: ["revenue", basis],
@@ -95,6 +108,10 @@ export const paymentApi = {
     id ? api.put(`payments/${id}`, data) : api.post("payments", data),
   confirm: ({ id, ...data }) => api.post(`payments/${id}/confirm`, data),
   remove: (id) => api.delete(`payments/${id}`),
+};
+
+export const emailApi = {
+  resend: (id) => api.post(`emails/${id}/resend`),
 };
 
 export const settingsApi = {

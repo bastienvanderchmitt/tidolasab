@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Services\BookingSettings;
-use Illuminate\Foundation\DevCommands;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,7 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // « php artisan dev » : pas de worker, la file d'attente est synchrone
-        DevCommands::except('queue');
+        //
     }
 }

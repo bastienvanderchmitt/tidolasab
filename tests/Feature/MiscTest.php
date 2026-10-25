@@ -18,7 +18,7 @@ it('envoie le message de contact après vérification du reCAPTCHA', function ()
         'message' => 'Bonjour', 'recaptchaToken' => 'token',
     ])->assertOk();
 
-    Mail::assertSent(ContactMessage::class, fn ($mail) => $mail->hasTo(config('tidolasab.admin_email'))
+    Mail::assertQueued(ContactMessage::class, fn ($mail) => $mail->hasTo(config('tidolasab.admin_email'))
         && $mail->hasReplyTo('marie@example.com'));
 });
 
@@ -30,7 +30,7 @@ it('renvoie une erreur si le reCAPTCHA échoue', function () {
         'message' => 'Bonjour', 'recaptchaToken' => 'token',
     ])->assertUnprocessable()->assertJsonValidationErrors('recaptchaToken');
 
-    Mail::assertNothingSent();
+    Mail::assertNothingOutgoing();
 });
 
 it('expose les règles tarifaires au front', function () {
@@ -53,6 +53,6 @@ it('rappelle le solde aux clients qui arrivent dans 14 jours', function () {
 
     $this->artisan('reminders:send')->assertSuccessful();
 
-    Mail::assertSent(PaymentReminder::class, 1);
-    Mail::assertSent(PaymentReminder::class, fn ($mail) => $mail->hasTo('due@example.com') && $mail->balance === 171.0);
+    Mail::assertQueued(PaymentReminder::class, 1);
+    Mail::assertQueued(PaymentReminder::class, fn ($mail) => $mail->hasTo('due@example.com') && $mail->balance === 171.0);
 });

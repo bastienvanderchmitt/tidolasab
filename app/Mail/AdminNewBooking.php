@@ -2,14 +2,18 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\TracksEmail;
 use App\Models\Booking;
 use App\Models\Client;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 
-class AdminNewBooking extends Mailable
+class AdminNewBooking extends Mailable implements ShouldQueue
 {
+    use TracksEmail;
+
     public function __construct(
         public Booking $booking,
         public ?Client $client,

@@ -44,7 +44,7 @@ describe('premier email à la réservation', function () {
     it('demande un acompte de 50 % quand l’arrivée est dans plus de 14 jours', function () {
         $this->postJson('/api/bookings', publicBooking('2026-12-01', '2026-12-04'))->assertCreated();
 
-        Mail::assertSent(BookingReceived::class, function (BookingReceived $mail) {
+        Mail::assertQueued(BookingReceived::class, function (BookingReceived $mail) {
             $html = html_entity_decode($mail->render(), ENT_QUOTES);
 
             return ! $mail->fullPayment
@@ -57,7 +57,7 @@ describe('premier email à la réservation', function () {
     it('demande la totalité quand l’arrivée est dans moins de 15 jours', function (string $checkIn, string $checkOut) {
         $this->postJson('/api/bookings', publicBooking($checkIn, $checkOut))->assertCreated();
 
-        Mail::assertSent(BookingReceived::class, function (BookingReceived $mail) {
+        Mail::assertQueued(BookingReceived::class, function (BookingReceived $mail) {
             $html = html_entity_decode($mail->render(), ENT_QUOTES);
 
             return $mail->fullPayment
@@ -74,13 +74,13 @@ describe('premier email à la réservation', function () {
     it('applique la règle à J-15 : acompte', function () {
         $this->postJson('/api/bookings', publicBooking('2026-11-08', '2026-11-11'))->assertCreated();
 
-        Mail::assertSent(BookingReceived::class, fn (BookingReceived $mail) => ! $mail->fullPayment);
+        Mail::assertQueued(BookingReceived::class, fn (BookingReceived $mail) => ! $mail->fullPayment);
     });
 
     it('envoie l’email en anglais avec la même règle', function () {
         $this->postJson('/api/bookings', [...publicBooking('2026-10-27', '2026-10-30'), 'language' => 'en'])->assertCreated();
 
-        Mail::assertSent(BookingReceived::class, fn (BookingReceived $mail) => $mail->locale === 'en'
+        Mail::assertQueued(BookingReceived::class, fn (BookingReceived $mail) => $mail->locale === 'en'
             && str_contains($mail->render(), 'full amount of your stay'));
     });
 
@@ -112,7 +112,7 @@ describe('paiement brouillon du solde', function () {
         validateBooking($booking, 342)->assertOk();
 
         expect(draftOf($booking))->toBeNull();
-        Mail::assertSent(BookingValidated::class, fn (BookingValidated $mail) => $mail->balance === 0.0
+        Mail::assertQueued(BookingValidated::class, fn (BookingValidated $mail) => $mail->balance === 0.0
             && str_contains($mail->render(), 'intégralement réglé')
             && ! str_contains($mail->render(), 'Solde à régler'));
     });
@@ -218,7 +218,7 @@ describe('paiement brouillon du solde', function () {
         Carbon::setTestNow('2026-11-17');
         $this->artisan('reminders:send')->assertSuccessful();
 
-        Mail::assertSent(PaymentReminder::class, fn ($mail) => $mail->hasTo('due@example.com') && $mail->balance === 171.0);
+        Mail::assertQueued(PaymentReminder::class, fn ($mail) => $mail->hasTo('due@example.com') && $mail->balance === 171.0);
     });
 
     it('crée les brouillons manquants des réservations déjà validées', function () {

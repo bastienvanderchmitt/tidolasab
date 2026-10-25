@@ -17,7 +17,8 @@ php artisan key:generate
 php artisan migrate
 ```
 
-Lancer le site : `php artisan dev` (lance `php artisan serve`, Vite et les logs dans un seul terminal).
+Lancer le site : `php artisan dev` (lance `php artisan serve`, Vite, la file d'attente des emails
+et les logs dans un seul terminal).
 Les emails sont écrits dans `storage/logs/laravel.log` (`MAIL_MAILER=log`).
 
 ## Tests
@@ -76,8 +77,11 @@ Le script n'utilise que des commandes disponibles sur le shell restreint LWS.
 2. Dans GitHub (environnement `production`) :
    - secrets : `LWS_HOST`, `LWS_USER`, `LWS_SSH_KEY`, `LWS_PORT`, `VITE_SENTRY_DSN`, `SENTRY_AUTH_TOKEN`
    - variables : `LWS_APP_PATH`, `LWS_PHP` (`php85` par défaut), `SENTRY_ORG`, `SENTRY_PROJECT`
-3. Cron LWS : `cd <app>/current && php85 artisan schedule:run` chaque minute,
-   ou `php85 artisan reminders:send` une fois par jour (rappel du solde à J-14).
+3. Cron LWS : `cd <app>/current && php85 artisan schedule:run` **chaque minute**. Il envoie
+   les emails en file d'attente (`QUEUE_CONNECTION=database`), le rappel du solde à J-14
+   et nettoie l'historique des emails (conservé deux ans).
+4. Emails : SMTP Gmail avec un mot de passe d'application (`MAIL_MAILER=smtp`,
+   `MAIL_HOST=smtp.gmail.com`, `MAIL_PORT=587`, `MAIL_USERNAME`/`MAIL_PASSWORD`).
 
 Avant chaque migration, `deploy/remote.sh` sauvegarde la base dans `<app>/shared/backups`
 (10 dernières sauvegardes conservées).

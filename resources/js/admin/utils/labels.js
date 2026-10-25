@@ -30,3 +30,24 @@ export const isRefund = (p) =>
 
 export const methodLabel = (value) =>
   PAYMENT_METHODS.find((m) => m.value === value)?.label ?? value;
+
+export const EMAIL_TYPES = {
+  BookingReceived: "Demande reçue",
+  BookingValidated: "Réservation validée",
+  BookingPending: "Remise en attente",
+  BookingCancelled: "Réservation annulée",
+  PaymentReminder: "Rappel du solde",
+};
+
+export const emailTypeLabel = (type) => EMAIL_TYPES[type] ?? type;
+
+// « ouvert » n'est pas un statut serveur : il se déduit de la première ouverture
+export const EMAIL_STATUSES = {
+  "en file": { label: "En file", color: "gray" },
+  envoyé: { label: "Envoyé", color: "teal" },
+  ouvert: { label: "Ouvert", color: "lagon" },
+  échec: { label: "Échec", color: "red" },
+};
+
+export const emailStatus = (email) =>
+  email.statut === "envoyé" && email.ouvert_le ? "ouvert" : email.statut;

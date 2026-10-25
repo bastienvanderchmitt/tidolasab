@@ -2,13 +2,17 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\TracksEmail;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 
-class ContactMessage extends Mailable
+class ContactMessage extends Mailable implements ShouldQueue
 {
+    use TracksEmail;
+
     public function __construct(
         public string $name,
         public string $email,

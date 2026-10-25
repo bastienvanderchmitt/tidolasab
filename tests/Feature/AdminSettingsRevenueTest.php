@@ -78,7 +78,7 @@ describe('réglages', function () {
         $this->postJson('/api/bookings', [...$payload, 'checkOut' => '2026-12-03'])->assertUnprocessable();
         $this->postJson('/api/bookings', [...$payload, 'checkOut' => '2026-12-04'])->assertCreated();
 
-        Mail::assertSent(BookingReceived::class, fn ($mail) => $mail->amountDue === round(342 * 0.3, 2));
+        Mail::assertQueued(BookingReceived::class, fn ($mail) => $mail->amountDue === round(342 * 0.3, 2));
     });
 
     it('désactive la remise semaine avec 0', function () {

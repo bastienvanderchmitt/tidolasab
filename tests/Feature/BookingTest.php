@@ -53,10 +53,10 @@ it('enregistre une réservation publique au prix calculé par le serveur', funct
         ->email->toBe('marie@example.com')
         ->adresse->toBe('1 rue des Palmiers, 97140 Capesterre, France');
 
-    Mail::assertSent(BookingReceived::class, fn ($mail) => $mail->hasTo('marie@example.com')
+    Mail::assertQueued(BookingReceived::class, fn ($mail) => $mail->hasTo('marie@example.com')
         && $mail->locale === 'fr'
         && count($mail->attachments()) === 2);
-    Mail::assertSent(AdminNewBooking::class, fn ($mail) => $mail->hasTo(config('tidolasab.admin_email')));
+    Mail::assertQueued(AdminNewBooking::class, fn ($mail) => $mail->hasTo(config('tidolasab.admin_email')));
 });
 
 it('refuse des dates qui chevauchent une réservation validée', function (string $checkIn, string $checkOut) {
@@ -116,8 +116,8 @@ it('permet à l’admin de saisir une réservation externe à son prix', functio
         ->prix_total->toEqual('500.00')
         ->type->toBe(BookingType::AirBnb);
 
-    Mail::assertNotSent(BookingReceived::class);
-    Mail::assertSent(AdminNewBooking::class);
+    Mail::assertNotQueued(BookingReceived::class);
+    Mail::assertQueued(AdminNewBooking::class);
 });
 
 it('enregistre une fermeture validée, gratuite et sans client', function () {
@@ -135,7 +135,7 @@ it('enregistre une fermeture validée, gratuite et sans client', function () {
         ->prix_total->toEqual('0.00')
         ->and($booking->clients)->toBeEmpty();
 
-    Mail::assertNothingSent();
+    Mail::assertNothingOutgoing();
 });
 
 it('n’expose que les dates sur le calendrier public', function () {
@@ -159,7 +159,7 @@ it('valide une réservation, enregistre l’acompte et prévient le client', fun
     expect($booking->fresh()->statut)->toBe(BookingStatus::Validated)
         ->and($booking->payments()->confirmed()->sum('montant_paiement'))->toEqual(171);
 
-    Mail::assertSent(BookingValidated::class, fn ($mail) => $mail->hasTo('client@example.com')
+    Mail::assertQueued(BookingValidated::class, fn ($mail) => $mail->hasTo('client@example.com')
         && $mail->balance === 171.0
         && $mail->balanceDueDate->toDateString() === '2026-11-17');
 });

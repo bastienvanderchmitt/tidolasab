@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Anchor,
@@ -20,18 +21,20 @@ import {
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
-import { useBooking } from "../api/queries";
+import { useBooking, useEmails } from "../api/queries";
 import QueryState from "../components/QueryState";
 import {
+  EmailStatusBadge,
   PaymentStatusBadge,
   StatusBadge,
   TypeBadge,
 } from "../components/Badges";
 import { daysUntil, date, guests, money, nights } from "../utils/format";
-import { isRefund, methodLabel } from "../utils/labels";
+import { emailTypeLabel, isRefund, methodLabel } from "../utils/labels";
 import { useBookingActions } from "./useBookingActions";
 import { useConfirmDraft } from "../payments/ConfirmDraftModal";
 import { openPaymentForm } from "../payments/PaymentFormModal";
+import EmailDetailModal from "../emails/EmailDetailModal";
 
 const Row = ({ label, children }) => (
   <Group justify="space-between" gap="xs" wrap="nowrap">
@@ -49,6 +52,8 @@ const Row = ({ label, children }) => (
  */
 const BookingDrawer = ({ bookingId, listItem, onClose }) => {
   const query = useBooking(bookingId);
+  const emails = useEmails({ booking: bookingId });
+  const [openedEmailId, setOpenedEmailId] = useState(null);
   const actions = useBookingActions();
   const confirmDraft = useConfirmDraft();
 
@@ -231,6 +236,33 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
                 </>
               )}
 
+              {emails.data?.length > 0 && (
+                <>
+                  <Divider label="Emails" labelPosition="left" />
+                  <Table highlightOnHover>
+                    <Table.Tbody>
+                      {emails.data.map((e) => (
+                        <Table.Tr
+                          key={e.id}
+                          onClick={() => setOpenedEmailId(e.id)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <Table.Td>
+                            <Text size="sm">{emailTypeLabel(e.type)}</Text>
+                            <Text size="xs" c="dimmed">
+                              {date(e.created_at, "D MMM YYYY à HH:mm")}
+                            </Text>
+                          </Table.Td>
+                          <Table.Td ta="right">
+                            <EmailStatusBadge email={e} />
+                          </Table.Td>
+                        </Table.Tr>
+                      ))}
+                    </Table.Tbody>
+                  </Table>
+                </>
+              )}
+
               {booking.note && (
                 <>
                   <Divider label="Note" labelPosition="left" />
@@ -291,6 +323,11 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
           );
         }}
       </QueryState>
+      <EmailDetailModal
+        emailId={openedEmailId}
+        showBooking={false}
+        onClose={() => setOpenedEmailId(null)}
+      />
     </Drawer>
   );
 };
