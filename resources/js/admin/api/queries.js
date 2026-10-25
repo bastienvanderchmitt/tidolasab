@@ -56,8 +56,13 @@ export const useSettings = () =>
 export const useUsers = () =>
   useQuery({ queryKey: ["users"], queryFn: get("users", "users") });
 
-export const fetchQuote = (params) =>
-  api.get("pricing/quote", { params }).then(({ data }) => data.quote);
+export const useQuote = (params, enabled) =>
+  useQuery({
+    queryKey: ["quote", params],
+    queryFn: get("pricing/quote", "quote", params),
+    enabled,
+    staleTime: 5 * 60_000,
+  });
 
 /**
  * Mutation qui affiche un message et rafraîchit toutes les données admin :

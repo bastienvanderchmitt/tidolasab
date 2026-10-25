@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { Button, Col, Form, Row } from "reactstrap";
 import Field from "../Field";
-import { sendEmail } from "../../../api/contact";
+import { useSendContact } from "../../../api/queries";
 import { faPaperPlane, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 const FormContact = () => {
   const { t } = useTranslation();
   const recaptchaRef = useRef();
+  const contact = useSendContact();
 
   const initialValues = useMemo(() => {
     return {
@@ -42,11 +43,17 @@ const FormContact = () => {
         return;
       }
 
-      const { data } = await sendEmail({ ...values, recaptchaToken: token });
+      const data = await contact.mutateAsync({
+        ...values,
+        recaptchaToken: token,
+      });
       if (data) toast.success(t("contact.sent"));
     } catch (e) {
       toast.error(e.error || t("common.error"));
       console.log("e", e);
+    } finally {
+      // Un jeton reCAPTCHA ne sert qu'une fois : sans cela, un nouvel essai serait refusé
+      recaptchaRef.current?.reset();
     }
   };
 

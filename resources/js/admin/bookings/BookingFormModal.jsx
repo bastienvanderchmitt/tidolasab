@@ -15,9 +15,9 @@ import { DatePickerInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import {
   bookingApi,
-  fetchQuote,
   useApiMutation,
   useClients,
+  useQuote,
 } from "../api/queries";
 import { BOOKING_TYPES } from "../utils/labels";
 import { dayjs, nights } from "../utils/format";
@@ -99,28 +99,21 @@ const BookingFormModal = ({ booking, defaults = {}, onDone }) => {
   const nightCount =
     checkIn && checkOut ? dayjs(checkOut).diff(checkIn, "day") : 0;
 
-  // Prix proposé pour une réservation directe, recalculé quand le séjour change
-  const firstRun = useRef(true);
+  // Prix proposé pour une réservation directe, recalculé quand le séjour change.
+  // En modification, le prix enregistré est gardé tant que le séjour ne change pas.
+  const quoteParams = { checkIn, checkOut, adults: Math.max(1, adults) };
+  const quote = useQuote(
+    quoteParams,
+    isDirect && !!checkIn && !!checkOut && nightCount > 0,
+  );
+  const savedStay = useRef(isEdit ? JSON.stringify(quoteParams) : null);
   useEffect(() => {
-    if (firstRun.current && isEdit) {
-      firstRun.current = false;
-      return;
-    }
-    firstRun.current = false;
-    if (!isDirect || !checkIn || !checkOut || nightCount <= 0) return;
-
-    let cancelled = false;
-    fetchQuote({ checkIn, checkOut, adults: Math.max(1, adults) })
-      .then((quote) => {
-        if (cancelled) return;
-        form.setFieldValue("total", quote.total);
-        form.setFieldValue("touristTax", quote.tourist_tax);
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, [isDirect, checkIn, checkOut, adults]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!isDirect || !quote.data) return;
+    if (JSON.stringify(quoteParams) === savedStay.current) return;
+    savedStay.current = null;
+    form.setFieldValue("total", quote.data.total);
+    form.setFieldValue("touristTax", quote.data.tourist_tax);
+  }, [quote.data, isDirect]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const clientOptions = useMemo(
     () =>

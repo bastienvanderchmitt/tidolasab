@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Field from "../Field";
 import { useBookingContext } from "../../../contexts/BookingContext";
-import { saveBooking } from "../../../api/booking";
+import { useSaveBooking } from "../../../api/queries";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +28,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
 
   const { checkIn, checkOut, total, days, adults, child, setBooked, type } =
     useBookingContext();
+  const booking = useSaveBooking();
 
   const initialValues = useMemo(() => {
     return {
@@ -65,7 +66,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
 
   const handleForm = async (values) => {
     try {
-      const res = await saveBooking({
+      const data = await booking.mutateAsync({
         ...values,
         checkIn: checkIn,
         checkOut: checkOut,
@@ -77,7 +78,7 @@ const FormClient = ({ isOpen, toggle, callbackAdmin }) => {
         isAdmin: !!callbackAdmin,
         type: type,
       });
-      if (res?.data?.bookingId) {
+      if (data?.bookingId) {
         toggle();
         setBooked(true);
         if (!!callbackAdmin) {

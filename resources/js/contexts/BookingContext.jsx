@@ -1,8 +1,7 @@
 import React, { useState, createContext, useEffect, useMemo } from "react";
 import useContextFactory from "../hooks/useContextFactory";
 import { computeQuote } from "../helpers/pricing";
-import useApi from "../hooks/useApi";
-import { getPricing } from "../api/pricing";
+import { usePricing } from "../api/queries";
 const BookingContext = createContext({});
 
 export const useBookingContext = () => {
@@ -27,7 +26,7 @@ const BookingContextProvider = ({ children }) => {
       ? selectedDates[1]?.toISOString().slice(0, 10)
       : "";
 
-  const [{ pricing }] = useApi(getPricing);
+  const { data: pricing } = usePricing();
 
   const quote = useMemo(
     () => computeQuote(pricing, checkIn, checkOut, adults),

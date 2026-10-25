@@ -2,8 +2,7 @@ import React, { useMemo } from "react";
 import Calendar from "@demark-pro/react-booking-calendar";
 import { fr, enUS } from "date-fns/locale";
 import { useBookingContext } from "../../contexts/BookingContext";
-import useApi from "../../hooks/useApi";
-import { getReservedBookings } from "../../api/booking";
+import { useReservedBookings } from "../../api/queries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment-timezone";
@@ -14,7 +13,7 @@ const DatePicker = ({ formRef, viewOnly }) => {
   const { selectedDates, setSelectedDates, type } = useBookingContext();
 
   const { t, i18n } = useTranslation();
-  const [{ bookings }, isLoading] = useApi(getReservedBookings);
+  const { data: bookings, isPending: isLoading } = useReservedBookings();
 
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
