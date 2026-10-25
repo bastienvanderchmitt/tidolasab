@@ -17,7 +17,7 @@ php artisan key:generate
 php artisan migrate
 ```
 
-Lancer le site : `php artisan serve` et, dans un autre terminal, `yarn dev`.
+Lancer le site : `php artisan dev` (lance `php artisan serve`, Vite et les logs dans un seul terminal).
 Les emails sont écrits dans `storage/logs/laravel.log` (`MAIL_MAILER=log`).
 
 ## Tests

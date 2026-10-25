@@ -28,13 +28,16 @@ jobs:
           extensions: pdo_mysql, mbstring, intl
           coverage: none
 
+      # Active le Yarn 4 déclaré dans package.json (packageManager)
+      - run: corepack enable
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: yarn
 
       - run: composer install --no-interaction --prefer-dist
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
 
       - name: Tests back (Pest)
         run: |
@@ -62,6 +65,9 @@ jobs:
           php-version: "8.5"
           coverage: none
 
+      # Active le Yarn 4 déclaré dans package.json (packageManager)
+      - run: corepack enable
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -71,7 +77,7 @@ jobs:
         run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Build du front
-        run: yarn install --frozen-lockfile && yarn build
+        run: yarn install --immutable && yarn build
         env:
           VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
           VITE_SENTRY_RELEASE: ${{ github.sha }}

@@ -27,3 +27,9 @@ Thumbs.db
 
 # Ancien build CRA (avant migration Vite)
 /build
+
+# Yarn 4
+/.yarn/*
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
