@@ -24,6 +24,7 @@ Route::get('emails/{token}/pixel.gif', [EmailController::class, 'pixel'])->name(
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::put('user/password', [AuthController::class, 'updatePassword']);
     Route::get('users', [AuthController::class, 'index']);
     Route::post('users', [AuthController::class, 'store']);
     Route::delete('users/{user}', [AuthController::class, 'destroy']);

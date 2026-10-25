@@ -18,6 +18,8 @@ import { useAuth } from "../auth/AuthContext";
 import PageHeader from "../components/PageHeader";
 import QueryState from "../components/QueryState";
 import { confirmAction } from "../components/confirm";
+import PasswordRequirements from "./PasswordRequirements";
+import { validatePassword } from "./passwordRules";
 
 const UserForm = ({ onDone }) => {
   const mutation = useApiMutation(userApi.create, "Administrateur créé");
@@ -27,7 +29,7 @@ const UserForm = ({ onDone }) => {
       name: (v) => (v ? null : "Indiquez le nom"),
       email: (v) => (/^\S+@\S+\.\S+$/.test(v) ? null : "Email invalide"),
       login: (v) => (v ? null : "Indiquez l'identifiant"),
-      password: (v) => (v.length >= 10 ? null : "10 caractères minimum"),
+      password: validatePassword,
     },
   });
 
@@ -53,9 +55,10 @@ const UserForm = ({ onDone }) => {
         />
         <PasswordInput
           label="Mot de passe"
-          description="10 caractères minimum"
+          autoComplete="new-password"
           {...form.getInputProps("password")}
         />
+        <PasswordRequirements value={form.values.password} />
         <Group justify="flex-end">
           <Button type="submit" loading={mutation.isPending}>
             Créer

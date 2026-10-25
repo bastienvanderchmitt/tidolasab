@@ -14,12 +14,13 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { modals } from "@mantine/modals";
 import {
   IconCalendarEvent,
   IconCash,
   IconChartBar,
   IconExternalLink,
-  IconHome,
+  IconKey,
   IconLayoutDashboard,
   IconMail,
   IconLogout,
@@ -31,6 +32,8 @@ import {
   IconBed,
 } from "@tabler/icons-react";
 import { useAuth } from "../auth/AuthContext";
+import PasswordForm from "../users/PasswordForm";
+import logo from "../../assets/img/logo_full.png";
 
 const LINKS = [
   { to: "/", label: "Tableau de bord", icon: IconLayoutDashboard },
@@ -87,7 +90,7 @@ const AdminLayout = () => {
               size="sm"
             />
             <Group gap={8}>
-              <IconHome size={22} color="var(--mantine-color-lagon-7)" />
+              <img src={logo} alt="" width={30} height={30} />
               <Text fw={700}>Ti' Dola Sab</Text>
               <Text c="dimmed" size="sm" visibleFrom="xs">
                 administration
@@ -124,6 +127,18 @@ const AdminLayout = () => {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Label>{user?.name}</Menu.Label>
+                <Menu.Item
+                  leftSection={<IconKey size={16} />}
+                  onClick={() => {
+                    const id = modals.open({
+                      title: "Changer mon mot de passe",
+                      children: <PasswordForm onDone={() => modals.close(id)} />,
+                    });
+                  }}
+                >
+                  Changer mon mot de passe
+                </Menu.Item>
+                <Menu.Divider />
                 <Menu.Item
                   leftSection={<IconLogout size={16} />}
                   color="red"

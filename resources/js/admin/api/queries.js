@@ -126,4 +126,5 @@ export const settingsApi = {
 export const userApi = {
   create: (data) => api.post("users", data),
   remove: (id) => api.delete(`users/${id}`),
+  updatePassword: (data) => api.put("user/password", data),
 };

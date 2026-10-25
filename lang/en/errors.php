@@ -5,4 +5,5 @@ return [
     'invalid_credentials' => 'Invalid credentials.',
     'recaptcha' => 'reCAPTCHA verification failed. Please try again.',
     'cannot_delete_self' => 'You cannot delete your own account.',
+    'wrong_current_password' => 'The current password is incorrect.',
 ];

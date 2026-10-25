@@ -31,6 +31,7 @@ it('refuse les routes d’administration sans session', function (string $method
     ['POST', '/api/users'],
     ['DELETE', '/api/users/1'],
     ['GET', '/api/user'],
+    ['PUT', '/api/user/password'],
 ]);
 
 it('connecte un administrateur sans exposer son mot de passe', function () {
@@ -77,7 +78,7 @@ it('limite les tentatives de connexion', function () {
 });
 
 it('ne permet de créer un administrateur qu’une fois connecté', function () {
-    $payload = ['name' => 'Bastien', 'email' => 'b@example.com', 'login' => 'bastien', 'password' => 'mot-de-passe-solide'];
+    $payload = ['name' => 'Bastien', 'email' => 'b@example.com', 'login' => 'bastien', 'password' => 'Mot-de-passe-solide-42'];
 
     $this->postJson('/api/users', $payload)->assertUnauthorized();
 
@@ -93,3 +94,49 @@ it('ouvre la session quel que soit le domaine qui sert le site', function () {
         ->postJson('https://www.tidolasab.com/api/login', ['login' => 'isabelle', 'password' => 'un-bon-mot-de-passe'])
         ->assertOk();
 });
+
+it('change le mot de passe de l’administrateur connecté', function () {
+    $user = User::factory()->create(['password' => Hash::make('ancien-mot-de-passe')]);
+
+    $this->actingAs($user)->putJson('/api/user/password', [
+        'current_password' => 'ancien-mot-de-passe',
+        'password' => 'Nouveau-mot-de-passe-42',
+        'password_confirmation' => 'Nouveau-mot-de-passe-42',
+    ])->assertOk();
+
+    expect(Hash::check('Nouveau-mot-de-passe-42', $user->fresh()->password))->toBeTrue();
+});
+
+it('refuse le changement de mot de passe sans le mot de passe actuel', function () {
+    $user = User::factory()->create(['password' => Hash::make('ancien-mot-de-passe')]);
+
+    $this->actingAs($user)->putJson('/api/user/password', [
+        'current_password' => 'faux',
+        'password' => 'Nouveau-mot-de-passe-42',
+        'password_confirmation' => 'Nouveau-mot-de-passe-42',
+    ])->assertUnprocessable()->assertJsonValidationErrors('current_password');
+
+    $this->actingAs($user)->putJson('/api/user/password', [
+        'current_password' => 'ancien-mot-de-passe',
+        'password' => 'Nouveau-mot-de-passe-42',
+        'password_confirmation' => 'autre-chose',
+    ])->assertUnprocessable()->assertJsonValidationErrors('password');
+
+    expect(Hash::check('ancien-mot-de-passe', $user->fresh()->password))->toBeTrue();
+});
+
+it('exige un mot de passe robuste et différent de l’actuel', function (string $password) {
+    $user = User::factory()->create(['password' => Hash::make('Ancien-mot-de-passe-42')]);
+
+    $this->actingAs($user)->putJson('/api/user/password', [
+        'current_password' => 'Ancien-mot-de-passe-42',
+        'password' => $password,
+        'password_confirmation' => $password,
+    ])->assertUnprocessable()->assertJsonValidationErrors('password');
+})->with([
+    'trop court' => 'Court-42',
+    'sans majuscule' => 'sans-majuscule-42',
+    'sans chiffre' => 'Sans-Chiffre-Ici',
+    'sans symbole' => 'SansSymbole42abc',
+    'identique' => 'Ancien-mot-de-passe-42',
+]);

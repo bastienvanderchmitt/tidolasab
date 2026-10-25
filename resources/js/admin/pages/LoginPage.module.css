@@ -1,0 +1,25 @@
+/* Coucher de soleil de l'ancien écran de connexion */
+.background {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  isolation: isolate;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10, 30, 38, 0.35);
+}
+
+.card {
+  background: light-dark(rgba(255, 255, 255, 0.86), rgba(36, 36, 36, 0.86));
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  width: 64px;
+  margin-bottom: 4px;
+}
