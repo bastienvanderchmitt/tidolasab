@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Contrat de location gîte Ti' Dola Sab</title>
+<!--
+  Source du contrat de location joint à l'email de demande de réservation
+  (public/contrat_location.pdf, copie dans resources/js/assets/pdf/).
+  Pour régénérer le PDF après modification :
+    chromium --headless --no-pdf-header-footer --print-to-pdf=public/contrat_location.pdf resources/pdf/contrat.html
+    cp public/contrat_location.pdf resources/js/assets/pdf/contrat_location.pdf
+-->
+<style>
+  @font-face { font-family: "Marcellus"; src: url("../js/assets/fonts/Marcellus-Regular.ttf"); }
+  @font-face { font-family: "Jost"; src: url("../js/assets/fonts/Jost-Regular.ttf"); }
+  @font-face { font-family: "LaBelleAurore"; src: url("../js/assets/fonts/LaBelleAurore-Regular.ttf"); }
+
+  :root {
+    --lagon: #0ea1ab;
+    --lagon-dark: #007c84;
+    --lagon-light: #e1fbfc;
+    --sable: #e3cfb4;
+    --sable-dark: #b99d75;
+    --cream: #fbf8f3;
+    --ink: #22303a;
+    --muted: #5d6b73;
+    --danger: #b3412f;
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm 15mm 18mm;
+
+    @bottom-left {
+      content: "Contrat de location · Ti' Dola Sab · Morne Lolo, 97112 Grand-Bourg";
+      font-family: Jost, sans-serif;
+      font-size: 7.5pt;
+      color: #5d6b73;
+      border-top: 1px solid #e3cfb4;
+      vertical-align: top;
+      padding-top: 6px;
+    }
+
+    @bottom-right {
+      content: "Page " counter(page) " / " counter(pages);
+      font-family: Jost, sans-serif;
+      font-size: 7.5pt;
+      color: #5d6b73;
+      border-top: 1px solid #e3cfb4;
+      vertical-align: top;
+      padding-top: 6px;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    font-family: Jost, sans-serif;
+    font-size: 10pt;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  svg { flex-shrink: 0; }
+
+  /* En-tête */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: linear-gradient(120deg, var(--lagon) 0%, #30bfc7 100%);
+    color: white;
+  }
+
+  .header img { width: 64px; height: 64px; }
+
+  .header h1 {
+    margin: 0;
+    font-family: Marcellus, serif;
+    font-weight: 400;
+    font-size: 21pt;
+    line-height: 1.1;
+  }
+
+  .header .tagline {
+    font-family: LaBelleAurore, cursive;
+    font-size: 15pt;
+    opacity: 0.95;
+  }
+
+  .header .meta {
+    margin-left: auto;
+    text-align: right;
+    font-size: 8pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  .intro { margin: 14px 0 0; }
+
+  /* Étapes de confirmation */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .step {
+    display: flex;
+    gap: 9px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--lagon-light);
+    border: 1px solid #a2e3e7;
+    font-size: 9pt;
+  }
+
+  .step .n {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--lagon);
+    color: white;
+    font-size: 9pt;
+    flex-shrink: 0;
+  }
+
+  /* Sections */
+  section { margin-top: 18px; break-inside: avoid; }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--sable);
+    font-family: Marcellus, serif;
+    font-weight: 400;
+    font-size: 13.5pt;
+  }
+
+  h2 .num {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--lagon);
+    color: white;
+    font-family: Jost, sans-serif;
+    font-size: 9pt;
+  }
+
+  h2 svg { width: 20px; height: 20px; color: var(--lagon); }
+
+  .part-title {
+    margin: 26px 0 4px;
+    text-align: center;
+    font-family: Marcellus, serif;
+    font-size: 17pt;
+    color: var(--lagon-dark);
+    break-after: avoid;
+  }
+
+  .part-title + .part-sub {
+    margin-bottom: 4px;
+    text-align: center;
+    font-family: LaBelleAurore, cursive;
+    font-size: 13pt;
+    color: var(--sable-dark);
+  }
+
+  p { margin: 0 0 6px; }
+
+  ul { margin: 2px 0 6px; padding-left: 18px; }
+  li { margin: 1px 0; }
+  li::marker { color: var(--lagon); }
+
+  /* Parties */
+  .parties { display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; }
+
+  .card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--sable);
+    background: var(--cream);
+  }
+
+  .card h3 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 6px;
+    font-family: Marcellus, serif;
+    font-weight: 400;
+    font-size: 12pt;
+  }
+
+  .card h3 svg { width: 18px; height: 18px; color: var(--lagon); }
+
+  .owner p { margin: 0 0 2px; }
+
+  .owner .line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #3a4750;
+  }
+
+  .owner .line svg { width: 14px; height: 14px; color: var(--lagon-dark); }
+
+  /* Champs à remplir */
+  .fields { display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px 12px; }
+
+  .field { display: flex; align-items: flex-end; gap: 6px; grid-column: span 3; }
+  .field.full { grid-column: 1 / -1; }
+  .field.third { grid-column: span 2; }
+
+  .field label { white-space: nowrap; font-size: 8.5pt; color: var(--muted); }
+
+  .field .blank {
+    flex: 1;
+    height: 18px;
+    border-bottom: 1px dotted var(--sable-dark);
+  }
+
+  .card .fields { margin-top: 4px; }
+
+  /* Séjour */
+  .stay { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+  .box {
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: var(--cream);
+    border: 1px solid var(--sable);
+  }
+
+  .box .label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 7pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .box .label svg { width: 14px; height: 14px; color: var(--lagon); }
+
+  .box .blank { height: 22px; border-bottom: 1px dotted var(--sable-dark); }
+
+  .box .hint { margin-top: 3px; font-size: 7.5pt; color: var(--muted); }
+
+  .box .value { margin-top: 2px; font-family: Marcellus, serif; font-size: 13pt; }
+
+  table.amounts {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--sable);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .amounts th {
+    padding: 6px 8px;
+    background: var(--lagon);
+    color: white;
+    font-weight: 400;
+    font-size: 8pt;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .amounts td {
+    height: 34px;
+    border-left: 1px solid var(--sable);
+    background: white;
+  }
+
+  .amounts td:first-child { border-left: none; }
+
+  .note {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 8.5pt;
+    color: var(--muted);
+  }
+
+  .note svg { width: 15px; height: 15px; color: var(--lagon); }
+
+  /* Paiement */
+  .payments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+  .pay {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--sable);
+    background: var(--cream);
+    font-size: 9pt;
+  }
+
+  .pay .when {
+    font-size: 7pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pay .what { font-family: Marcellus, serif; font-size: 13pt; color: var(--lagon-dark); }
+
+  .pay p { margin: 3px 0 0; color: #3a4750; }
+
+  .bank {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 10px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--ink);
+    color: white;
+  }
+
+  .bank > svg { width: 28px; height: 28px; color: var(--sable); }
+
+  .bank .grid { display: grid; grid-template-columns: auto 1fr; gap: 1px 14px; font-size: 9pt; }
+
+  .bank .k { font-size: 7.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.65); align-self: center; }
+
+  .bank .iban { font-family: Marcellus, serif; font-size: 12.5pt; letter-spacing: 0.06em; color: var(--sable); }
+
+  /* Règles */
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+
+  .rule { display: flex; gap: 9px; break-inside: avoid; }
+
+  .rule .icon {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--lagon-light);
+    color: var(--lagon-dark);
+    flex-shrink: 0;
+  }
+
+  .rule .icon svg { width: 15px; height: 15px; }
+
+  .rule h3 { margin: 2px 0 1px; font-weight: 600; font-size: 9.6pt; }
+
+  .rule p { margin: 0 0 3px; color: #3a4750; }
+
+  .rule ul { color: #3a4750; }
+
+  .wide { grid-column: 1 / -1; }
+
+  .warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-weight: 600;
+    color: var(--danger);
+  }
+
+  .warning svg { width: 16px; height: 16px; }
+
+  /* Annulation */
+  .cancel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+  .cancel .box p { margin: 4px 0 0; font-size: 9pt; color: #3a4750; }
+
+  .cancel .ok { background: var(--lagon-light); border-color: #a2e3e7; }
+  .cancel .ko { background: #fdf3f1; border-color: #f0cfc8; }
+
+  .sos-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 14px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #f0cfc8;
+    background: #fdf3f1;
+    color: var(--danger);
+    font-size: 9pt;
+  }
+
+  .sos-line strong { font-family: Marcellus, serif; font-size: 14pt; margin-right: 4px; }
+
+  /* Signatures */
+  .signatures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 24px;
+    break-inside: avoid;
+  }
+
+  .sign {
+    min-height: 140px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--sable);
+    background: var(--cream);
+  }
+
+  .sign h3 { margin: 0; font-family: Marcellus, serif; font-weight: 400; font-size: 12pt; }
+
+  .sign .hint { font-size: 8pt; color: var(--muted); }
+
+  .sign img { display: block; height: 70px; margin: 8px 0 0 10px; }
+
+  .sign .field { margin-top: 10px; }
+
+  .closing {
+    margin-top: 20px;
+    text-align: center;
+    font-family: LaBelleAurore, cursive;
+    font-size: 17pt;
+    color: var(--lagon-dark);
+  }
+
+  .page-break { break-before: page; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="../js/assets/img/logo_full.png" alt="">
+  <div>
+    <h1>Contrat de location</h1>
+    <div class="tagline">Gîte Ti' Dola Sab · Marie-Galante</div>
+  </div>
+  <div class="meta">Morne Lolo<br>97112 Grand-Bourg</div>
+</header>
+
+<p class="intro">Afin de rendre définitive la location, j'ai le plaisir de vous adresser le présent contrat. La location sera prise en compte dès réception du contrat et du versement des arrhes.</p>
+
+<div class="steps">
+  <div class="step"><span class="n">1</span><span>Remplissez et signez ce contrat, puis renvoyez-nous un exemplaire dès réception.</span></div>
+  <div class="step"><span class="n">2</span><span>Versez les arrhes par virement à l'ordre de EI Ti' Dola Sab (coordonnées bancaires ci-dessous).</span></div>
+  <div class="step"><span class="n">3</span><span>Un email d'accusé de réception vous confirme alors votre réservation.</span></div>
+</div>
+
+<section>
+  <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="users"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg> Les parties</h2>
+  <div class="parties">
+    <div class="card owner">
+      <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="home-2"><path d="M5 12l-2 0l9 -9l9 9l-2 0"></path><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path><path d="M10 12h4v4h-4l0 -4"></path></svg> Le propriétaire</h3>
+      <p><strong>Isabelle Bellot</strong></p>
+      <p>EI Ti' Dola Sab</p>
+      <p class="line"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="map-pin"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0"></path></svg> Morne Lolo, 97112 Grand-Bourg</p>
+      <p class="line"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="phone"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path></svg> +590 690 64 89 04</p>
+      <p class="line"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="mail"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"></path><path d="M3 7l9 6l9 -6"></path></svg> tidolasab@gmail.com</p>
+    </div>
+    <div class="card">
+      <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="user"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path></svg> Le locataire</h3>
+      <div class="fields">
+        <div class="field"><label>Prénom</label><span class="blank"></span></div>
+        <div class="field"><label>Nom</label><span class="blank"></span></div>
+        <div class="field full"><label>Adresse</label><span class="blank"></span></div>
+        <div class="field third"><label>Code postal</label><span class="blank"></span></div>
+        <div class="field" style="grid-column: span 4"><label>Commune</label><span class="blank"></span></div>
+        <div class="field"><label>Pays</label><span class="blank"></span></div>
+        <div class="field"><label>Nationalité</label><span class="blank"></span></div>
+        <div class="field"><label>Tél. portable</label><span class="blank"></span></div>
+        <div class="field"><label>Email</label><span class="blank"></span></div>
+        <div class="field"><label>Nombre d'adultes</label><span class="blank"></span></div>
+        <div class="field"><label>Bébés (moins de 6 mois)</label><span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top: 10px">
+    <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="users"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg> Autres occupants <span style="font-family: Jost, sans-serif; font-size: 8.5pt; color: var(--muted)">· prénom et nom</span></h3>
+    <div class="fields">
+      <div class="field"><label>1.</label><span class="blank"></span></div>
+      <div class="field"><label>2.</label><span class="blank"></span></div>
+    </div>
+  </div>
+  <div class="note"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="info-circle"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 9h.01"></path><path d="M11 12h1v4h1"></path></svg> <span>Capacité d'accueil maximale : <strong>2 personnes</strong>. Merci de bien vouloir la respecter scrupuleusement.</span></div>
+</section>
+
+<section>
+  <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="calendar-event"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12"></path><path d="M16 3l0 4"></path><path d="M8 3l0 4"></path><path d="M4 11l16 0"></path><path d="M8 15h2v2h-2l0 -2"></path></svg> Le séjour</h2>
+  <div class="stay">
+    <div class="box">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-enter"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5"></path><path d="M21 7h-7m3 -3l-3 3l3 3"></path></svg> Arrivée le</div>
+      <div class="blank"></div>
+      <div class="hint">entre 14h et 20h</div>
+    </div>
+    <div class="box">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-exit"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path><path d="M14 7h7m-3 -3l3 3l-3 3"></path></svg> Départ le</div>
+      <div class="blank"></div>
+      <div class="hint">entre 8h et 11h</div>
+    </div>
+    <div class="box">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="moon"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"></path></svg> Nuitées</div>
+      <div class="blank"></div>
+    </div>
+    <div class="box">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="users"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg> Personnes</div>
+      <div class="blank"></div>
+    </div>
+  </div>
+
+  <table class="amounts">
+    <thead>
+      <tr><th>Séjour</th><th>Forfait ménage</th><th>Taxe de séjour</th><th>Arrhes (50 %)</th><th>Solde</th></tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="note"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="info-circle"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 9h.01"></path><path d="M11 12h1v4h1"></path></svg> <span>La taxe de séjour est calculée par nuit et par personne de plus de 18 ans, selon le barème fixé par la CCMG (Grand-Bourg).</span></div>
+</section>
+
+<section>
+  <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="receipt-euro"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2"></path><path d="M15 7.8c-.523 -.502 -1.172 -.8 -1.875 -.8c-1.727 0 -3.125 1.791 -3.125 4s1.398 4 3.125 4c.703 0 1.352 -.298 1.874 -.8"></path><path d="M9 11h4"></path></svg> Paiement et caution</h2>
+  <div class="payments">
+    <div class="pay">
+      <div class="when">Dès réception du contrat</div>
+      <div class="what">Arrhes · 50 %</div>
+      <p>50 % du séjour, par virement.</p>
+    </div>
+    <div class="pay">
+      <div class="when">14 jours avant l'arrivée</div>
+      <div class="what">Solde</div>
+      <p>À régler par virement au plus tard 14 jours avant l'arrivée.</p>
+    </div>
+    <div class="pay">
+      <div class="when">Le jour de l'arrivée</div>
+      <div class="what">Caution · 500 €</div>
+      <p>En espèces ou par chèque à l'ordre de Isabelle Bellot EI Ti' Dola Sab.</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="building-bank"><path d="M3 21l18 0"></path><path d="M3 10l18 0"></path><path d="M5 6l7 -3l7 3"></path><path d="M4 10l0 11"></path><path d="M20 10l0 11"></path><path d="M8 14l0 3"></path><path d="M12 14l0 3"></path><path d="M16 14l0 3"></path></svg>
+    <div class="grid">
+      <span class="k">Titulaire</span><span>Bellot Isabelle (EI) · Lieu-dit Morne Lolo, 97112 Grand-Bourg</span>
+      <span class="k">IBAN</span><span class="iban">FR76 1027 8021 3800 0218 0420 131</span>
+      <span class="k">BIC</span><span>CMCIFR2A · Crédit Mutuel, CCM Bayeux</span>
+    </div>
+  </div>
+
+  <p class="note" style="display: block">La caution n'est pas encaissée : elle vous est restituée à votre départ si aucun dégât n'est constaté, ou après déduction des frais de réparation ou de remplacement en cas de dommages matériels provoqués lors de votre séjour.</p>
+</section>
+
+<section>
+  <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="clock"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 7v5l3 3"></path></svg> Arrivée et départ</h2>
+  <div class="rules">
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-enter"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5"></path><path d="M21 7h-7m3 -3l-3 3l3 3"></path></svg></span>
+      <div>
+        <h3>Arrivée</h3>
+        <p>L'après-midi, entre 14 heures et 20 heures : remise des clefs et dépôt de votre caution de 500 € par chèque ou en espèces.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="door-exit"><path d="M13 12v.01"></path><path d="M3 21h18"></path><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path><path d="M14 7h7m-3 -3l3 3l-3 3"></path></svg></span>
+      <div>
+        <h3>Départ</h3>
+        <p>Le matin, entre 8 heures et 11 heures : état des lieux et restitution de votre caution.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h2 class="part-title" style="border: none; display: block">Conditions générales de location du gîte</h2>
+<div class="part-sub">À lire attentivement avant de signer</div>
+
+<section>
+  <h2><span class="num">1</span> Utilisation des lieux</h2>
+  <div class="rules">
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="wheelchair"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"></path><path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 17a3 3 0 0 0 -3 -3h-3.4"></path><path d="M3 3h1a2 2 0 0 1 2 2v6"></path><path d="M6 8h11"></path><path d="M15 8v6"></path></svg></span>
+      <div>
+        <h3>Accès PMR</h3>
+        <p>Accessibilité partielle aux PMR : trois marches permettent d'accéder à la terrasse et la porte de la salle de douche mesure 69 cm de largeur.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="home"><path d="M5 12l-2 0l9 -9l9 9l-2 0"></path><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path></svg></span>
+      <div>
+        <h3>Respect des lieux</h3>
+        <p>Le locataire pourra profiter pleinement des lieux en respectant le matériel mis à sa disposition. Ce gîte a été construit pour recevoir nos hôtes dans un cadre naturel : nous demandons que tout ce que nous laissons à votre entière disposition soit protégé et respecté.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">2</span> Nombre d'occupants et charges</h2>
+  <div class="rules">
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="users"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg></span>
+      <div>
+        <h3>Occupants</h3>
+        <p>Le locataire s'engage à respecter la capacité d'accueil fixée. Le propriétaire ou son représentant se réserve le droit de refuser le ou les locataires supplémentaires.</p>
+        <p>Le locataire s'engage à ne pas sous-louer la location ni céder le présent contrat à un tiers.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="checklist"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"></path><path d="M14 19l2 2l4 -4"></path><path d="M9 8h4"></path><path d="M9 12h2"></path></svg></span>
+      <div>
+        <h3>Charges comprises dans le prix</h3>
+        <ul>
+          <li>la consommation d'eau et d'électricité</li>
+          <li>l'entretien de la piscine</li>
+          <li>les parures de lit</li>
+          <li>les serviettes de toilette et de piscine</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rule wide">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="sparkles"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6"></path></svg></span>
+      <div>
+        <h3>Entretien</h3>
+        <p>Le gîte vous est remis en parfait état de propreté. Nous vous remercions du soin apporté à son entretien pendant votre séjour : un équipement complet de nettoyage (matériel et produits) est à votre disposition. Nous vous demandons de rendre le gîte avec la vaisselle faite, les poubelles vidées et la cafetière vidée. Un lave-linge est à votre disposition dans la salle de bain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">3</span> Règles de vie</h2>
+  <div class="rules">
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="leaf"><path d="M5 21c.5 -4.5 2.5 -8 7 -10"></path><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3l.014 0"></path></svg></span>
+      <div>
+        <h3>Environnement</h3>
+        <p>Pour respecter au mieux l'environnement, veuillez éteindre les lumières lorsque vous quittez une pièce et ne pas laisser couler l'eau inutilement.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="lock"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6"></path><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path><path d="M8 11v-4a4 4 0 1 1 8 0v4"></path></svg></span>
+      <div>
+        <h3>Sécurité</h3>
+        <p>La porte du logement ferme à clé : vous êtes responsables de tout vol et de toute dégradation. Pour la sécurité et la tranquillité de tous, le portail d'entrée doit rester fermé.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="smoking-no"><path d="M8 13l0 4"></path><path d="M16 5v.5a2 2 0 0 0 2 2a2 2 0 0 1 2 2v.5"></path><path d="M3 3l18 18"></path><path d="M17 13h3a1 1 0 0 1 1 1v2c0 .28 -.115 .533 -.3 .714m-3.7 .286h-13a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1h9"></path></svg></span>
+      <div>
+        <h3>Tabac et feu</h3>
+        <p>Il est strictement interdit de fumer à l'intérieur. Les cendriers sont prévus pour l'extérieur : merci de ne pas jeter vos mégots à terre. Tout feu sauvage est interdit.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="pool"><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"></path><path d="M2 16a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"></path><path d="M15 12v-7.5a1.5 1.5 0 0 1 3 0"></path><path d="M9 12v-7.5a1.5 1.5 0 0 0 -3 0"></path><path d="M15 5l-6 0"></path><path d="M9 10l6 0"></path></svg></span>
+      <div>
+        <h3>Enfants et piscine</h3>
+        <p>Pour des raisons de sécurité, l'accès au gîte est autorisé uniquement aux bébés ne pouvant se déplacer seuls. La baignade dans la piscine est sous l'entière responsabilité d'un parent ou d'un adulte.</p>
+      </div>
+    </div>
+    <div class="rule wide">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="recycle"><path d="M12 17l-2 2l2 2"></path><path d="M10 19h9a2 2 0 0 0 1.75 -2.75l-.55 -1"></path><path d="M8.536 11l-.732 -2.732l-2.732 .732"></path><path d="M7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141 .024"></path><path d="M15.464 11l2.732 .732l.732 -2.732"></path><path d="M18.196 11.732l-4.5 -7.794a2 2 0 0 0 -3.256 -.14l-.591 .976"></path></svg></span>
+      <div>
+        <h3>Ordures ménagères</h3>
+        <p>Nous vous recommandons fortement de participer au tri des déchets. Un container est mis à votre disposition à l'entrée du chemin, et des poubelles de tri du verre et des emballages sont disponibles sur Morne Lolo, en face de la supérette Sympa Shop. Lors de votre départ, veuillez ne rien laisser dans les poubelles et les rendre propres, afin d'éviter toute invasion de fourmis et autres insectes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">4</span> Assainissement par phytoépuration</h2>
+  <div class="rules">
+    <div class="rule wide">
+      <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="plant-2"><path d="M2 9a10 10 0 1 0 20 0"></path><path d="M12 19a10 10 0 0 1 10 -10"></path><path d="M2 9a10 10 0 0 1 10 10"></path><path d="M12 4a9.7 9.7 0 0 1 2.99 7.5"></path><path d="M9.01 11.5a9.7 9.7 0 0 1 2.99 -7.5"></path></svg></span>
+      <div>
+        <p>Le gîte est sur <strong>phytoépuration</strong>, qui fonctionne grâce à l'action de plantes épuratrices, plantées dans des bassins, qui filtrent et dépolluent les eaux usées. Veuillez ne rien jeter dans la cuvette des WC hormis le papier hygiénique (ni serviettes, ni tampons, ni lingettes…) et n'utiliser que des produits compatibles avec une fosse.</p>
+      </div>
+    </div>
+  </div>
+  <div class="warning"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="alert-triangle"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></svg> Tout dommage causé par votre négligence sera à votre charge.</div>
+</section>
+
+<section>
+  <h2><span class="num">5</span> Forfait nettoyage</h2>
+  <p>Un forfait nettoyage supplémentaire de <strong>80 €</strong> peut s'appliquer en fin de séjour si le locataire n'a pas choisi d'effectuer lui-même le nettoyage des lieux, ou si l'état des lieux après son départ indique que le nettoyage a été insuffisant.</p>
+</section>
+
+<section>
+  <h2><span class="num">6</span> État des lieux</h2>
+  <p>L'état des lieux est fait en début et en fin de séjour. Nous vous expliquerons le fonctionnement des divers appareils électroménagers et restons à votre disposition tout au long de votre séjour.</p>
+  <p>Le locataire doit nous avertir sans délai, par téléphone au <strong>+590 690 64 89 04</strong>, de tout dégât ou dysfonctionnement des équipements : nous ferons alors au mieux pour remédier à la situation. En cas de casse, de sinistre ou de dégradation, merci de le signaler durant votre séjour.</p>
+</section>
+
+<section>
+  <h2><span class="num">7</span> Assurances</h2>
+  <p>Le locataire certifie avoir vérifié que son propre contrat d'assurance prévoit l'extension villégiature (location de vacances), ou s'engage à souscrire une police d'assurance pour la durée du séjour ; une copie du contrat d'assurance est envoyée avec le contrat de location. <strong>L'extension villégiature est obligatoire.</strong></p>
+</section>
+
+<section>
+  <h2><span class="num">8</span> Conditions d'annulation</h2>
+  <p>Toute annulation doit être notifiée par lettre recommandée à l'adresse du propriétaire avant l'entrée dans les lieux.</p>
+  <div class="cancel">
+    <div class="box ok">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="calendar-x"><path d="M13 21h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6.5"></path><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M4 11h16"></path><path d="M22 22l-5 -5"></path><path d="M17 22l5 -5"></path></svg> Plus de 30 jours avant</div>
+      <p>Annulation gratuite : les arrhes versées sont remboursées.</p>
+    </div>
+    <div class="box ok">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="shield-check"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"></path><path d="M15 19l2 2l4 -4"></path></svg> Arrhes remboursées</div>
+      <p>En cas de mesure d'interdiction de déplacement (pandémie…), ou si le propriétaire annule la location.</p>
+    </div>
+    <div class="box ko">
+      <div class="label"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-icon="alert-triangle"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></svg> Non-présentation</div>
+      <p>Sans avis au propriétaire 24 heures après la date d'arrivée : le contrat est résilié, les arrhes restent acquises au propriétaire, qui peut disposer de son bien.</p>
+    </div>
+  </div>
+  <p style="margin-top: 8px">Le propriétaire se réserve le droit d'interrompre le contrat de location à tout moment si le locataire ne respecte pas l'ensemble de ces engagements.</p>
+
+  <div class="sos-line">
+    <span>En cas d'urgence, prévenez les secours :</span>
+    <span><strong>18</strong>Pompiers</span>
+    <span><strong>15</strong>Samu</span>
+    <span><strong>17</strong>Police</span>
+  </div>
+</section>
+
+<div class="signatures">
+  <div class="sign">
+    <h3>Le propriétaire</h3>
+    <div class="hint">Isabelle Bellot, EI Ti' Dola Sab</div>
+    <img src="signature.png" alt="">
+  </div>
+  <div class="sign">
+    <h3>Le locataire</h3>
+    <div class="hint">Signature précédée de la mention manuscrite « lu et approuvé »</div>
+    <div class="field" style="margin-top: 82px"><label>Date</label><span class="blank"></span></div>
+  </div>
+</div>
+
+<p class="closing">Nous vous souhaitons un agréable séjour à Ti' Dola Sab !</p>
+
+</body>
+</html>
