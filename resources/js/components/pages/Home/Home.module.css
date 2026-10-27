@@ -68,6 +68,11 @@ section.preview {
   background: linear-gradient(180deg, var(--tds-cream), #f3ece0);
 }
 
+/* Le gîte se détache des sections crème qui l'entourent */
+.highlighted {
+  background: #fff;
+}
+
 .split {
   align-items: center;
 }

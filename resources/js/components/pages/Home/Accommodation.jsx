@@ -14,7 +14,7 @@ const Accommodation = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="section">
+    <section className={`section ${classes.highlighted}`}>
       <Container size="lg">
         <SectionTitle
           align="center"
