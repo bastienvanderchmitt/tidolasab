@@ -48,6 +48,9 @@ return [
     // Nombre de jours avant l'arrivée pour le paiement du solde
     'balance_due_days' => 14,
 
+    // Nombre de jours après le départ pour le versement de la plateforme
+    'payout_days' => ['AirBnb' => 2, 'Booking' => 7],
+
     /*
     |--------------------------------------------------------------------------
     | Documents joints aux emails

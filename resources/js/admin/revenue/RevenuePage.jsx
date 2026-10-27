@@ -86,7 +86,7 @@ const RevenuePage = () => {
             ]}
           />
           <Switch
-            label="Inclure les soldes attendus (brouillons)"
+            label="Inclure les paiements attendus (brouillons)"
             checked={withDrafts}
             onChange={(e) => setWithDrafts(e.currentTarget.checked)}
           />
@@ -142,7 +142,7 @@ const RevenuePage = () => {
                       : 0,
                   )}
                   hint={
-                    withDrafts ? "soldes en brouillon" : "brouillons exclus"
+                    withDrafts ? "paiements en brouillon" : "brouillons exclus"
                   }
                   icon={IconClockHour4}
                   color="orange"

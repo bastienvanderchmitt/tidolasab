@@ -125,12 +125,65 @@ describe('paiement brouillon du solde', function () {
         expect(draftOf($booking)->date_paiement->toDateString())->toBe('2026-10-24');
     });
 
-    it('ne crée pas de brouillon pour Booking et AirBnb', function () {
-        $booking = Booking::factory()->withClient()->create(['type' => 'AirBnb', 'prix_total' => 500]);
+    it('attend le versement de la plateforme après le départ', function (string $type, string $expected) {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['type' => $type, 'prix_total' => 500]);
 
-        validateBooking($booking, 200)->assertOk();
+        validateBooking($booking, 0)->assertOk();
+
+        expect($booking->payments()->confirmed()->count())->toBe(0)
+            ->and(draftOf($booking))
+            ->montant_paiement->toEqual('500.00')
+            ->date_paiement->toDateString()->toBe($expected)
+            ->note->toBe(__('booking.payout_draft_note', ['platform' => $type === 'AirBnb' ? 'Airbnb' : 'Booking']));
+    })->with([
+        'Airbnb : 2 jours après le départ' => ['AirBnb', '2026-12-06'],
+        'Booking : 7 jours après le départ' => ['Booking', '2026-12-11'],
+    ]);
+
+    it('date le versement attendu comme demandé à la validation', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['type' => 'Booking', 'prix_total' => 500]);
+
+        $this->actingAs(admin())->postJson("/api/bookings/{$booking->id}/validate", [
+            'deposit' => 0, 'date' => '2026-10-24', 'type' => 'virement', 'dueDate' => '2026-12-08',
+        ])->assertOk();
+
+        expect(draftOf($booking)->date_paiement->toDateString())->toBe('2026-12-08');
+    });
+
+    it('solde la réservation de plateforme au premier versement, commission déduite', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['type' => 'AirBnb', 'prix_total' => 500]);
+        validateBooking($booking, 0);
+
+        $this->actingAs(admin())->postJson('/api/payments/'.draftOf($booking)->id.'/confirm', [
+            'deposit' => 455, 'date' => '2026-12-06', 'type' => 'virement',
+        ])->assertOk();
+
+        expect(draftOf($booking))->toBeNull()
+            ->and($booking->payments()->confirmed()->sum('montant_paiement'))->toEqual(455);
+    });
+
+    it('n’attend rien d’une plateforme déjà versée à la validation', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['type' => 'Booking', 'prix_total' => 500]);
+
+        validateBooking($booking, 480)->assertOk();
 
         expect(draftOf($booking))->toBeNull();
+    });
+
+    it('expose la date de versement prévue d’une réservation de plateforme', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->create(['type' => 'AirBnb']);
+
+        $this->actingAs(admin())->getJson("/api/bookings/{$booking->id}")
+            ->assertJsonPath('booking.versement_prevu', '2026-12-06');
+    });
+
+    it('n’enregistre pas de paiement de 0 € à la validation', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient()->create(['prix_total' => 342]);
+
+        validateBooking($booking, 0)->assertOk();
+
+        expect($booking->payments()->confirmed()->count())->toBe(0)
+            ->and(draftOf($booking)->montant_paiement)->toEqual('342.00');
     });
 
     it('encaisse un brouillon, en totalité ou en partie', function () {
@@ -219,6 +272,42 @@ describe('paiement brouillon du solde', function () {
         $this->artisan('reminders:send')->assertSuccessful();
 
         Mail::assertQueued(PaymentReminder::class, fn ($mail) => $mail->hasTo('due@example.com') && $mail->balance === 171.0);
+    });
+
+    it('ne rappelle pas le solde aux voyageurs des plateformes', function () {
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->withClient(['email' => 'guest@example.com'])
+            ->create(['type' => 'Booking', 'prix_total' => 500]);
+        validateBooking($booking, 0);
+
+        Carbon::setTestNow('2026-11-17');
+        $this->artisan('reminders:send')->assertSuccessful();
+
+        Mail::assertNotQueued(PaymentReminder::class);
+    });
+
+    it('convertit les versements de plateforme notés à 0 € en paiements attendus', function () {
+        $planned = Booking::factory()->between('2026-12-01', '2026-12-04')->validated()->withClient()->create(['type' => 'Booking', 'prix_total' => 500]);
+        Payment::factory()->for($planned)->create(['montant_paiement' => 0, 'date_paiement' => '2026-12-09']);
+        $untracked = Booking::factory()->between('2026-11-01', '2026-11-04')->validated()->withClient()->create(['type' => 'AirBnb', 'prix_total' => 300]);
+        $paid = Booking::factory()->between('2026-09-01', '2026-09-04')->validated()->withClient()->create(['type' => 'AirBnb', 'prix_total' => 300]);
+        Payment::factory()->for($paid)->create(['montant_paiement' => 300]);
+        $cancelled = Booking::factory()->between('2026-12-10', '2026-12-12')->withClient()
+            ->create(['type' => 'Booking', 'statut' => BookingStatus::Cancelled, 'prix_total' => 200]);
+        Payment::factory()->for($cancelled)->create(['montant_paiement' => 0]);
+        $direct = Booking::factory()->between('2026-12-20', '2026-12-24')->validated()->withClient()->create(['prix_total' => 400]);
+        Payment::factory()->for($direct)->create(['montant_paiement' => 0]);
+
+        $migration = require database_path('migrations/2026_10_27_000001_expect_platform_payouts.php');
+        $migration->up();
+        $migration->up();
+
+        expect($planned->payments()->count())->toBe(1)
+            ->and(draftOf($planned))->montant_paiement->toEqual('500.00')->date_paiement->toDateString()->toBe('2026-12-09')
+            ->and(draftOf($untracked))->montant_paiement->toEqual('300.00')->date_paiement->toDateString()->toBe('2026-11-06')
+            ->and($paid->payments()->count())->toBe(1)
+            ->and(draftOf($paid))->toBeNull()
+            ->and($cancelled->payments()->count())->toBe(0)
+            ->and($direct->payments()->confirmed()->count())->toBe(1);
     });
 
     it('crée les brouillons manquants des réservations déjà validées', function () {

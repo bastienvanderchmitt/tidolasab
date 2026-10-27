@@ -93,7 +93,7 @@ const PaymentForm = ({ payment, bookingId, refund, onDone }) => {
       <Stack>
         {isDraft && (
           <Alert color="orange" icon={<IconInfoCircle size={18} />}>
-            Solde attendu : son montant suit automatiquement le prix de la
+            Paiement attendu : son montant suit automatiquement le prix de la
             réservation.
           </Alert>
         )}

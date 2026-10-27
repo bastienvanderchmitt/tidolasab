@@ -3,15 +3,20 @@ import { DatePickerInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { modals } from "@mantine/modals";
 import { paymentApi, useApiMutation } from "../api/queries";
-import { PAYMENT_METHODS } from "../utils/labels";
+import { BOOKING_TYPES, PAYMENT_METHODS, isPlatform } from "../utils/labels";
 import { isoDate, money } from "../utils/format";
 
 /**
- * Encaissement d'un solde attendu. Un montant inférieur laisse un nouveau brouillon pour le reste.
+ * Encaissement d'un paiement attendu. Pour un solde, un montant inférieur laisse un
+ * nouveau brouillon pour le reste ; le versement d'une plateforme, lui, solde la
+ * réservation (commission déduite).
  */
 const ConfirmDraftForm = ({ payment, onDone }) => {
   const mutation = useApiMutation(paymentApi.confirm, "Paiement encaissé");
   const expected = Number(payment.montant_paiement);
+  const platform = isPlatform(payment.type_reservation)
+    ? BOOKING_TYPES[payment.type_reservation].label
+    : null;
 
   const form = useForm({
     initialValues: {
@@ -36,7 +41,8 @@ const ConfirmDraftForm = ({ payment, onDone }) => {
     >
       <Stack>
         <Text size="sm">
-          Solde attendu de <strong>{money(expected)}</strong>
+          {platform ? `Versement ${platform} attendu` : "Solde attendu"} de{" "}
+          <strong>{money(expected)}</strong>
           {payment.nom_client ? ` pour ${payment.nom_client}` : ""}.
         </Text>
         <NumberInput
@@ -63,7 +69,9 @@ const ConfirmDraftForm = ({ payment, onDone }) => {
         </Group>
         {rest > 0 && (
           <Text size="sm" c="dimmed">
-            Il restera {money(rest)} à encaisser, en nouveau paiement brouillon.
+            {platform
+              ? "Indiquez le montant réellement versé : la réservation sera considérée comme réglée."
+              : `Il restera ${money(rest)} à encaisser, en nouveau paiement brouillon.`}
           </Text>
         )}
         <Group justify="flex-end">
@@ -78,7 +86,7 @@ const ConfirmDraftForm = ({ payment, onDone }) => {
 
 export const useConfirmDraft = () => (payment) => {
   const id = modals.open({
-    title: "Encaisser le solde",
+    title: "Encaisser le paiement",
     children: (
       <ConfirmDraftForm payment={payment} onDone={() => modals.close(id)} />
     ),

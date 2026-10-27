@@ -24,6 +24,7 @@ function validSettings(array $overrides = []): array
         'minimum_stay_periods' => [['start' => '2026-12-21', 'end' => '2027-01-06', 'nights' => 4]],
         'deposit_percent' => 50,
         'balance_due_days' => 14,
+        'payout_days' => ['AirBnb' => 2, 'Booking' => 7],
     ], $overrides);
 }
 
@@ -98,6 +99,19 @@ describe('réglages', function () {
         ]))->assertUnprocessable()->assertJsonValidationErrors([
             'rates.1.from_year', 'rates.1.low', 'low_season_months.0', 'deposit_percent', 'minimum_stay_periods.0.end',
         ]);
+    });
+
+    it('règle le délai de versement de chaque plateforme', function () {
+        $this->actingAs(admin())->putJson('/api/settings', validSettings(['payout_days' => ['AirBnb' => 1, 'Booking' => 61]]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['payout_days.Booking']);
+
+        $this->actingAs(admin())->putJson('/api/settings', validSettings(['payout_days' => ['AirBnb' => 1, 'Booking' => 4]]))
+            ->assertOk()
+            ->assertJsonPath('settings.payout_days.Booking', 4);
+
+        $booking = Booking::factory()->between('2026-12-01', '2026-12-04')->create(['type' => 'Booking']);
+        $this->actingAs(admin())->getJson("/api/bookings/{$booking->id}")->assertJsonPath('booking.versement_prevu', '2026-12-08');
     });
 });
 

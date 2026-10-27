@@ -305,6 +305,28 @@ const SettingsForm = ({ settings }) => {
           </Text>
         </Section>
 
+        <Section
+          title="Versements des plateformes"
+          description="Booking et Airbnb versent le séjour après le départ du voyageur : à la validation, le versement devient un paiement attendu à cette date."
+        >
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <NumberInput
+              label="Airbnb"
+              suffix=" jours après le départ"
+              min={0}
+              max={60}
+              {...form.getInputProps("payout_days.AirBnb")}
+            />
+            <NumberInput
+              label="Booking"
+              suffix=" jours après le départ"
+              min={0}
+              max={60}
+              {...form.getInputProps("payout_days.Booking")}
+            />
+          </SimpleGrid>
+        </Section>
+
         <Group justify="flex-end" pos="sticky" bottom={16}>
           <Button
             type="submit"
@@ -329,7 +351,7 @@ const SettingsPage = () => {
     <>
       <PageHeader
         title="Réglages"
-        description="Tarifs, saisons, taxe de séjour, durées minimales et acompte"
+        description="Tarifs, saisons, taxe de séjour, durées minimales, acompte et versements"
       />
       <QueryState query={settings}>
         {(data) => <SettingsForm settings={data} />}

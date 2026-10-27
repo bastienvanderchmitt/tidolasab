@@ -20,6 +20,7 @@ class BookingSettings
         'minimum_stay_periods',
         'deposit_percent',
         'balance_due_days',
+        'payout_days',
     ];
 
     private ?array $stored = null;

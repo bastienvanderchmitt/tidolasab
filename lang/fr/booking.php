@@ -6,6 +6,7 @@ return [
     'minimum_stay_period' => 'Durée de séjour de :nights nuits minimum du :start au :end.',
     'client_has_bookings' => 'Une réservation existe pour ce client, veuillez la supprimer.',
     'payment_not_draft' => 'Ce paiement est déjà encaissé.',
+    'payout_draft_note' => 'Versement :platform',
     'balance_draft_note' => 'Solde',
     'draft_not_deletable' => 'Le solde attendu se met à jour automatiquement : modifiez le prix de la réservation pour le changer.',
     'refunds_exceed_paid' => 'Les remboursements ne peuvent pas dépasser les sommes encaissées sur cette réservation.',

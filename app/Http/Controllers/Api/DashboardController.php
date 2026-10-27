@@ -20,7 +20,7 @@ class DashboardController extends Controller
     public function __construct(private readonly BookingService $bookings) {}
 
     /**
-     * Ce qui demande une action : réservations à valider, soldes attendus, prochaines arrivées.
+     * Ce qui demande une action : réservations à valider, paiements attendus, prochaines arrivées.
      */
     public function index(): JsonResponse
     {
@@ -28,8 +28,9 @@ class DashboardController extends Controller
             'pending_bookings' => $this->withClient(
                 Booking::query()->where('statut', BookingStatus::Pending)->orderBy('date_arrivee')
             )->each(function (Booking $booking) {
-                $booking->setAttribute('acompte_attendu', $this->bookings->amountDueAtBooking($booking));
-                $booking->setAttribute('paiement_total_requis', $this->bookings->requiresFullPayment($booking));
+                foreach ($this->bookings->paymentTerms($booking) as $key => $value) {
+                    $booking->setAttribute($key, $value);
+                }
             }),
             'upcoming_arrivals' => $this->withClient(
                 Booking::query()
@@ -41,7 +42,7 @@ class DashboardController extends Controller
             ),
             'drafts' => Payment::query()
                 ->draft()
-                ->select('paiements.*', 'r.date_arrivee', 'rc.id_client')
+                ->select('paiements.*', 'r.date_arrivee', 'r.type as type_reservation', 'rc.id_client')
                 ->selectRaw("CONCAT(c.nom, ' ', c.prenom) as nom_client")
                 ->join('reservations as r', 'r.id', '=', 'paiements.id_reservation')
                 ->leftJoin('reservations_clients as rc', 'rc.id_reservation', '=', 'r.id')

@@ -123,23 +123,26 @@ class BookingService
     }
 
     /**
-     * Valide la réservation et enregistre l'acompte reçu.
-     * Pour une réservation directe, le solde restant devient un paiement brouillon.
+     * Valide la réservation et enregistre le montant déjà reçu (acompte, ou rien
+     * pour une plateforme). Le reste devient un paiement brouillon, daté de
+     * « $dueDate » s'il est fourni.
      */
-    public function validate(Booking $booking, float $deposit, string $date, string $method): Booking
+    public function validate(Booking $booking, float $deposit, string $date, string $method, ?string $dueDate = null): Booking
     {
-        DB::transaction(function () use ($booking, $deposit, $date, $method) {
+        DB::transaction(function () use ($booking, $deposit, $date, $method, $dueDate) {
             $this->ensureDatesAvailable($booking->date_arrivee->toDateString(), $booking->date_depart->toDateString(), $booking);
 
             $booking->update(['statut' => BookingStatus::Validated]);
-            $booking->payments()->create([
-                'montant_paiement' => $deposit,
-                'date_paiement' => $date,
-                'moyen_paiement' => $method,
-                'statut' => PaymentStatus::Confirmed,
-            ]);
+            if ($deposit > 0) {
+                $booking->payments()->create([
+                    'montant_paiement' => $deposit,
+                    'date_paiement' => $date,
+                    'moyen_paiement' => $method,
+                    'statut' => PaymentStatus::Confirmed,
+                ]);
+            }
 
-            $this->syncBalanceDraft($booking);
+            $this->syncBalanceDraft($booking, $dueDate);
         });
 
         $client = $booking->primaryClient();
@@ -228,10 +231,11 @@ class BookingService
     }
 
     /**
-     * Tient à jour le brouillon du solde d'une réservation directe validée :
+     * Tient à jour le brouillon de ce qui reste attendu sur une réservation validée
+     * (solde d'une réservation directe, versement d'une plateforme) :
      * montant = prix total - paiements encaissés, supprimé quand tout est réglé.
      */
-    public function syncBalanceDraft(Booking $booking): void
+    public function syncBalanceDraft(Booking $booking, ?string $dueDate = null): void
     {
         $drafts = $booking->payments()->draft()->orderBy('id')->get();
         $remaining = $this->balance($booking);
@@ -246,14 +250,17 @@ class BookingService
         $drafts->each->delete();
 
         if ($draft) {
-            $draft->update(['montant_paiement' => $remaining]);
+            $draft->update(array_filter(['montant_paiement' => $remaining, 'date_paiement' => $dueDate]));
         } else {
+            $platform = $booking->type->isPlatform();
             $booking->payments()->create([
                 'montant_paiement' => $remaining,
-                'date_paiement' => $this->balanceDueDate($booking)->toDateString(),
+                'date_paiement' => $dueDate ?? ($platform ? $this->payoutDate($booking) : $this->balanceDueDate($booking))->toDateString(),
                 'moyen_paiement' => PaymentMethod::Transfer,
                 'statut' => PaymentStatus::Draft,
-                'note' => __('booking.balance_draft_note'),
+                'note' => $platform
+                    ? __('booking.payout_draft_note', ['platform' => $booking->type->label()])
+                    : __('booking.balance_draft_note'),
             ]);
         }
     }
@@ -302,11 +309,21 @@ class BookingService
     }
 
     /**
-     * Seule une réservation directe validée attend un solde (paiement brouillon).
+     * Une réservation validée attend son solde (réservation directe) ou le versement
+     * de la plateforme. Celle-ci verse le séjour en une fois, commission déduite :
+     * le premier versement reçu solde la réservation.
      */
     private function expectsBalance(Booking $booking): bool
     {
-        return $booking->type === BookingType::Classique && $booking->statut === BookingStatus::Validated;
+        if ($booking->statut !== BookingStatus::Validated) {
+            return false;
+        }
+
+        return match (true) {
+            $booking->type === BookingType::Classique => true,
+            $booking->type->isPlatform() => ! $booking->payments()->confirmed()->where('montant_paiement', '>', 0)->exists(),
+            default => false,
+        };
     }
 
     /**
@@ -326,6 +343,29 @@ class BookingService
         return $this->requiresFullPayment($booking)
             ? (float) $booking->prix_total
             : round($booking->prix_total * (int) $this->settings->get('deposit_percent') / 100, 2);
+    }
+
+    /**
+     * Conditions de paiement affichées à la validation : acompte à demander,
+     * ou date du versement attendu pour une plateforme.
+     */
+    public function paymentTerms(Booking $booking): array
+    {
+        return [
+            'acompte_attendu' => $this->amountDueAtBooking($booking),
+            'paiement_total_requis' => $this->requiresFullPayment($booking),
+            'versement_prevu' => $booking->type->isPlatform() ? $this->payoutDate($booking)->toDateString() : null,
+        ];
+    }
+
+    /**
+     * Versement attendu d'une plateforme : X jours après le départ (réglage par plateforme).
+     */
+    public function payoutDate(Booking $booking): CarbonImmutable
+    {
+        $days = (int) ($this->settings->get('payout_days')[$booking->type->value] ?? 0);
+
+        return CarbonImmutable::parse($booking->date_depart)->addDays($days);
     }
 
     /**

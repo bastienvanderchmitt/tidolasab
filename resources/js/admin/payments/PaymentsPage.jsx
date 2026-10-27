@@ -81,7 +81,7 @@ const PaymentsPage = () => {
           ),
       )
       .sort((a, b) =>
-        // Les soldes attendus d'abord, du plus urgent au plus lointain
+        // Les paiements attendus d'abord, du plus urgent au plus lointain
         a.statut !== b.statut
           ? a.statut === "brouillon"
             ? -1
@@ -112,7 +112,7 @@ const PaymentsPage = () => {
     <>
       <PageHeader
         title="Paiements"
-        description="Encaissements et soldes attendus (brouillons)"
+        description="Encaissements, soldes et versements attendus (brouillons)"
       >
         <Button
           variant="default"

@@ -68,6 +68,10 @@ const DashboardPage = () => {
             (sum, d) => sum + Number(d.montant_paiement),
             0,
           );
+          const toConfirm = data.pending_bookings.reduce(
+            (sum, b) => sum + Number(b.prix_total),
+            0,
+          );
 
           return (
             <Stack gap="lg">
@@ -84,7 +88,7 @@ const DashboardPage = () => {
                   icon={IconCash}
                 />
                 <StatCard
-                  label="Soldes attendus"
+                  label="Paiements attendus"
                   value={money(expected)}
                   hint={
                     overdue.length
@@ -112,7 +116,16 @@ const DashboardPage = () => {
                 <Section
                   title="Réservations à valider"
                   action={
-                    <Badge color="yellow">{data.pending_bookings.length}</Badge>
+                    <Group gap="xs">
+                      {toConfirm > 0 && (
+                        <Text size="sm" c="dimmed">
+                          {money(toConfirm)} à confirmer
+                        </Text>
+                      )}
+                      <Badge color="yellow">
+                        {data.pending_bookings.length}
+                      </Badge>
+                    </Group>
                   }
                 >
                   {data.pending_bookings.length === 0 ? (
@@ -122,13 +135,16 @@ const DashboardPage = () => {
                       {data.pending_bookings.map((b) => (
                         <Group key={b.id} justify="space-between" wrap="nowrap">
                           <div>
-                            <Anchor
-                              component={Link}
-                              to={`/reservations?id=${b.id}`}
-                              fw={600}
-                            >
-                              {b.nom_client || "Sans client"}
-                            </Anchor>
+                            <Group gap="xs" wrap="nowrap">
+                              <Anchor
+                                component={Link}
+                                to={`/reservations?id=${b.id}`}
+                                fw={600}
+                              >
+                                {b.nom_client || "Sans client"}
+                              </Anchor>
+                              <TypeBadge type={b.type} />
+                            </Group>
                             <Text size="xs" c="dimmed">
                               {shortDate(b.date_arrivee)} →{" "}
                               {shortDate(b.date_depart)} ·{" "}
@@ -147,7 +163,7 @@ const DashboardPage = () => {
                 </Section>
 
                 <Section
-                  title="Soldes attendus"
+                  title="Paiements attendus"
                   action={
                     <Anchor
                       component={Link}

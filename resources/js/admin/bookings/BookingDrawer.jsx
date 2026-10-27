@@ -194,6 +194,7 @@ const BookingDrawer = ({ bookingId, listItem, onClose }) => {
                                     confirmDraft({
                                       ...p,
                                       nom_client: summary.nom_client,
+                                      type_reservation: booking.type,
                                     })
                                   }
                                 >

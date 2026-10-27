@@ -104,6 +104,7 @@ class BookingController extends Controller
             (float) $request->input('deposit'),
             $request->input('date'),
             $request->input('type'),
+            $request->input('dueDate'),
         );
 
         return response()->json(['success' => true]);
@@ -123,13 +124,11 @@ class BookingController extends Controller
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Montant à demander au client à la validation (acompte ou totalité si l'arrivée est proche).
-     */
     private function appendPaymentTerms(Booking $booking): void
     {
-        $booking->setAttribute('acompte_attendu', $this->bookings->amountDueAtBooking($booking));
-        $booking->setAttribute('paiement_total_requis', $this->bookings->requiresFullPayment($booking));
+        foreach ($this->bookings->paymentTerms($booking) as $key => $value) {
+            $booking->setAttribute($key, $value);
+        }
         $booking->setAttribute('remboursable', $this->bookings->refundable($booking));
     }
 

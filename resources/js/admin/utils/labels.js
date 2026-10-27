@@ -11,6 +11,9 @@ export const BOOKING_TYPES = {
   Fermeture: { label: "Fermeture", color: "dark" },
 };
 
+// Booking et Airbnb versent le séjour après le départ du voyageur
+export const isPlatform = (type) => type === "Booking" || type === "AirBnb";
+
 export const PAYMENT_METHODS = [
   { value: "virement", label: "Virement" },
   { value: "espèces", label: "Espèces" },

@@ -267,6 +267,11 @@ const BookingsPage = () => {
                                 + {money(b.total_brouillon)} attendu
                               </Text>
                             )}
+                            {b.statut === "en attente" && (
+                              <Text size="xs" c="yellow.8">
+                                {money(b.prix_total)} à confirmer
+                              </Text>
+                            )}
                           </>
                         )}
                       </Table.Td>

@@ -25,7 +25,8 @@ class SendPaymentReminders extends Command
             ->with('clients')
             ->whereDate('date_arrivee', today()->addDays($days))
             ->where('statut', BookingStatus::Validated)
-            ->where('type', '<>', BookingType::Fermeture)
+            // Booking et Airbnb encaissent eux-mêmes le voyageur : rien à lui rappeler
+            ->where('type', BookingType::Classique)
             ->get();
 
         $sent = 0;

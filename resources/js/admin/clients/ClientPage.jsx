@@ -15,7 +15,9 @@ import {
 import {
   IconBed,
   IconCash,
+  IconClockHour4,
   IconEdit,
+  IconHourglass,
   IconMail,
   IconMapPin,
   IconPhone,
@@ -64,6 +66,14 @@ const ClientPage = () => {
         const sum = (list) =>
           list.reduce((total, p) => total + Number(p.montant_paiement), 0);
         const fullName = `${client.nom} ${client.prenom}`.trim();
+        // Une demande en attente peut ne jamais aboutir : elle n'est pas comptée dans « Attendu »
+        const pending = client.bookings.filter(
+          (b) => b.statut === "en attente",
+        );
+        const toConfirm = pending.reduce(
+          (total, b) => total + Number(b.prix_total),
+          0,
+        );
 
         return (
           <Stack gap="lg">
@@ -115,7 +125,7 @@ const ClientPage = () => {
                 </Card>
               </Grid.Col>
               <Grid.Col span={{ base: 12, md: 8 }}>
-                <SimpleGrid cols={{ base: 1, sm: 3 }}>
+                <SimpleGrid cols={{ base: 1, sm: 2 }}>
                   <StatCard
                     label="Séjours"
                     value={client.bookings.length}
@@ -124,13 +134,26 @@ const ClientPage = () => {
                   <StatCard
                     label="Encaissé"
                     value={money(sum(confirmed))}
+                    hint="Paiements reçus, remboursements déduits"
                     icon={IconCash}
                   />
                   <StatCard
                     label="Attendu"
                     value={money(sum(drafts))}
-                    icon={IconCash}
+                    hint="Soldes et versements des séjours validés"
+                    icon={IconClockHour4}
                     color="orange"
+                  />
+                  <StatCard
+                    label="À confirmer"
+                    value={money(toConfirm)}
+                    hint={
+                      pending.length
+                        ? `${pending.length} demande${pending.length > 1 ? "s" : ""} en attente de validation`
+                        : "Aucune demande en attente"
+                    }
+                    icon={IconHourglass}
+                    color="yellow"
                   />
                 </SimpleGrid>
               </Grid.Col>
@@ -228,7 +251,13 @@ const ClientPage = () => {
                                 size="compact-xs"
                                 variant="light"
                                 onClick={() =>
-                                  confirmDraft({ ...p, nom_client: fullName })
+                                  confirmDraft({
+                                    ...p,
+                                    nom_client: fullName,
+                                    type_reservation: client.bookings.find(
+                                      (b) => b.id === p.id_reservation,
+                                    )?.type,
+                                  })
                                 }
                               >
                                 Encaisser

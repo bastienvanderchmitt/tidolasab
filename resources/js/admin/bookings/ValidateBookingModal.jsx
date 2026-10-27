@@ -11,27 +11,35 @@ import { DatePickerInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { bookingApi, useApiMutation } from "../api/queries";
-import { PAYMENT_METHODS } from "../utils/labels";
+import { BOOKING_TYPES, PAYMENT_METHODS, isPlatform } from "../utils/labels";
 import { isoDate, money, nights, shortDate } from "../utils/format";
 
 /**
  * Valide une réservation en enregistrant le premier paiement reçu.
- * Pour une réservation directe, le reste devient automatiquement un paiement brouillon.
+ * Le reste devient automatiquement un paiement brouillon : solde d'une réservation
+ * directe, ou versement attendu de la plateforme.
  */
 const ValidateBookingModal = ({ booking, onDone }) => {
   const mutation = useApiMutation(bookingApi.validate, "Réservation validée");
   const total = Number(booking.prix_total);
   const isDirect = booking.type === "Classique";
+  const platform = isPlatform(booking.type)
+    ? BOOKING_TYPES[booking.type].label
+    : null;
 
   const form = useForm({
     initialValues: {
-      deposit: Number(booking.acompte_attendu ?? total),
+      // La plateforme verse le séjour après le départ : rien n'est encore reçu
+      deposit: platform ? 0 : Number(booking.acompte_attendu ?? total),
       date: isoDate(new Date()),
       type: "virement",
+      dueDate: booking.versement_prevu ?? null,
     },
     validate: {
       deposit: (v) => (v >= 0 ? null : "Montant invalide"),
       date: (v) => (v ? null : "Indiquez la date du paiement"),
+      dueDate: (v) =>
+        platform && !v ? "Indiquez la date du versement attendu" : null,
     },
   });
 
@@ -40,8 +48,13 @@ const ValidateBookingModal = ({ booking, onDone }) => {
     Math.round((total - Number(form.values.deposit || 0)) * 100) / 100,
   );
 
-  const submit = form.onSubmit((values) =>
-    mutation.mutate({ id: booking.id, ...values }, { onSuccess: onDone }),
+  const received = Number(form.values.deposit || 0) > 0;
+
+  const submit = form.onSubmit(({ dueDate, ...values }) =>
+    mutation.mutate(
+      { id: booking.id, ...values, ...(platform ? { dueDate } : {}) },
+      { onSuccess: onDone },
+    ),
   );
 
   return (
@@ -61,7 +74,12 @@ const ValidateBookingModal = ({ booking, onDone }) => {
         )}
 
         <NumberInput
-          label="Montant reçu"
+          label={platform ? `Déjà versé par ${platform}` : "Montant reçu"}
+          description={
+            platform
+              ? "Laissez 0 si le versement n'a pas encore eu lieu"
+              : undefined
+          }
           suffix=" €"
           decimalScale={2}
           min={0}
@@ -69,20 +87,37 @@ const ValidateBookingModal = ({ booking, onDone }) => {
           decimalSeparator=","
           {...form.getInputProps("deposit")}
         />
-        <Group grow>
-          <DatePickerInput
-            label="Date du paiement"
-            valueFormat="D MMM YYYY"
-            {...form.getInputProps("date")}
-          />
-          <Select
-            label="Moyen de paiement"
-            data={PAYMENT_METHODS}
-            allowDeselect={false}
-            {...form.getInputProps("type")}
-          />
-        </Group>
+        {received && (
+          <Group grow>
+            <DatePickerInput
+              label="Date du paiement"
+              valueFormat="D MMM YYYY"
+              {...form.getInputProps("date")}
+            />
+            <Select
+              label="Moyen de paiement"
+              data={PAYMENT_METHODS}
+              allowDeselect={false}
+              {...form.getInputProps("type")}
+            />
+          </Group>
+        )}
 
+        {platform && !received && (
+          <>
+            <DatePickerInput
+              label="Versement attendu le"
+              description="Délai après le départ réglable dans Réglages"
+              valueFormat="D MMM YYYY"
+              {...form.getInputProps("dueDate")}
+            />
+            <Text size="sm" c="dimmed">
+              Le versement de <strong>{money(remaining)}</strong> sera créé en
+              paiement attendu : encaissez-le à réception, au montant réellement
+              versé.
+            </Text>
+          </>
+        )}
         {isDirect && remaining > 0 && (
           <Text size="sm" c="dimmed">
             Le solde de <strong>{money(remaining)}</strong> sera créé en

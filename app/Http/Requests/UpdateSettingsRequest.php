@@ -24,6 +24,9 @@ class UpdateSettingsRequest extends FormRequest
             'minimum_stay_periods.*.nights' => ['required', 'integer', 'min:1', 'max:60'],
             'deposit_percent' => ['required', 'integer', 'between:0,100'],
             'balance_due_days' => ['required', 'integer', 'between:0,90'],
+            'payout_days' => ['required', 'array:AirBnb,Booking'],
+            'payout_days.AirBnb' => ['required', 'integer', 'between:0,60'],
+            'payout_days.Booking' => ['required', 'integer', 'between:0,60'],
         ];
     }
 
@@ -59,6 +62,10 @@ class UpdateSettingsRequest extends FormRequest
                 ->all(),
             'deposit_percent' => (int) $data['deposit_percent'],
             'balance_due_days' => (int) $data['balance_due_days'],
+            'payout_days' => [
+                'AirBnb' => (int) $data['payout_days']['AirBnb'],
+                'Booking' => (int) $data['payout_days']['Booking'],
+            ],
         ];
     }
 }
