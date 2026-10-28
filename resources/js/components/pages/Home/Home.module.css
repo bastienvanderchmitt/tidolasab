@@ -12,28 +12,32 @@ section.preview {
   position: relative;
 }
 
-/* Première photo alignée sur le contenu des Container « lg » (1140px, marges md) */
+/* Bandeau calé sur la largeur du contenu, comme les autres sections */
 .strip {
-  --edge: max(
-    var(--mantine-spacing-md),
-    calc((100% - 1140px) / 2 + var(--mantine-spacing-md))
-  );
+  position: relative;
   display: flex;
   gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 8px var(--edge) 16px;
-  scroll-padding-inline: var(--edge);
+  padding: 8px 0 16px;
   scrollbar-width: none;
+  outline: none;
 }
 
 .strip::-webkit-scrollbar {
   display: none;
 }
 
+.strip:focus-visible {
+  outline: 2px solid var(--mantine-color-lagon-5);
+  outline-offset: 4px;
+  border-radius: var(--mantine-radius-lg);
+}
+
+/* Trois photos visibles en desktop, deux en tablette */
 .strip img {
   flex: 0 0 auto;
-  width: min(78vw, 420px);
+  width: calc((100% - 32px) / 3);
   aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: var(--mantine-radius-lg);
@@ -46,14 +50,64 @@ section.preview {
   /* Centrage sans transform : Mantine l'utilise pour l'effet d'appui des boutons */
   top: calc(50% - 22px);
   box-shadow: var(--tds-shadow);
+  transition: opacity 0.2s ease;
+}
+
+/* Bouton inutile en début ou fin de course : masqué plutôt que grisé */
+.prev:disabled,
+.next:disabled {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .prev {
-  left: max(8px, calc((100% - 1140px) / 2 - 24px));
+  left: calc(var(--mantine-spacing-md) + 12px);
 }
 
 .next {
-  right: max(8px, calc((100% - 1140px) / 2 - 24px));
+  right: calc(var(--mantine-spacing-md) + 12px);
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mantine-color-lagon-2);
+  cursor: pointer;
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.dot[data-active] {
+  width: 24px;
+  background: var(--mantine-color-lagon-7);
+}
+
+@media (max-width: 62em) {
+  .strip img {
+    width: calc((100% - 16px) / 2);
+  }
+}
+
+@media (max-width: 48em) {
+  .strip img {
+    width: 78%;
+  }
+
+  .prev,
+  .next {
+    display: none;
+  }
 }
 
 .caption {

@@ -27,21 +27,19 @@
 .caption {
   position: absolute;
   left: 20px;
-  bottom: 40px;
+  bottom: 20px;
   font-size: 1.6rem;
   color: white;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   pointer-events: none;
 }
 
+/* Sous la photo, comme le bandeau de l'accueil */
 .dots {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 14px;
   display: flex;
   justify-content: center;
   gap: 8px;
+  margin-top: 16px;
 }
 
 .dot {
@@ -50,7 +48,7 @@
   padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--mantine-color-lagon-2);
   cursor: pointer;
   transition:
     width 0.25s ease,
@@ -59,5 +57,5 @@
 
 .dot[data-active] {
   width: 24px;
-  background: white;
+  background: var(--mantine-color-lagon-7);
 }

@@ -99,6 +99,10 @@ const Room = () => {
       </SimpleGrid>
 
       <div className={classes.block}>
+        <PhotoGallery photos={photos} mosaic />
+      </div>
+
+      <div className={classes.block}>
         <p className={`${classes.handTitle} handwritten`}>{t("room.beaches")}</p>
         <Group gap="xs">
           {beaches.map((beach) => (
@@ -119,10 +123,6 @@ const Room = () => {
             </div>
           ))}
         </SimpleGrid>
-      </div>
-
-      <div className={classes.block}>
-        <PhotoGallery photos={photos} mosaic />
       </div>
     </Container>
   );

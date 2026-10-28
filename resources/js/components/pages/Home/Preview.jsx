@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ActionIcon, Container } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
@@ -14,23 +14,60 @@ const photos = import.meta.glob("../../../assets/img/caroussel/*.webp", {
 const Preview = () => {
   const { t } = useTranslation();
   const stripRef = useRef(null);
+  const [current, setCurrent] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+  const list = Object.values(photos);
 
-  // Défile d'une photo, la molette verticale ne faisant pas défiler en largeur
-  const slide = (direction) => {
+  // Positions de défilement qui alignent chaque photo sur la marge gauche
+  const starts = () => {
     const strip = stripRef.current;
-    if (!strip) return;
-    const edge = parseFloat(getComputedStyle(strip).paddingLeft);
-    const starts = [...strip.querySelectorAll("img")].map(
-      (photo) => photo.offsetLeft - strip.offsetLeft - edge,
+    const edge = parseFloat(getComputedStyle(strip).scrollPaddingLeft) || 0;
+    return [...strip.querySelectorAll("img")].map(
+      (photo) => photo.offsetLeft - edge,
     );
-    // Photo actuellement alignée à gauche, puis la suivante ou la précédente
-    const current = starts.findIndex((start) => start >= strip.scrollLeft - 2);
-    const target = Math.min(
-      Math.max(current + direction, 0),
-      starts.length - 1,
-    );
-    strip.scrollTo({ left: starts[target], behavior: "smooth" });
   };
+
+  const onScroll = () => {
+    const strip = stripRef.current;
+    const max = strip.scrollWidth - strip.clientWidth;
+    setAtStart(strip.scrollLeft <= 2);
+    setAtEnd(strip.scrollLeft >= max - 2);
+    // En fin de course, la dernière photo est considérée comme active
+    const positions = starts();
+    const index =
+      strip.scrollLeft >= max - 2
+        ? positions.length - 1
+        : positions.reduce(
+            (best, start, i) =>
+              Math.abs(start - strip.scrollLeft) <
+              Math.abs(positions[best] - strip.scrollLeft)
+                ? i
+                : best,
+            0,
+          );
+    setCurrent(index);
+  };
+
+  const goTo = (index) => {
+    const positions = starts();
+    const target = Math.min(Math.max(index, 0), positions.length - 1);
+    stripRef.current.scrollTo({ left: positions[target], behavior: "smooth" });
+  };
+
+  // Les flèches du clavier passent d'une photo à l'autre
+  const onKeyDown = (event) => {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      goTo(current + (event.key === "ArrowRight" ? 1 : -1));
+    }
+  };
+
+  useEffect(() => {
+    onScroll();
+    window.addEventListener("resize", onScroll);
+    return () => window.removeEventListener("resize", onScroll);
+  }, []);
 
   return (
     <section className={`section ${classes.preview}`}>
@@ -45,16 +82,24 @@ const Preview = () => {
         </SectionTitle>
       </Container>
 
-      <div className={classes.slider}>
+      <Container size="lg" className={classes.slider}>
         {/* Défilement horizontal natif, aimanté sur chaque photo */}
-        <div ref={stripRef} className={classes.strip}>
-          {Object.values(photos).map((photo) => (
+        <div
+          ref={stripRef}
+          className={classes.strip}
+          onScroll={onScroll}
+          onKeyDown={onKeyDown}
+          tabIndex={0}
+          aria-label={t("preview.title")}
+        >
+          {list.map((photo) => (
             <img key={photo} src={photo} alt="" loading="lazy" />
           ))}
         </div>
         <ActionIcon
           className={classes.prev}
-          onClick={() => slide(-1)}
+          onClick={() => goTo(current - 1)}
+          disabled={atStart}
           variant="white"
           radius="xl"
           size="xl"
@@ -64,7 +109,8 @@ const Preview = () => {
         </ActionIcon>
         <ActionIcon
           className={classes.next}
-          onClick={() => slide(1)}
+          onClick={() => goTo(current + 1)}
+          disabled={atEnd}
           variant="white"
           radius="xl"
           size="xl"
@@ -72,6 +118,19 @@ const Preview = () => {
         >
           <IconChevronRight />
         </ActionIcon>
+      </Container>
+
+      <div className={classes.dots}>
+        {list.map((photo, index) => (
+          <button
+            key={photo}
+            type="button"
+            className={classes.dot}
+            data-active={index === current || undefined}
+            onClick={() => goTo(index)}
+            aria-label={`Photo ${index + 1}`}
+          />
+        ))}
       </div>
 
       <Container size="lg">

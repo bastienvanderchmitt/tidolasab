@@ -20,15 +20,17 @@ const PhotoSlider = ({ photos, caption }) => {
   };
 
   return (
-    <div className={classes.slider}>
-      <div ref={trackRef} className={classes.track} onScroll={onScroll}>
-        {photos.map((photo) => (
-          <img key={photo} src={photo} alt="" loading="lazy" />
-        ))}
+    <div>
+      <div className={classes.slider}>
+        <div ref={trackRef} className={classes.track} onScroll={onScroll}>
+          {photos.map((photo) => (
+            <img key={photo} src={photo} alt="" loading="lazy" />
+          ))}
+        </div>
+        {caption && (
+          <span className={`${classes.caption} handwritten`}>{caption}</span>
+        )}
       </div>
-      {caption && (
-        <span className={`${classes.caption} handwritten`}>{caption}</span>
-      )}
       <div className={classes.dots}>
         {photos.map((photo, index) => (
           <button
