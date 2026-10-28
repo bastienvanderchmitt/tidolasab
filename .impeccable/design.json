@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-28T21:21:01.820329+00:00",
+  "title": "Design System: Ti' Dola Sab",
+  "extensions": {
+    "colorMeta": {
+      "lagon": {
+        "role": "primary",
+        "displayName": "Turquoise lagon",
+        "tonalRamp": [
+          "#00666d",
+          "#00747c",
+          "#00838c",
+          "#1ebbc3",
+          "#49c7ce",
+          "#70d4d9",
+          "#a2e3e7",
+          "#e1fbfc"
+        ]
+      },
+      "lagon-deep": {
+        "role": "primary",
+        "displayName": "Lagon profond",
+        "tonalRamp": [
+          "#00666d",
+          "#00747c",
+          "#00838c",
+          "#1ebbc3",
+          "#49c7ce",
+          "#70d4d9",
+          "#a2e3e7",
+          "#e1fbfc"
+        ]
+      },
+      "lagon-mist": {
+        "role": "primary",
+        "displayName": "Brume de lagon",
+        "tonalRamp": [
+          "#00666d",
+          "#00747c",
+          "#00838c",
+          "#1ebbc3",
+          "#49c7ce",
+          "#70d4d9",
+          "#a2e3e7",
+          "#e1fbfc"
+        ]
+      },
+      "lagon-pale": {
+        "role": "primary",
+        "displayName": "Lagon pâle",
+        "tonalRamp": [
+          "#00666d",
+          "#00747c",
+          "#00838c",
+          "#1ebbc3",
+          "#49c7ce",
+          "#70d4d9",
+          "#a2e3e7",
+          "#e1fbfc"
+        ]
+      },
+      "sable": {
+        "role": "secondary",
+        "displayName": "Sable",
+        "tonalRamp": [
+          "#6b5339",
+          "#86694a",
+          "#a1835b",
+          "#b99d75",
+          "#d6bc98",
+          "#e3cfb4",
+          "#ebdfcb",
+          "#fbf8f3"
+        ]
+      },
+      "sable-dore": {
+        "role": "secondary",
+        "displayName": "Sable doré",
+        "tonalRamp": [
+          "#6b5339",
+          "#86694a",
+          "#a1835b",
+          "#b99d75",
+          "#d6bc98",
+          "#e3cfb4",
+          "#ebdfcb",
+          "#fbf8f3"
+        ]
+      },
+      "creme": {
+        "role": "neutral",
+        "displayName": "Crème",
+        "tonalRamp": [
+          "#5c5240",
+          "#857760",
+          "#ab9d85",
+          "#cfc2ab",
+          "#e6dccb",
+          "#f3ece0",
+          "#f8f3ea",
+          "#fbf8f3"
+        ]
+      },
+      "creme-tinted": {
+        "role": "neutral",
+        "displayName": "Crème teintée",
+        "tonalRamp": [
+          "#5c5240",
+          "#857760",
+          "#ab9d85",
+          "#cfc2ab",
+          "#e6dccb",
+          "#f3ece0",
+          "#f8f3ea",
+          "#fbf8f3"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Blanc",
+        "tonalRamp": [
+          "#5c5240",
+          "#857760",
+          "#ab9d85",
+          "#cfc2ab",
+          "#e6dccb",
+          "#f3ece0",
+          "#f8f3ea",
+          "#fbf8f3"
+        ]
+      },
+      "encre": {
+        "role": "neutral",
+        "displayName": "Encre",
+        "tonalRamp": [
+          "#141d23",
+          "#22303a",
+          "#34444f",
+          "#4a5a65",
+          "#5d6b73",
+          "#8a969d",
+          "#c3cacf",
+          "#eef1f3"
+        ]
+      },
+      "ardoise": {
+        "role": "neutral",
+        "displayName": "Ardoise",
+        "tonalRamp": [
+          "#141d23",
+          "#22303a",
+          "#34444f",
+          "#4a5a65",
+          "#5d6b73",
+          "#8a969d",
+          "#c3cacf",
+          "#eef1f3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titre du grand hero de l'accueil."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titres de section."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Titres de cartes et de blocs."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texte courant."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Introductions sous les titres de section."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Sur-titres en capitales espacées."
+      },
+      "handwritten": {
+        "displayName": "Manuscrit",
+        "purpose": "Accroches et légendes personnelles."
+      }
+    },
+    "shadows": [
+      {
+        "name": "flottante",
+        "value": "0 18px 50px -20px rgba(34, 48, 58, 0.28)",
+        "purpose": "Cartes, barre de réservation, sliders, flèches."
+      },
+      {
+        "name": "en-tete",
+        "value": "0 6px 24px -12px rgba(34, 48, 58, 0.25)",
+        "purpose": "En-tête opaque au défilement."
+      }
+    ],
+    "motion": [
+      {
+        "name": "souligne-nav",
+        "value": "transform 0.25s ease",
+        "purpose": "Déploiement du souligné sable de la navigation."
+      },
+      {
+        "name": "zoom-photo",
+        "value": "transform 0.7s ease",
+        "purpose": "Léger zoom (1.04) des photos au survol."
+      },
+      {
+        "name": "apparition-hero",
+        "value": "rise 0.9s ease",
+        "purpose": "Montée en fondu du texte du hero, désactivée si prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "48em"
+      },
+      {
+        "name": "md",
+        "value": "62em"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Appel à l'action en pilule lagon, ex. « Réserver ».",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/><path d=\"M16 3v4M8 3v4M4 11h16\"/></svg><span>Réserver</span></button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 22px;border:0;border-radius:32px;background:#00838c;color:#fff;font-family:Jost,sans-serif;font-size:16px;cursor:pointer;transition:background-color .2s ease,transform .1s ease}.ds-btn-primary:hover{background:#00747c}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid #00838c;outline-offset:2px}"
+    },
+    {
+      "name": "Flèche sur photo",
+      "kind": "button",
+      "refersTo": "button-white",
+      "description": "Bouton rond blanc posé sur les photos des sliders.",
+      "html": "<div class=\"ds-arrows\"><button class=\"ds-btn-round\" aria-label=\"Photo précédente\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 6l-6 6l6 6\"/></svg></button><button class=\"ds-btn-round\" aria-label=\"Photo suivante\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 6l6 6l-6 6\"/></svg></button></div>",
+      "css": ".ds-arrows{display:flex;gap:12px}.ds-btn-round{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:999px;background:#fff;color:#00838c;box-shadow:0 18px 50px -20px rgba(34,48,58,.28);cursor:pointer;transition:background-color .2s ease}.ds-btn-round:hover{background:#f8f9fa}.ds-btn-round:focus-visible{outline:2px solid #00838c;outline-offset:2px}"
+    },
+    {
+      "name": "Champ de saisie",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Champ de formulaire Mantine taille md.",
+      "html": "<label class=\"ds-field\"><span>Email</span><input class=\"ds-input\" placeholder=\"vous@exemple.fr\"></label>",
+      "css": ".ds-field{display:grid;gap:4px;font-family:Jost,sans-serif;font-size:14px;color:#22303a}.ds-input{height:42px;padding:0 14px;border:1px solid #ced4da;border-radius:8px;background:#fff;font:inherit;font-size:16px;color:#22303a}.ds-input:focus-visible{outline:none;border-color:#00838c}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Liens de l'en-tête avec souligné sable au survol et sur la page active.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-link ds-active\" href=\"#\">Accueil</a><a class=\"ds-link\" href=\"#\">Histoire</a><a class=\"ds-link\" href=\"#\">Activités</a><a class=\"ds-link\" href=\"#\">Photos</a></nav>",
+      "css": ".ds-nav{display:flex;gap:28px;padding:20px 24px;background:rgba(251,248,243,.88);font-family:Jost,sans-serif}.ds-link{position:relative;padding:6px 0;color:#22303a;text-decoration:none;letter-spacing:.04em;opacity:.88;transition:opacity .2s ease}.ds-link::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:#e3cfb4;transform:scaleX(0);transition:transform .25s ease}.ds-link:hover,.ds-active{opacity:1}.ds-link:hover::after,.ds-active::after{transform:scaleX(1)}.ds-link:focus-visible{outline:2px solid #00838c;outline-offset:4px}"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Pastille claire pour les plages et équipements.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-chip\">Anse Canot</span><span class=\"ds-chip\">Folle Anse</span><span class=\"ds-chip\">Vieux Fort</span></div>",
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px}.ds-chip{padding:6px 14px;border-radius:32px;background:#e1fbfc;color:#00747c;font-family:Jost,sans-serif;font-size:14px;font-weight:600}"
+    },
+    {
+      "name": "Carte d'avis",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Témoignage client réel, carte blanche arrondie.",
+      "html": "<figure class=\"ds-card\"><blockquote>Une expérience inoubliable, nous y reviendrons c’est certain.</blockquote><figcaption><span>FABIENNE – BOOKING</span><span class=\"ds-stars\">★★★★★</span></figcaption></figure>",
+      "css": ".ds-card{margin:0;max-width:340px;padding:28px;display:grid;gap:16px;border-radius:16px;background:#fff;color:#22303a;box-shadow:0 18px 50px -20px rgba(34,48,58,.28);font-family:Jost,sans-serif}.ds-card blockquote{margin:0;line-height:1.7}.ds-card figcaption{display:flex;justify-content:space-between;font-weight:500;font-size:14px}.ds-stars{color:#b99d75;letter-spacing:2px}"
+    },
+    {
+      "name": "Titre de section",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Sur-titre en capitales lagon profond, titre Marcellus, texte d'introduction ardoise.",
+      "html": "<header class=\"ds-section-title\"><p class=\"ds-eyebrow\">Bienvenue à Ti' Dola Sab</p><h2>Au cœur des Caraïbes</h2><p class=\"ds-lead\">Venez prendre le temps de découvrir les charmes authentiques de Marie-Galante.</p></header>",
+      "css": ".ds-section-title{max-width:760px;text-align:center;background:#fbf8f3;padding:24px}.ds-eyebrow{margin:0 0 10px;font-family:Jost,sans-serif;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:#00747c}.ds-section-title h2{margin:0;font-family:Marcellus,Georgia,serif;font-weight:400;font-size:2.4rem;line-height:1.15;color:#22303a}.ds-lead{margin:18px 0 0;font-family:Jost,sans-serif;font-size:1.08rem;line-height:1.75;color:#5d6b73}"
+    },
+    {
+      "name": "Pagination de slider",
+      "kind": "custom",
+      "refersTo": "dot-active",
+      "description": "Points sous les photos ; le point actif s'allonge.",
+      "html": "<div class=\"ds-dots\"><button class=\"ds-dot\" aria-label=\"Photo 1\"></button><button class=\"ds-dot ds-dot-on\" aria-label=\"Photo 2\"></button><button class=\"ds-dot\" aria-label=\"Photo 3\"></button><button class=\"ds-dot\" aria-label=\"Photo 4\"></button></div>",
+      "css": ".ds-dots{display:flex;justify-content:center;gap:8px}.ds-dot{width:9px;height:9px;padding:0;border:0;border-radius:999px;background:#a2e3e7;cursor:pointer;transition:width .25s ease,background-color .25s ease}.ds-dot:hover{background:#70d4d9}.ds-dot-on{width:24px;background:#00838c}.ds-dot:focus-visible{outline:2px solid #00838c;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Lagon et sable",
+    "overview": "Le site doit donner l'impression qu'on a les pieds dans l'eau au bord de l'Anse Canot : clair, apaisé, aéré. Une base crème chaude, des touches de turquoise du lagon pour ce qui se clique, du sable doré pour les petits détails précieux (étoiles, soulignés, sur-titres du pied de page). Rien ne crie, tout respire : de grands espaces entre les sections, des photos généreuses qui portent l'émotion, du texte court.\n\nLa personnalité vient de trois voix typographiques : un serif d'inspiration antique (Marcellus) pour les titres, un sans-serif géométrique doux (Jost) pour le texte, et une écriture manuscrite (La Belle Aurore) pour les accroches personnelles, comme un mot laissé par les propriétaires. Les formes sont rondes et accueillantes, les ombres longues et diffuses.\n\nCe qu'on refuse : le cliché tropical criard. Pas de couleurs saturées, pas de motifs de palmiers en papier peint, pas de polices fantaisie. Le tropique vient des photos, pas de la décoration.",
+    "keyCharacteristics": [
+      "Base crème chaude, jamais de blanc pur en fond de page",
+      "Turquoise réservé à l'action et à la navigation",
+      "Sable doré en accent rare",
+      "Trois voix typographiques aux rôles stricts",
+      "Coins arrondis partout, boutons en pilule",
+      "Une seule ombre, longue et diffuse",
+      "Photos réelles du gîte et de l'île, grandes et arrondies"
+    ],
+    "rules": [
+      {
+        "name": "The Lagoon Means Action Rule",
+        "body": "Le turquoise signale ce qui se clique ou ce qui est actif. Il ne sert pas de fond de section ni de décoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sand Is Rare Rule",
+        "body": "Le sable n'apparaît qu'en petites touches (étoiles, soulignés, sur-titres sur fond sombre). Jamais en grande surface, jamais pour un texte courant sur fond clair.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Voices Rule",
+        "body": "Marcellus pour les titres, Jost pour tout le reste, La Belle Aurore pour une phrase personnelle par bloc au plus. Jamais de manuscrit pour un texte informatif (prix, règles, formulaires).",
+        "section": "typography"
+      },
+      {
+        "name": "The Uppercase Is A Whisper Rule",
+        "body": "Les capitales sont réservées aux petits sur-titres très espacés. Pas de titre ni de bouton en capitales.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Shadow Rule",
+        "body": "Une seule ombre pour tout ce qui flotte, toujours teintée de l'encre, jamais grise ni noire. Pas d'empilement d'ombres.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No Sharp Corner Rule",
+        "body": "Rien d'anguleux sur le site public : une photo, une carte ou un bouton a toujours ses coins arrondis.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do garder le fond de page en crème (`--tds-cream`) et réserver le blanc aux cartes et aux sections à détacher.",
+      "Do utiliser l'ombre flottante (`--tds-shadow`) pour tout élément qui flotte, et rien d'autre.",
+      "Do mettre un sur-titre en petites capitales lagon profond au-dessus des titres de section, avec `SectionTitle`.",
+      "Do utiliser les vraies photos du gîte et de l'île en grand, coins de 16px.",
+      "Do placer la pagination des sliders sous les photos, en points lagon.",
+      "Do respecter `prefers-reduced-motion` pour toute animation d'entrée, le défilement doux (`helpers/motion.js`) et les zooms au survol.",
+      "Do servir les photos avec `responsive()` (`helpers/responsiveImage.js`) et un `sizes` qui décrit leur largeur affichée.",
+      "Do donner aux points de pagination une zone cliquable de 24px autour du point visible de 9px."
+    ],
+    "donts": [
+      "Don't tomber dans le cliché tropical criard : pas de couleurs saturées, pas de motifs de palmiers répétés, pas de police fantaisie.",
+      "Don't utiliser le turquoise en grand fond de section ni le sable pour du texte courant sur fond clair.",
+      "Don't utiliser l'écriture manuscrite pour un prix, une règle ou un formulaire.",
+      "Don't faire des coins droits ni des bordures décoratives.",
+      "Don't descendre sous la nuance 7 de la rampe lagon pour un texte ou un fond de texte blanc : les nuances 7 à 9 ont été foncées pour atteindre 4.5:1 (blanc sur lagon 4.5:1, lagon profond sur crème 5.2:1), au plus clair possible pour garder un turquoise vif. Les nuances 0 à 6 servent aux fonds, points et pastilles.",
+      "Don't utiliser le gris de Mantine (`gray.5`, `gray.6`) pour du texte : prendre l'ardoise."
+    ]
+  }
+}
