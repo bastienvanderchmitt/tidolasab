@@ -106,7 +106,7 @@ const Room = () => {
         <p className={`${classes.handTitle} handwritten`}>{t("room.beaches")}</p>
         <Group gap="xs">
           {beaches.map((beach) => (
-            <Badge key={beach} size="lg" variant="light" color="lagon" radius="xl" tt="none">
+            <Badge key={beach} size="lg" variant="light" color="lagon" c="lagon.8" radius="xl" tt="none">
               {beach}
             </Badge>
           ))}

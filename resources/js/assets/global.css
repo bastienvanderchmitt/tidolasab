@@ -16,12 +16,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Comic Relief";
-  src: url("./fonts/ComicRelief-Regular.ttf");
-  font-display: swap;
-}
-
 :root {
   --tds-cream: #fbf8f3;
   --tds-sand: #e3cfb4;
@@ -34,6 +28,12 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {

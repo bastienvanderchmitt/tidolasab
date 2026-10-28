@@ -4,6 +4,8 @@ import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import palm_tree from "../../../assets/img/icons/palm_tree.png";
 import SectionTitle from "../../common/SectionTitle";
+import { small } from "../../../helpers/responsiveImage";
+import { scrollBehavior } from "../../../helpers/motion";
 import classes from "./Home.module.css";
 
 const photos = import.meta.glob("../../../assets/img/caroussel/*.webp", {
@@ -17,6 +19,8 @@ const Preview = () => {
   const [current, setCurrent] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  // Photo visée par un défilement en cours : des clics rapides avancent d'autant
+  const pendingRef = useRef(null);
   const list = Object.values(photos);
 
   // Positions de défilement qui alignent chaque photo sur la marge gauche
@@ -33,8 +37,15 @@ const Preview = () => {
     const max = strip.scrollWidth - strip.clientWidth;
     setAtStart(strip.scrollLeft <= 2);
     setAtEnd(strip.scrollLeft >= max - 2);
-    // En fin de course, la dernière photo est considérée comme active
     const positions = starts();
+    const pending = pendingRef.current;
+    if (
+      pending !== null &&
+      Math.abs(strip.scrollLeft - Math.min(positions[pending], max)) <= 2
+    ) {
+      pendingRef.current = null;
+    }
+    // En fin de course, la dernière photo est considérée comme active
     const index =
       strip.scrollLeft >= max - 2
         ? positions.length - 1
@@ -52,14 +63,29 @@ const Preview = () => {
   const goTo = (index) => {
     const positions = starts();
     const target = Math.min(Math.max(index, 0), positions.length - 1);
-    stripRef.current.scrollTo({ left: positions[target], behavior: "smooth" });
+    pendingRef.current = target;
+    stripRef.current.scrollTo({ left: positions[target], behavior: scrollBehavior() });
+  };
+
+  // En fin de course, on repart de la dernière photo qui peut s'aligner à gauche
+  const step = (direction) => {
+    const strip = stripRef.current;
+    const max = strip.scrollWidth - strip.clientWidth;
+    const lastAligned = starts().filter((start) => start <= max + 2).length - 1;
+    const from = pendingRef.current ?? (atEnd ? lastAligned : current);
+    goTo(Math.min(from + direction, lastAligned + (direction > 0 ? 1 : 0)));
+  };
+
+  // Un glissement ou la molette reprend la main sur le défilement en cours
+  const cancelPending = () => {
+    pendingRef.current = null;
   };
 
   // Les flèches du clavier passent d'une photo à l'autre
   const onKeyDown = (event) => {
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
-      goTo(current + (event.key === "ArrowRight" ? 1 : -1));
+      step(event.key === "ArrowRight" ? 1 : -1);
     }
   };
 
@@ -89,32 +115,35 @@ const Preview = () => {
           className={classes.strip}
           onScroll={onScroll}
           onKeyDown={onKeyDown}
+          onPointerDown={cancelPending}
+          onWheel={cancelPending}
           tabIndex={0}
           aria-label={t("preview.title")}
         >
+          {/* 800 px suffisent : les photos du bandeau ne dépassent pas 360 px de large */}
           {list.map((photo) => (
-            <img key={photo} src={photo} alt="" loading="lazy" />
+            <img key={photo} src={small(photo)} alt="" loading="lazy" />
           ))}
         </div>
         <ActionIcon
           className={classes.prev}
-          onClick={() => goTo(current - 1)}
+          onClick={() => step(-1)}
           disabled={atStart}
           variant="white"
           radius="xl"
           size="xl"
-          aria-label="Photo précédente"
+          aria-label={t("a11y.previous_photo")}
         >
           <IconChevronLeft />
         </ActionIcon>
         <ActionIcon
           className={classes.next}
-          onClick={() => goTo(current + 1)}
+          onClick={() => step(1)}
           disabled={atEnd}
           variant="white"
           radius="xl"
           size="xl"
-          aria-label="Photo suivante"
+          aria-label={t("a11y.next_photo")}
         >
           <IconChevronRight />
         </ActionIcon>
@@ -128,7 +157,7 @@ const Preview = () => {
             className={classes.dot}
             data-active={index === current || undefined}
             onClick={() => goTo(index)}
-            aria-label={`Photo ${index + 1}`}
+            aria-label={t("a11y.photo", { number: index + 1 })}
           />
         ))}
       </div>

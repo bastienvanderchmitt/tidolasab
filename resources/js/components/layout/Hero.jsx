@@ -25,7 +25,11 @@ const Hero = ({ page }) => {
         {page.subtitle && <p className={classes.subtitle}>{t(page.subtitle)}</p>}
         <h1 className={classes.title}>{t(page.title)}</h1>
         {page.large && (
-          <div className={classes.stars} aria-label="4 étoiles">
+          <div
+            className={classes.stars}
+            role="img"
+            aria-label={t("a11y.stars", { count: 4 })}
+          >
             {[1, 2, 3, 4].map((star) => (
               <IconStarFilled key={star} size={16} />
             ))}

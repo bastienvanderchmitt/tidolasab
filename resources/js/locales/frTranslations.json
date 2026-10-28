@@ -29,7 +29,7 @@
       "description": "Des amoureaux de cette île, tout simplement."
     },
     "activities": {
-      "title": "Activitées locales",
+      "title": "Activités locales",
       "subtitle": "Que faire sur l'île"
     },
     "photos": {
@@ -53,21 +53,21 @@
     }
   },
   "preview": {
-    "welcome": "BIENVENUE A TI' DOLA SAB",
-    "title": "Dans l’une des plus authentiques et des plus belles îles de la Guadeloupe, au coeur des Caraïbes",
+    "welcome": "BIENVENUE À TI' DOLA SAB",
+    "title": "Dans l’une des plus authentiques et des plus belles îles de la Guadeloupe, au cœur des Caraïbes",
     "subtitle": "Venez prendre le temps de découvrir les charmes authentiques de Marie-Galante, ses habitants et la culture antillaise.",
-    "description": "L'authenticité de la vie aux Antilles, un charme pittoresque et d'innombrables plages de sable blanc.."
+    "description": "L'authenticité de la vie aux Antilles, un charme pittoresque et d'innombrables plages de sable blanc…"
   },
   "discover": {
     "title": "Découvrez l'île",
-    "description": "Découvrez « la galette » (surnom de l’île), ses plages de sable blanc aux eaux turquoises, sa faune aquatique, ses forets tropicales, sa mangrove, ses sentiers de randonnées, sa gastronomie, ses trois rhumeries, ses moulins...",
+    "description": "Découvrez « la galette » (surnom de l’île), ses plages de sable blanc aux eaux turquoises, sa faune aquatique, ses forêts tropicales, sa mangrove, ses sentiers de randonnées, sa gastronomie, ses trois rhumeries, ses moulins...",
     "see": "VOIR",
     "image_title": "Îlet de Vieux Fort"
   },
   "accommodation": {
     "title": "COMMENCEZ VOTRE SÉJOUR CONFORTABLEMENT",
     "subtitle": "Détente et dépaysement assurés dans un cadre naturel",
-    "subtitle_2": "Au coeur d'une verdure luxuriante, bienvenue à Marie-Galante.",
+    "subtitle_2": "Au cœur d'une verdure luxuriante, bienvenue à Marie-Galante.",
     "photo_link": "Vue depuis le jardin",
     "breadcrumb": "Jardin tropical / Calme & Reposant / Nature",
     "description": "Notre case Ti’ Dola Sab est une habitation indépendante toute en bois, de construction récente avec tout le confort nécessaire.",
@@ -210,8 +210,8 @@
   "history": {
     "title": "Découvrez la team",
     "subtitle": "Qui sommes-nous ?",
-    "description_1": "La découverte de Marie-Galante a été un véritable coup de coeur pour nous.",
-    "description_2": "Après de multiples allers et retours sur cette magnifique île qui nous a adoptée, nous avons décidé de ne plus en repartir et de nous y implanter définitivement.",
+    "description_1": "La découverte de Marie-Galante a été un véritable coup de cœur pour nous.",
+    "description_2": "Après de multiples allers et retours sur cette magnifique île qui nous a adoptés, nous avons décidé de ne plus en repartir et de nous y implanter définitivement.",
     "description_3": "Notre plus grand plaisir est de vous la partager.",
     "maintenance": "Entretien",
     "rhum": "Rhum",
@@ -221,8 +221,8 @@
   },
   "activities": {
     "title": "Partez à la découverte et ...",
-    "subtitle": "Ecrivez votre histoire",
-    "description": "En découvrant ses plages de sable blanc aux eaux turquoises, sa faune aquatique, ses forets tropicales, sa mangrove, ses sentiers de randonnées, sa gastronomie, ses trois rhumeries, ses moulins...",
+    "subtitle": "Écrivez votre histoire",
+    "description": "En découvrant ses plages de sable blanc aux eaux turquoises, sa faune aquatique, ses forêts tropicales, sa mangrove, ses sentiers de randonnées, sa gastronomie, ses trois rhumeries, ses moulins...",
     "sub_description": "Venez prendre le temps d'apprécier les charmes authentiques de Marie-Galante, ses habitants et sa culture antillaise.",
     "activity_1": {
       "title": "Plages",
@@ -241,7 +241,7 @@
     },
     "activity_4": {
       "title": "Îlet de Vieux Fort",
-      "description": "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels!",
+      "description": "Partez explorer la mangrove de Vieux Fort, sa plage mais aussi sa randonnée dans des paysages exceptionnels !",
       "location": "Vieux Fort"
     },
     "activity_5": {
@@ -347,5 +347,21 @@
     "resend_in": "Renvoyer le code ({{seconds}} s)",
     "edit_email": "Modifier mon email",
     "spam": "Rien reçu ? Pensez à vérifier vos courriers indésirables."
+  },
+  "a11y": {
+    "previous_photo": "Photo précédente",
+    "next_photo": "Photo suivante",
+    "photo": "Photo {{number}}",
+    "enlarge_photo": "Agrandir la photo {{number}}",
+    "stars": "{{count}} étoiles",
+    "menu": "Menu",
+    "remove_adult": "Retirer un adulte",
+    "add_adult": "Ajouter un adulte"
+  },
+  "error": {
+    "title": "Oups",
+    "not_found": "Oups ! Cette page s'est envolée vers les Caraïbes",
+    "unexpected": "Une erreur inattendue est survenue, nous en avons été informés.",
+    "home": "Retour à l'accueil"
   }
 }

@@ -17,10 +17,12 @@
   position: absolute;
   inset: 0;
   z-index: -1;
+  /* Haut plus sombre : les liens blancs de l'en-tête restent lisibles sur toutes les photos */
   background: linear-gradient(
     to bottom,
-    rgba(10, 30, 38, 0.45) 0%,
-    rgba(10, 30, 38, 0.1) 40%,
+    rgba(10, 30, 38, 0.6) 0%,
+    rgba(10, 30, 38, 0.35) 160px,
+    rgba(10, 30, 38, 0.1) 45%,
     rgba(10, 30, 38, 0.55) 100%
   );
 }

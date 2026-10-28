@@ -21,6 +21,7 @@ const Discover = () => {
               component={Link}
               to="/activities"
               variant="outline"
+              color="lagon.8"
               rightSection={<IconArrowRight size={18} />}
             >
               {t("discover.see")}

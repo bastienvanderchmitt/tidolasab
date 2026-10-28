@@ -81,7 +81,7 @@ const Header = () => {
           onClick={toggle}
           hiddenFrom="md"
           color={scrolled || opened ? "var(--tds-ink)" : "white"}
-          aria-label="Menu"
+          aria-label={t("a11y.menu")}
         />
       </div>
 

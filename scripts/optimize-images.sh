@@ -5,6 +5,8 @@
 #   - 2048 px maximum sur le grand côté (suffisant pour la galerie en plein écran)
 #   - PNG (icônes, logos) compressés au maximum
 #   - suppression des métadonnées (EXIF, coordonnées GPS, profil appareil)
+#   - copie de 800 px de large de chaque photo dans « small/ » (même arborescence),
+#     servie aux petits écrans par helpers/responsiveImage.js
 # Les images déjà optimisées ne sont pas modifiées : le script peut être relancé.
 #
 # Usage : scripts/optimize-images.sh [dossier]   (défaut : resources/js/assets/img)
@@ -14,12 +16,14 @@ set -eu
 DIR="${1:-resources/js/assets/img}"
 MAX_SIZE=2048
 WEBP_QUALITY=80
+SMALL_WIDTH=800
+SMALL_DIR="$DIR/small"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
 resize_args="-auto-orient -resize ${MAX_SIZE}x${MAX_SIZE}> -strip"
 
-find "$DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | while read -r file; do
+find "$DIR" -path "$SMALL_DIR" -prune -o -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print | while read -r file; do
   ext=$(printf '%s' "${file##*.}" | tr 'A-Z' 'a-z')
 
   case "$ext" in
@@ -52,6 +56,18 @@ find "$DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -i
       fi
       ;;
   esac
+done
+
+# Copies réduites des photos (les icônes et logos en PNG n'en ont pas besoin, les
+# bannières non plus : en plein écran sur mobile, elles demandent la grande taille)
+find "$DIR" \( -path "$SMALL_DIR" -o -path "$DIR/banners" \) -prune -o -type f -iname '*.webp' -print | while read -r file; do
+  small="$SMALL_DIR/${file#"$DIR"/}"
+  [ "$small" -nt "$file" ] && continue
+  width=$(magick identify -format '%w' "$file")
+  [ "$width" -le "$SMALL_WIDTH" ] && continue
+  mkdir -p "$(dirname "$small")"
+  magick "$file" -resize "${SMALL_WIDTH}x" -quality "$WEBP_QUALITY" -define webp:method=6 "$small"
+  printf 'réduit       %s\n' "$small"
 done
 
 echo "Terminé. Taille du dossier : $(du -sh "$DIR" | cut -f1)"

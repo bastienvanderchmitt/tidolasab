@@ -13,9 +13,11 @@ export const theme = createTheme({
       "#49c7ce",
       "#30bfc7",
       "#1ebbc3",
-      "#0ea1ab",
-      "#008f98",
-      "#007c84",
+      // Nuances foncées au plus clair possible pour rester lisibles (WCAG AA) :
+      // 7 sous un texte blanc, 8 pour le petit texte sur crème
+      "#00838c",
+      "#00747c",
+      "#00666d",
     ],
     sable: [
       "#fbf8f3",
@@ -46,4 +48,14 @@ export const theme = createTheme({
     Textarea: { defaultProps: { radius: "md", size: "md" } },
     Select: { defaultProps: { radius: "md", size: "md" } },
   },
+});
+
+// Texte secondaire et texte indicatif des champs en ardoise : le gris de Mantine manque de contraste
+export const cssVariablesResolver = () => ({
+  variables: {},
+  light: {
+    "--mantine-color-dimmed": "#5d6b73",
+    "--mantine-color-placeholder": "#5d6b73",
+  },
+  dark: {},
 });

@@ -1,10 +1,13 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { scrollBehavior } from "../../helpers/motion";
 import classes from "./PhotoSlider.module.css";
 
 /**
  * Une photo à la fois : glisser (tactile, pavé) ou cliquer sur les points.
  */
 const PhotoSlider = ({ photos, caption }) => {
+  const { t } = useTranslation();
   const trackRef = useRef(null);
   const [current, setCurrent] = useState(0);
 
@@ -16,7 +19,7 @@ const PhotoSlider = ({ photos, caption }) => {
   const goTo = (index) => {
     const track = trackRef.current;
     setCurrent(index);
-    track?.scrollTo({ left: index * track.clientWidth, behavior: "smooth" });
+    track?.scrollTo({ left: index * track.clientWidth, behavior: scrollBehavior() });
   };
 
   return (
@@ -39,7 +42,7 @@ const PhotoSlider = ({ photos, caption }) => {
             className={classes.dot}
             data-active={index === current || undefined}
             onClick={() => goTo(index)}
-            aria-label={`Photo ${index + 1}`}
+            aria-label={t("a11y.photo", { number: index + 1 })}
           />
         ))}
       </div>

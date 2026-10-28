@@ -348,5 +348,21 @@
     "resend_in": "Resend the code ({{seconds}} s)",
     "edit_email": "Change my email",
     "spam": "Nothing received? Please check your spam folder."
+  },
+  "a11y": {
+    "previous_photo": "Previous photo",
+    "next_photo": "Next photo",
+    "photo": "Photo {{number}}",
+    "enlarge_photo": "Enlarge photo {{number}}",
+    "stars": "{{count}} stars",
+    "menu": "Menu",
+    "remove_adult": "Remove an adult",
+    "add_adult": "Add an adult"
+  },
+  "error": {
+    "title": "Oops",
+    "not_found": "Oops! This page has flown off to the Caribbean",
+    "unexpected": "An unexpected error occurred, and we have been notified.",
+    "home": "Back to the home page"
   }
 }

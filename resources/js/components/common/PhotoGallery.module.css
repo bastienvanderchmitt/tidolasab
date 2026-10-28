@@ -26,6 +26,12 @@
   transform: scale(1.05);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .tile:hover img {
+    transform: none;
+  }
+}
+
 /*
  * Mosaïque sur 4 colonnes : une grande photo, deux petites, une large,
  * puis une large et deux petites, sans trou.

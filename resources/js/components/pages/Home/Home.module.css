@@ -71,24 +71,36 @@ section.preview {
 .dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
 }
 
+/* Zone cliquable de 24px autour d'un point de 9px (WCAG 2.5.8) */
 .dot {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7.5px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: "";
   width: 9px;
   height: 9px;
-  padding: 0;
-  border: 0;
   border-radius: 999px;
   background: var(--mantine-color-lagon-2);
-  cursor: pointer;
   transition:
     width 0.25s ease,
     background-color 0.25s ease;
 }
 
-.dot[data-active] {
+.dot:hover::before {
+  background: var(--mantine-color-lagon-3);
+}
+
+.dot[data-active]::before {
   width: 24px;
   background: var(--mantine-color-lagon-7);
 }
@@ -148,6 +160,12 @@ section.preview {
 
 .photo:hover img {
   transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo:hover img {
+    transform: none;
+  }
 }
 
 .cardTitle {

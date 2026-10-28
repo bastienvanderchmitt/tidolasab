@@ -29,6 +29,10 @@ i18n
 // Écouter les changements de langue et les sauvegarder dans le localStorage
 i18n.on("languageChanged", (lng) => {
   localStorage.setItem("i18nextLng", lng);
+  // Les lecteurs d'écran prononcent le texte selon la langue déclarée
+  document.documentElement.lang = lng;
 });
+
+document.documentElement.lang = i18n.language;
 
 export default i18n;

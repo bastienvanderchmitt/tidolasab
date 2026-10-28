@@ -11,7 +11,7 @@ const Host = ({ name, roles }) => (
     </Text>
     <Group gap="xs">
       {roles.map((role) => (
-        <Badge key={role} size="lg" variant="light" color="sable" c="sable.8" radius="xl" tt="none">
+        <Badge key={role} size="lg" variant="light" color="sable" c="sable.9" radius="xl" tt="none">
           {role}
         </Badge>
       ))}

@@ -11,7 +11,7 @@ import { Notifications } from "@mantine/notifications";
 import { useTranslation } from "react-i18next";
 import { queryClient } from "./api/queries";
 import { allRoutes } from "./routes/allRoutes";
-import { theme } from "./theme";
+import { cssVariablesResolver, theme } from "./theme";
 import BookingContextProvider from "./contexts/BookingContext";
 
 const router = createBrowserRouter(allRoutes);
@@ -32,7 +32,11 @@ const LocalizedDates = ({ children }) => {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <MantineProvider theme={theme} forceColorScheme="light">
+      <MantineProvider
+        theme={theme}
+        cssVariablesResolver={cssVariablesResolver}
+        forceColorScheme="light"
+      >
         <LocalizedDates>
           <Notifications position="top-center" />
           <BookingContextProvider>

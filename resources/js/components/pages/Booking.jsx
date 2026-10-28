@@ -29,6 +29,7 @@ import { bookingSearch } from "../booking/bookingSearch";
 import useEmailVerification from "../booking/useEmailVerification";
 import { formatPrice } from "../booking/format";
 import Room from "./Booking/Room";
+import { scrollBehavior } from "../../helpers/motion";
 import classes from "../booking/Booking.module.css";
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -134,7 +135,7 @@ const Booking = () => {
 
   const goTo = (nextStep) => {
     setStep(nextStep);
-    mainRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    mainRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
   };
 
   const submit = async (code = verification.code) => {

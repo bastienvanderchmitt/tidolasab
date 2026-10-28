@@ -11,6 +11,7 @@ import location_4_square from "../../assets/img/locations/location_4_square.webp
 import location_6_square from "../../assets/img/locations/location_6_square.webp";
 import location_10_square from "../../assets/img/locations/location_10_square.webp";
 import SectionTitle from "../common/SectionTitle";
+import { responsive } from "../../helpers/responsiveImage";
 import classes from "./Pages.module.css";
 
 const photos = [
@@ -45,7 +46,12 @@ const Activities = () => {
           return (
             <article key={key} className={classes.activity}>
               <div className={classes.activityPhoto}>
-                <img src={photo} alt="" loading="lazy" />
+                <img
+                  src={photo}
+                  {...responsive(photo, "(max-width: 48em) 100vw, (max-width: 62em) 50vw, 360px")}
+                  alt=""
+                  loading="lazy"
+                />
               </div>
               <div className={classes.activityBody}>
                 <h3>{t(`${key}.title`)}</h3>

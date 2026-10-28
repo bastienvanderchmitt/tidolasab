@@ -11,6 +11,10 @@
     />
     <link rel="manifest" href="/manifest.json" />
     <title>Ti' Dola Sab</title>
+    @if (request()->is('/'))
+      {{-- Bannière de l'accueil, la plus grande image affichée au chargement --}}
+      <link rel="preload" as="image" href="{{ Vite::asset('resources/js/assets/img/banners/home_banner.webp') }}" fetchpriority="high" />
+    @endif
     @viteReactRefresh
     @vite('resources/js/index.jsx')
   </head>

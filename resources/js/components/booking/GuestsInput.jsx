@@ -17,7 +17,7 @@ const GuestsInput = () => {
         size="lg"
         onClick={() => setAdults(adults - 1)}
         disabled={adults <= 1}
-        aria-label="-"
+        aria-label={t("a11y.remove_adult")}
       >
         <IconMinus size={16} />
       </ActionIcon>
@@ -30,7 +30,7 @@ const GuestsInput = () => {
         size="lg"
         onClick={() => setAdults(adults + 1)}
         disabled={adults >= MAX_ADULTS}
-        aria-label="+"
+        aria-label={t("a11y.add_adult")}
       >
         <IconPlus size={16} />
       </ActionIcon>
