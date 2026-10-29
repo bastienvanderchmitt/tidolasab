@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import essentials_1 from "../../../assets/img/room/room_6.webp";
 import essentials_2 from "../../../assets/img/room/view_3.webp";
 import SectionTitle from "../../common/SectionTitle";
+import Reveal from "../../common/Reveal";
 import classes from "./Home.module.css";
 
 const essentials = [
@@ -33,19 +34,19 @@ const Essentials = () => {
     <section className="section">
       <Container size="lg">
         <SimpleGrid cols={{ base: 1, md: 5 }} spacing={56}>
-          <div className={classes.essentialsPhotos}>
+          <Reveal className={classes.essentialsPhotos}>
             <img src={essentials_1} alt="" loading="lazy" />
             <img src={essentials_2} alt="" loading="lazy" />
             <p className="handwritten">{t("essentials.photo_title")}</p>
-          </div>
+          </Reveal>
           <div className={classes.essentialsList}>
             <SectionTitle
               eyebrow={t("essentials.title")}
               title={t("essentials.subtitle")}
             />
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" verticalSpacing="xl">
-              {essentials.map(({ icon: Icon, title, text }) => (
-                <div key={title} className={classes.essential}>
+              {essentials.map(({ icon: Icon, title, text }, index) => (
+                <Reveal key={title} index={index % 2} className={classes.essential}>
                   <span className={classes.essentialIcon}>
                     <Icon size={22} stroke={1.6} />
                   </span>
@@ -53,7 +54,7 @@ const Essentials = () => {
                     <h3>{t(`essentials.${title}`)}</h3>
                     {text && <p>{t(`essentials.${text}`)}</p>}
                   </div>
-                </div>
+                </Reveal>
               ))}
             </SimpleGrid>
           </div>

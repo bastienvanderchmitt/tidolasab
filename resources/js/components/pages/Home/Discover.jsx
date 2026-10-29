@@ -4,6 +4,7 @@ import { IconArrowRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import mg_beach from "../../../assets/img/locations/location_4.webp";
 import SectionTitle from "../../common/SectionTitle";
+import Reveal from "../../common/Reveal";
 import classes from "./Home.module.css";
 
 const Discover = () => {
@@ -27,9 +28,11 @@ const Discover = () => {
               {t("discover.see")}
             </Button>
           </div>
-          <Link to="/activities" className={classes.photo}>
-            <img src={mg_beach} alt="" loading="lazy" />
-          </Link>
+          <Reveal index={1}>
+            <Link to="/activities" className={classes.photo}>
+              <img src={mg_beach} alt="" loading="lazy" />
+            </Link>
+          </Reveal>
         </SimpleGrid>
       </Container>
     </section>

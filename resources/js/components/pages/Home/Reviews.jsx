@@ -2,6 +2,7 @@ import { Container, SimpleGrid } from "@mantine/core";
 import { IconQuote, IconStarFilled } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import beach_palm from "../../../assets/img/discover/beach_palm.webp";
+import Reveal from "../../common/Reveal";
 import classes from "./Home.module.css";
 
 const Reviews = () => {
@@ -13,10 +14,12 @@ const Reviews = () => {
       style={{ backgroundImage: `url(${beach_palm})` }}
     >
       <Container size="lg">
-        <p className={`${classes.reviewsTitle} handwritten`}>{t("reviews.title")}</p>
+        <Reveal component="p" className={`${classes.reviewsTitle} handwritten`}>
+          {t("reviews.title")}
+        </Reveal>
         <SimpleGrid cols={{ base: 1, md: 3 }} spacing="lg">
           {[1, 2, 3].map((i) => (
-            <figure key={i} className={classes.review}>
+            <Reveal component="figure" key={i} index={i} className={classes.review}>
               <IconQuote size={28} className={classes.quoteIcon} />
               <blockquote>{t("reviews.quote_" + i)}</blockquote>
               <figcaption>
@@ -27,7 +30,7 @@ const Reviews = () => {
                   ))}
                 </span>
               </figcaption>
-            </figure>
+            </Reveal>
           ))}
         </SimpleGrid>
       </Container>

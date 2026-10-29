@@ -3,6 +3,7 @@ import { IconMail, IconMapPin, IconPhone } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import banner from "../../assets/img/locations/location_11.webp";
 import SectionTitle from "../common/SectionTitle";
+import Reveal from "../common/Reveal";
 import ContactForm from "./Contact/ContactForm";
 import classes from "./Pages.module.css";
 
@@ -16,7 +17,7 @@ const Contact = () => {
           <SectionTitle eyebrow={t("contact.contact")} title={t("contact.title")}>
             <p>{t("pages.contact.description")}</p>
           </SectionTitle>
-          <Stack gap="md">
+          <Reveal component={Stack} gap="md">
             <a href="tel:0690648904" className={classes.contactLine}>
               <IconPhone size={20} /> 06 90 64 89 04
             </a>
@@ -26,15 +27,26 @@ const Contact = () => {
             <span className={classes.contactLine}>
               <IconMapPin size={20} /> Morne Lolo, 97112 Grand-Bourg
             </span>
-          </Stack>
-          <img src={banner} alt="" className={classes.contactPhoto} loading="lazy" />
+          </Reveal>
+          <Reveal
+            component="img"
+            src={banner}
+            alt=""
+            className={classes.contactPhoto}
+            loading="lazy"
+          />
         </Stack>
-        <Paper p={{ base: "lg", sm: "xl" }} className={classes.formCard}>
+        <Reveal
+          component={Paper}
+          index={1}
+          p={{ base: "lg", sm: "xl" }}
+          className={classes.formCard}
+        >
           <Text className="eyebrow" mb="lg">
             {t("contact.form_title")}
           </Text>
           <ContactForm />
-        </Paper>
+        </Reveal>
       </SimpleGrid>
     </Container>
   );

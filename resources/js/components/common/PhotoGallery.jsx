@@ -4,6 +4,7 @@ import { useHotkeys } from "@mantine/hooks";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { responsive } from "../../helpers/responsiveImage";
+import Reveal from "./Reveal";
 import classes from "./PhotoGallery.module.css";
 
 /**
@@ -39,8 +40,10 @@ const PhotoGallery = ({ photos, columns = 3, mosaic = false }) => {
         style={{ "--columns": columns }}
       >
         {photos.map((photo, index) => (
-          <button
+          <Reveal
+            component="button"
             key={photo}
+            index={index % columns}
             type="button"
             className={classes.tile}
             onClick={() => setCurrent(index)}
@@ -52,7 +55,7 @@ const PhotoGallery = ({ photos, columns = 3, mosaic = false }) => {
               alt=""
               loading="lazy"
             />
-          </button>
+          </Reveal>
         ))}
       </div>
 
@@ -64,6 +67,7 @@ const PhotoGallery = ({ photos, columns = 3, mosaic = false }) => {
         withCloseButton={false}
         classNames={{ content: classes.viewer }}
         overlayProps={{ backgroundOpacity: 0.85, blur: 4 }}
+        transitionProps={{ transition: "pop", duration: 220, timingFunction: "var(--tds-ease-out)" }}
       >
         {isOpen && (
           <>

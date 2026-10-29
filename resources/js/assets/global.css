@@ -24,6 +24,9 @@
   --tds-muted: #5d6b73;
   --tds-shadow: 0 18px 50px -20px rgba(34, 48, 58, 0.28);
   --tds-header-height: 76px;
+  /* Sorties franches pour l'interface, glissé plus long pour les apparitions */
+  --tds-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --tds-ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
@@ -77,4 +80,41 @@ h3,
 
 .section {
   padding-block: clamp(56px, 9vw, 112px);
+}
+
+/* Appui : les boutons s'enfoncent légèrement au lieu de descendre d'un pixel */
+.mantine-active {
+  transition: transform 160ms var(--tds-ease-out);
+}
+
+.mantine-active:active {
+  transform: scale(0.97);
+}
+
+/*
+ * Apparition au défilement (components/common/Reveal.jsx) : fondu montant, décalé
+ * de 70 ms par élément d'une même rangée. Sans mouvement si le visiteur le demande.
+ */
+[data-reveal] {
+  transition:
+    opacity 700ms var(--tds-ease-reveal),
+    transform 900ms var(--tds-ease-reveal);
+  transition-delay: calc(var(--reveal-index, 0) * 70ms);
+}
+
+[data-reveal]:not([data-revealed]) {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal]:not([data-revealed]) {
+    transform: translateY(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: opacity 400ms ease;
+    transition-delay: 0ms;
+  }
 }

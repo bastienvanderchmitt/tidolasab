@@ -35,7 +35,23 @@
 
 .content {
   max-width: 760px;
-  animation: rise 0.9s ease both;
+}
+
+/* Accueil : sur-titre, titre, étoiles et accroche arrivent l'un après l'autre */
+.hero[data-large] .content > * {
+  animation: rise 0.9s var(--tds-ease-reveal) both;
+}
+
+.hero[data-large] .content > :nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.hero[data-large] .content > :nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.hero[data-large] .content > :nth-child(4) {
+  animation-delay: 270ms;
 }
 
 .subtitle {
@@ -83,8 +99,14 @@
   }
 }
 
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .content {
-    animation: none;
+  .hero[data-large] .content > :nth-child(n) {
+    animation: fade 0.4s ease both;
   }
 }

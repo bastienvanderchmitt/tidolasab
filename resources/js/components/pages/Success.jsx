@@ -6,6 +6,7 @@ import { IconCheck, IconMail, IconCoinEuro, IconBeach } from "@tabler/icons-reac
 import { useBookingContext } from "../../contexts/BookingContext";
 import { nightsBetween, today } from "../../helpers/availability";
 import PriceSummary from "../booking/PriceSummary";
+import Reveal from "../common/Reveal";
 import { formatDate, formatPrice } from "../booking/format";
 import classes from "./Success.module.css";
 
@@ -27,7 +28,7 @@ const Success = () => {
   return (
     <Container size="lg" className="section">
       <Stack align="center" gap="xs" ta="center" mb={48}>
-        <ThemeIcon size={64} radius="xl" color="lagon">
+        <ThemeIcon size={64} radius="xl" color="lagon" className={classes.check}>
           <IconCheck size={34} />
         </ThemeIcon>
         <h2 className={classes.title}>{t("success.title")}</h2>
@@ -37,7 +38,7 @@ const Success = () => {
       </Stack>
 
       <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
-        <Paper p="xl" className={classes.card}>
+        <Reveal component={Paper} p="xl" className={classes.card}>
           <Text className="eyebrow" mb="md">
             {t("success.subtitle")}
           </Text>
@@ -50,9 +51,9 @@ const Success = () => {
             {t("booking.adults_count", { count: adults })}
           </Text>
           <PriceSummary quote={quote} />
-        </Paper>
+        </Reveal>
 
-        <Paper p="xl" className={classes.card}>
+        <Reveal component={Paper} index={1} p="xl" className={classes.card}>
           <Text className="eyebrow" mb="lg">
             {t("success.next_steps")}
           </Text>
@@ -76,7 +77,7 @@ const Success = () => {
               </Text>
             </Timeline.Item>
           </Timeline>
-        </Paper>
+        </Reveal>
       </SimpleGrid>
 
       <Stack align="center" mt={56} gap="md" ta="center">

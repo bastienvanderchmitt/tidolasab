@@ -11,6 +11,7 @@ import location_4_square from "../../assets/img/locations/location_4_square.webp
 import location_6_square from "../../assets/img/locations/location_6_square.webp";
 import location_10_square from "../../assets/img/locations/location_10_square.webp";
 import SectionTitle from "../common/SectionTitle";
+import Reveal from "../common/Reveal";
 import { responsive } from "../../helpers/responsiveImage";
 import classes from "./Pages.module.css";
 
@@ -44,7 +45,9 @@ const Activities = () => {
         {photos.map((photo, index) => {
           const key = `activities.activity_${index + 1}`;
           return (
-            <article key={key} className={classes.activity}>
+            // Enveloppe à part : la carte garde son propre soulèvement au survol
+            <Reveal key={key} index={index % 3} className={classes.reveal}>
+              <article className={classes.activity}>
               <div className={classes.activityPhoto}>
                 <img
                   src={photo}
@@ -62,7 +65,8 @@ const Activities = () => {
                   <IconMapPin size={16} /> {t(`${key}.location`)}
                 </Text>
               </div>
-            </article>
+              </article>
+            </Reveal>
           );
         })}
       </SimpleGrid>

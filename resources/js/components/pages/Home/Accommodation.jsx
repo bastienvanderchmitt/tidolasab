@@ -7,6 +7,7 @@ import view_2 from "../../../assets/img/room/view_2.webp";
 import view_5 from "../../../assets/img/room/view_5.webp";
 import SectionTitle from "../../common/SectionTitle";
 import PhotoSlider from "../../common/PhotoSlider";
+import Reveal from "../../common/Reveal";
 import Assets from "./Assets";
 import classes from "./Home.module.css";
 
@@ -25,11 +26,13 @@ const Accommodation = () => {
         </SectionTitle>
 
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={56} className={classes.split}>
-          <PhotoSlider
-            photos={[view_1, view_2, view_5]}
-            caption={t("accommodation.photo_link")}
-          />
-          <div>
+          <Reveal>
+            <PhotoSlider
+              photos={[view_1, view_2, view_5]}
+              caption={t("accommodation.photo_link")}
+            />
+          </Reveal>
+          <Reveal index={1}>
             <p className="eyebrow">{t("accommodation.breadcrumb")}</p>
             <h3 className={classes.cardTitle}>Case Ti' Dola Sab</h3>
             <Assets />
@@ -51,7 +54,7 @@ const Accommodation = () => {
             >
               {t("common.booking")}
             </Button>
-          </div>
+          </Reveal>
         </SimpleGrid>
       </Container>
     </section>

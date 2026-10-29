@@ -9,6 +9,10 @@
   transform: rotate(-1.5deg);
 }
 
+.reveal {
+  display: grid;
+}
+
 .activity {
   display: flex;
   flex-direction: column;
@@ -21,9 +25,11 @@
     box-shadow 0.3s ease;
 }
 
-.activity:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--tds-shadow);
+@media (hover: hover) and (pointer: fine) {
+  .activity:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--tds-shadow);
+  }
 }
 
 .activityPhoto {

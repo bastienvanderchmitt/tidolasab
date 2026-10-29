@@ -4,6 +4,7 @@ import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import palm_tree from "../../../assets/img/icons/palm_tree.png";
 import SectionTitle from "../../common/SectionTitle";
+import Reveal from "../../common/Reveal";
 import { small } from "../../../helpers/responsiveImage";
 import { scrollBehavior } from "../../../helpers/motion";
 import classes from "./Home.module.css";
@@ -108,7 +109,7 @@ const Preview = () => {
         </SectionTitle>
       </Container>
 
-      <Container size="lg" className={classes.slider}>
+      <Reveal component={Container} size="lg" className={classes.slider}>
         {/* Défilement horizontal natif, aimanté sur chaque photo */}
         <div
           ref={stripRef}
@@ -147,7 +148,7 @@ const Preview = () => {
         >
           <IconChevronRight />
         </ActionIcon>
-      </Container>
+      </Reveal>
 
       <div className={classes.dots}>
         {list.map((photo, index) => (

@@ -65,7 +65,7 @@
   border-radius: 2px;
   background: var(--tds-sand);
   transform: scaleX(0);
-  transition: transform 0.25s ease;
+  transition: transform 0.25s var(--tds-ease-out);
 }
 
 /* En-tête transparent sur photo : une ombre douce assure la lisibilité des liens */
@@ -73,14 +73,22 @@
   text-shadow: 0 1px 10px rgba(10, 30, 38, 0.45);
 }
 
-.link:hover,
 .active {
   opacity: 1;
 }
 
-.link:hover::after,
 .active::after {
   transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    opacity: 1;
+  }
+
+  .link:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .drawerNav .link {

@@ -2,6 +2,7 @@ import { Badge, Container, Group, SimpleGrid, Stack, Text } from "@mantine/core"
 import { useTranslation } from "react-i18next";
 import franck_isa from "../../assets/img/story/franck_isa.webp";
 import SectionTitle from "../common/SectionTitle";
+import Reveal from "../common/Reveal";
 import classes from "./Pages.module.css";
 
 const Host = ({ name, roles }) => (
@@ -25,18 +26,20 @@ const Story = () => {
   return (
     <Container size="lg" className="section">
       <SimpleGrid cols={{ base: 1, md: 2 }} spacing={64} className={classes.center}>
-        <img
-          className={classes.portrait}
-          src={franck_isa}
-          alt="Franck & Isabelle"
-        />
+        <Reveal>
+          <img
+            className={classes.portrait}
+            src={franck_isa}
+            alt="Franck & Isabelle"
+          />
+        </Reveal>
         <div>
           <SectionTitle eyebrow={t("history.title")} title={t("history.subtitle")}>
             <p>{t("history.description_1")}</p>
             <p>{t("history.description_2")}</p>
             <p>{t("history.description_3")}</p>
           </SectionTitle>
-          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
+          <Reveal component={SimpleGrid} cols={{ base: 1, sm: 2 }} spacing="lg">
             <Host
               name="Franck"
               roles={[t("history.maintenance"), t("history.rhum")]}
@@ -49,7 +52,7 @@ const Story = () => {
                 t("history.communication"),
               ]}
             />
-          </SimpleGrid>
+          </Reveal>
         </div>
       </SimpleGrid>
     </Container>

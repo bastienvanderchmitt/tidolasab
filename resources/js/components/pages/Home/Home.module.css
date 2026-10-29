@@ -155,16 +155,13 @@ section.preview {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  transition: transform 0.7s ease;
+  transition: transform 0.7s var(--tds-ease-out);
 }
 
-.photo:hover img {
-  transform: scale(1.04);
-}
-
-@media (prefers-reduced-motion: reduce) {
+/* Zoom au survol à la souris seulement : sur mobile, le toucher le déclencherait */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .photo:hover img {
-    transform: none;
+    transform: scale(1.04);
   }
 }
 

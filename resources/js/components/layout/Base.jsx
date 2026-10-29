@@ -13,7 +13,8 @@ const Base = () => {
     <>
       <ScrollRestoration />
       <Header />
-      <Hero page={page} />
+      {/* Clé par page : la bannière rejoue son entrée à chaque navigation */}
+      <Hero key={page.title} page={page} />
       {!page.hideQuickBooking && <QuickBookingBar />}
       <main>
         <Outlet />
