@@ -2,10 +2,13 @@
   margin-bottom: 40px;
 }
 
-.root[data-align="center"] {
-  text-align: center;
-  max-width: 760px;
-  margin-inline: auto;
+/* Centré sur grand écran seulement : sur mobile, tout le texte de la page part du même bord */
+@media (min-width: 48em) {
+  .root[data-align="center"] {
+    text-align: center;
+    max-width: 760px;
+    margin-inline: auto;
+  }
 }
 
 .root :global(.eyebrow) {

@@ -1,7 +1,19 @@
 .palm {
   width: 56px;
-  margin: 0 auto 20px;
+  margin: 0 0 20px;
   opacity: 0.7;
+}
+
+/* Accroches centrées sur grand écran, alignées à gauche sur mobile comme le reste */
+@media (min-width: 48em) {
+  .palm {
+    margin-inline: auto;
+  }
+
+  .caption,
+  .reviewsTitle {
+    text-align: center;
+  }
 }
 
 section.preview {
@@ -124,7 +136,6 @@ section.preview {
 
 .caption {
   margin: 40px 0 0;
-  text-align: center;
   font-size: 1.6rem;
   line-height: 1.4;
   color: var(--mantine-color-lagon-8);
@@ -189,7 +200,6 @@ section.preview {
 
 .reviewsTitle {
   margin: 0 0 32px;
-  text-align: center;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   color: white;
 }
