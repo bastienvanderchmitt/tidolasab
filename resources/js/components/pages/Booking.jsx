@@ -227,6 +227,7 @@ const Booking = () => {
               allowNextStepsSelect={false}
               size="sm"
               mb={32}
+              classNames={{ step: classes.step, stepBody: classes.stepBody }}
             >
               <Stepper.Step label={t("stepper.dates")} />
               <Stepper.Step label={t("stepper.contact")} />

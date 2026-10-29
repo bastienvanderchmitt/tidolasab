@@ -33,8 +33,8 @@ const Accommodation = () => {
             <p className="eyebrow">{t("accommodation.breadcrumb")}</p>
             <h3 className={classes.cardTitle}>Case Ti' Dola Sab</h3>
             <Assets />
-            <Group gap={8} c="dimmed" mt="md">
-              <IconWheelchair size={18} />
+            <Group gap={8} c="dimmed" mt="md" wrap="nowrap" align="flex-start">
+              <IconWheelchair size={18} style={{ flex: "none", marginTop: 2 }} />
               <Text size="sm" fs="italic">
                 {t("accommodation.pmr")}
               </Text>

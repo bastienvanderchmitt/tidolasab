@@ -52,6 +52,14 @@ img {
   display: block;
 }
 
+h1,
+h2,
+h3,
+.eyebrow,
+.handwritten {
+  text-wrap: balance;
+}
+
 /* Sur-titre en capitales au-dessus des titres de section */
 .eyebrow {
   font-family: Jost, sans-serif;

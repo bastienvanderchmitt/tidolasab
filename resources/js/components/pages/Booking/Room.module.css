@@ -42,9 +42,13 @@
   border: 1px solid var(--mantine-color-sable-1);
 }
 
-.amenity img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  opacity: 0.8;
+.amenityIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--mantine-color-lagon-0);
+  color: var(--mantine-color-lagon-8);
 }

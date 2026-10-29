@@ -66,10 +66,10 @@ const Footer = () => {
                 href="https://www.facebook.com/profile.php?id=61557470872317"
                 target="_blank"
                 rel="noreferrer"
-                variant="light"
-                color="sable"
+                variant="transparent"
                 size="lg"
                 radius="xl"
+                className={classes.social}
                 aria-label="Facebook"
               >
                 <IconBrandFacebook size={20} />
@@ -79,10 +79,10 @@ const Footer = () => {
                 href="https://www.instagram.com/tidolasab?igsh=bHZnZTQ0OXRhNjRz"
                 target="_blank"
                 rel="noreferrer"
-                variant="light"
-                color="sable"
+                variant="transparent"
                 size="lg"
                 radius="xl"
+                className={classes.social}
                 aria-label="Instagram"
               >
                 <IconBrandInstagram size={20} />

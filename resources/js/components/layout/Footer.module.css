@@ -39,6 +39,17 @@ a.line:hover {
   text-decoration-color: var(--tds-sand);
 }
 
+.social {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--tds-sand);
+  transition: background-color 0.2s ease;
+}
+
+.social:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--tds-sand);
+}
+
 .bottom {
   margin-top: 56px;
   padding-top: 24px;

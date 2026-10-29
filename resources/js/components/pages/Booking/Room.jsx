@@ -1,20 +1,24 @@
 import { Badge, Container, Group, SimpleGrid, Stack, Text } from "@mantine/core";
-import { IconHome, IconMapPin, IconWheelchair } from "@tabler/icons-react";
+import {
+  IconAirConditioning,
+  IconBlender,
+  IconBread,
+  IconCoffee,
+  IconCooker,
+  IconCup,
+  IconDeviceSpeaker,
+  IconDroplets,
+  IconFridge,
+  IconHanger,
+  IconHome,
+  IconMapPin,
+  IconMicrowave,
+  IconToiletPaper,
+  IconToolsKitchen2,
+  IconWheelchair,
+  IconWifi,
+} from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
-import air_conditioning from "../../../assets/img/icons/air_conditioning.png";
-import breakfast from "../../../assets/img/icons/breakfast.png";
-import coffee_machine from "../../../assets/img/icons/coffee_machine.png";
-import douche from "../../../assets/img/icons/douche.png";
-import electric_kettle from "../../../assets/img/icons/electric_kettle.png";
-import fridge from "../../../assets/img/icons/fridge.png";
-import microwave from "../../../assets/img/icons/microwave.png";
-import serviette from "../../../assets/img/icons/serviette.png";
-import stove from "../../../assets/img/icons/stove.png";
-import toaster from "../../../assets/img/icons/toaster.png";
-import toilets from "../../../assets/img/icons/toilets.png";
-import wifi_signal from "../../../assets/img/icons/wifi_signal.png";
-import speaker from "../../../assets/img/icons/speaker.png";
-import cooking_robot from "../../../assets/img/icons/cooking_robot.png";
 import room_1 from "../../../assets/img/room/room_1.webp";
 import room_2 from "../../../assets/img/room/room_2.webp";
 import room_4 from "../../../assets/img/room/room_4.webp";
@@ -46,20 +50,20 @@ const Room = () => {
   const { t } = useTranslation();
 
   const amenities = [
-    { icon: wifi_signal, text: t("amenities.wifi") },
-    { icon: air_conditioning, text: t("amenities.clim") },
-    { icon: stove, text: t("amenities.hob") },
-    { icon: microwave, text: t("amenities.micro-wave") },
-    { icon: coffee_machine, text: t("amenities.coffee") },
-    { icon: fridge, text: t("amenities.fridge") },
-    { icon: toaster, text: t("amenities.toaster") },
-    { icon: electric_kettle, text: t("amenities.kettle") },
-    { icon: breakfast, text: t("amenities.dishes") },
-    { icon: douche, text: t("amenities.shower") },
-    { icon: toilets, text: t("amenities.wc") },
-    { icon: serviette, text: t("amenities.towels") },
-    { icon: speaker, text: t("amenities.speaker") },
-    { icon: cooking_robot, text: t("amenities.robot") },
+    { icon: IconWifi, text: t("amenities.wifi") },
+    { icon: IconAirConditioning, text: t("amenities.clim") },
+    { icon: IconCooker, text: t("amenities.hob") },
+    { icon: IconMicrowave, text: t("amenities.micro-wave") },
+    { icon: IconCoffee, text: t("amenities.coffee") },
+    { icon: IconFridge, text: t("amenities.fridge") },
+    { icon: IconBread, text: t("amenities.toaster") },
+    { icon: IconCup, text: t("amenities.kettle") },
+    { icon: IconToolsKitchen2, text: t("amenities.dishes") },
+    { icon: IconDroplets, text: t("amenities.shower") },
+    { icon: IconToiletPaper, text: t("amenities.wc") },
+    { icon: IconHanger, text: t("amenities.towels") },
+    { icon: IconDeviceSpeaker, text: t("amenities.speaker") },
+    { icon: IconBlender, text: t("amenities.robot") },
   ];
 
   return (
@@ -71,8 +75,8 @@ const Room = () => {
             <h2 className={classes.title}>Case Ti' Dola Sab</h2>
           </div>
           <Assets />
-          <Group gap={8} c="dimmed">
-            <IconWheelchair size={18} />
+          <Group gap={8} c="dimmed" wrap="nowrap" align="flex-start">
+            <IconWheelchair size={18} style={{ flex: "none", marginTop: 2 }} />
             <Text size="sm" fs="italic">
               {t("accommodation.pmr")}
             </Text>
@@ -116,10 +120,12 @@ const Room = () => {
       <div className={classes.block}>
         <h2 className={classes.title}>{t("room.equipments")}</h2>
         <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="md" mt="lg">
-          {amenities.map((amenity) => (
-            <div key={amenity.text} className={classes.amenity}>
-              <img src={amenity.icon} alt="" loading="lazy" />
-              <span>{amenity.text}</span>
+          {amenities.map(({ icon: Icon, text }) => (
+            <div key={text} className={classes.amenity}>
+              <span className={classes.amenityIcon}>
+                <Icon size={20} stroke={1.6} />
+              </span>
+              <span>{text}</span>
             </div>
           ))}
         </SimpleGrid>

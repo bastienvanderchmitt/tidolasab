@@ -13,6 +13,19 @@
   padding: clamp(20px, 4vw, 40px);
 }
 
+/* Sur mobile, seule l'étape en cours garde son libellé : les trois tiennent sur une ligne */
+@media (max-width: 30em) {
+  .step:not([data-progress]) .stepBody {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
 .stepTitle {
   margin: 0 0 4px;
   font-family: Marcellus, serif;
