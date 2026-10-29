@@ -5,11 +5,23 @@
   align-items: flex-end;
   justify-content: center;
   padding: calc(var(--tds-header-height) + 32px) 24px 96px;
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
   color: white;
   text-align: center;
   isolation: isolate;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Accueil : la photo se pose en se resserrant lentement à l'arrivée */
+.hero[data-large] .backdrop {
+  animation: settle 1.6s var(--tds-ease-out) both;
 }
 
 .hero::before {
@@ -88,6 +100,15 @@
   line-height: 1.3;
 }
 
+@keyframes settle {
+  from {
+    transform: scale(1.03);
+  }
+  to {
+    transform: none;
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -106,6 +127,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero[data-large] .backdrop {
+    animation: none;
+  }
+
   .hero[data-large] .content > :nth-child(n) {
     animation: fade 0.4s ease both;
   }

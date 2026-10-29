@@ -17,10 +17,13 @@ const Hero = ({ page }) => {
     <section
       className={classes.hero}
       data-large={page.large || undefined}
-      style={{
-        backgroundImage: `url(${banners[`../../assets/img/banners/${page.image}`]})`,
-      }}
     >
+      <div
+        className={classes.backdrop}
+        style={{
+          backgroundImage: `url(${banners[`../../assets/img/banners/${page.image}`]})`,
+        }}
+      />
       <div className={classes.content}>
         {page.subtitle && <p className={classes.subtitle}>{t(page.subtitle)}</p>}
         <h1 className={classes.title}>{t(page.title)}</h1>

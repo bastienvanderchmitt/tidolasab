@@ -178,7 +178,7 @@ Une palette lumineuse et naturelle : l'eau, le sable et l'encre.
 
 - **Conteneur** : 1140px (`Container size="lg"` de Mantine) avec 16px de marge latérale. L'en-tête va jusqu'à 1280px avec 24px de marge.
 - **Rythme vertical** : chaque section a un padding de `clamp(56px, 9vw, 112px)` (`.section`). Les blocs à l'intérieur d'une section sont espacés de 56 à 72px.
-- **Grilles** : colonnes `SimpleGrid` de Mantine ; souvent deux colonnes (photo et texte) en desktop, une seule en dessous de 62em. Section services sur 5 colonnes (photos sur 2, liste sur 3).
+- **Grilles** : colonnes `SimpleGrid` de Mantine ; souvent deux colonnes (photo et texte) en desktop, une seule en dessous de 62em. Section services sur 2 colonnes inégales (photo haute sur 2 parts, calée sur la hauteur du texte ; services sur 3 parts : ceux des hôtes en avant, équipements en liste compacte), puis la vue aérienne en bandeau avec la légende manuscrite.
 - **Points de rupture** : ceux de Mantine, surtout `48em` (mobile) et `62em` (tablette).
 - **Alternance des fonds** : les sections alternent crème, blanc (`.highlighted`) et dégradé teinté (`.tinted`) pour séparer les blocs sans traits.
 - **Hero** : photo plein cadre (100svh moins 72px sur l'accueil, 52vh ailleurs), dégradé sombre en haut et en bas pour la lisibilité, la barre de réservation chevauche le bas du hero de 56px.

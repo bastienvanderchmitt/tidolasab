@@ -228,48 +228,62 @@ section.preview {
   color: var(--tds-sand-dark);
 }
 
-.essentialsPhotos {
-  grid-column: span 2;
+/*
+ * Services : une photo haute à gauche, calée sur la hauteur du texte ; à droite les
+ * services des hôtes en avant, puis les équipements en liste compacte. La vue
+ * aérienne ferme la section en bandeau, avec la légende manuscrite.
+ */
+.essentials {
   display: grid;
-  gap: 16px;
-  align-content: start;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 56px;
 }
 
-.essentialsPhotos img {
+.essentialsPhoto {
+  position: relative;
+  min-height: 440px;
+}
+
+.essentialsPhoto img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  border-radius: var(--mantine-radius-lg);
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: cover;
+  /* Recadrage par la droite : la signature de la photo reste entière */
+  object-position: right center;
+  border-radius: var(--mantine-radius-lg);
 }
 
-.essentialsPhotos img:first-child {
-  aspect-ratio: 4 / 5;
+.essentialsGroup {
+  margin: 0 0 24px;
+  font-family: Marcellus, serif;
+  font-weight: 400;
+  font-size: 1.4rem;
 }
 
-.essentialsPhotos p {
-  margin: 0;
-  text-align: center;
-  font-size: 1.5rem;
-  color: var(--mantine-color-lagon-8);
+.services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 40px;
+  margin: 0 0 56px;
+  padding: 0;
+  list-style: none;
 }
 
-.essentialsList {
-  grid-column: span 3;
-}
-
-.essential {
+.service {
   display: flex;
   gap: 16px;
 }
 
-.essential h3 {
+.service h4 {
   margin: 0 0 4px;
   font-family: Jost, sans-serif;
   font-weight: 500;
   font-size: 1.05rem;
 }
 
-.essential p {
+.service p {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -287,22 +301,111 @@ section.preview {
   color: var(--mantine-color-lagon-8);
 }
 
+/*
+ * Équipements : un cran sous les services des hôtes (titre 1rem, texte 0.9rem au lieu
+ * de 1.05 / 0.95), titre et précision sur deux lignes comme au-dessus. Icône sans
+ * pastille, mais plus grande et au trait plus appuyé pour tenir à côté du texte.
+ */
+.included {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.included li {
+  display: flex;
+  gap: 16px;
+}
+
+/* Centrée sur 44px, la largeur des pastilles : icônes et textes s'alignent sur ceux du dessus */
+.included svg {
+  flex-shrink: 0;
+  margin-inline: 11px;
+  color: var(--mantine-color-lagon-8);
+}
+
+.included strong {
+  display: block;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 22px;
+  color: var(--tds-ink);
+}
+
+.included p {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--tds-muted);
+}
+
+.aerial {
+  position: relative;
+  margin-top: 72px;
+  border-radius: var(--mantine-radius-lg);
+  overflow: hidden;
+}
+
+.aerial img {
+  width: 100%;
+  aspect-ratio: 21 / 8;
+  object-fit: cover;
+}
+
+/* Bas assombri : la légende blanche reste lisible sur le vert du jardin */
+.aerial::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 30, 38, 0.6), rgba(10, 30, 38, 0) 55%);
+  pointer-events: none;
+}
+
+.aerial p {
+  position: absolute;
+  z-index: 1;
+  left: clamp(20px, 4vw, 40px);
+  right: clamp(20px, 4vw, 40px);
+  bottom: clamp(16px, 3vw, 32px);
+  max-width: 34ch;
+  margin: 0;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.35;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
 @media (max-width: 62em) {
-  .essentialsPhotos,
-  .essentialsList {
-    grid-column: auto;
+  .essentials {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .essentialsPhotos {
+  /* Sur tablette et mobile, la photo suit le texte au lieu de le précéder */
+  .essentialsPhoto {
     order: 2;
-    grid-template-columns: 1fr 1fr;
+    min-height: 0;
   }
 
-  .essentialsPhotos img:first-child {
+  .essentialsPhoto img {
+    position: static;
     aspect-ratio: 4 / 3;
   }
 
-  .essentialsPhotos p {
-    grid-column: 1 / -1;
+  .aerial {
+    margin-top: 16px;
+  }
+
+  .aerial img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 48em) {
+  .services,
+  .included {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
